@@ -1,5 +1,5 @@
 import React from 'react';  
-import './LoginModal.css'; 
+import './login.scss'; 
 
 interface LoginModalProps {  
   onClose: () => void;   
