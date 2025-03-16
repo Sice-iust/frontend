@@ -13,6 +13,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
+    
     <div style={{ position: "relative", padding: "20px" }}>
       <button
         style={{
@@ -31,7 +32,11 @@ const HomePage: React.FC = () => {
         ورود/عضویت
       </button>
       {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} />}
+      <div className="bg-MainOrange text-white p-4">
+  Tailwind CSS is working!
+</div>
     </div>
+    
   );
 };
 
