@@ -8,17 +8,17 @@ import { useState } from 'react';
 
 import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
-import PhoneIcon from '@mui/icons-material/Phone'; // Import the icon
-import PhoneOutlined from '@mui/icons-material/PhoneOutlined'; // Import outlined icon
+import PhoneIcon from '@mui/icons-material/Phone';
+import PhoneOutlined from '@mui/icons-material/PhoneOutlined'; 
 import Logo from "../../../public/logo.png";
-import  './login.scss'; // Import the SCSS file
+import  './login.scss';
 
 interface LoginModalProps {
   open: boolean;
   onClose: () => void;
 }
 const theme = createTheme({
-  direction: 'rtl', // Set the direction to RTL
+  direction: 'rtl', 
 });
 function Rtl(props) {
   return <CacheProvider value={rtlCache}>{props.children}</CacheProvider>;
@@ -35,14 +35,24 @@ const cacheRtl = createCache({
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [phoneNumber, setPhoneNumber] = useState('');  
-  const [isFocused, setIsFocused] = useState(false); // Track if the input is focused  
+  const [isFocused, setIsFocused] = useState(false); 
+  const [error, setError] = useState<string | null>(null); 
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
   };
   const handleInputChange = (event) => {  
-    setPhoneNumber(event.target.value);  
-  }; 
+    const value = event.target.value;  
+    setPhoneNumber(value);  
+  
+    if (value.length < 2) {  
+      setError(null); 
+    } else if (!value.startsWith("09") && value.length >= 2 || value.length > 11 || value.length === 11 && !/^09\d{9}$/.test(value)) {  
+      setError('شماره همراه معتبر نیست');
+    } else {  
+      setError(null); 
+    }  
+  };    
   const handleFocus = () => {  
     setIsFocused(true);  
   };  
@@ -52,6 +62,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
       setIsFocused(false);  
     }  
   }; 
+
+  const isButtonDisabled = phoneNumber.length !== 11; // Check if phone number has 11 digits  
+
   return (
 <Dialog  
   open={open}  
@@ -63,18 +76,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
       borderRadius: '26px',  
       overflow: 'hidden', 
       justifyContent:'center',
-      // alignItems:'center',
+     
     },  
     '& .MuiDialogContent-root': {  
-      paddingBottom: 0, // Adjust padding if needed  
-      overflowY: 'hidden', // Remove vertical scroll  
+      paddingBottom: 0, 
+      overflowY: 'hidden',
     },  
     '& .MuiDialogActions-root': {  
-      padding: '16px', // Adjust padding for actions  
+      padding: '16px',
     },  
   }}  
 >  
-  {/* Rest of your code */}  
+  
       <DialogTitle>
       <IconButton edge="end" color="inherit" onClick={onClose} className='closeButton'>
             <CloseIcon className='closeIcon'  />
@@ -96,93 +109,105 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
        
       </DialogTitle>
       <CacheProvider value={cacheRtl}>  
-  <ThemeProvider theme={theme}>  
-    <div  
-      dir="rtl"  
-      style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}  
-    >  
-      <form id="login-form" onSubmit={handleSubmit} style={{ width: '350px', margin: '0 auto' }}>  
-      <TextField
-  autoFocus
-  margin="dense"
-  label="شماره تلفن همراه"
-  type="text"
-  fullWidth
-  variant="outlined"
-  
-  value={phoneNumber} // Controlled input value
-  onChange={(e) => setPhoneNumber(e.target.value)} // Handle input change
-  InputProps={{
-    startAdornment: (
-      <InputAdornment position="start" style={{ direction: 'ltr' }}>
-        <PhoneOutlined style={{ color: 'black', direction: 'ltr' }} /> {/* Outlined phone icon */}      </InputAdornment>
-    ),
-    style: { 
-      color: 'black', 
-      textAlign: 'right', // Align text to the right
-      direction: 'ltr', // Ensure RTL text direction
-    },
-  }}
-  InputLabelProps={{
-    shrink: isFocused || phoneNumber.length > 0, // Float label on focus or content
-  }}
-  sx={{
-    '& .MuiOutlinedInput-root': {
-      borderRadius: '15px',
-      fontFamily: 'IRANSansMobile',
-      fontSize: '18px',
-      alignItems:'center',
-      color: '#4C4343',
-      height: '50px',
-      '& .MuiOutlinedInput-notchedOutline': {
-        borderColor: '#4C4343', // Border color
-      },
-      '&:hover .MuiOutlinedInput-notchedOutline': {
-        borderColor: '#4C4343', // Border color on hover
-      },
-      '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-        borderColor: '#4C4343', // Border color when focused
-      },
-      '&.Mui-focused': {
-        color: '#4C4343', // Text color when focused
-      },
-    },
-    '& .MuiInputBase-root': {
-      '&.Mui-focused': {
-        color: '#4C4343', // Text color on focus
-      },
-      '&:focus': {
-        boxShadow: 'none', // Disable the blue focus ring
-      },
-    },
-    '& .MuiInputBase-input:focus': {
-      color: '#4C4343', // Ensure text color is black on focus
-    },
-    '& .MuiInputLabel-outlined': {
-      fontFamily: 'IRANSansMobile',
-      fontSize: '18px',
-      justifyContent:'center',
-      alignItems:'center',
-      color: phoneNumber ? '#4C4343' : 'gray', // Label color based on input
-    },
-    '& .MuiFormLabel-asterisk': {
-      color: 'red', // Red asterisk for required field
-    },
-    '& .MuiFormLabel': {
-      color: '#4C4343', // Label color
-    },
-  }}
-/>
-          </form> 
-    </div>  
-  </ThemeProvider>  
-</CacheProvider>  
+        <ThemeProvider theme={theme}>  
+          <div dir="rtl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>  
+            <form id="login-form" onSubmit={handleSubmit} style={{ width: '350px', margin: '0 auto' }}>  
+              <TextField  
+                autoFocus  
+                margin="dense"  
+                label={  
+                  <span>  
+                    شماره تلفن همراه  
+                    {(isFocused || phoneNumber.length > 0) && (  
+                      <span style={{ color: 'red' }}> *</span>  
+                    )}  
+                  </span>  
+                }  
+                type="text"  
+                fullWidth  
+                variant="outlined"  
+                value={phoneNumber}  
+                onChange={handleInputChange}  
+                onFocus={handleFocus}  
+                onBlur={handleBlur}  
+                error={!!error} 
+                helperText={error} 
+                InputProps={{  
+                  startAdornment: (  
+                    <InputAdornment position="start">  
+                      <PhoneOutlined style={{ color: 'black' }} />  
+                    </InputAdornment>  
+                  ),  
+                  style: {  
+                    color: 'black',  
+                    textAlign: 'right',  
+                    direction: 'ltr',  
+                  },  
+                }}  
+                InputLabelProps={{  
+                  shrink: isFocused || phoneNumber.length > 0,  
+                  style: {  
+                    color: error ? 'red' : (isFocused || phoneNumber.length > 0 ? '#4C4343' : 'gray'), // Change label color based on error  
+                  },  
+                }}  
+                sx={{  
+                  '& .MuiOutlinedInput-root': {  
+                    borderRadius: '15px',  
+                    fontFamily: 'IRANSansMobile',  
+                    fontSize: '18px',  
+                    height: '50px',  
+                    '& .MuiOutlinedInput-notchedOutline': {  
+                      borderColor: error ? 'red' : '#4C4343',
+                    },  
+                    '&:hover .MuiOutlinedInput-notchedOutline': {  
+                      borderColor: error ? 'red' : '#4C4343', 
+                    },  
+                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {  
+                      borderColor: error ? 'red' : '#4C4343', 
+                    },  
+                    '&.Mui-focused': {  
+                      color: '#4C4343',
+                    },  
+                  },  
+                  '& .MuiInputBase-root': {  
+                    '&.Mui-focused': {  
+                      color: '#4C4343',
+                    },  
+                    '&:focus': {  
+                      boxShadow: 'none', 
+                    },  
+                  },  
+                  '& .MuiInputBase-input:focus': {  
+                    color: '#4C4343', 
+                  },  
+                  '& .MuiInputLabel-outlined': {  
+                    fontFamily: 'IRANSansMobile',  
+                    fontSize: '18px',  
+                    justifyContent: 'center',  
+                    alignItems: 'center',  
+                    color: phoneNumber ? '#4C4343' : 'gray',   
+                  },  
+                  '& .MuiFormLabel-asterisk': {  
+                    color: 'red', 
+                  },  
+                  '& .MuiFormLabel': {  
+                    color: '#4C4343',
+                  },  
+                }}  
+                dir="rtl" 
+              />  
+            </form>  
+          </div>  
+        </ThemeProvider>  
+      </CacheProvider>
+                    
       <DialogActions className="dialogActions">  
-  <div className="buttonWrapper"> {/* Wrapper for centering */}  
+  <div className="buttonWrapper"> 
     <Button  
       type="submit"  
       form="login-form"  
-      className="dialogActionsButton"  
+      className={`dialogActionsButton ${isButtonDisabled ? 'disabled' : ''}`} 
+            disabled={isButtonDisabled} 
     >  
       ادامه  
     </Button>  

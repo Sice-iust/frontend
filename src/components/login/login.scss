@@ -62,67 +62,46 @@
 }  
 
 
-.dialogContent {
-  form {
-    .textField {
-      width: 100%; // Corrected from 1000% to 100%
-      direction: rtl; // Ensure the entire field is set to RTL
 
-      // Apply border radius to the TextField
-      .MuiOutlinedInput-root {
-        border-radius: 200px; // Set your desired border radius
-      }
-
-      // Target the input element inside the TextField
-      .MuiOutlinedInput-input {
-        text-align: right; // Ensure right alignment in input
-        direction: rtl; // Ensure right-to-left direction in input
-        padding-right: 12px; // Adjust padding as needed (reduced from 10002px)
-      }
-
-      // Target the label
-      .MuiInputLabel-outlined {
-        text-align: right; // Align label text to the right
-        transform-origin: top right; // Adjust transform origin for RTL
-        right: 0; // Position the label correctly
-        left: auto; // Override default left positioning
-      }
-    }
-  }
-}
 .dialogActions {  
   display: flex;                 
-  justify-content: center;   
-  // align-items: center;    
+  justify-content: center;    
   width: 100%;                   
 
   .buttonWrapper {  
     display: flex;               
     justify-content: center;  
     align-items: center;    
-    margin-top: 10px;
-    margin-bottom: 40px;
+    margin-top: 10px;  
+    margin-bottom: 40px;  
     width: 100%;   
-    font-family: 'Vazir FD-WOL'      ;
-    // margin-left: 0 auto;    
+    font-family: 'Vazir FD-WOL';  
   }  
 
-  button {  
+  .dialogActionsButton {  
     background-color: #F18825;   
-      color: white;                 
-      padding: 0.5rem 0; // Adjust padding for vertical space  
-      width: 79.5%; // Set button width to 100%  
-      height: 40px;
-      border-radius: 15px;    
-      transition: background-color 0.3s ease;  
-      font-family:  'IRANSansMobile';
-      font-size: 21px; 
-      margin-right: 27px;
+    color: white;                 
+    padding: 0.5rem 0; 
+    width: 79.5%;
+    height: 40px;  
+    border-radius: 15px;    
+    transition: background-color 0.3s ease;  
+    font-family: 'IRANSansMobile';  
+    font-size: 21px;   
 
+   margin-right: 20px;
 
-    
+    &.disabled { 
+      background-color:rgba(237, 239, 240);  
+      color: rgba(168, 171, 178); 
+      cursor: not-allowed;  
+
+      &:hover { 
+        background-color: rgba(237, 239, 240);   
+      }  
+    }  
   }  
-}
+}  
 
 .nanziText {
   display: flex;
