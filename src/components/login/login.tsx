@@ -395,8 +395,9 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             <div className="countdown-container">  
               {!isFinished ? (  
                 <div className="flex-center">  
+                 <span className='wait-title'>&nbsp;شکیبا باشید&nbsp;</span>  
                  <h2 >{toPersianDigits(formatTime(timeLeft))} </h2>
-                  <span className='wait-title'>&nbsp;شکیبا باشید&nbsp;</span>  
+                 
                     
                 </div>  
               ) : (  
