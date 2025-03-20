@@ -1,20 +1,19 @@
 import React from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, IconButton, InputAdornment } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
+import axios from 'axios';  
 import { useState,useEffect,useRef  } from 'react';
 
 import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
-import PhoneIcon from '@mui/icons-material/Phone';
-import PhoneOutlined from '@mui/icons-material/PhoneOutlined';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FileCopyIcon from '@mui/icons-material/FileCopy';  
 
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, IconButton, InputAdornment } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CloseIcon from '@mui/icons-material/Close';
+import PhoneOutlined from '@mui/icons-material/PhoneOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import EditIcon from '@mui/icons-material/Edit';
+
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
+
 import Logo from "../../../public/logo.png";
 import './login.scss';
 
@@ -108,34 +107,90 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   };
 
   
-  const handleCodeSubmit = () => {
-    console.log('Verification code entered:', verificationCode);
-    // const isVerified = true; 
-    // if (isVerified) {
-    //   const isRegistered = false; 
-    //   if (isRegistered) {
-    //     console.log('Redirecting to home page...');
-    //     onClose();
-    //   } else {
-    //     setStep(Step.REGISTER);
-    //   }
-    // } else {
-    //   setError('کد تأیید نامعتبر است.');
-    // }
+  const handleCodeSubmit = async() => {
+    console.log('Verification code entered:', verificationCode.join(''));
+    let verification=verificationCode.join('')
+    verification=toEnglishDigits(verification)
+   
+    console.log('Verification code entered:',verification);
+
+    if (!isPhoneButtonDisabled && !error) {  
+      console.log('Verification code sent to:', phoneNumber);  
+      let phonenumber=toEnglishDigits(phoneNumber);
+      if (phonenumber.startsWith('09')) {  
+        phonenumber = '+98' + phonenumber.slice(1); 
+      } 
+      console.log('Verification code sent to:', phonenumber);  
+
+      try {  
+        const response = await axios.post('https://nanziback.liara.run/users/login/',   
+          { phonenumber:phonenumber,
+            otp:verification ,
+          },   
+          {  
+            headers: {  
+              'Content-Type': 'application/json',  
+            },  
+          }  
+        );  
+  
+        console.log('Response from the server:', response.data);  
+        if (response.data.message=="Login succesful")
+        {
+           onClose();
+
+        }
+        else{
+            setError('کد تأیید نامعتبر است.');
+
+        }
+  
+        // const isRegistered = response.data.is_registered; 
+        
+        // if (isRegistered) {  
+        //   setStep(Step.CODE);  
+        // } else {  
+        //   setStep(Step.REGISTER);  
+        // }  
+      } catch (error) {  
+        console.error('Error occurred during submission:', error);  
+      }  
+    }  
   };
 
-  const handlePhoneSubmit = () => {
-    if (!isPhoneButtonDisabled && !error) {
-      console.log('Verification code sent to:', phoneNumber);
+  const handlePhoneSubmit = async () => {  
+    if (!isPhoneButtonDisabled && !error) {  
+      console.log('Verification code sent to:', phoneNumber);  
+      let phonenumber=toEnglishDigits(phoneNumber);
+      if (phonenumber.startsWith('09')) {  
+        phonenumber = '+98' + phonenumber.slice(1); 
+      } 
+      console.log('Verification code sent to:', phonenumber);  
 
-      const isRegistered = checkIfUserIsRegistered(phoneNumber); 
-
-      if (isRegistered) {
-        setStep(Step.CODE);       } else {
-        setStep(Step.REGISTER); 
-      }
-    }
-  };
+      try {  
+        const response = await axios.post('https://nanziback.liara.run/users/sendotp/',   
+          { phonenumber },   
+          {  
+            headers: {  
+              'Content-Type': 'application/json',  
+            },  
+          }  
+        );  
+  
+        console.log('Response from the server:', response.data);  
+  
+        const isRegistered = response.data.is_registered; 
+        
+        if (isRegistered) {  
+          setStep(Step.CODE);  
+        } else {  
+          setStep(Step.REGISTER);  
+        }  
+      } catch (error) {  
+        console.error('Error occurred during submission:', error);  
+      }  
+    }  
+  }; 
 
 
   useEffect(() => {
