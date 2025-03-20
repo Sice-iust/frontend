@@ -4,7 +4,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, I
 import CloseIcon from '@mui/icons-material/Close';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
-import { useState } from 'react';
+import { useState,useEffect,useRef  } from 'react';
 
 import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
@@ -41,58 +41,73 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [step, setStep] = useState<Step>(Step.PHONE);
-  const [verificationCode, setVerificationCode] = useState('');
+  const [timeLeft, setTimeLeft] = useState(120); 
+  const [isFinished, setIsFinished] = useState(false);  
+  const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
+  const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(4).fill(null));
  
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
   };
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setPhoneNumber(value);
 
-    if (value.length < 2) {
+  const handleInputChange = (event) => {
+
+    const value = event.target.value;
+    const new_Value = toEnglishDigits(value);  
+   
+    setPhoneNumber(new_Value);
+
+    if (new_Value.length < 2) {
       setError(null);
-    } else if (!value.startsWith("09") && value.length >= 2 || value.length > 11 || value.length === 11 && !/^09\d{9}$/.test(value)) {
+    } else if (!new_Value.startsWith("09") && new_Value.length >= 2 || value.length > 11 || new_Value.length === 11 && !/^09\d{9}$/.test(new_Value)) {
       setError('شماره همراه معتبر نیست');
     } else {
       setError(null);
     }
   };
+
+  const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d$/.test(value)) {
+      const newCode = [...verificationCode];
+      newCode[index] = value;
+      setVerificationCode(newCode);
+
+      if (index < 3 && value !== '') {
+        inputRefs.current[index + 1]?.focus();
+      }
+    }
+  };
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Backspace') {
+      const newCode = [...verificationCode];
+      if (newCode[index] !== '') {
+        newCode[index] = '';
+      } else if (index > 0) {
+        newCode[index - 1] = '';
+        inputRefs.current[index - 1]?.focus();
+      }
+      setVerificationCode(newCode);
+    }
+  };
+
   const handleFocus = () => {
     setIsFocused(true);
   };
+
+  const handleResendCode = () => {  
+    setTimeLeft(120);
+    setIsFinished(false); 
+  };  
 
   const handleBlur = () => {
     if (phoneNumber === '') {
       setIsFocused(false);
     }
   };
-  const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
 
-  const handlePhoneSubmit = () => {
-    if (!isPhoneButtonDisabled && !error) {
-      console.log('Verification code sent to:', phoneNumber);
-
-      const isRegistered = checkIfUserIsRegistered(phoneNumber); 
-
-      if (isRegistered) {
-        setStep(Step.CODE);       } else {
-        setStep(Step.REGISTER); 
-      }
-    }
-  };
-
-  const checkIfUserIsRegistered = (phoneNumber: string): boolean => {
-   //we have bool item as is_registered, it will be handled when  it  connect  to back
-   //to go to page 3 enter odd phone number 
-    return parseInt(phoneNumber.slice(-1)) % 2 === 0;
-  };
-
-  const handleVerificationCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setVerificationCode(event.target.value);
-  };
-
-
+  
   const handleCodeSubmit = () => {
     console.log('Verification code entered:', verificationCode);
     // const isVerified = true; 
@@ -109,10 +124,79 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     // }
   };
 
+  const handlePhoneSubmit = () => {
+    if (!isPhoneButtonDisabled && !error) {
+      console.log('Verification code sent to:', phoneNumber);
+
+      const isRegistered = checkIfUserIsRegistered(phoneNumber); 
+
+      if (isRegistered) {
+        setStep(Step.CODE);       } else {
+        setStep(Step.REGISTER); 
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    if (step === Step.PHONE) {
+      setVerificationCode(Array(4).fill('')); 
+    }
+  }, [step]);
+
+  useEffect(() => {  
+    if (step === Step.CODE) {  
+      setTimeLeft(120); 
+      setIsFinished(false); 
+    }  
+  }, [step]);  
+
+  useEffect(() => {  
+    let timerId: ReturnType<typeof setInterval>;  
+
+    if (timeLeft <= 0) {  
+      setIsFinished(true);  
+    } else {  
+      timerId = setInterval(() => {  
+        setTimeLeft((prevTime) => prevTime - 1);  
+      }, 1000);  
+    }  
+
+    return () => clearInterval(timerId); 
+  }, [timeLeft]); 
+
+
+
+  const formatTime = (seconds: number) => {  
+    const minutes = Math.floor(seconds / 60);  
+    const secs = seconds % 60;  
+    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;  
+  };  
+
+  const checkIfUserIsRegistered = (phoneNumber: string): boolean => {
+   //we have bool item as is_registered, it will be handled when  it  connect  to back
+   //to go to page 3 enter odd phone number 
+    return parseInt(phoneNumber.slice(-1)) % 2 === 0;
+  };
+
+ 
   const toPersianDigits = (num: string) => {
     const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
     return num.replace(/\d/g, (digit) => persianDigits[parseInt(digit)]);
   };
+  
+  const toEnglishDigits = (num:string) => {  
+    const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+    const englishDigits = '0123456789';
+    return num.split('').map(char => {  
+      const index = persianDigits.indexOf(char);  
+      return index !== -1 ? englishDigits[index] : char; 
+    }).join('');  
+  };  
+
+  const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
+  const isVerificationCodeEntered=verificationCode.join('').length !== 4;;
+
  const renderContent = () => {
   switch (step) {
     case Step.PHONE:
@@ -169,16 +253,17 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 margin="dense"
                 label={
                   <span>
-                    شماره تلفن همراه
                     {(isFocused || phoneNumber.length > 0) && (
                       <span style={{ color: 'red' }}> *</span>
                     )}
+                    شماره تلفن همراه
+                    
                   </span>
                 }
                 type="text"
                 fullWidth
                 variant="outlined"
-                value={phoneNumber}
+                value={toPersianDigits(phoneNumber)}
                 onChange={handleInputChange}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
@@ -246,7 +331,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                     color: '#4C4343',
                   },
                 }}
-                dir="rtl"
+                dir="ltr"
               />
             </form>
           </div>
@@ -286,30 +371,45 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         </div>
         </DialogTitle>
         <DialogContent>
-        <div dir="rtl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div dir="ltr" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <form id="verification-form" style={{ width: '350px', margin: '0 auto' }}>
-            <h4 className="text-center mb-4">کد تأیید خود را وارد کنید</h4>
-            <div className="d-flex mb-3">
-              {[...Array(4)].map((_, index) => (
-                <input
-                  key={index}
-                  type="tel"
-                  maxLength={1}
-                  pattern="[0-9]"
-                  className="form-control"
-                  value={verificationCode[index] || ''}
-                  onChange={(e) => {
-                    const newCode = [...verificationCode];
-                    newCode[index] = e.target.value;
-                    setVerificationCode(newCode.join(''));
-                  }}
-                  style={{ margin: '0 4px', textAlign: 'center' }}
-                />
-              ))}
-            </div>
+          <div className="d-flex mb-3">
+      {[...Array(4)].map((_, index) => (
+        <input
+          key={index}
+          type="tel"
+          maxLength={1}
+          pattern="[0-9]"
+          className="form-control"
+          value={toPersianDigits(verificationCode[index] || '')}
+
+          onChange={(e) => handleChange(index, e)}
+          onKeyDown={(e) => handleKeyDown(index, e)}
+          style={{ margin: '0 4px', textAlign: 'center', direction: 'rtl' }}
+          ref={(el) => {
+            inputRefs.current[index] = el;
+          }}
+        />
+      ))}
+    </div>
+            <div className="countdown-container">  
+              {!isFinished ? (  
+                <div className="flex-center">  
+                 <h2 >{toPersianDigits(formatTime(timeLeft))} </h2>
+                  <span className='wait-title'>&nbsp;شکیبا باشید&nbsp;</span>  
+                    
+                </div>  
+              ) : (  
+                <div className='resend-message'>   
+                  <h1>کد تأیید را دریافت نکردید؟</h1>   
+                  <h3  onClick={handleResendCode}>ارسال دوباره</h3>  
+                </div> 
+              )}  
+            </div>  
             <button
               type="submit"
-              className="w-100 btn btn-primary"
+              className={`btn-primary ${isVerificationCodeEntered ? 'disabled' : ''}`}
+              disabled={isVerificationCodeEntered}
               onClick={(e) => {
                 e.preventDefault();
                 handleCodeSubmit();
