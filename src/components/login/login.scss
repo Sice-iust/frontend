@@ -62,7 +62,7 @@
 }  
 
 .titleContainer h1 {  
-  font-size: 30px;   
+  font-size: 30px;  
   margin: 0;   
   display: inline-block;   
   position: relative;   
@@ -230,7 +230,7 @@
 ////second page
 .titleContainer2 {  
 
-  text-align: right;  
+  text-align: center;  
   font-size: 10px;
   margin: 0 10px ; 
   font-weight: 400; 
@@ -242,14 +242,14 @@
   direction: ltr;
 }
 .editNumber {  
-  display: flex; 
+  display:flex; 
   align-items: center;
   direction: rtl;
   color: var(--main-green);
   font-family: "Calibri";
   font-size: 15px;
   cursor: pointer;
-
+  margin-right: 14px;
   svg {  
     margin-right: 0.5rem;
     width: 1.25rem; 
@@ -320,7 +320,7 @@
     color:  var(--error-color);
     margin-top: 10px;
     text-align: right;   
-    margin-right: 5px;
+    margin-right: 12px;
     font-family: "calibri";
 
 
@@ -410,3 +410,5 @@
   }
 }
 
+
+//third page

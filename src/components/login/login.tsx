@@ -328,7 +328,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
         <DialogTitle className={isDarkMode ? 'dark-login' : 'light-login'}>
         <div className="titleContainer2">
           <h1>
-            .کد&nbsp;  تایید &nbsp; به&nbsp;  شماره &nbsp;<span className="underlined">{toPersianDigits(phoneNumber)}&nbsp;</span> ارسال &nbsp; شد
+            .کد&nbsp;تایید&nbsp;به&nbsp;شماره &nbsp;<span className="underlined">{toPersianDigits(phoneNumber)}</span> ارسال &nbsp;شد
           </h1>
           <h1>
             <span className="editNumber" onClick={() => setStep(Step.PHONE)}>
@@ -375,7 +375,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 </div>  
               ) : (  
                 <div className='resend-message'>   
-                  <h1>کد تأیید را دریافت نکردید؟ &nbsp;&nbsp; <span  className='resend' onClick={handleResendCode}> ارسال دوباره</span></h1>   
+                  <h1>کد تأیید را دریافت نکردید؟ &nbsp; <span  className='resend' onClick={handleResendCode}> ارسال دوباره</span></h1>   
+                  
                 </div> 
               )}  
             </div>  
