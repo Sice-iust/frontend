@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap');  
+
 .light-login {  
   --background-color:#fff;
   --text-color:black;
@@ -6,7 +8,6 @@
   --error-color:red;
   --main-green:#34A853;
 
-  --font-family:'Calibri';
  
 }  
 .dark-login{
@@ -17,7 +18,6 @@
   --error-color:red;
   --main-green:#34A853;
   
-  --font-family:'Calibri';
 
 
 
@@ -40,11 +40,12 @@
   img {  
     height: 60px;  
     width: 115px;  
+    z-index: 10;
   }  
 }  
 
 .closeButton {  
-  color: #000;   
+  color: var(--text-color);   
   transition: color 0.3s ease;  
   margin: 0 auto ;
   text-align:left ;
@@ -65,7 +66,8 @@
   margin: 0;   
   display: inline-block;   
   position: relative;   
-    font-family: 'Calibri';  
+  font-family: 'Calibri';  
+  color: var(--text-color);
   font-weight: bold;  
 }  
 
@@ -85,19 +87,19 @@
   input {  
     padding: 15px 40px 15px 40px;
     border-radius: 15px;  
-    border: 1px solid #4C4343; 
+    border: 1px solid var(--second-textcolor); 
     height: 10px;
     font-size: 15px;
     font-family: "calibri";
-    background-color: #fff; 
-    color: #4C4343; 
+    background-color:var(--background-color); 
+    color: var(--second-textcolor); 
     width: 265px; 
     text-align: right; 
     outline: none;  
     transition: border 200ms;
     &.error {  
-      border: 1px solid red; 
-      color: red; 
+      border: 1px solid var(--error-color); 
+      color:  var(--error-color); 
     } 
   }  
 
@@ -108,12 +110,14 @@
 
     left: 220px;
     top: 10px; 
-    background: white;
+    background:var(--background-color);
+    color: var(--second-textcolor); 
+
     padding: 0 5px;
     transition: transform 200ms, color 200ms;
     pointer-events: none;  
     &.error {  
-      color: red; 
+      color:  var(--error-color); 
     } 
   }  
 
@@ -124,17 +128,17 @@
   input:focus + label,  
   input:not(:placeholder-shown) + label {  
     transform: translateY(-20px) scale(0.8); 
-    color: #4C4343; 
+    color:  var(--second-textcolor); 
     &.error {  
-      color: red; 
+      color:  var(--error-color); 
     } 
   }  
 
   input:focus {  
-    border: 1px solid #4C4343; 
+    border: 1px solid  var(--second-textcolor); 
     &.error {  
-      color: red;   
-      border: 1px solid red; 
+      color:  var(--error-color);   
+      border: 1px solid  var(--error-color); 
       
     } 
   }  
@@ -150,7 +154,7 @@
   input:focus + label::after,  
   input:not(:placeholder-shown) + label::after {  
     content: '*'; 
-    color: red; 
+    color:  var(--error-color); 
     margin-right: 5px; 
   } }
 
@@ -169,8 +173,8 @@
   }  
 
   .dialogActionsButton {  
-    background-color: #F18825;   
-    color: white;                 
+    background-color: var(--main-orange);   
+    color: var(--text-color);                 
     padding: 0.5rem 0; 
     width: 79.5%;
     height: 40px;  
@@ -234,7 +238,7 @@
   display: flex; 
   align-items: center;
   direction: rtl;
-  color: #34A853;
+  color: var(--main-green);
   font-family: "Calibri";
   font-size: 15px;
   cursor: pointer;
@@ -243,24 +247,23 @@
     margin-right: 0.5rem;
     width: 1.25rem; 
     height: 1.25rem;
-    color: #34A853;
-    fill: #34A853; 
+    color: var(--main-green);
+    fill: var(--main-green); 
     
     &:hover {  
-      fill: #34A853; 
+      fill: var(--main-green); 
     }  
   }  
 
   .MuiSvgIcon-root {  
-    color: #34A853; 
+    color: var(--main-green); 
     vertical-align: middle; 
   }  
 }  
 #verification-form {
   text-align: center;
   flex-direction: column;
-  flex-direction: column; // Ensure it stacks well  
-
+  
   
   .d-flex {
     display: flex;
@@ -274,14 +277,14 @@
       text-align: center;
       font-size: 1.25rem;
       font-family: "Calibri";
-      border: 1px solid #000000;
+      border: 1px solid var(--text-color);
       border-radius: 10px;
       padding: 0.4rem;
       margin: 0 2px;
       &.error-verify
       {
-        border: 1px solid red;
-        color: red;
+        border: 1px solid  var(--error-color);
+        color:  var(--error-color);
         &:focus {
           border-color: #ed2d2d;
           box-shadow: 0 0 5px #ed2d2d;
@@ -292,8 +295,8 @@
 
       }
       &:focus {
-        border-color: #4C4343;
-        box-shadow: 0 0 5px #4C4343;
+        border-color:  var(--second-textcolor);
+        box-shadow: 0 0 5px  var(--second-textcolor);
         outline: none;
       }
       
@@ -303,7 +306,7 @@
     
   }
   .error-message-code{
-    color: red;
+    color:  var(--error-color);
     margin-top: 10px;
     text-align: right;   
     margin-right: 5px;
@@ -328,7 +331,7 @@
     
     h2 {  
         font-size: 15px;  
-        color: #4C4343;  
+        color:  var(--second-textcolor);  
         text-align: right;  
         font-family: "Calibri";  
         position: relative;  
@@ -337,7 +340,7 @@
     .wait-title {  
       font-size: 15px;  
 
-      color: #4C4343;  
+      color:  var(--second-textcolor);  
       text-align: right;  
       margin-right: 5px;
       font-family: "Calibri";  
@@ -351,10 +354,10 @@
         h1 {
           font-size: 13px;  
           font-family: "Calibri";
-        color: rgb(83, 86, 92);  
+        color:var(--second-textcolor);  
         }
         h3 {
-          color: #34A853;
+          color: var(--main-green);
           font-family: "Calibri";
           font-size: 17px;
           cursor: pointer;
@@ -363,7 +366,7 @@
 }  
 
   .btn-primary {
-    background-color: #F18825;
+    background-color: var(--main-orange);
     border: none;
     width: 100%;
     border-radius: 8px;
@@ -372,7 +375,7 @@
     font-weight: bold;
     margin-bottom: 60px;
     margin-top: 0px;
-    color: #fff;
+    color: var(--background-color);
     cursor: pointer;
     transition: background-color 0.3s ease;
 
