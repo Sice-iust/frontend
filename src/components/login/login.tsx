@@ -12,23 +12,17 @@ import PhoneOutlined from '@mui/icons-material/PhoneOutlined';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import createCache from '@emotion/cache';
-import { CacheProvider } from '@emotion/react';
 
 import Logo from "../../../public/logo.png";
 import './login.scss';
+import { useTheme } from '../theme';  
+
 
 interface LoginModalProps {
   open: boolean;
   onClose: () => void;
 }
-const theme = createTheme({
-  direction: 'rtl',
-});
 
-const cacheRtl = createCache({
-  key: 'muirtl',
-  stylisPlugins: [prefixer, rtlPlugin],
-});
 
 enum Step {  
   PHONE = 'PHONE',  
@@ -36,6 +30,8 @@ enum Step {
   REGISTER = 'REGISTER',  
 } 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
+  
+  const { isDarkMode, toggleDarkMode } = useTheme(); 
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,10 +40,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const [isFinished, setIsFinished] = useState(false);  
   const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
   const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(4).fill(null));
- 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-  };
+  const [codeError, setCodeError] =useState<string | null>(null);
+
+  useEffect(() => {  
+    const body = document.body;  
+    body.classList.toggle('dark-mode', isDarkMode);  
+    body.classList.toggle('light-mode', !isDarkMode); 
+
+  }, [isDarkMode]);
 
   const handleInputChange = (event) => {
 
@@ -83,6 +83,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
       const newCode = [...verificationCode];
       if (newCode[index] !== '') {
         newCode[index] = '';
+              setCodeError('');
+
       } else if (index > 0) {
         newCode[index - 1] = '';
         inputRefs.current[index - 1]?.focus();
@@ -98,6 +100,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const handleResendCode = () => {  
     setTimeLeft(120);
     setIsFinished(false); 
+    handlePhoneSubmit();
   };  
 
   const handleBlur = () => {
@@ -141,7 +144,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
 
         }
         else{
-            setError('کد تأیید نامعتبر است.');
+          setCodeError('.کد تأیید نامعتبر است');
+          isVerificationCodeEntered==true;
 
         }
   
@@ -196,6 +200,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   useEffect(() => {
     if (step === Step.PHONE) {
       setVerificationCode(Array(4).fill('')); 
+      setCodeError('');
+
     }
   }, [step]);
 
@@ -203,6 +209,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
     if (step === Step.CODE) {  
       setTimeLeft(120); 
       setIsFinished(false); 
+      setCodeError('');
     }  
   }, [step]);  
 
@@ -250,7 +257,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   };  
 
   const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
-  const isVerificationCodeEntered=verificationCode.join('').length !== 4;;
+  const isVerificationCodeEntered=verificationCode.join('').length !== 4 || codeError;
 
  const renderContent = () => {
   switch (step) {
@@ -299,99 +306,25 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
 
 
       </DialogTitle>
-      <CacheProvider value={cacheRtl}>
-        <ThemeProvider theme={theme}>
+          <div className='phone-input'>
           <div dir="rtl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <form id="login-form" onSubmit={handleSubmit} style={{ width: '350px', margin: '0 auto' }}>
-              <TextField
-                autoFocus
-                margin="dense"
-                label={
-                  <span>
-                    {(isFocused || phoneNumber.length > 0) && (
-                      <span style={{ color: 'red' }}> *</span>
-                    )}
-                    شماره تلفن همراه
-                    
-                  </span>
-                }
-                type="text"
-                fullWidth
-                variant="outlined"
-                value={toPersianDigits(phoneNumber)}
-                onChange={handleInputChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                error={!!error}
-                helperText={error}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <PhoneOutlined style={{ color: 'black' }} />
-                    </InputAdornment>
-                  ),
-                  style: {
-                    color: 'black',
-                    textAlign: 'right',
-                    direction: 'ltr',
-                  },
-                }}
-                InputLabelProps={{
-                  shrink: isFocused || phoneNumber.length > 0,
-                  style: {
-                    color: error ? 'red' : (isFocused || phoneNumber.length > 0 ? '#4C4343' : 'gray'), 
-                  },
-                }}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    borderRadius: '15px',
-                    fontFamily: "Calibri",
-                    fontSize: '18px',
-                    height: '50px',
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: error ? 'red' : '#4C4343',
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: error ? 'red' : '#4C4343',
-                    },
-                    '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                      borderColor: error ? 'red' : '#4C4343',
-                    },
-                    '&.Mui-focused': {
-                      color: '#4C4343',
-                    },
-                  },
-                  '& .MuiInputBase-root': {
-                    '&.Mui-focused': {
-                      color: '#4C4343',
-                    },
-                    '&:focus': {
-                      boxShadow: 'none',
-                    },
-                  },
-                  '& .MuiInputBase-input:focus': {
-                    color: '#4C4343',
-                  },
-                  '& .MuiInputLabel-outlined': {
-                    fontFamily: "Calibri",
-                    fontSize: '18px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: phoneNumber ? '#4C4343' : 'gray',
-                  },
-                  '& .MuiFormLabel-asterisk': {
-                    color: 'red',
-                  },
-                  '& .MuiFormLabel': {
-                    color: '#4C4343',
-                  },
-                }}
-                dir="ltr"
-              />
-            </form>
+                  
+            <div className="form-group">  
+            <span className="icon"><PhoneOutlined style={{ color: '#4C4343' }} /></span> {/* Phone icon */}  
+            <input  
+        type="tel"  
+        id="phoneNumber"  
+        placeholder=" "  
+        autoComplete="off"  
+        required  
+        value={toPersianDigits(phoneNumber)}  
+        onChange={handleInputChange}  
+        className={error ? 'error' : ''} 
+      />  
+      <label htmlFor="phoneNumber" className={error ? 'error' : ''}>شماره تلفن همراه</label>  
+    </div> 
           </div>
-        </ThemeProvider>
-      </CacheProvider>
+          </div>
 
       <DialogActions className="dialogActions">
         <div className="buttonWrapper">
@@ -435,7 +368,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           type="tel"
           maxLength={1}
           pattern="[0-9]"
-          className="form-control"
+          className={`form-control ${codeError ? 'error-verify' : ''}`}
           value={toPersianDigits(verificationCode[index] || '')}
 
           onChange={(e) => handleChange(index, e)}
@@ -444,9 +377,14 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
           ref={(el) => {
             inputRefs.current[index] = el;
           }}
+          
         />
-      ))}
-    </div>
+        
+      ))}         
+
+
+    </div> {codeError  && <div className='error-message-code'>{codeError }</div>} {/* Error message shown here */}  
+
             <div className="countdown-container">  
               {!isFinished ? (  
                 <div className="flex-center">  
@@ -465,7 +403,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
             <button
               type="submit"
               className={`btn-primary ${isVerificationCodeEntered ? 'disabled' : ''}`}
-              disabled={isVerificationCodeEntered}
+              disabled={isVerificationCodeEntered }
               onClick={(e) => {
                 e.preventDefault();
                 handleCodeSubmit();

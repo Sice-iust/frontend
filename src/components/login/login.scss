@@ -1,14 +1,34 @@
-/* LoginModal.module.scss */
-@import url('https://fonts.googleapis.com/css2?family=Neonderthaw&display=swap');  
-@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid&display=swap');  
+.light-login {  
+  --background-color:#fff;
+  --text-color:black;
+  --second-textcolor:#4C4343;
+  --main-orange:#F18825;
+  --error-color:red;
+  --main-green:#34A853;
+
+  --font-family:'Calibri';
+ 
+}  
+.dark-login{
+  --background-color:#191919;
+  --text-color:#FFFFFF;
+  --second-textcolor:#fff;
+  --main-orange:#F18825;
+  --error-color:red;
+  --main-green:#34A853;
+  
+  --font-family:'Calibri';
+
+
+
+}
 
 
 .dialogTitle {  
   display: flex;  
   align-items: center;    
   flex-direction: column;
-  // padding-top: 20px;    
-  // border-radius: 40px;
+ 
 }  
 
 .logoContainer {  
@@ -55,6 +75,84 @@
 }  
 
 
+.phone-input
+{
+  .form-group {  
+    position: relative;  
+    margin-bottom: 20px;  
+  }  
+
+  input {  
+    padding: 15px 40px 15px 40px;
+    border-radius: 15px;  
+    border: 1px solid #4C4343; 
+    height: 10px;
+    font-size: 15px;
+    font-family: "calibri";
+    background-color: #fff; 
+    color: #4C4343; 
+    width: 265px; 
+    text-align: right; 
+    outline: none;  
+    transition: border 200ms;
+    &.error {  
+      border: 1px solid red; 
+      color: red; 
+    } 
+  }  
+
+  label {  
+    position: absolute;  
+    font-family: "calibri";
+    font-size: 18px;
+
+    left: 220px;
+    top: 10px; 
+    background: white;
+    padding: 0 5px;
+    transition: transform 200ms, color 200ms;
+    pointer-events: none;  
+    &.error {  
+      color: red; 
+    } 
+  }  
+
+  input::placeholder {  
+    opacity: 0;  
+  }  
+
+  input:focus + label,  
+  input:not(:placeholder-shown) + label {  
+    transform: translateY(-20px) scale(0.8); 
+    color: #4C4343; 
+    &.error {  
+      color: red; 
+    } 
+  }  
+
+  input:focus {  
+    border: 1px solid #4C4343; 
+    &.error {  
+      color: red;   
+      border: 1px solid red; 
+      
+    } 
+  }  
+
+  .icon {  
+    position: absolute;  
+    left: 10px;
+    top: 50%;  
+    transform: translateY(-50%); 
+    pointer-events: none;
+  }  
+
+  input:focus + label::after,  
+  input:not(:placeholder-shown) + label::after {  
+    content: '*'; 
+    color: red; 
+    margin-right: 5px; 
+  } }
 
 .dialogActions {  
   display: flex;                 
@@ -65,7 +163,7 @@
     display: flex;               
     justify-content: center;  
     align-items: center;    
-    margin-top: 10px;  
+    margin-top: 0px;  
     margin-bottom: 40px;  
     width: 100%;   
   }  
@@ -160,12 +258,14 @@
 }  
 #verification-form {
   text-align: center;
+  flex-direction: column;
+  flex-direction: column; // Ensure it stacks well  
 
   
   .d-flex {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin-bottom: 50 px;
     direction: ltr;
 
     .form-control {
@@ -178,24 +278,45 @@
       border-radius: 10px;
       padding: 0.4rem;
       margin: 0 2px;
+      &.error-verify
+      {
+        border: 1px solid red;
+        color: red;
+        &:focus {
+          border-color: #ed2d2d;
+          box-shadow: 0 0 5px #ed2d2d;
+          outline: none;
+          // text-align: ;
+        }
 
+
+      }
       &:focus {
         border-color: #4C4343;
         box-shadow: 0 0 5px #4C4343;
         outline: none;
       }
+      
       direction: ltr; 
 
     }
+    
   }
+  .error-message-code{
+    color: red;
+    margin-top: 10px;
+    text-align: right;   
+    margin-right: 5px;
 
+
+  }
   .countdown-container {  
     display: flex;  
     justify-content: center;  
     align-items: center;  
     // margin-bottom: 15px;
     flex-direction: column; 
-    min-height: 10px; 
+    min-height: 15px; 
 
     .flex-center {  
         margin-top: 10px;
@@ -223,19 +344,19 @@
     }  
   
     .resend-message {  
-        // margin-top: 10px;  
+        margin-top: 13px;  
         align-items: center;
         text-align: center;
-        margin-bottom: 0;
+        // margin-bottom: 10 px;
         h1 {
-          font-size: 15px;  
+          font-size: 13px;  
           font-family: "Calibri";
         color: rgb(83, 86, 92);  
         }
         h3 {
           color: #34A853;
           font-family: "Calibri";
-          font-size: 20px;
+          font-size: 17px;
           cursor: pointer;
         }
     }  
@@ -250,7 +371,7 @@
     font-size: 21px;
     font-weight: bold;
     margin-bottom: 60px;
-    margin-top: 10px;
+    margin-top: 0px;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -270,3 +391,4 @@
     }  
   }
 }
+
