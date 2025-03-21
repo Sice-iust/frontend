@@ -158,6 +158,13 @@
     margin-right: 5px; 
   } }
 
+.error-message-login{
+  color:  var(--error-color);
+  margin-top: 10px;
+  text-align: right;   
+  margin-right: 5px;
+  font-family: "calibri";
+}
 .dialogActions {  
   display: flex;                 
   justify-content: center;    
@@ -263,16 +270,20 @@
 #verification-form {
   text-align: center;
   flex-direction: column;
+  justify-content: center;
   
   
   .d-flex {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 50 px;
+    justify-content: center; /* Change this to flex-start */  
+    margin-bottom: 10 px;
+    gap: 20px;
     direction: ltr;
 
     .form-control {
       width: 30px;
+      gap: 5px; /* Add a small gap if needed, or set to 0 for no gap */  
+
       height: 30px;
       text-align: center;
       font-size: 1.25rem;
@@ -280,7 +291,7 @@
       border: 1px solid var(--text-color);
       border-radius: 10px;
       padding: 0.4rem;
-      margin: 0 2px;
+      margin: 0; /* Set to zero to remove space between boxes */  
       &.error-verify
       {
         border: 1px solid  var(--error-color);
@@ -310,6 +321,8 @@
     margin-top: 10px;
     text-align: right;   
     margin-right: 5px;
+    font-family: "calibri";
+
 
 
   }
@@ -374,6 +387,8 @@
     font-size: 21px;
     font-weight: bold;
     margin-bottom: 60px;
+    font-family: "calibri";
+
     margin-top: 0px;
     color: white;
     cursor: pointer;
