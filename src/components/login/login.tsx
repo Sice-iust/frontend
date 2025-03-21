@@ -375,8 +375,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
                 </div>  
               ) : (  
                 <div className='resend-message'>   
-                  <h1>کد تأیید را دریافت نکردید؟</h1>   
-                  <h3  onClick={handleResendCode}>ارسال دوباره</h3>  
+                  <h1>کد تأیید را دریافت نکردید؟ &nbsp;&nbsp; <span  className='resend' onClick={handleResendCode}> ارسال دوباره</span></h1>   
                 </div> 
               )}  
             </div>  
