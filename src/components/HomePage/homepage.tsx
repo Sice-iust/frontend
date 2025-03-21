@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";  
-import LoginModal from "../login/login"; // Ensure the path is correct  
+import LoginModal from "../login/login"; // Ensure the path is correct 
+import Signup from "../login/signup"
 import { useTheme } from '../theme'; // Import your theme context if needed  
 
 const HomePage: React.FC = () => {  
