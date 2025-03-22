@@ -8,7 +8,7 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-export default function SecondPage(isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft , onClose) {
+export default function SecondPage({isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft , onClose}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 

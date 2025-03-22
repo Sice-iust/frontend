@@ -55,9 +55,15 @@ export default function LoginModal({ open, onClose }) {
   const renderContent = () => {
     switch (step) {
       case Step.PHONE:
-        return FirstPage(open, onClose, isDarkMode, setStep)
+        return (<FirstPage isDarkMode={isDarkMode} setStep={setStep} />);
       case Step.CODE:
-        return SecondPage(isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft, onClose)
+        return (<SecondPage 
+          isDarkMode={isDarkMode}
+          phoneNumber={phoneNumber}
+          setStep={setStep}
+          timeLeft={timeLeft}
+          setTimeLeft={setTimeLeft}
+          onClose={onClose} />);
       case Step.REGISTER:
         return (
           <>

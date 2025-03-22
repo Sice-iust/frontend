@@ -1,9 +1,6 @@
 import { PhoneOutlined } from "@mui/icons-material";
-import { Dialog, DialogTitle, IconButton, DialogActions, Button } from "@mui/material";
+import { DialogActions, Button } from "@mui/material";
 import React, { useState } from "react";
-import CloseIcon from '@mui/icons-material/Close';
-import Logo from "./assets/logo.png";
-import Logodark from "./assets/logo-dark.png";
 import axios from "axios";
 
 enum Step {
@@ -12,10 +9,30 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-export default function FirstPage(open, onClose, isDarkMode, setStep) {
+export default function FirstPage({isDarkMode, setStep}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
+
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [error, setError] = useState<string | null>(null);
+    const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
+
+    const handleInputChange = (event) => {
+
+        const value = event.target.value;
+        const new_Value = p2e(value);
+
+        setPhoneNumber(new_Value);
+
+        if (new_Value.length < 2) {
+            setError(null);
+        } else if (!new_Value.startsWith("09") && new_Value.length >= 2 || value.length > 11 || new_Value.length === 11 && !/^09\d{9}$/.test(new_Value)) {
+            setError('شماره همراه معتبر نیست');
+        } else {
+            setError(null);
+        }
+    };
     const handlePhoneSubmit = async () => {
         if (!isPhoneButtonDisabled && !error) {
             console.log('Verification code sent to:', phoneNumber);
@@ -47,25 +64,6 @@ export default function FirstPage(open, onClose, isDarkMode, setStep) {
             } catch (error) {
                 console.error('Error occurred during submission:', error);
             }
-        }
-    };
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [error, setError] = useState<string | null>(null);
-    const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
-
-    const handleInputChange = (event) => {
-
-        const value = event.target.value;
-        const new_Value = p2e(value);
-
-        setPhoneNumber(new_Value);
-
-        if (new_Value.length < 2) {
-            setError(null);
-        } else if (!new_Value.startsWith("09") && new_Value.length >= 2 || value.length > 11 || new_Value.length === 11 && !/^09\d{9}$/.test(new_Value)) {
-            setError('شماره همراه معتبر نیست');
-        } else {
-            setError(null);
         }
     };
 
