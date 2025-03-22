@@ -8,7 +8,7 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft, onClose }) {
+export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft, onClose ,isFinished,setIsFinished}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
@@ -16,7 +16,6 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
     const [error, setError] = useState<string | null>(null);
     const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
     const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(4).fill(null));
-    const [isFinished, setIsFinished] = useState(false);
 
     const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
     const isVerificationCodeEntered = verificationCode.join('').length !== 4 || codeError;

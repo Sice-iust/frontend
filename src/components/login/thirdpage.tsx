@@ -14,8 +14,7 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-
-export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTimeLeft, setStep, phoneNumber }) {
+export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTimeLeft, setStep, phoneNumber ,isFinished,setIsFinished}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
@@ -23,7 +22,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
     const [code, setCode] = useState('');
     const [error, setError] = useState<string | null>(null);
     const [t, sett] = useState(Date.now() + 120000);
-    const [isFinished, setIsFinished] = useState(false);
+    // const [isFinished, setIsFinished] = useState(false);
     const [userNameError, setuserNameError] =useState<string | null>(null);
     const isVerificationCodeEntered2 = code?.length !== 4 || error || userNameError;
 
