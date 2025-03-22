@@ -8,10 +8,9 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-export default function SecondPage({isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft , onClose}) {
+export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft, onClose }) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
-
 
     const [codeError, setCodeError] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -173,12 +172,8 @@ export default function SecondPage({isDarkMode, phoneNumber, setStep, timeLeft, 
                                     ref={(el) => {
                                         inputRefs.current[index] = el;
                                     }}
-
                                 />
-
                             ))}
-
-
                         </div> {codeError && <div className='error-message-code'>{codeError}</div>} {/* Error message shown here */}
 
                         <div className="countdown-container">
@@ -186,13 +181,10 @@ export default function SecondPage({isDarkMode, phoneNumber, setStep, timeLeft, 
                                 <div className="flex-center">
                                     <span className='wait-title'>&nbsp;شکیبا باشید&nbsp;</span>
                                     <h2 >{e2p(formatTime(timeLeft))} </h2>
-
-
                                 </div>
                             ) : (
                                 <div className='resend-message'>
                                     <h1>کد تأیید را دریافت نکردید؟ &nbsp; <span className='resend' onClick={handleResendCode}> ارسال دوباره</span></h1>
-
                                 </div>
                             )}
                         </div>
@@ -205,7 +197,8 @@ export default function SecondPage({isDarkMode, phoneNumber, setStep, timeLeft, 
                                 handleCodeSubmit();
                             }}
                         >
-                            ورود            </button>
+                            ورود
+                        </button>
                     </form>
                 </div>
             </DialogContent>

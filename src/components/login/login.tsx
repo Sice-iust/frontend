@@ -12,6 +12,7 @@ import './login.scss';
 import { useTheme } from '../theme';
 import FirstPage from './firstpage';
 import SecondPage from './secondpage';
+import ThirdPage from './thirdpage';
 
 enum Step {
   PHONE = 'PHONE',
@@ -22,7 +23,7 @@ export default function LoginModal({ open, onClose }) {
 
   const { isDarkMode, toggleDarkMode } = useTheme(); // Get both isDarkMode and toggleDarkMode from context  
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [step, setStep] = useState<Step>(Step.PHONE);
+  const [step, setStep] = useState<Step>(Step.REGISTER);
   const [timeLeft, setTimeLeft] = useState(120);
   const [isFinished, setIsFinished] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
@@ -55,7 +56,7 @@ export default function LoginModal({ open, onClose }) {
   const renderContent = () => {
     switch (step) {
       case Step.PHONE:
-        return (<FirstPage isDarkMode={isDarkMode} setStep={setStep} />);
+        return (<FirstPage isDarkMode={isDarkMode} setStep={setStep}  />);
       case Step.CODE:
         return (<SecondPage 
           isDarkMode={isDarkMode}
@@ -66,9 +67,7 @@ export default function LoginModal({ open, onClose }) {
           onClose={onClose} />);
       case Step.REGISTER:
         return (
-          <>
-            <h1>page 3</h1>
-          </>
+          <ThirdPage open={open} onClose={onClose}></ThirdPage>
         );
       default:
         return null;

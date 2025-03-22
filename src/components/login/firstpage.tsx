@@ -9,12 +9,10 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-export default function FirstPage({isDarkMode, setStep}) {
+export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNumber}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
-
-    const [phoneNumber, setPhoneNumber] = useState('');
     const [error, setError] = useState<string | null>(null);
     const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
 
@@ -75,7 +73,6 @@ export default function FirstPage({isDarkMode, setStep}) {
             </div>
             <div className={`phone-input ${isDarkMode ? 'dark-login' : 'light-login'}`} >
                 <div dir="rtl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-
                     <div className="form-group">
                         <span className="icon"><PhoneOutlined style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} /></span> {/* Phone icon */}
                         <input
@@ -90,7 +87,6 @@ export default function FirstPage({isDarkMode, setStep}) {
                         />
                         <label htmlFor="phoneNumber" className={error ? 'error' : ''}>شماره تلفن همراه</label>
                         {error && <div className="error-message-login">{error}</div>}
-
                     </div>
                 </div>
             </div>
