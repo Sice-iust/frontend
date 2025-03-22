@@ -121,7 +121,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                 );
 
                 console.log('Response from the server:', response.data);
-                if (response.data.message == "Login succesful") {
+                if (response.data.message == "Login successful") {
                     onClose();
 
                 }
