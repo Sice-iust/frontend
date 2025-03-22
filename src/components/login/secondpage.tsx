@@ -1,6 +1,6 @@
 import { DialogContent, DialogTitle } from "@mui/material";
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState ,useEffect} from "react";
 
 enum Step {
     PHONE = 'PHONE',
@@ -137,7 +137,19 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
             }
         }
     };
-
+    useEffect(() => {  
+        let timerId: ReturnType<typeof setInterval>;  
+    
+        if (timeLeft <= 0) {  
+          setIsFinished(true);  
+        } else {  
+          timerId = setInterval(() => {  
+            setTimeLeft((prevTime) => prevTime - 1);  
+          }, 1000);  
+        }  
+    
+        return () => clearInterval(timerId); 
+      }, [timeLeft]); 
     return (
         <>
             <DialogTitle className={isDarkMode ? 'dark-login' : 'light-login'}>

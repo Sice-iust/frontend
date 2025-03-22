@@ -40,18 +40,7 @@ export default function LoginModal({ open, onClose }) {
     }
   }, [step]);
 
-  useEffect(() => {
-    let timerId: ReturnType<typeof setInterval>;
-
-    if (timeLeft <= 0) {
-      setIsFinished(true);
-    } else {
-      timerId = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timerId);
-  }, [timeLeft]);
+ 
 
   const renderContent = () => {
     switch (step) {
