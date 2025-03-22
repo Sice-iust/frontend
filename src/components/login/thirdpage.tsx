@@ -14,28 +14,30 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-
-export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTimeLeft, setStep, phoneNumber }) {
+export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTimeLeft, setStep, phoneNumber ,isFinished,setIsFinished}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const [error, setError] = useState<string | null>(null);
-    const [t, sett] = useState(Date.now() + 120000);
-    const [isFinished, setIsFinished] = useState(false);
 
-    const renderer = ({ minutes, seconds, completed }) => {
-        if (completed) {
-            //route to first page
-            //onClose()
-        } else {
-            return <span>{e2p(zeroPad(minutes))} : {e2p(zeroPad(seconds))}</span>;
+    const handleSubmit = async (event: React.FormEvent) => {
+        try {
+            const response = await axios.post('https://nanziback.liara.run/users/sendotp/',
+                { name,code },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+
+            console.log('Response from the server:', response.data);
+
+        } catch (error) {
+            console.error('Error occurred during submission:', error);
         }
-    };
-
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
     };
     const handleNameChange = (event) => {
         const value = event.target.value;
@@ -123,7 +125,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
                     <div style={{ width: '100%', display: 'flex' }}>
                         <Button sx={{ color: '#34A853' }}> اصلاح شماره<DrawOutlinedIcon sx={{ mr: 0.5 }} /> </Button>
                     </div>
-                    <div className="countdown-container">
+                    <div className="countdown-container" style={{ display: 'flex' , justifyContent: 'center'}}>
                         {!isFinished ? (
                             <div className="flex-center">
                                 <span className='wait-title'>&nbsp;شکیبا باشید&nbsp;</span>

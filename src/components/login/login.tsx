@@ -53,10 +53,23 @@ export default function LoginModal({ open, onClose }) {
           setStep={setStep}
           timeLeft={timeLeft}
           setTimeLeft={setTimeLeft}
-          onClose={onClose} />);
+          onClose={onClose} 
+          isFinished={isFinished}
+          setIsFinished={setIsFinished}
+          />);
       case Step.REGISTER:
         return (
-          <ThirdPage open={open} onClose={onClose} isDarkMode={isDarkMode} timeLeft={timeLeft} setTimeLeft={setTimeLeft} setStep={setStep} phoneNumber={phoneNumber}></ThirdPage>
+          <ThirdPage 
+          open={open} 
+          onClose={onClose} 
+          isDarkMode={isDarkMode} 
+          timeLeft={timeLeft} 
+          setTimeLeft={setTimeLeft} 
+          setStep={setStep} 
+          phoneNumber={phoneNumber}
+          isFinished={isFinished}
+          setIsFinished={setIsFinished}
+          />
         );
       default:
         return null;
