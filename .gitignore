@@ -9,6 +9,7 @@ lerna-debug.log*
 
 # Build output  
 .next/  
+
 out/  
 
 # Dependencies  
