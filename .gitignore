@@ -10,8 +10,7 @@ lerna-debug.log*
 # Build output  
 .next/  
 out/  
-next/static/
-next/cache/
+
 # Dependencies  
 node_modules/  
 dist/  
