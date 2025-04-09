@@ -130,6 +130,10 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                     onClose();
 
                 }
+                else if(response.data.message=="You can only request 3 OTPs every 10 minutes.")
+                {
+                    setCodeError("امکان ارسال بیش از 3 پیامک در 10 دقیقه نیست.لطفا صبر و مجددا تلاش کنید. ")
+                }
                 else {
                     setCodeError('.کد تأیید نامعتبر است');
                     isVerificationCodeEntered == true;

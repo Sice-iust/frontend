@@ -22,6 +22,8 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
     const [code, setCode] = useState('');
     const [error, setError] = useState<string | null>(null);
     const[cdError,setCdError]=useState<string | null>(null);
+    const[coutnError,setCountError]=useState<string | null>(null);
+
     const [t, sett] = useState(Date.now() + 120000);
     const [userNameError, setuserNameError] = useState<string | null>(null);
     const isVerificationCodeEntered2 = code?.length !== 4 || error || userNameError;
@@ -75,7 +77,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
         console.log(p2e(code));
         console.log(phonenumber);
         axios
-            .post("https://nanziback.liara.run//signup/", {
+            .post("https://nanziback.liara.run/users/signup/", {
                 phonenumber: phonenumber,
                 username: name,
                 otp: new_code
@@ -91,7 +93,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
 
                 }
                 else {
-                    setCdError('.کد تأیید نادرست  است');
+                    setCdError('کد تایید نادرست است .');
                     isVerificationCodeEntered2 == true;
 
                 }
@@ -123,7 +125,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
         return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     };
     const handleResendCode = () => {
-        setTimeLeft(5);
+        setTimeLeft(120);
         setIsFinished(false);
         handlePhoneSubmit();
     };
@@ -146,7 +148,10 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
             );
 
             console.log('Response from the server:', response.data);
-
+            if(response.data.message=="You can only request 3 OTPs every 10 minutes.")
+            {
+                setCountError("امکان ارسال بیش از 3 پیامک در 10 دقیقه نیست.لطفا صبر و مجددا تلاش کنید. ")
+            }
             const isRegistered = response.data.is_registered;
 
             if (isRegistered) {
@@ -217,6 +222,8 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
                             ) : (
                                 <div className={styles.resendMessage}>
                                     <h1>کد تأیید را دریافت نکردید؟ &nbsp; <span className={styles.resend} onClick={handleResendCode}> ارسال دوباره</span></h1>
+                                    {coutnError && <div className={ styles.errorMessageSignup}>{coutnError}</div>}
+
                                 </div>
                             )}
                         </div>
