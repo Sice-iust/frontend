@@ -16,6 +16,8 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
     const [codeError, setCodeError] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
+    const[coutnError,setCountError]=useState<string | null>(null);
+    
     const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(4).fill(null));
 
     const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
@@ -25,6 +27,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
         setTimeLeft(120);
         setIsFinished(false);
         handlePhoneSubmit();
+        setCountError('');
     };
 
     const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,12 +88,18 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
 
 
                 const isRegistered = response.data.is_registered;
-
+                if(response.data.message=="You can only request 3 OTPs every 10 minutes.")
+                    {
+                        setTimeLeft(0);
+                        setIsFinished(true);
+                        setCountError(`.امکان ارسال بیش از ${e2p("3")} پیامک در ${e2p("10")} دقیقه نیست.لطفا صبر و مجددا تلاش کنید`)
+                    }
+                else{
                 if (isRegistered) {
                     setStep(Step.CODE);
                 } else {
                     setStep(Step.REGISTER);
-                }
+                }}
             } catch (error) {
                 console.error('Error occurred during submission:', error);
             }
@@ -130,10 +139,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                     onClose();
 
                 }
-                else if(response.data.message=="You can only request 3 OTPs every 10 minutes.")
-                {
-                    setCodeError("امکان ارسال بیش از 3 پیامک در 10 دقیقه نیست.لطفا صبر و مجددا تلاش کنید. ")
-                }
+                
                 else {
                     setCodeError('.کد تأیید نامعتبر است');
                     isVerificationCodeEntered == true;
@@ -197,8 +203,11 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                         </div> {codeError && <div className={styles.errorMessageCode}>{codeError}</div>} {/* Error message shown here */}
 
                         <div className={styles.countdownContainer}>
+                        {coutnError && <div className={ styles.errorMessageTooManyReq}>{coutnError}</div>}
+
                             {!isFinished ? (
                                 <div className={styles.flexCenter}>
+
                                     <span className={styles.waitTitle}>&nbsp;شکیبا باشید&nbsp;</span>
                                     <h2 >{e2p(formatTime(timeLeft))} </h2>
                                 </div>

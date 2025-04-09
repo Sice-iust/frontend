@@ -22,7 +22,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
     const [code, setCode] = useState('');
     const [error, setError] = useState<string | null>(null);
     const[cdError,setCdError]=useState<string | null>(null);
-    const[coutnError,setCountError]=useState<string | null>(null);
+    const[coutnError2,setCountError2]=useState<string | null>(null);
 
     const [t, sett] = useState(Date.now() + 120000);
     const [userNameError, setuserNameError] = useState<string | null>(null);
@@ -127,6 +127,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
     const handleResendCode = () => {
         setTimeLeft(120);
         setIsFinished(false);
+        setCountError2('');
         handlePhoneSubmit();
     };
     const handlePhoneSubmit = async () => {
@@ -150,7 +151,9 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
             console.log('Response from the server:', response.data);
             if(response.data.message=="You can only request 3 OTPs every 10 minutes.")
             {
-                setCountError("امکان ارسال بیش از 3 پیامک در 10 دقیقه نیست.لطفا صبر و مجددا تلاش کنید. ")
+                setTimeLeft(0);
+                setIsFinished(true);
+                setCountError2(`.امکان ارسال بیش از ${e2p("3")} پیامک در ${e2p("10")} دقیقه نیست.لطفا صبر و مجددا تلاش کنید`)
             }
             const isRegistered = response.data.is_registered;
 
@@ -213,6 +216,8 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
 
                     <form id="verification-form" style={{ width: '350px', margin: '0 auto' }}>
                         <div className={styles.countdownContainer}>
+                        {coutnError2 && <div className={ styles.errorMessageSignup}>{coutnError2}</div>}
+
                             {!isFinished ? (
                                 <div className={styles.flexCenter}>
                                      <h2 >{e2p(formatTime(timeLeft))} </h2>
@@ -222,7 +227,6 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
                             ) : (
                                 <div className={styles.resendMessage}>
                                     <h1>کد تأیید را دریافت نکردید؟ &nbsp; <span className={styles.resend} onClick={handleResendCode}> ارسال دوباره</span></h1>
-                                    {coutnError && <div className={ styles.errorMessageSignup}>{coutnError}</div>}
 
                                 </div>
                             )}

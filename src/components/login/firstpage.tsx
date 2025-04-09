@@ -14,6 +14,8 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
     const [error, setError] = useState<string | null>(null);
+    const[coutnError0,setCountError0]=useState<string | null>(null);
+
     const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
 
     const handleInputChange = (event) => {
@@ -53,7 +55,11 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
                 console.log('Response from the server:', response.data);
 
                 const isRegistered = response.data.is_registered;
-
+                if(response.data.message=="You can only request 3 OTPs every 10 minutes.")
+                    {
+                      
+                        setCountError0("امکان ارسال بیش از 3 پیامک در 10 دقیقه نیست.لطفا صبر و مجددا تلاش کنید. ")
+                    }
                 if (isRegistered) {
                     setStep(Step.CODE);
                 } else {
@@ -87,6 +93,8 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
                         />
                         <label htmlFor="phoneNumber" className={error ? styles.error : ''}>شماره تلفن همراه</label>
                         {error && <div className={styles.errorMessageLogin}>{error}</div>}
+                        {coutnError0 && <div className={ styles.errorMessageLogin}>{coutnError0}</div>}
+
                     </div>
                 </div>
             </div>
