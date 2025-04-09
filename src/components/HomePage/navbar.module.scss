@@ -1,10 +1,10 @@
 .header {  
-    background: #FFFFFF; // Light background for the header  
+    background: #FFFFFF; 
     padding: 10px 20px;  
-    display: flex; // Flex for proper alignment  
+    display: flex; 
     align-items: center;  
-    justify-content: space-between; // Space between items  
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
+    justify-content: space-between; 
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 1);  
     
     .headerContent {  
         display: flex;  
@@ -51,12 +51,12 @@
     .drakModeIcon{
         font-size: 20px;  
         color: black;  
-        margin-left: 0px; // Space between the text and icon  
+        margin-left: 0px; 
     }
     
     .cartBadge {  
         position: absolute;  
-        top: -10px; // Adjust badge position  
+        top: -10px; 
         right: -10px;  
         background-color: #F18825;  
         color: white;  
@@ -79,17 +79,23 @@
         font-size: 15px;
         font-family: "calibri";
         font-weight: bold;
+        cursor: pointer;
+        &:hover
+        {
+            margin-top: 1px;
+            text-decoration: underline;
+        }
 
     }  
     .searchContainer {  
         display: flex;  
         align-items: center;  
         background-color: #D9D9D9;   
-        border-radius: 40px; /* Corner radius */  
-        padding: 5px; /* Slight padding around the container */  
-        margin-left: 40px; /* Adjust as needed */  
-        flex-grow: 1; /* Allow to expand */  
-        max-width: 400px; /* Set a max width */  
+        border-radius: 40px;
+        padding: 5px;
+        margin-left: 40px;
+        flex-grow: 1; 
+        max-width: 400px; 
        
     }  
 
@@ -99,27 +105,131 @@
     }  
     .logoContainerNav {  
         display: flex;   
-        align-items: flex-start; /* Center logo vertically */  
+        align-items: flex-start; 
     }  
     
     .logoNav {  
-        height: 50px; /* Set a height for your logo */  
-        margin-left: 280px; /* Adjust spacing after logo */
+        height: 50px;
+        margin-left: 280px; 
         width:100px;  
     }  
     
     .searchInput {  
-        width: 100%; /* Full width of the container */  
+        width: 100%; 
         padding: 10px;  
-        border: none; /* Border style */  
-        border-radius: 40px; /* Match container's radius */  
+        border: none; 
+        border-radius: 40px; 
         font-size: 16px;  
-        background-color: transparent; /* Transparent background for input */  
+        background-color: transparent; 
         color: #696363;
         font-family: "calibri";
         &:focus {  
-            outline: none; /* Remove default outline */  
+            outline: none;
         }  
     }   
 
 }  
+.backgroundImageContainer {  
+    position: relative; 
+    top: 0px; 
+    left: 0;  
+    right: 0;  
+    bottom: 0;  
+    z-index: -1; 
+    overflow: hidden; 
+}  
+
+.backgroundImage {  
+    width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+    display: block; 
+}  
+
+.overlayText {  
+    position: absolute; 
+    top: 70%; 
+    left: 30%; 
+    transform: translate(-50%, -50%); 
+    color: white; 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
+    z-index: 1; 
+    text-align: center; 
+    white-space: nowrap; 
+    // width: 400px;
+
+    h2 {  
+        font-size: 2em; 
+        margin: 0;
+        color: rgba(85, 80, 80, 1); 
+        animation: fade-in 1s; 
+        font-family: "calibri";
+        text-align: right; 
+        
+
+
+    }  
+    
+    p {  
+        font-size: 1.2em; 
+        margin-top: 10px; 
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
+        text-align: right; 
+    }  
+    .locationInput {  
+        padding: 10px;  
+        flex-grow: 1;
+
+        border:none ;
+        border-radius: 20px;
+        font-size: 16px;  
+        background-color: rgba(183, 179, 172, 1); 
+        color: rgba(241, 136, 37, 1);
+        font-family: "calibri";
+        text-align: right;
+    
+        &:focus {  
+            outline: none;  
+        }  
+    }   
+    .locationIcon {  
+        color: rgba(241, 136, 37, 1);  
+        margin-right: 0px;  
+        left :100px;
+    }  
+    .locationContainer {  
+        display: flex;  
+        align-items: center;  
+        background-color: rgba(183, 179, 172, 1);   
+        border-radius: 20px; 
+        padding: 5px; 
+        margin-left: 0px; 
+        width: 100%; 
+       
+    }  
+}  
+
+.animation {  
+    height: 50px;  
+    overflow: hidden;  
+  }  
+  
+  .breadType {  
+    padding: 0.25rem 0.25rem;  
+    height: 2.81rem;  
+    margin-bottom: 2.81rem;  
+    display: inline-block;  
+    color: rgba(241, 136, 37, 1);
+   
+    transition: opacity 1s;  
+    font-family: "calibri";
+    text-align: right;
+
+
+  }  
+  
+  .fadeOut {  
+    opacity: 0; 
+  }  
+ 
