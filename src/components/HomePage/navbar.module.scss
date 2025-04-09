@@ -1,29 +1,125 @@
-.nav {  
-    width: 100%;   
-    height: 5rem;  
-    background-color: #047857;  
-    position: sticky;  
-    top: 0;   
-}  
-
-.nav-container {  
-    max-width: 1000px;   
-    margin-left: auto;  
-    margin-right: auto;   
-    padding-left: 1rem;   
-    padding-right: 1rem;   
-    height: 100%;   
-}  
-
-.second-container {  
-    display: flex;   
-    justify-content: space-between;  
+.header {  
+    background: #FFFFFF; // Light background for the header  
+    padding: 10px 20px;  
+    display: flex; // Flex for proper alignment  
     align-items: center;  
-    height: 100%;  
-}  
+    justify-content: space-between; // Space between items  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);  
+    
+    .headerContent {  
+        display: flex;  
+        align-items: center;  
+        width: 100%;
+    }  
 
-.nav-texts {  
-    gap: 1.5rem;  
-    color: rgb(215, 23, 23);  
-    display: flex; // Ensure this is set to flex to display the links correctly  
+    .loginButton {  
+        background: #F18825;
+        color: white; 
+        border: none;  
+        border-radius: 30px;  
+        padding: 10px 15px;  
+        cursor: pointer;  
+        font-family: "calibri";
+        font-size: 17px;
+        font-weight: 900px;
+        margin-right: 20px; 
+
+       
+    }  
+    .cartContainer {  
+        position: relative;  
+        display: flex;  
+        align-items: center;  
+        margin-right: 15px;  
+        margin-left: 5px;  
+    }  
+    
+    h1 {  
+        font-size: 15px;
+        font-weight: bold; 
+        text-align: left;  
+        font-family: "calibri";
+
+        margin: 0;  
+    }  
+    
+    .cartIcon {  
+        font-size: 30px;  
+        color: black;  
+        margin-left: 5px;  
+    }  
+    .drakModeIcon{
+        font-size: 20px;  
+        color: black;  
+        margin-left: 0px; // Space between the text and icon  
+    }
+    
+    .cartBadge {  
+        position: absolute;  
+        top: -10px; // Adjust badge position  
+        right: -10px;  
+        background-color: #F18825;  
+        color: white;  
+        border-radius: 10px;  
+        padding: 3px 6px;  
+        font-size: 12px;  
+    }  
+    .divider {  
+        width: .5px;
+        height: 45px; 
+        background-color: #B8681D;
+        margin: 0 15px; 
+        font-weight: bold;
+    }  
+
+    .statusText {  
+        margin-left: px;  
+        font-size: 15px;  
+        color: #000000;  
+        font-size: 15px;
+        font-family: "calibri";
+        font-weight: bold;
+
+    }  
+    .searchContainer {  
+        display: flex;  
+        align-items: center;  
+        background-color: #D9D9D9;   
+        border-radius: 40px; /* Corner radius */  
+        padding: 5px; /* Slight padding around the container */  
+        margin-left: 40px; /* Adjust as needed */  
+        flex-grow: 1; /* Allow to expand */  
+        max-width: 400px; /* Set a max width */  
+       
+    }  
+
+    .searchIcon {  
+        color: #B8681D;  
+        margin-right: 10px;  
+    }  
+    .logoContainerNav {  
+        display: flex;   
+        align-items: flex-start; /* Center logo vertically */  
+    }  
+    
+    .logoNav {  
+        height: 50px; /* Set a height for your logo */  
+        margin-left: 280px; /* Adjust spacing after logo */
+        width:100px;  
+    }  
+    
+    .searchInput {  
+        width: 100%; /* Full width of the container */  
+        padding: 10px;  
+        border: none; /* Border style */  
+        border-radius: 40px; /* Match container's radius */  
+        font-size: 16px;  
+        background-color: transparent; /* Transparent background for input */  
+        color: #696363;
+        font-family: "calibri";
+        &:focus {  
+            outline: none; /* Remove default outline */  
+        }  
+    }   
+
 }  
