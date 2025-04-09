@@ -21,8 +21,8 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const [error, setError] = useState<string | null>(null);
+    const[cdError,setCdError]=useState<string | null>(null);
     const [t, sett] = useState(Date.now() + 120000);
-    // const [isFinished, setIsFinished] = useState(false);
     const [userNameError, setuserNameError] = useState<string | null>(null);
     const isVerificationCodeEntered2 = code?.length !== 4 || error || userNameError;
 
@@ -30,7 +30,6 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
         const value = event.target.value;
         setName(value);
 
-        const persianRegex = /^[\u0600-\u06FF\s]+$/;
         const numberRegex = /[\d\u06F0-\u06F9]/;
         if (value.length === 0) {
             setuserNameError('');
@@ -42,13 +41,6 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
                 setuserNameError(`طول نام کاربری حداقل ${e2p("3")} کاراکتر است و  شامل عدد نباید باشد.`);
             } else {
                 setuserNameError(`نام کاربری نمیتواند شامل عدد باشد.`);
-            }
-        }
-        else if (!persianRegex.test(value)) {
-            if (value.length < 3) {
-                setuserNameError(`نام کاربری حتما باید فارسی و حداقل شامل ${e2p("3")} کاراکتر باشد.`);
-            } else {
-                setuserNameError(`نام کاربری حتما باید فارسی باشد.`);
             }
         }
         else if (value.length < 3) {
@@ -80,13 +72,23 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
             phonenumber = '+98' + phonenumber.slice(1);
         }
         axios
-            .post("https://nanziback.liara.run/users/signup/", {
+            .post("https://nanziback.liara.run//signup/", {
                 phonenumber: phonenumber,
                 username: name,
                 otp: code
             })
             .then((response) => {
                 console.log('Response from the server:', response.data);
+                if (response.data.message == "SignUp successful") {
+                    onClose();
+
+                }
+                else {
+                    setCdError('.کد تأیید نادرست  است');
+                    isVerificationCodeEntered2 == true;
+
+                }
+
             })
             .catch((err) => {
                 console.error('Error occurred during submission:', err);
@@ -96,7 +98,17 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
     const handleCodeChange = (event) => {
         const value = event.target.value;
         setCode(value);
-        //set error
+        const new_value=p2e(value);
+        if (value.length === 0) {  
+            setCdError(''); // Clear the error when the input is empty  
+            return;  
+        }  
+    
+        if (!/^\d{1,4}$/.test(new_value)) {  
+            setCdError('کد تایید معتبر نیست');  
+        } else {  
+            setCdError(''); // Clear the error when the input is valid  
+        }  
     };
     const formatTime = (seconds: number) => {
         const minutes = Math.floor(seconds / 60);
@@ -179,11 +191,12 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
                             placeholder=" "
                             autoComplete="off"
                             required
+                            value={e2p(code)}
                             onChange={handleCodeChange}
-                            className={error ?  styles.error : ''}
+                            className={cdError ?  styles.error : ''}
                         />
-                        <label htmlFor="code" className={error ?  styles.error : ''}>کد تایید  </label>
-                        {error && <div className={ styles.errorMessageSignup}>{error}</div>}
+                        <label htmlFor="code" className={cdError ?  styles.error : ''}>کد تایید  </label>
+                        {cdError && <div className={ styles.errorMessageSignup}>{cdError}</div>}
                     </div>
 
                     <form id="verification-form" style={{ width: '350px', margin: '0 auto' }}>

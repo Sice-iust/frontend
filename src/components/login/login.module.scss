@@ -151,7 +151,7 @@
   .icon {
     position: absolute;
     left: 10px;
-    top: 50%;
+    top: 22px;
     transform: translateY(-50%);
     pointer-events: none;
   }
@@ -166,7 +166,7 @@
 
 .errorMessageLogin {
   color: var(--error-color);
-  margin-top: 10px;
+  margin-top: 5px;
   text-align: right;
   margin-right: 5px;
   font-family: "calibri";
