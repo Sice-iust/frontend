@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -15,16 +14,19 @@
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
     "axios": "^1.8.4",
+    "next": "^15.2.4",
     "react": "^19.0.0",
     "react-countdown": "^2.3.6",
     "react-dom": "^19.0.0",
     "react-router": "^7.3.0",
     "react-router-dom": "^7.3.0",
+    "sass": "^1.86.3",
     "stylis": "^4.3.6",
     "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/node": "22.14.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
@@ -36,6 +38,7 @@
     "postcss": "^8.5.3",
     "sass-embedded": "^1.85.1",
     "tailwindcss": "^3.4.17",
+    "typescript": "5.8.3",
     "vite": "^6.2.0",
     "vite-plugin-tailwind": "^0.0.4"
   }

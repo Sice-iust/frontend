@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 import { Dialog, DialogTitle, IconButton } from '@mui/material';
@@ -7,11 +8,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import Logo from "./assets/logo.png";
 import Logodark from "./assets/logo-dark.png";
-import './login.scss';
+import styles from'./login.module.scss';
 import { useTheme } from '../theme';
 import FirstPage from './firstpage';
 import SecondPage from './secondpage';
 import ThirdPage from './thirdpage';
+import next from 'next';
 
 enum Step {
   PHONE = 'PHONE',
@@ -22,8 +24,8 @@ export default function LoginModal({ open, onClose }) {
 
   const { isDarkMode, toggleDarkMode } = useTheme(); // Get both isDarkMode and toggleDarkMode from context  
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [step, setStep] = useState<Step>(Step.REGISTER);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [step, setStep] = useState<Step>(Step.PHONE);
+  const [timeLeft, setTimeLeft] = useState(5);
   const [isFinished, setIsFinished] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
   const [codeError, setCodeError] = useState<string | null>(null);
@@ -75,7 +77,7 @@ export default function LoginModal({ open, onClose }) {
     }
   };
   return (
-    <Dialog className={isDarkMode ? 'dark-login' : 'light-login'}
+    <Dialog className={isDarkMode ? styles.darkLogin : styles.lightLogin}
       open={open}
       onClose={onClose}
       maxWidth="xs"
@@ -99,27 +101,30 @@ export default function LoginModal({ open, onClose }) {
 
       }}
     >
-      <DialogTitle className={isDarkMode ? 'dark-login' : 'light-login'}>
+      <DialogTitle className={isDarkMode ? styles.darkLogin : styles.lightLogin} sx={{
+    marginBottom: 0,
+    paddingBottom:0, // Removes the bottom margin
+  }}>
         {step === Step.PHONE ? (
-          <IconButton edge="end" color="inherit" onClick={onClose} className="closeButton">
-            <CloseIcon className="closeIcon" />
+          <IconButton edge="end" color="inherit" onClick={onClose} className={styles.closeButton}>
+            <CloseIcon className={styles.closeIcon} />
           </IconButton>
         ) : (
           <IconButton
             edge="start"
             color="inherit"
             onClick={() => setStep(Step.PHONE)}
-            className="backButton"
+            className={styles.backButton}
           >
-            <ChevronLeftIcon className="backIcon" />
+            <ChevronLeftIcon className={styles.backIcon} />
           </IconButton>
         )}
-        <div className='dialogTitle'>
-          <div className='logoContainer'>
-            <img src={isDarkMode ? Logodark : Logo} alt="Nanzi Logo" />
+        <div className={styles.dialogTitle}>
+          <div className={styles.logoContainer}>
+            <Image src={isDarkMode ? Logodark : Logo} alt="Nanzi Logo" />
           </div>
-          <div className='fullScreenContainer'>
-            <h1 className='nanziText'>Nanzi</h1>
+          <div className={styles.fullScreenContainer}>
+            <h1 className={styles.nanziText}>Nanzi</h1>
           </div>
 
         </div>

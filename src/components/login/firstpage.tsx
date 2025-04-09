@@ -2,7 +2,7 @@ import { PhoneOutlined } from "@mui/icons-material";
 import { DialogActions, Button } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
-
+import styles from "./login.module.scss";
 enum Step {
     PHONE = 'PHONE',
     CODE = 'CODE',
@@ -67,14 +67,14 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
 
     return (
         <>
-            <div className="titleContainer">
-                <h1>    ورود <span className="non-bold">یا</span> عضویت
+            <div className={styles.titleContainer}>
+                <h1>    ورود <span className={styles.nonBold}>یا</span> عضویت
                 </h1>
             </div>
-            <div className={`phone-input ${isDarkMode ? 'dark-login' : 'light-login'}`} >
+            <div className={`${styles.phoneInput} ${isDarkMode ? styles.darkLogin : styles.lightLogin}`} >
                 <div dir="rtl" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                    <div className="form-group">
-                        <span className="icon"><PhoneOutlined style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} /></span> {/* Phone icon */}
+                    <div className={styles.formGroup}>
+                        <span className={styles.icon}><PhoneOutlined style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} /></span> {/* Phone icon */}
                         <input
                             type="tel"
                             id="phoneNumber"
@@ -83,20 +83,20 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
                             required
                             value={e2p(phoneNumber)}
                             onChange={handleInputChange}
-                            className={error ? 'error' : ''}
+                            className={error ? styles.error : ''}
                         />
-                        <label htmlFor="phoneNumber" className={error ? 'error' : ''}>شماره تلفن همراه</label>
-                        {error && <div className="error-message-login">{error}</div>}
+                        <label htmlFor="phoneNumber" className={error ? styles.error : ''}>شماره تلفن همراه</label>
+                        {error && <div className={styles.errorMessageLogin}>{error}</div>}
                     </div>
                 </div>
             </div>
 
-            <DialogActions className={`dialogActions ${isDarkMode ? 'dark-login' : 'light-login'}`}>
-                <div className="buttonWrapper">
+            <DialogActions className={`${styles.dialogActions} ${isDarkMode ? styles.darkLogin : styles.lightLogin}`}>
+                <div className={styles.buttonWrapper}>
                     <Button
                         type="submit"
                         form="login-form"
-                        className={`dialogActionsButton ${isPhoneButtonDisabled ? 'disabled' : ''}`}
+                        className={`${styles.dialogActionsButton} ${isPhoneButtonDisabled ? styles.disabled : ''}`}
                         disabled={isPhoneButtonDisabled}
                         onClick={handlePhoneSubmit}
                     >

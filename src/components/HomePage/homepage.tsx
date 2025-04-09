@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LoginModal from "../login/login"; // Ensure the path is correct 
 import { useTheme } from '../theme'; // Import your theme context if needed  
-
-
+import Navbar from "./navbar";
 export default function HomePage() {
   const { isDarkMode, toggleDarkMode } = useTheme(); // Get both isDarkMode and toggleDarkMode from context  
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +23,7 @@ export default function HomePage() {
         color: isDarkMode ? '#ffffff' : '#000000' // Text color changes with theme  
       }}
     >
+      {/* <Navbar></Navbar> */}
       <button
         style={{
           position: "absolute",
