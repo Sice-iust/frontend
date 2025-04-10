@@ -21,7 +21,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
     const inputRefs = useRef<(HTMLInputElement | null)[]>(Array(4).fill(null));
 
     const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
-    const isVerificationCodeEntered = verificationCode.join('').length !== 4 || codeError;
+    const isVerificationCodeEntered = verificationCode.join('').length !== 4 || codeError ||coutnError;
 
     const handleResendCode = () => {
         setTimeLeft(120);

@@ -16,7 +16,7 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
     const [error, setError] = useState<string | null>(null);
     const[coutnError0,setCountError0]=useState<string | null>(null);
 
-    const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09');
+    const isPhoneButtonDisabled = phoneNumber.length !== 11 || !phoneNumber.startsWith('09') ||coutnError0;
 
     const handleInputChange = (event) => {
 
@@ -34,6 +34,7 @@ export default function FirstPage({isDarkMode, setStep , phoneNumber, setPhoneNu
         }
     };
     const handlePhoneSubmit = async () => {
+        setCountError0('');
         if (!isPhoneButtonDisabled && !error) {
             console.log('Verification code sent to:', phoneNumber);
             let phonenumber = p2e(phoneNumber);

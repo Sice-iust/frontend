@@ -1,0 +1,264 @@
+
+.footer {
+    background-color: rgba(255, 255, 255, 1);
+    padding-top: 5px;
+    padding-bottom: 10px;
+    direction: rtl; // For RTL languages like Arabic/Persian
+    border-top: 4px solid rgba(183, 179, 172, 1); // Add this line for the gray border
+
+  
+    .container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 .5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  
+    // Left Container Styles
+    .leftContainer {
+        flex: 1; /* Prevent stretching */
+      }
+      
+      .imageWrapper {
+        display: flex;
+        gap: 5rem; /* Space between images (if multiple) */
+        margin-top: 10px;
+      }
+      
+      .image {
+        object-fit: contain; /* Preserve aspect ratio */
+        height: 250px;
+      }
+  
+    // Center Container Styles
+    .centerContainer {
+        flex: 1;
+        min-width: 200px;
+        direction: rtl;
+        text-align: right;
+        padding: .5rem;
+        font-family: "calibri";
+        margin-top: 45px;
+      
+        .faqSection {
+          display: flex;
+          gap: .1rem;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        }
+      
+        .faqColumn {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        //   flex: 1;
+          min-width: 150px;
+        }
+      
+        .faqItem {
+          padding:  0;
+        }
+      
+        .faqTitle {
+          margin: 0;
+        //   margin-top: .75rem;
+          font-size: 1rem;
+          font-weight: 400;
+          color: rgba(0, 0, 0, 1);
+        }
+      
+        .faqText {
+          margin: 0;
+          font-size: 1rem;
+          font-weight: 400;
+
+          color: rgba(0, 0, 0, 1);
+          margin-top: 25px;
+        //   margin-left: -;
+        }
+      
+        .faqDivider {
+          height: 0.5px;
+          background-color: rgba(184, 104, 29, 1);
+          width: 50%;
+          margin-top: 20px;
+          margin-left: 0;
+          margin-right: -5px;
+        //   right:20px;
+        //   margin-bottom: 20px;
+          
+        }
+      }
+    // Right Container Styles
+    .rightContainer {
+      flex: 0;
+      min-width: 400px;
+  
+      .logoSection {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 10px;
+        margin-top: 0;
+        
+  
+        .logo {
+        //   border-radius: 50%;
+        width:120px;
+        height: 80px;
+        // margin-top: 15px;// height: 80px;
+
+        }
+  
+        .logoText {
+            font-family: 'Traditional Arabic', 'Scheherazade New', 'Arial', sans-serif;
+            .title {
+            margin: 0;
+            font-weight: 100;
+            font-size: 35px;
+            color: rgba(184, 104, 29, 1);
+            margin-bottom: 0;
+            margin-top: 10px;
+          }
+  
+          .slogan {
+            margin: 0.2rem 0 0;
+            font-size: 1.1rem;
+            margin-top: 0;
+            color: rgba(68, 65, 65, 1);
+          }
+        }
+      }
+  
+      .description {
+        direction: rtl;
+        text-align: justify;
+        text-justify: inter-word; // For better Persian/Arabic justification
+        hyphens: auto; // For better word breaking
+        line-height: 1.8; // Adjust for better readability
+        unicode-bidi: plaintext; // Ensures proper RTL rendering
+        color:rgba(0, 0, 0, 1);
+        width:85%;
+        font-family: "calibri";
+      }
+  
+      .roundedSocialButtons {
+        text-align: right;
+        direction: ltr; // Ensure proper alignment for social icons
+        margin-top: 10px;
+        
+      }
+      
+      .socialButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        width: 30px;
+        height: 30px;
+        border: 0.125rem solid transparent;
+        padding: 0;
+        text-decoration: none;
+        color: #fefefe;
+        font-size: 1.5625rem;
+        font-weight: normal;
+        border-radius: 1.6875rem;
+        transition: all 0.5s ease;
+        margin-left:20px;
+        margin-bottom: 0.25rem;
+        margin-top: 5px;
+      
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      
+        &:hover, &:focus {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .twitter {
+        color: rgba(184, 104, 29, 1);
+        background: #fefefe;
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: #f4f5f6;
+          background: rgba(184, 104, 29, 1);
+          border-color: #f8fafc;
+        }
+      }
+      
+      .linkedin {
+        color: rgba(184, 104, 29, 1);
+        background: #fefefe;
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: #f7f9fb;
+          background: rgba(184, 104, 29, 1);
+          border-color: #fbfdfe;
+        }
+      }
+      
+      .youtube {
+        color: rgba(184, 104, 29, 1);
+        background: #fefefe;
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: #f5f1f1;
+          background: rgba(184, 104, 29, 1);
+          border-color: #fbf9f9;
+        }
+      }
+      
+      .instagram {
+        color: rgba(184, 104, 29, 1);
+        background: #fefefe;
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: #fefefe;
+          background: rgba(184, 104, 29, 1);
+          border-color: #faf7f5;
+        }
+      }
+    }
+  
+    // Responsive adjustments
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+  
+      .leftContainer, .centerContainer, .rightContainer {
+        min-width: 100%;
+      }
+  
+      .imageWrapper {
+        justify-content: center !important;
+      }
+  
+      .centerGrid {
+        justify-content: center;
+      }
+  
+      .rightContainer {
+        text-align: center;
+  
+        .logoSection {
+          justify-content: center;
+        }
+  
+        .socialIcons {
+          justify-content: center;
+        }
+      }
+    }
+  }

@@ -26,7 +26,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
 
     const [t, sett] = useState(Date.now() + 120000);
     const [userNameError, setuserNameError] = useState<string | null>(null);
-    const isVerificationCodeEntered2 = code?.length !== 4 || error || userNameError;
+    const isVerificationCodeEntered2 = code?.length !== 4 || error || userNameError||coutnError2;
 
     const handleNameChange = (event) => {
         const value = event.target.value;

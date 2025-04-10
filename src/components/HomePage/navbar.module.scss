@@ -1,10 +1,37 @@
+
+.lightNav{
+    --backgroundColor:#FFFFFF;
+    --boxShadow:rgba(255, 255, 255, 1);
+    --mainOrange:#F18825;
+    --textColor:rgba(255, 255, 255, 1);
+    --cartColor:rgba(25,25,25,1);
+    --searchBackGround:#D9D9D9;
+    --searchText:#696363;
+    --searchInput:#585555;
+    --locationBackGround:#B7B3AC;
+
+}
+.darkNav{
+    --backgroundColor:    rgba(25, 25, 25, 1);
+    --boxShadow:rgba(25, 25, 25, 1);
+    --mainOrange:#F18825;
+    --textColor:rgba(25, 25, 25, 1);
+    --cartColor:rgba(255,255,255,1);
+    --searchBackGround:rgba(56, 53, 53, 1);
+    --searchText:#B2A7A7;
+    --searchInput:#B2A7A7;
+    --locationBackGround:#383535;
+
+
+}
 .header {  
-    background: #FFFFFF; 
+    background: var(--backgroundColor); 
     padding: 10px 20px;  
     display: flex; 
     align-items: center;  
     justify-content: space-between; 
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 1);  
+    box-shadow: 0 2px 5px var(--boxShadow);  
+
     
     .headerContent {  
         display: flex;  
@@ -13,10 +40,10 @@
     }  
 
     .loginButton {  
-        background: #F18825;
-        color: white; 
+        background: var(--mainOrange);
+        color: var(--textColor); 
         border: none;  
-        border-radius: 30px;  
+        border-radius: 15px;  
         padding: 10px 15px;  
         cursor: pointer;  
         font-family: "calibri";
@@ -46,21 +73,21 @@
     
     .cartIcon {  
         font-size: 30px;  
-        color: black;  
+        color: var(--cartColor);  
         margin-left: 5px;  
     }  
     .drakModeIcon{
         font-size: 20px;  
-        color: black;  
-        margin-left: 0px; 
+        color:var(--cartColor);   
+        margin-left: 2px; 
     }
     
     .cartBadge {  
         position: absolute;  
         top: -10px; 
         right: -10px;  
-        background-color: #F18825;  
-        color: white;  
+        background-color: var(--mainOrange);  
+        color: var(--textColor);  
         border-radius: 10px;  
         padding: 3px 6px;  
         font-size: 12px;  
@@ -76,11 +103,12 @@
     .statusText {  
         margin-left: px;  
         font-size: 15px;  
-        color: #000000;  
+        color: var(--cartColor);  
         font-size: 15px;
         font-family: "calibri";
         font-weight: bold;
         cursor: pointer;
+        // margin-bottom: 5px;
         &:hover
         {
             margin-top: 1px;
@@ -91,7 +119,7 @@
     .searchContainer {  
         display: flex;  
         align-items: center;  
-        background-color: #D9D9D9;   
+        background-color: var(--searchBackGround);  
         border-radius: 40px;
         padding: 5px;
         margin-left: 40px;
@@ -122,7 +150,7 @@
         border-radius: 40px; 
         font-size: 16px;  
         background-color: transparent; 
-        color: #696363;
+        color: var(--searchText);
         font-family: "calibri";
         &:focus {  
             outline: none;
@@ -148,47 +176,52 @@
 }  
 
 .overlayText {  
-    position: absolute; 
-    top: 70%; 
-    left: 30%; 
-    transform: translate(-50%, -50%); 
-    color: white; 
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
-    z-index: 1; 
-    text-align: center; 
-    white-space: nowrap; 
-    // width: 400px;
+    position: absolute;   
+    top: 70%;   
+    left: 30%;   
+    transform: translate(-50%, -50%);   
+    color: white;   
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);   
+    z-index: 1;   
+    white-space: nowrap;   
+
+    .breadTitleContainer {  
+        display: flex; 
+        align-items: center; 
+        justify-content: flex-end; 
+        margin: 0;
+
+        .breadTypeContainer {  
+            padding-left: 15px;
+            display: flex;
+            align-items: center; 
+            margin-right: 5px;
+        }  
+    }  
 
     h2 {  
-        font-size: 2em; 
-        margin: 0;
-        color: rgba(85, 80, 80, 1); 
-        animation: fade-in 1s; 
-        font-family: "calibri";
-        text-align: right; 
-        
-
-
-    }  
-    
-    p {  
-        font-size: 1.2em; 
-        margin-top: 10px; 
-        color: white;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); 
-        text-align: right; 
+        font-size: 2em;   
+        color: rgba(85, 80, 80, 1);   
+        animation: fade-in 1s;   
+        font-family: "calibri";  
+        text-align: right;   
     }  
     .locationInput {  
         padding: 10px;  
         flex-grow: 1;
+        box-sizing: border-box;  
 
         border:none ;
         border-radius: 20px;
         font-size: 16px;  
-        background-color: rgba(183, 179, 172, 1); 
+        background-color: transparent; 
         color: rgba(241, 136, 37, 1);
         font-family: "calibri";
         text-align: right;
+        width: 350px;  
+        min-width: 250px; 
+        max-width: 100%; 
+        direction: rtl;
     
         &:focus {  
             outline: none;  
@@ -196,41 +229,41 @@
     }   
     .locationIcon {  
         color: rgba(241, 136, 37, 1);  
-        margin-right: 0px;  
+        margin-right: 10px;  
         left :100px;
     }  
     .locationContainer {  
         display: flex;  
         align-items: center;  
-        background-color: rgba(183, 179, 172, 1);   
+        background-color: var(--locationBackGround);   
         border-radius: 20px; 
         padding: 5px; 
         margin-left: 0px; 
         width: 100%; 
+        margin-top: 10px;
        
-    }  
+    }  .animation {  
+        height: 50px;  
+        overflow: hidden;  
+      }  
+      
+      .breadType {  
+        padding: 0.25rem 0.25rem;  
+        height: 2.81rem;  
+        margin-bottom: 2.81rem;  
+        display: inline-block;  
+        color: rgba(241, 136, 37, 1);
+       
+        transition: opacity 1s;  
+        font-family: "calibri";
+        text-align: right;
+    
+    
+      }  
+      
+      .fadeOut {  
+        opacity: 0; 
+      }  
+     
 }  
 
-.animation {  
-    height: 50px;  
-    overflow: hidden;  
-  }  
-  
-  .breadType {  
-    padding: 0.25rem 0.25rem;  
-    height: 2.81rem;  
-    margin-bottom: 2.81rem;  
-    display: inline-block;  
-    color: rgba(241, 136, 37, 1);
-   
-    transition: opacity 1s;  
-    font-family: "calibri";
-    text-align: right;
-
-
-  }  
-  
-  .fadeOut {  
-    opacity: 0; 
-  }  
- 

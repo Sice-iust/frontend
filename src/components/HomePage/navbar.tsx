@@ -5,11 +5,15 @@ import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Logo from "../../assets/logo.png";
+import DarkLogo from "../../assets/logo-dark.png"
 import HomePagePhoto from "../../assets/homePagePhoto.png";
+import DrakHomePagePhoto from "../../assets/darkHomePagePhoto.png"
 import LoginModal from "../login/login"; 
 import { useTheme } from '../theme';   
 import Image from 'next/image';
+import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import { useState ,useEffect} from 'react';
+import { colors } from '@mui/material';
 
 const Header: React.FC = () => {  
     const { isDarkMode, toggleDarkMode } = useTheme(); 
@@ -44,22 +48,23 @@ const Header: React.FC = () => {
 
 
     return (  
-        <div>
-            <header className={styles.header}> 
+        <div  className={isDarkMode ? styles.darkNav : styles.lightNav}>
+            <header className={styles.header} > 
             
                 <div className={styles.headerContent}>  
                     <button className={styles.loginButton}         onClick={handleOpenModal}
                     >ورود / عضویت</button>
                     <div className={styles.divider} /> 
                     <div className={styles.cartContainer}>  
-                        <h1>سبد خرید</h1>
+                        <h1 style={{ color: isDarkMode ? 'white' : 'black'}}>سبد خرید</h1>
                         <ShoppingCartIcon className={styles.cartIcon} />  
                         <span className={styles.cartBadge}>2</span>  
                     </div>  
                     <div className={styles.divider} />
-                    <span className={styles.statusText}     onClick={toggleDarkMode}   >حالت شب</span>
+                    <span className={styles.statusText}     onClick={toggleDarkMode}   >
+                        {isDarkMode? 'حالت روز':'حالت شب'}</span>
                  
-                    <Brightness2OutlinedIcon className={styles.drakModeIcon} />  
+                    {isDarkMode?<WbSunnyOutlinedIcon className={styles.drakModeIcon} /> : <Brightness2OutlinedIcon className={styles.drakModeIcon} /> } 
 
                     <div className={styles.searchContainer} dir="rtl">  
                         <span className={styles.searchIcon}><SearchOutlinedIcon /></span>   
@@ -70,7 +75,7 @@ const Header: React.FC = () => {
                         />  
                     </div> 
                         <div className={styles.logoContainerNav}>  
-                            <Image src={Logo} alt="Logo" className={styles.logoNav} />  
+                            <Image src={isDarkMode?DarkLogo:Logo} alt="Logo" className={styles.logoNav} />  
                         </div>  
                 </div>  
           
@@ -78,19 +83,20 @@ const Header: React.FC = () => {
             </header>  
             {!isLoggedIn && (  
                 <div className={styles.backgroundImageContainer}>  
-                    <Image src={HomePagePhoto} alt="Background" className={styles.backgroundImage}/> 
+                    <Image src={isDarkMode?DrakHomePagePhoto:HomePagePhoto} alt="Background" className={styles.backgroundImage}/> 
                     <div className={styles.overlayText}>  
-                        <h2 style={{ display: 'flex', alignItems: 'center' ,textAlign:'right' }}>  
-                        
-                            <span style={{ marginLeft: '10px', padding: '5px',textAlign:'right' }}>  
+                    <h2 className={styles.breadTitleContainer}>  
+                        <span className={styles.breadTypeContainer}>  
                             <section className={styles.animation}>  
                                 <div className={`${styles.breadType} ${fading ? styles.fadeOut : ''}`}>  
-                                <div>{currentBreadType}</div>  
+                                    <div>{currentBreadType}</div>  
                                 </div>  
                             </section>  
-                            </span>  
-                            سفارش انواع نان  
-                        </h2>  
+                        </span>  
+                        <span style={{ color: isDarkMode ? '#B2A7A7' : '#555050'}}>  
+        سفارش انواع نان  
+      </span>  
+                    </h2>  
                         <div className={styles.locationContainer} dir="rtl"> 
                             <span className={styles.locationIcon}><LocationOnIcon /></span>   
                                 <input   
@@ -101,8 +107,9 @@ const Header: React.FC = () => {
 
                         </div>    
                     </div>
-                </div> )}
-                      {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} />}
+                </div> 
+            )}
+            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} />}
                 
         </div>
           
