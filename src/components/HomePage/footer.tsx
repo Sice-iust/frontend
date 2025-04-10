@@ -3,6 +3,9 @@ import styles from './footer.module.scss';
 import Image from 'next/image';
 import Logo from "../../assets/logo.png";
 import Symbol from "../../assets/footerSymbol.png"
+import { useTheme } from '../theme';   
+import DarkLogo from "../../assets/logo-dark.png"
+import DarkSymbol from "../../assets/darkFooterSymbol.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faInstagram, 
@@ -12,17 +15,19 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 const Footer = () => {
+    const { isDarkMode, toggleDarkMode } = useTheme(); 
+
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     // const persianNumber = ;
 
 
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${isDarkMode ? styles.darkFooter : styles.lightFooter}`}>  
       <div className={styles.container}>
       <div className={styles.rightContainer}>
           <div className={styles.logoSection}>
             <Image 
-              src={Logo} 
+              src={isDarkMode?DarkLogo:Logo} 
               alt="Logo" 
               width={50} 
               height={50} 
@@ -122,7 +127,7 @@ const Footer = () => {
         <div className={styles.leftContainer}>
           <div className={styles.imageWrapper}>
             <Image 
-              src={Symbol}
+              src={isDarkMode?DarkSymbol:Symbol}
               alt="First Image" 
               width={350} 
               height={150} 
