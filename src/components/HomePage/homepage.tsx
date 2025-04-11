@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./navbar";
-import Footer from "./footer";
-import { Margin } from "@mui/icons-material";
+import CategoryWrapper from "../CardWrapper/categoryWrapper";
+import CardSlider from "../CardWrapper/cardSlider";
 
 export default function HomePage() {
-  
+
   return (
     <div>
-      <Navbar/>
-      <div style={{marginBottom:'50px'}}></div>
-      <Footer/>
+      <div style={{ background: '#EAEAEA'}}>
+        <CategoryWrapper />
+        <CardSlider />
+        <CardSlider />
+      </div>
     </div>
   );
 }; 
