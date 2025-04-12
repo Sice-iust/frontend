@@ -1,4 +1,5 @@
 import React from 'react';  
+import Search from "./search";
 import styles from  './navbar.module.scss'; 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
@@ -13,6 +14,8 @@ import { useTheme } from '../theme';
 import Image from 'next/image';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import { useState ,useEffect} from 'react';
+import axios from "axios";
+
 import { colors } from '@mui/material';
 
 const Header: React.FC = () => {  
@@ -21,8 +24,38 @@ const Header: React.FC = () => {
     const breadTypes = ["بربری", "سنگک", "تافتون", "لواش", "محلی", "فانتزی"];  
     const [currentBreadType, setCurrentBreadType] = useState(breadTypes[0]); 
     const [fading, setFading] = useState(false);  
+    const [shoppingNum,setShoppingNum]=useState(2);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [username, setUsername] = useState(null);  
 
+    const getUsername = async () => {  
+        const token = localStorage.getItem("token");  
+        console.log('Retrieved Token:', token);  
+        
+        if (token=="undefined" || !token) {  
+            console.log('No token found');  
+            return;  
+        }  
+        // localStorage.removeItem('token');  
+        else{
+                try {  
+                const response = await axios.get('https://nanziback.liara.run/cart/header/', {  
+                    headers: {  
+                        'Authorization': `Bearer ${token}`, // Note: Make sure it starts with "Bearer "  
+                    }  
+                });  
+                
+                if (response.data.is_login) {  
+                    setUsername(response.data.username);   
+                    setIsLoggedIn(response.data.is_login);  
+                    setShoppingNum(response.data.nums);  
+                }  
+                console.log('Username:', response.data.username); // Correctly log the username  
+            } catch (error) {  
+                console.error('Error fetching username:', error);  
+            }  
+        }
+    };  
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
@@ -30,6 +63,7 @@ const Header: React.FC = () => {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+    
     useEffect(() => {  
         const interval = setInterval(() => {  
           setFading(true);
@@ -46,34 +80,31 @@ const Header: React.FC = () => {
         return () => clearInterval(interval);  
       }, [breadTypes]);  
 
-
+      useEffect(() => {  
+        getUsername(); 
+    }, []);
     return (  
         <div  className={isDarkMode ? styles.darkNav : styles.lightNav}>
             <header className={styles.header} > 
             
                 <div className={styles.headerContent}>  
                     <button className={styles.loginButton}         onClick={handleOpenModal}
-                    >ورود / عضویت</button>
+                    > {isLoggedIn ? username : 'ورود / عضویت'}   </button>
                     <div className={styles.divider} /> 
                     <div className={styles.cartContainer}>  
                         <h1 style={{ color: isDarkMode ? 'white' : 'black'}}>سبد خرید</h1>
                         <ShoppingCartIcon className={styles.cartIcon} />  
-                        <span className={styles.cartBadge}>2</span>  
-                    </div>  
+                        {}
+                        {shoppingNum > 0 && <span className={styles.cartBadge}>{shoppingNum}</span>}   
+                        </div>  
                     <div className={styles.divider} />
                     <span className={styles.statusText}     onClick={toggleDarkMode}   >
                         {isDarkMode? 'حالت روز':'حالت شب'}</span>
                  
                     {isDarkMode?<WbSunnyOutlinedIcon className={styles.drakModeIcon} /> : <Brightness2OutlinedIcon className={styles.drakModeIcon} /> } 
 
-                    <div className={styles.searchContainer} dir="rtl">  
-                        <span className={styles.searchIcon}><SearchOutlinedIcon /></span>   
-                        <input   
-                            type="text"   
-                            className={styles.searchInput}  
-                            placeholder=" نام کالای مورد نظر را جستجو کنید ..."   
-                        />  
-                    </div> 
+                    <Search isDarkMode={isDarkMode} />
+
                         <div className={styles.logoContainerNav}>  
                             <Image src={isDarkMode?DarkLogo:Logo} alt="Logo" className={styles.logoNav} />  
                         </div>  
@@ -93,7 +124,7 @@ const Header: React.FC = () => {
                                 </div>  
                             </section>  
                         </span>  
-                        <span style={{ color: isDarkMode ? '#B2A7A7' : '#555050'}}>  
+                        <span style={{ color: isDarkMode ? '#B2A7A7' : '#555050' ,marginBottom:'5px'}}>  
         سفارش انواع نان  
       </span>  
                     </h2>  

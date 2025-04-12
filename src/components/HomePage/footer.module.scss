@@ -31,43 +31,52 @@
   
     // Left Container Styles
     .leftContainer {
-        flex: 1; /* Prevent stretching */
+        flex: 0; /* Prevent stretching */
+        align-items: center;
       }
       
       .imageWrapper {
         display: flex;
         gap: 5rem; /* Space between images (if multiple) */
         margin-top: 10px;
+        // margin-right: 5px;
       }
       
       .image {
-        object-fit: contain; /* Preserve aspect ratio */
-        height: 250px;
+        // object-fit: contain; /* Preserve aspect ratio */
+        width: 390px;
+        height: 350px;
+        margin-left: -100px;
+        // margin-right: -50px;
       }
   
     // Center Container Styles
     .centerContainer {
         flex: 1;
-        min-width: 200px;
+        min-width: 390px;
         direction: rtl;
         text-align: right;
         padding: .5rem;
         font-family: "calibri";
-        margin-top: 45px;
+        margin-right: -150px;
+        margin-top: 60px;
       
         .faqSection {
           display: flex;
           gap: .1rem;
           flex-wrap: wrap;
+          margin-right: 25px;
+          margin-left: 15px;
           justify-content: space-between;
         }
       
         .faqColumn {
           display: flex;
           flex-direction: column;
-          gap: 20px;
+          gap: 25px;
         //   flex: 1;
           min-width: 150px;
+          margin-left: 20px;
         }
       
         .faqItem {
@@ -77,18 +86,18 @@
         .faqTitle {
           margin: 0;
         //   margin-top: .75rem;
-          font-size: 1rem;
+          font-size: 1.15rem;
           font-weight: 400;
           color:var(--textColor)
         }
       
         .faqText {
           margin: 0;
-          font-size: 1rem;
+          font-size: 1.15rem;
           font-weight: 400;
 
           color: var(--textColor);
-          margin-top: 25px;
+          margin-top: 30px;
         //   margin-left: -;
         }
       
@@ -96,7 +105,7 @@
           height: 0.5px;
           background-color: rgba(184, 104, 29, 1);
           width: 50%;
-          margin-top: 20px;
+          margin-top: 30px;
           margin-left: 0;
           margin-right: -5px;
         //   right:20px;
@@ -107,7 +116,7 @@
     // Right Container Styles
     .rightContainer {
       flex: 0;
-      min-width: 400px;
+      min-width: 500px;
   
       .logoSection {
         display: flex;
@@ -115,11 +124,11 @@
         gap: 1rem;
         margin-bottom: 10px;
         margin-top: 0;
-        
+        margin-right: -150px;
   
         .logo {
         //   border-radius: 50%;
-        width:120px;
+        width:150px;
         height: 80px;
         // margin-top: 15px;// height: 80px;
 
@@ -130,7 +139,7 @@
             .title {
             margin: 0;
             font-weight: 100;
-            font-size: 35px;
+            font-size: 45px;
             color: rgba(184, 104, 29, 1);
             margin-bottom: 0;
             margin-top: 9px;
@@ -138,7 +147,7 @@
   
           .slogan {
             margin: 0.2rem 0 0;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             margin-top: 0;
             color: var(--sloganColor);
           }
@@ -148,6 +157,7 @@
       .description {
         direction: rtl;
         text-align: justify;
+        margin-right: -140px;
         text-justify: inter-word; // For better Persian/Arabic justification
         hyphens: auto; // For better word breaking
         line-height: 1.8; // Adjust for better readability
@@ -155,13 +165,14 @@
         color:var(--textColor);
         width:85%;
         font-family: "calibri";
+        font-size: 20px;
       }
   
       .roundedSocialButtons {
         text-align: right;
         direction: ltr; // Ensure proper alignment for social icons
         margin-top: 10px;
-        
+        margin-right: -140px;
       }
       
       .socialButton {
@@ -170,8 +181,8 @@
         justify-content: center;
         position: relative;
         cursor: pointer;
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border: 0.125rem solid transparent;
         padding: 0;
         text-decoration: none;
@@ -185,8 +196,8 @@
         margin-top: 5px;
       
         svg {
-          width: 20px;
-          height: 20px;
+          width: 25px;
+          height: 25px;
         }
       
         &:hover, &:focus {
