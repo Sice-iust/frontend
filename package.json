@@ -23,7 +23,9 @@
     "react-dom": "^19.0.0",
     "react-router": "^7.3.0",
     "react-router-dom": "^7.3.0",
+    "react-slick": "^0.30.3",
     "sass": "^1.86.3",
+    "slick-carousel": "^1.8.1",
     "stylis": "^4.3.6",
     "stylis-plugin-rtl": "^2.1.1"
   },

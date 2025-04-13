@@ -1,21 +1,31 @@
 import React from 'react';
 import Image from 'next/image';
-import Logo from "../../assets/logo.png";
+import bread from "../../assets/breads/barbari.png";
 import Link from 'next/link';
 
-export default function CategoryCard() {
+export default function CategoryCard({ img_src, text, ref }) {
     return (
         <>
-            <div style={{ background: 'white',border: '1px solid black',
-                borderRadius: '8px', padding: '10px', margin: '10px' ,
-                display: 'flex', flexDirection: 'column', alignContent: 'center'}}>
-                <Image src={Logo}
-                        width={100}
-                        height={100}
-                        alt="Nanzi Logo"
-                        style={{margin: 'auto'}} />
-                <a >nanzi</a>
-                <Link href={{pathname:`/breads`,query: {slug: 1}}}>links</Link>
+            <div style={{
+                background: 'white', border: '1px solid black',
+                height: '145px', width: '145px',
+                borderRadius: '30px', padding: '10px',
+                display: 'flex', flexDirection: 'column', alignContent: 'center'
+            }}>
+                <Image src={bread}
+                    width={100}
+                    height={100}
+                    alt="Nanzi Logo"
+                    style={{ margin: 'auto' }} />
+                <Link
+                    style={{
+                        display: 'flex', justifyContent: 'center'
+                        , color: 'black', textDecoration: 'none'
+                    }}
+                    href={{ pathname: `/breads:1` }}
+                >
+                    {text}
+                </Link>
             </div>
         </>
     );

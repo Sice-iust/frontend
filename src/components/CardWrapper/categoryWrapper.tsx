@@ -1,45 +1,47 @@
 import React from 'react';
 import CategoryCard from '../ProductCard/categoryCard';
+import axios from 'axios';
+import { data } from 'react-router';
 const CardData = [
     {
-        src: 'images/img-2.jpg',
-        text: 'Travel ',
+        src: '/breads/barbari.png',
+        text: 'بربری',
     },
     {
-        src: 'images/img-4.jpg',
-        text: 'Experience ',
+        src: '/breads/barbari.png',
+        text: 'سنگک',
     },
     {
-        src: 'images/img-3.jpg',
-        text: 'Swimming',
+        src: '/breads/barbari.png',
+        text: 'لواش',
     },
     {
-        src: 'images/img-3.jpg',
-        text: 'Swimming',
+        src: '/breads/barbari.png',
+        text: 'تافتون',
     },
     {
-        src: 'images/img-3.jpg',
-        text: 'Swimming',
+        src: '/breads/barbari.png',
+        text: 'سایر',
     },
     {
-        src: 'images/img-3.jpg',
-        text: 'Swimming',
-    },
-    {
-        src: 'images/img-3.jpg',
-        text: 'Swimming',
-    },
-    {
-        src: 'images/img-3.jpg',
-        text: 'Swimming',
+        src: '/breads/barbari.png',
+        text: 'سایر',
     }
 ];
 export default function CategoryWrapper() {
+
     return (
         <>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', padding: '16px' }}>
-                {CardData.map((card,index) => <CategoryCard/>)}
-            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', padding: '30px' }}>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <h2>
+                        دسته بندی ها
+                    </h2>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'space-around', columnGap: '70px',rowGap: '50px'}}>
+                    {CardData.map((card, index) => <CategoryCard key={index} img_src={card.src} text={card.text} ref={""} />)}
+                </div>
+            </div >
         </>
     );
 }
