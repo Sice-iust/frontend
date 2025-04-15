@@ -1,15 +1,13 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./src/**/**/*.{html,js,jsx,ts,tsx}", // Scans all files under src, including components/login/login.tsx
-
+module.exports={
+  content:[
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-    extend: {
-      colors: {
-        MainOrange: "#FF8C00", // Example custom color
-      },
-    },
+  theme:{
+    extend:{},
+
   },
-  plugins: [],
-};
+  plugins:[],
+}
