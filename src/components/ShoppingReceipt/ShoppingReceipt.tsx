@@ -116,23 +116,27 @@ const Receipt: React.FC = () => {
             <div className="flex flex-row-reverse  space-x-reverse space-x-2 mt-7 mr-3">   
                 <CgNotes color="#F18825" className="w-6 h-5" />  
                 <h2 className="text-[17px] font-vazir font-semibold text-right">خلاصه سفارش</h2>  
-            </div>  
-            <div className="p-5 flex flex-col pt-2">  
-            {items.map((item) => (  
-                <div key={item.id} className="flex  flex-row-reverse py-2">  
-                    <span className="text-[17px] font-vazir font-medium text-right ml-31">{item.name}</span>  
-                    <span className="ml-1 text-gray-500" >× {convertToPersianNumbers(item.quantity)}  </span> 
-                    <span > {convertToPersianNumbers(item.price.toLocaleString())}  </span> 
-                    <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
                 </div>  
-            ))}  
-            <div className="flex flex-row-reverse py-2 border-t mt-5 ">  
-                <span className="font-vazir font-semibold ml-50">جمع کل</span>  
-                <span className="font-bold font-2xl">{convertToPersianNumbers(totalPrice.toLocaleString())}</span> 
-                <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span> 
-            </div>  
-        </div> 
+                <div className="p-5 flex flex-col pt-2">  
+                {items.map((item) => (  
+                    <div key={item.id} className="flex  flex-row-reverse py-2">  
+                        <span className="text-[17px] font-vazir font-medium text-right ml-31">{item.name}</span>  
+                        <span className="ml-1 text-gray-500" >× {convertToPersianNumbers(item.quantity)}  </span> 
+                        <span > {convertToPersianNumbers(item.price.toLocaleString())}  </span> 
+                        <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
+                    </div>  
+                ))}  
+                <div className="flex flex-row-reverse py-2 border-t mt-5 ">  
+                    <span className="font-vazir font-semibold ml-50">جمع کل</span>  
+                    <span className="font-bold font-2xl">{convertToPersianNumbers(totalPrice.toLocaleString())}</span> 
+                    <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span> 
+                </div>  
+            </div>
+            <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white font-bold py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300">  
+            ثبت و ادامه  
+            </button>  
         </div>    
+
     );   
 };  
 
