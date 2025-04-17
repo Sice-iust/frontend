@@ -132,7 +132,7 @@ const Receipt: React.FC = () => {
                     <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span> 
                 </div>  
             </div>
-            <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white font-bold py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300">  
+            <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white font-medium font-vazir font-2xl py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300">  
             ثبت و ادامه  
             </button>  
         </div>    
