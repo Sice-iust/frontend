@@ -116,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({showImage=true}) => {
           
             
             </header>  
-            {(!isLoggedIn || showImage) && (  
+            {(!isLoggedIn && showImage) && (  
                 <div className={styles.backgroundImageContainer}>  
                     <Image src={isDarkMode?DrakHomePagePhoto:HomePagePhoto} alt="Background" className={styles.backgroundImage}/> 
                     <div className={styles.overlayText}>  
