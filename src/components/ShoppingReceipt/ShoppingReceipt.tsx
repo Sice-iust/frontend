@@ -15,7 +15,7 @@ interface Item {
 
 const Receipt: React.FC = () => {  
     const initialItems: Item[] = [  
-        { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 3, after: 10000, total: 30000, stock: 3 },  
+        { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 13, after: 10000, total: 30000, stock: 3 },  
         { id: 2, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
     ];   
 
@@ -29,14 +29,14 @@ const Receipt: React.FC = () => {
 
     const incrementQuantity = (id: number) => {  
         setItems(items.map(item => {  
-            if (item.id === id && item.quantity < item.stock) {  // Check if quantity is less than stock  
+            if (item.id === id && item.quantity < item.stock) {   
                 return { ...item, quantity: item.quantity + 1 };  
             }  
             return item;  
         }));  
     };  
     const removeItem = (id: number) => {  
-        setItems(items.filter(item => item.id !== id));  // Removing the item from the list  
+        setItems(items.filter(item => item.id !== id)); 
     };
     const decrementQuantity = (id: number) => {  
         setItems(items.map(item =>   
@@ -108,6 +108,14 @@ const Receipt: React.FC = () => {
                                     قیمت: {convertToPersianNumbers(item.price.toLocaleString())} تومان
                                 </span>
                             </div>
+                            {item.discount > 0 && (
+                                <div className="flex flex-row-reverse mr-6">
+                                <div className="bg-[#F18825] text-lg w-9 h-5 text-white text-[14px] pl-1.5 rounded-md">
+                                    %{convertToPersianNumbers(item.discount)}
+                                </div>
+                                <div className="mr-2 text-gray-500 line-through">{convertToPersianNumbers(item.after.toLocaleString())} </div>
+                                </div>
+                            )}                            
                         </div>
                     </div>
                     </div>
