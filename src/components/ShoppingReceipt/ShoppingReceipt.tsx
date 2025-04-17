@@ -1,7 +1,7 @@
-import React, { useState } from "react";  
+import React, { useState,useEffect } from "react";  
 import Navbar from "../HomePage/navbar";  
 import { CgNotes } from "react-icons/cg";
-
+import axios from "axios";
 interface Item {  
     id: number;  
     name: string;  
@@ -44,11 +44,28 @@ const Receipt: React.FC = () => {
         ));  
     };  
 
-    const n: number = items.length;   
+    const n: number = items.length; 
+
+    const [data, setData] = useState(null);
+    const [dataLength,setDataLength]=useState(0);
+    // const fetchData = async () => {
+    //     try {
+    //       const response = await axios.get("https://nanziback.liara.run/user/cart/", {
+    //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    //       });
+    //       setData(response.data);
+    //       console.log(`data from back: ${data}`);
+    //     } catch (error) {
+    //       console.error("Error fetching data:", error);
+    //     }
+    //   };
+    //   useEffect(() => {
+    //     fetchData();
+    //   }, []);
 
     return (  
         <div className="box-content ml-10 mt-10 mb-10 min-h-130 w-95 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">   
-            <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold ">سبد خرید ({convertToPersianNumbers(n)})</h2>  
+            <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold ">سبد خرید {n>0 ? `(${convertToPersianNumbers(n)})` : ""}</h2>  
             {items.map((item) => (  
                   <>
                     <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full place-self-end mr-1 mt-2 p-1">
