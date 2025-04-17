@@ -190,7 +190,8 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                                     type="tel"
                                     maxLength={1}
                                     pattern="[0-9]"
-                                    className={`${styles.formControl}  ${codeError ? styles.errorVerify : ''}`}                                    value={e2p(verificationCode[index] || '')}
+                                    className={`${styles.formControl}  ${codeError ? styles.errorVerify : ''}`}                                    
+                                    value={e2p(verificationCode[index] || '')}
 
                                     onChange={(e) => handleChange(index, e)}
                                     onKeyDown={(e) => handleKeyDown(index, e)}
