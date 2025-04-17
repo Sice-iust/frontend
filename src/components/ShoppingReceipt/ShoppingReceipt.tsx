@@ -17,6 +17,7 @@ const Receipt: React.FC = () => {
     const initialItems: Item[] = [  
         { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 13, after: 10000, total: 30000, stock: 3 },  
         { id: 2, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
+        { id: 3, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
     ];   
 
     const [items, setItems] = useState<Item[]>(initialItems);  
@@ -64,11 +65,12 @@ const Receipt: React.FC = () => {
     //   }, []);
 
     return (  
-        <div className="box-content ml-10 mt-10 mb-10 min-h-130 w-95 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">   
+        <div className="box-content ml-10 mt-10 mb-10 min-h-130 w-100 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">   
             <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold ">سبد خرید {n>0 ? `(${convertToPersianNumbers(n)})` : ""}</h2>  
+            <div className={`${n > 2 ? "overflow-y-scroll max-h-60" : ""}`}>
             {items.map((item) => (  
                   <>
-                    <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full place-self-end mr-1 mt-2 p-1">
+                    <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full place-self-end  mr-1 mt-2 p-1">
                     <button
                         className="bg-white cursor-pointer text-red-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"
                         onClick={() => removeItem(item.id)}
@@ -81,7 +83,7 @@ const Receipt: React.FC = () => {
                             <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />
                         </svg>
                     </button>
-                    <div className="box-content ml-5 w-78 h-25 border border-gray-400 rounded-lg">
+                    <div className="box-content ml-5 w-82 h-25 border border-gray-400 rounded-lg">
                         <div className="flex flex-col">
                             <span className="text-[18px] text-right mr-3 mt-2 font-vazir font-semibold">
                                 {item.name}
@@ -138,6 +140,7 @@ const Receipt: React.FC = () => {
                     </div>
                 </>  
             ))} 
+            </div>
             <div className="flex flex-row-reverse  space-x-reverse space-x-2 mt-7 mr-3">   
                 <CgNotes color="#F18825" className="w-6 h-5" />  
                 <h2 className="text-[17px] font-vazir font-semibold text-right">خلاصه سفارش</h2>  

@@ -2,7 +2,7 @@ import HomePage from '../src/components/HomePage/homepage';
 import Receipt from '../src/components/ShoppingReceipt/ShoppingReceipt';
 import CategoryPage from '../src/components/CategoryPage/CategoryPage';
 const IndexPage = () => {
-  return <HomePage />;
+  return <CategoryPage />;
 };
 
 export default IndexPage;
