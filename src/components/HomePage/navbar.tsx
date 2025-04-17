@@ -18,7 +18,11 @@ import axios from "axios";
 
 import { colors } from '@mui/material';
 
-const Header: React.FC = () => {  
+interface HeaderProps {   
+    showImage: boolean;   
+  }  
+
+const Header: React.FC<HeaderProps> = ({showImage=true}) => {  
     const { isDarkMode, toggleDarkMode } = useTheme(); 
     const [isLoggedIn, setIsLoggedIn] = useState(false);  
     const breadTypes = ["بربری", "سنگک", "تافتون", "لواش", "محلی", "فانتزی"];  
@@ -89,7 +93,7 @@ const Header: React.FC = () => {
             
                 <div className={styles.headerContent}>  
                     <button className={styles.loginButton}         onClick={handleOpenModal}
-                    > {isLoggedIn ? username : 'ورود / عضویت'}   </button>
+                    > {isLoggedIn  ? username : 'ورود / عضویت'}   </button>
                     <div className={styles.divider} /> 
                     <div className={styles.cartContainer}>  
                         <h1 style={{ color: isDarkMode ? 'white' : 'black'}}>سبد خرید</h1>
@@ -112,7 +116,7 @@ const Header: React.FC = () => {
           
             
             </header>  
-            {!isLoggedIn && (  
+            {(!isLoggedIn || showImage) && (  
                 <div className={styles.backgroundImageContainer}>  
                     <Image src={isDarkMode?DrakHomePagePhoto:HomePagePhoto} alt="Background" className={styles.backgroundImage}/> 
                     <div className={styles.overlayText}>  

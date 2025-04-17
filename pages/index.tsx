@@ -1,7 +1,7 @@
 import HomePage from '../src/components/HomePage/homepage';
 import Receipt from '../src/components/ShoppingReceipt/ShoppingReceipt';
 const IndexPage = () => {
-  return <Receipt />;
+  return <HomePage />;
 };
 
 export default IndexPage;
