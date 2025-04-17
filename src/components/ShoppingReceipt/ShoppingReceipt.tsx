@@ -1,5 +1,6 @@
 import React, { useState } from "react";  
 import Navbar from "../HomePage/navbar";  
+import { CgNotes } from "react-icons/cg";
 
 interface Item {  
     id: number;  
@@ -19,7 +20,8 @@ const Receipt: React.FC = () => {
     ];   
 
     const [items, setItems] = useState<Item[]>(initialItems);  
-    
+    const totalPrice = initialItems.reduce((sum, item) => sum + item.total, 0);  
+
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
@@ -67,7 +69,7 @@ const Receipt: React.FC = () => {
                             <span className="text-[18px] text-right mr-3 mt-2 font-vazir font-semibold">
                                 {item.name}
                             </span>
-                            <div className="flex justify-between items-center mr-6 mt-2">
+                            <div className="flex justify-between items-center mr-6 mt-2 flex items-center space-x-2">
                                 <div className="flex items-center space-x-2">
                                     <button
                                         className={`bg-white ml-5 border-3 ${item.quantity >= item.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}
@@ -110,7 +112,26 @@ const Receipt: React.FC = () => {
                     </div>
                     </div>
                 </>  
+            ))} 
+            <div className="flex flex-row-reverse  space-x-reverse space-x-2 mt-7 mr-3">   
+                <CgNotes color="#F18825" className="w-6 h-5" />  
+                <h2 className="text-[17px] font-vazir font-semibold text-right">خلاصه سفارش</h2>  
+            </div>  
+            <div className="p-5 flex flex-col pt-2">  
+            {items.map((item) => (  
+                <div key={item.id} className="flex  flex-row-reverse py-2">  
+                    <span className="text-[17px] font-vazir font-medium text-right ml-31">{item.name}</span>  
+                    <span className="ml-1 text-gray-500" >× {convertToPersianNumbers(item.quantity)}  </span> 
+                    <span > {convertToPersianNumbers(item.price.toLocaleString())}  </span> 
+                    <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
+                </div>  
             ))}  
+            <div className="flex flex-row-reverse py-2 border-t mt-5 ">  
+                <span className="font-vazir font-semibold ml-50">جمع کل</span>  
+                <span className="font-bold font-2xl">{convertToPersianNumbers(totalPrice.toLocaleString())}</span> 
+                <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span> 
+            </div>  
+        </div> 
         </div>    
     );   
 };  

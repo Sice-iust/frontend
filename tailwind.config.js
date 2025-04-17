@@ -11,7 +11,7 @@ module.exports = {
         vazir: ['Vazirmatn', 'sans-serif'],  
       },   
       colors: {  
-        'custom-bg': '#f5f5f5',   
+        MainOrange: '#F18825',   
       },    
     },  
   },   
