@@ -9,12 +9,13 @@ interface Item {
     discount: number;  
     after: number;  
     total: number;  
+    stock: number;  
 }  
 
 const Receipt: React.FC = () => {  
     const initialItems: Item[] = [  
-        { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 3, after: 10000, total: 30000 },  
-        { id: 2, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000 },  
+        { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 3, after: 10000, total: 30000, stock: 3 },  
+        { id: 2, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
     ];   
 
     const [items, setItems] = useState<Item[]>(initialItems);  
@@ -25,11 +26,16 @@ const Receipt: React.FC = () => {
     };  
 
     const incrementQuantity = (id: number) => {  
-        setItems(items.map(item =>   
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item  
-        ));  
+        setItems(items.map(item => {  
+            if (item.id === id && item.quantity < item.stock) {  // Check if quantity is less than stock  
+                return { ...item, quantity: item.quantity + 1 };  
+            }  
+            return item;  
+        }));  
     };  
-
+    const removeItem = (id: number) => {  
+        setItems(items.filter(item => item.id !== id));  // Removing the item from the list  
+    };
     const decrementQuantity = (id: number) => {  
         setItems(items.map(item =>   
             item.id === id && item.quantity > 0 ? { ...item, quantity: item.quantity - 1 } : item  
@@ -40,40 +46,73 @@ const Receipt: React.FC = () => {
 
     return (  
         <div className="box-content ml-10 mt-10 mb-10 min-h-130 w-95 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">   
-            <h2 className="text-[25px] text-center p-5 font-vazir font-bold ">سبد خرید ({convertToPersianNumbers(n)})</h2>  
+            <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold ">سبد خرید ({convertToPersianNumbers(n)})</h2>  
             {items.map((item) => (  
-                <div key={item.id} className="box-content mt-5 ml-5 w-78 h-25 border border-gray-400 rounded-lg">  
-                    <div className="flex flex-col">  
-                        <span className="text-[18px] text-right mr-3 mt-2 font-vazir font-semibold">  
-                            {item.name}  
-                        </span>  
-                        <div className="flex justify-between items-center mr-6 mt-2">
-                            <div className="flex items-center space-x-2">
-                                <button   
-                                    className="bg-white ml-5 cursor-pointer border-4 border-green-500 text-green-500 font-bold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-green-500 hover:text-white hover:scale-110"    
-                                    onClick={() => incrementQuantity(item.id)}  
-                                >  
-                                    +  
-                                </button>  
-                                <span className="text-lg font-semibold">  
-                                    {convertToPersianNumbers(item.quantity)}  
-                                </span>  
-                                <button   
-                                    className="bg-white cursor-pointer border-4 border-red-500 text-red-500 font-bold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"     
-                                    onClick={() => decrementQuantity(item.id)}  
-                                >  
-                                    -  
-                                </button>  
-                            </div>  
-                            <span className="text-[15px] text-right font-vazir font-medium"> 
-                                قیمت: {convertToPersianNumbers(item.price.toLocaleString())} تومان  
-                            </span>  
-                        </div>  
-                    </div>  
-                </div>  
+                  <>
+                    <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full place-self-end mr-1 mt-2 p-1">
+                    <button
+                        className="bg-white cursor-pointer text-red-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"
+                        onClick={() => removeItem(item.id)}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M3 6h18" />
+                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                            <path d="M10 11v6" />
+                            <path d="M14 11v6" />
+                            <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />
+                        </svg>
+                    </button>
+                    <div className="box-content ml-5 w-78 h-25 border border-gray-400 rounded-lg">
+                        <div className="flex flex-col">
+                            <span className="text-[18px] text-right mr-3 mt-2 font-vazir font-semibold">
+                                {item.name}
+                            </span>
+                            <div className="flex justify-between items-center mr-6 mt-2">
+                                <div className="flex items-center space-x-2">
+                                    <button
+                                        className={`bg-white ml-5 border-3 ${item.quantity >= item.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}
+                                        onClick={() => incrementQuantity(item.id)}
+                                        disabled={item.quantity >= item.stock}
+                                    >
+                                        +
+                                    </button>
+                                    <span className="text-lg font-semibold">
+                                        {convertToPersianNumbers(item.quantity)}
+                                    </span>
+
+                                    {item.quantity === 1 ? (
+                                        <button
+                                            className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"
+                                            onClick={() => removeItem(item.id)}
+                                        >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M3 6h18" />
+                                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                                <path d="M10 11v6" />
+                                                <path d="M14 11v6" />
+                                                <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />
+                                            </svg>
+                                        </button>
+                                    ) : (
+                                        <button
+                                            className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"
+                                            onClick={() => decrementQuantity(item.id)}
+                                        >
+                                            <span className="text-xl">-</span>
+                                        </button>
+                                    )}
+                                </div>
+                                <span className="text-[15px] text-right font-vazir font-medium">
+                                    قیمت: {convertToPersianNumbers(item.price.toLocaleString())} تومان
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </>  
             ))}  
         </div>    
     );   
 };  
-  
+
 export default Receipt;  

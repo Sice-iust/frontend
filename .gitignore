@@ -46,3 +46,33 @@ public/static/
 
 # If using TypeScript  
 *.tsbuildinfo  
+
+{items.map((item) => (
+    <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full mt-5">
+        {/* سطل زباله */}
+        <button
+            className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"
+            onClick={() => removeItem(item.id)}
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 6h18" />
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+                <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />
+            </svg>
+        </button>
+
+        {/* کارت خرید */}
+        <div className="box-content w-78 h-25 border border-gray-400 rounded-lg">
+            <div className="flex flex-col">
+                <span className="text-[18px] text-right mr-3 mt-2 font-vazir font-semibold">
+                    {item.name}
+                </span>
+                <span className="text-[15px] text-right mr-6 mt-5 font-vazir font-medium">
+                    قیمت: {convertToPersianNumbers(item.price.toLocaleString())} تومان
+                </span>
+            </div>
+        </div>
+    </div>
+))}
