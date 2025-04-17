@@ -5,9 +5,12 @@ module.exports={
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme:{
-    extend:{},
-
-  },
+  theme: {  
+    extend: {  
+      fontFamily: {  
+        vazir: ['Vazirmatn', 'sans-serif'],  
+      },  
+    },  
+  }, 
   plugins:[],
 }
