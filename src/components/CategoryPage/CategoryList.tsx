@@ -29,10 +29,10 @@ export default function CategoryList({catNumber}) {
     };  
     const [items, setItems] = useState<Item[]>(initialItems);  
     return (  
-        <div className='flex flex-row'>  
-            <div className='flex-shrink-0'>  
-                <Receipt />  
-            </div>  
+        // <div className='flex flex-row'>  
+        //     <div className='flex-shrink-0'>  
+        //         <Receipt />  
+        //     </div>  
             <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8  w-full h-auto rounded-2xl gap-6">  
                 {items.map(item => (   
                     <div key={item.id} className='flex flex-col box-content border-1 rounded-2xl bg-white w-79 h-77 '>  
@@ -52,6 +52,6 @@ export default function CategoryList({catNumber}) {
                     </div>  
                 ))}  
             </div>  
-        </div>  
+        // </div>  
     );   
 };
