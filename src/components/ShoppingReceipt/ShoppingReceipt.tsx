@@ -67,13 +67,13 @@ const Receipt: React.FC = () => {
     //   }, []);
 
     return (  
-        <div className="box-content ml-10 mt-10 mb-10 min-h-130 w-100 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">  
+        <div className="box-content ml-10 mt-10 mb-10 min-h-140 min-w-100 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">  
             <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold">  
                 سبد خرید {n > 0 ? `(${convertToPersianNumbers(n)})` : ""}  
             </h2>  
             {items.length === 0 ? ( 
                 <div className="flex flex-col justify-center items-center mt-10">  
-                    <Image src={emptyReceipt} alt="idk" className="w-70 h-70 "/>  
+                    <Image src={emptyReceipt} alt="emptyReceipt" className="w-70 h-70 "/>  
                     <span className="font-vazir text-lg font-semibold mt-2">!سبد خرید شما خالی است</span>
                 </div> 
             ) : (  
