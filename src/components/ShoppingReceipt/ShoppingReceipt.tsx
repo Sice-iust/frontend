@@ -74,7 +74,7 @@ const Receipt: React.FC = () => {
             {items.length === 0 ? ( 
                 <div className="flex flex-col justify-center items-center mt-10">  
                     <Image src={emptyReceipt} alt="idk" className="w-70 h-70 "/>  
-                    <span className="font-vazir text-lg font-medium mt-2">!سبد خرید شما خالی است</span>
+                    <span className="font-vazir text-lg font-semibold mt-2">!سبد خرید شما خالی است</span>
                 </div> 
             ) : (  
                 <div className={`${n > 2 ? "overflow-y-scroll max-h-60" : ""}`}>  
