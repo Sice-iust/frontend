@@ -17,9 +17,9 @@ interface Item {
 
 const Receipt: React.FC = () => {  
     const initialItems: Item[] = [  
-        // { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 13, after: 10000, total: 30000, stock: 3 },  
-        // { id: 2, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
-        // { id: 3, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
+        { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 13, after: 10000, total: 30000, stock: 3 },  
+        { id: 2, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
+        { id: 3, name: 'نان بربری کنجدی', price: 26000, quantity: 1, discount: 0, after: 26000, total: 26000, stock: 10 },  
     ];   
 
     const [items, setItems] = useState<Item[]>(initialItems);  
