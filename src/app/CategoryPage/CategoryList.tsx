@@ -5,29 +5,46 @@ import { FaStar } from "react-icons/fa";
 
 export default function CategoryList({category}) {
 
-    const [catNumber, setCategoryNumber] = useState(category);
+
+    const [catNumber, setCategoryNumber] = useState(() => {
+        if (typeof window !== "undefined") {
+            return localStorage.getItem('category') || category;
+        }
+        return category;
+    });
+
+    useEffect(() => {
+        if (typeof window !== "undefined" && catNumber) {
+            localStorage.setItem('category', catNumber);
+        }
+    }, [catNumber]);
+    
+
+    
+    console.log("category number",catNumber);
     const convertToPersianNumbers = (num: string | number): string => {  
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
+    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
     };  
     const [data, setData] = useState(null);
     const [dataLength,setDataLength]=useState(0);
-    const fetchData = async () => {  
-        try {  
-          const response = await axios.get("https://nanziback.liara.run/product/category/", {  
-            params: { category : catNumber },  
-          });  
-          setData(response.data);  
-          setDataLength(response.data.length);
-          console.log(`Data from back:`, data);  
-        } catch (error) {  
-          console.error("Error fetching data:", error.response ? error.response.data : error.message);  
+    useEffect(() => {  
+        const fetchData = async () => {  
+            try {  
+                const response = await axios.get("https://nanziback.liara.run/product/category/", {  
+                    params: { category: catNumber },  
+                });  
+                setData(response.data);  
+                setDataLength(response.data.length);  
+                console.log(`Data from back:`, response.data);  
+            } catch (error) {  
+                console.error("Error fetching data:", error.response ? error.response.data : error.message);  
+            }  
+        };  
+        if (catNumber) {  
+            fetchData();  
         }  
-      };  
-    
-      useEffect(() => {  
-        fetchData();  
-      }, []);  
+    }, [catNumber]); 
     return (  
         <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6">  
             {dataLength > 0 ? (  
@@ -41,7 +58,14 @@ export default function CategoryList({category}) {
                                 </span>  
                             </div>  
                             <div className="flex flex-row justify-center items-center">  
-                                <Image src={emptyReceipt} alt="productImg" className="rounded-2xl w-70 h-55 mr-1" />  
+                            <div className="relative w-60 h-50 mb-3 mt-1"> 
+                            <Image  
+                                className="rounded-2xl"  
+                                src={item.photo}  
+                                alt="productImg"  
+                                layout="fill"               
+                            />  
+                            </div>  
                             </div>  
                         </div>  
                         <div className="font-vazir text-xl font-semibold text-right mr-5">{item.name}</div>  
@@ -61,7 +85,7 @@ export default function CategoryList({category}) {
                                 </div>  
                             )}  
                             </div>
-                            <button className="bg-[#F18825] rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 mt-2">افزودن</button>  
+                            <button className="bg-[#F18825] rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 ">افزودن</button>  
                         </div>  
                     </div>  
                 ))  
