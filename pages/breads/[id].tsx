@@ -1,4 +1,3 @@
-// pages/breads/[id].tsx  
 import React from 'react';  
 import Navbar from '../../src/components/HomePage/navbar';  
 import Receipt from '../../src/components/ShoppingReceipt/ShoppingReceipt';  
@@ -15,7 +14,7 @@ const Bread = () => {
             <div className='flex-shrink-0'>  
                 <Receipt />  
             </div>  
-            <CategoryList catNumber={id}/>
+            <CategoryList category={id}/>
         </div>  
         </>  
     );  
