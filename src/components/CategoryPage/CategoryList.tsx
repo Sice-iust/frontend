@@ -113,7 +113,7 @@ export default function CategoryList({ category }) {
                             </div>  
                             {quantities[item.id] === undefined ? (  
                                 <button  
-                                    className="bg-[#F18825] rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18"  
+                                    className="bg-[#F18825] rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 hover:bg-orange-400 transition duration-300 hover:scale-110"  
                                     onClick={() => handleAdd(item.id)}  
                                 >  
                                     افزودن  
