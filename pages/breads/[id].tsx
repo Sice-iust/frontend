@@ -6,7 +6,7 @@ import CategoryList from '../../src/components/CategoryPage/CategoryList';
 import { useRouter } from 'next/router';
 const Bread = () => {  
     const router = useRouter();
-    const { id } = router.query; // Extract the id from the URL
+    const { id } = router.query;
 
     return (  
         <>  
