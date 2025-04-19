@@ -6,8 +6,7 @@ import emptyReceipt from "../../assets/emptyReceipt.png";
 import { FaStar } from "react-icons/fa";  
 
 export default function CategoryList({ category }) {  
-
-    
+ 
     const [catNumber, setCategoryNumber] = useState(() => {
         if (typeof window !== "undefined") {
             return localStorage.getItem('category') || category;
@@ -22,7 +21,6 @@ export default function CategoryList({ category }) {
         }
     }, [category]); 
     
-
     const [data, setData] = useState(null);  
     const [dataLength, setDataLength] = useState(0);  
     const [quantities, setQuantities] = useState({});  
@@ -48,12 +46,35 @@ export default function CategoryList({ category }) {
         }  
     }, [catNumber]);  
 
-    const handleAdd = (itemId) => {  
-        setQuantities((prev) => ({  
-            ...prev,  
-            [itemId]: 1,
-        }));  
-    };  
+    // const handleAdd = (itemId) => {  
+    //     setQuantities((prev) => ({  
+    //         ...prev,  
+    //         [itemId]: 1,
+    //     }));  
+    // };  
+    const handleAdd = async (itemId) => {
+        const token = localStorage.getItem('token'); 
+        try {
+            
+            await axios.post(`https://nanziback.liara.run/user/cart/modify/${itemId}/1/`, {
+              quantity: 1
+            }, {
+              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+            });
+            alert("Item added to cart!");
+          } catch (error) {
+            if (error.response?.data?.error === "You already have this product in your cart") {
+              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/1/`, {
+                // quantity: qty
+              }, {
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+              });
+              alert("Cart updated!");
+            } else {
+              console.error(error.response?.data);
+            }
+          }
+    };
 
     const incrementQuantity = (itemId) => {  
         setQuantities((prev) => ({  
@@ -113,17 +134,17 @@ export default function CategoryList({ category }) {
                             </div>  
                             {quantities[item.id] === undefined ? (  
                                 <button  
-                                    className="bg-[#F18825] rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 hover:bg-orange-400 transition duration-300 hover:scale-110"  
+                                    className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 `}  
                                     onClick={() => handleAdd(item.id)}  
+                                    disabled={ item.stock_1==0}  
                                 >  
                                     افزودن  
                                 </button>  
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${quantities[item.id] >= item.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${quantities[item.id] >= item.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
-                                        onClick={() => incrementQuantity(item.id)}  
-                                        disabled={quantities[item.id] >= item.stock}  
+                                        className={`bg-white ml-5 border-3 ${item.quantity >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        onClick={() => incrementQuantity(item.id)}  
+                                        disabled={quantities[item.id] >= item.stock_1}  
                                     >  
                                         +  
                                     </button>  
