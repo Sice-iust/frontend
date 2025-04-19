@@ -4,6 +4,8 @@ import Receipt from '../ShoppingReceipt/ShoppingReceipt';
 import Image from 'next/image';
 import emptyReceipt from "../../assets/emptyReceipt.png";
 import { FaStar } from "react-icons/fa";
+import { useRouter } from 'next/router';
+
 interface Item {  
     id: number;  
     name: string;  
@@ -17,6 +19,7 @@ interface Item {
     rate: number;  
 }  
 export default function CategoryList({catNumber}) {
+
     const initialItems: Item[] = [  
         { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 13, after: 10000, total: 30000, stock: 3 ,rate:4.5,image:"\assets\emptyReceipt.png"},  
         { id: 1, name: 'نان سنگک ساده', price: 20000, quantity: 3, discount: 13, after: 10000, total: 30000, stock: 3 ,rate:4,image:"\assets\emptyReceipt.png"}, 

@@ -6,26 +6,33 @@ const CardData = [
     {
         src: '/breads/barbari.png',
         text: 'بربری',
+        id:1,
     },
     {
         src: '/breads/barbari.png',
         text: 'سنگک',
+        id:2,
     },
     {
         src: '/breads/barbari.png',
         text: 'لواش',
+        id:6,
     },
     {
         src: '/breads/barbari.png',
         text: 'تافتون',
+        id:3,
     },
     {
         src: '/breads/barbari.png',
-        text: 'سایر',
+        text: 'نان فانتزی',
+        id:5,
+
     },
     {
         src: '/breads/barbari.png',
-        text: 'سایر',
+        text: 'نان های محلی',
+        id:4,
     }
 ];
 export default function CategoryWrapper() {
@@ -39,7 +46,7 @@ export default function CategoryWrapper() {
                     </h2>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'space-around', columnGap: '70px',rowGap: '50px'}}>
-                    {CardData.map((card, index) => <CategoryCard key={index} img_src={card.src} text={card.text} ref={""} />)}
+                    {CardData.map((card, index) => <CategoryCard key={index} img_src={card.src} text={card.text} id={card.id} />)}
                 </div>
             </div >
         </>

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import bread from "../../assets/breads/barbari.png";
 import Link from 'next/link';
 
-export default function CategoryCard({ img_src, text, ref }) {
+export default function CategoryCard({ img_src, text, id }) {
     return (
         <>
             <div style={{
@@ -22,7 +22,7 @@ export default function CategoryCard({ img_src, text, ref }) {
                         display: 'flex', justifyContent: 'center'
                         , color: 'black', textDecoration: 'none'
                     }}
-                    href={{ pathname: `/breads:1` }}
+                    href={`/breads/${id}`}
                 >
                     {text}
                 </Link>
