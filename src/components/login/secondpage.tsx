@@ -81,10 +81,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                 );
 
                 console.log('Response from the server:', response.data);
-                const accessToken = response?.data?.access_token;
-                const refershToken=response?.data?.refresh_token;
-                localStorage.setItem("token", accessToken);
-                localStorage.setItem("rtoken", refershToken);
+               
 
 
                 const isRegistered = response.data.is_registered;
@@ -136,6 +133,10 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
 
                 console.log('Response from the server:', response.data);
                 if (response.data.message == "Login successful") {
+                    const accessToken = response?.data?.access_token;
+                    const refershToken=response?.data?.refresh_token;
+                    localStorage.setItem("token", accessToken);
+                    localStorage.setItem("rtoken", refershToken);
                     onClose();
 
                 }
