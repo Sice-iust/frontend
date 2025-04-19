@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({showImage=true}) => {
         // localStorage.removeItem('token');  
         else{
                 try {  
-                const response = await axios.get('https://nanziback.liara.run/cart/header/', {  
+                const response = await axios.get('https://nanziback.liara.run/header/', {  
                     headers: {  
                         'Authorization': `Bearer ${token}`, // Note: Make sure it starts with "Bearer "  
                     }  
