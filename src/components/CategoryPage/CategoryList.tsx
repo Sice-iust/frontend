@@ -22,6 +22,7 @@ export default function CategoryList({ category }) {
     }, [category]); 
     
     const [data, setData] = useState(null);  
+    const [userdata, setuserData] = useState(null);  
     const [dataLength, setDataLength] = useState(0);  
     const [quantities, setQuantities] = useState({});  
     const convertToPersianNumbers = (num: string | number): string => {  
@@ -46,14 +47,14 @@ export default function CategoryList({ category }) {
         }  
     }, [catNumber]);  
 
-    // const handleAdd = (itemId) => {  
-    //     setQuantities((prev) => ({  
-    //         ...prev,  
-    //         [itemId]: 1,
-    //     }));  
-    // };  
+
     const handleAdd = async (itemId) => {
         const token = localStorage.getItem('token'); 
+        const response = await axios.get(`https://nanziback.liara.run/user/cart/quantity/${itemId}/`, {  
+            headers: { Authorization: `Bearer ${token}`},  
+        });  
+        setuserData(response.data);
+        console.log("user data : ",userdata);
         try {
             
             await axios.post(`https://nanziback.liara.run/user/cart/modify/${itemId}/1/`, {
@@ -65,7 +66,7 @@ export default function CategoryList({ category }) {
           } catch (error) {
             if (error.response?.data?.error === "You already have this product in your cart") {
               await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/1/`, {
-                // quantity: qty
+                quantity: (userdata.box_quantities.Box_of_1)+1
               }, {
                 headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
               });
@@ -105,7 +106,7 @@ export default function CategoryList({ category }) {
                                 </span>  
                             </div>  
                             <div className="flex flex-row justify-center items-center">  
-                                <div className="relative w-60 h-50 mb-3 mt-1">  
+                                <div className="relative w-50 h-50 mb-3 mt-1">  
                                     <Image  
                                         className="rounded-2xl"  
                                         src={item.photo}  
@@ -132,7 +133,7 @@ export default function CategoryList({ category }) {
                                     </div>  
                                 )}  
                             </div>  
-                            {quantities[item.id] === undefined ? (  
+                            { userdata===null || userdata.box_quantities.Box_of_1 === null || userdata.box_quantities.Box_of_1 === 0 ? (  
                                 <button  
                                     className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 `}  
                                     onClick={() => handleAdd(item.id)}  
@@ -143,13 +144,14 @@ export default function CategoryList({ category }) {
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${item.quantity >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        onClick={() => incrementQuantity(item.id)}  
-                                        disabled={quantities[item.id] >= item.stock_1}  
+                                        className={`bg-white ml-5 border-3 ${userdata.box_quantities.Box_of_1 >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata.box_quantities.Box_of_1 >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                        onClick={() => incrementQuantity(item.id)}  
+                                        disabled={userdata.box_quantities.Box_of_1 >= item.stock_1}  
                                     >  
                                         +  
                                     </button>  
-                                    <span className="text-lg font-semibold">{convertToPersianNumbers(quantities[item.id]) || 0}</span>  
-                                    {quantities[item.id] === 1 ? (  
+                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata.box_quantities.Box_of_1) || 0}</span>  
+                                    {userdata.box_quantities.Box_of_1 === 1 ? (  
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
                                             onClick={() => {  
@@ -170,7 +172,7 @@ export default function CategoryList({ category }) {
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
                                             onClick={() => decrementQuantity(item.id)}  
-                                            disabled={quantities[item.id] <= 1}  
+                                            disabled={userdata.box_quantities.Box_of_1 <= 1}  
                                         >  
                                             <span className="text-xl">-</span>  
                                         </button>  
