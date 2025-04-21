@@ -20,7 +20,7 @@ export default function CategoryList({ category }) {
             setCategoryNumber(category);
         }
     }, [category]); 
-    
+    const [isOpen, setOpen] = useState(false);   
     const [data, setData] = useState(null);  
     const [userdata, setuserData] = useState(null);  
     const [dataLength, setDataLength] = useState(0);  
@@ -28,12 +28,19 @@ export default function CategoryList({ category }) {
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
-    };  
+    }; 
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpen(false);
+    }; 
     useEffect(() => {  
         const fetchData = async () => {  
             try {  
                 const response = await axios.get("https://nanziback.liara.run/product/category/", {  
-                    params: { category: catNumber },  
+                    params: { category: catNumber, box_type: 1 },  
                 });  
                 setData(response.data);  
                 setDataLength(response.data.length);  
@@ -53,11 +60,11 @@ export default function CategoryList({ category }) {
         const response = await axios.get(`https://nanziback.liara.run/user/cart/quantity/${itemId}/`, {  
             headers: { Authorization: `Bearer ${token}`},  
         });  
-        setuserData(response.data);
+        setuserData(response.data.cart_item);
         console.log("user data : ",userdata);
         try {
             
-            await axios.post(`https://nanziback.liara.run/user/cart/modify/${itemId}/1/`, {
+            await axios.post(`https://nanziback.liara.run/user/cart/create/${itemId}/`, {
               quantity: 1
             }, {
               headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
@@ -65,8 +72,8 @@ export default function CategoryList({ category }) {
             alert("Item added to cart!");
           } catch (error) {
             if (error.response?.data?.error === "You already have this product in your cart") {
-              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/1/`, {
-                quantity: (userdata.box_quantities.Box_of_1)+1
+              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/`, {
+                update : 'add'
               }, {
                 headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
               });
@@ -106,10 +113,10 @@ export default function CategoryList({ category }) {
                                 </span>  
                             </div>  
                             <div className="flex flex-row justify-center items-center">  
-                                <div className="relative w-50 h-50 mb-3 mt-1">  
+                                <div className="relative w-40 h-50 mb-3 ml-5 mt-1">  
                                     <Image  
                                         className="rounded-2xl"  
-                                        src={item.photo}  
+                                        src={item.photo_url}  
                                         alt="productImg"  
                                         layout="fill"  
                                     />  
@@ -133,7 +140,7 @@ export default function CategoryList({ category }) {
                                     </div>  
                                 )}  
                             </div>  
-                            { userdata===null || userdata.box_quantities.Box_of_1 === null || userdata.box_quantities.Box_of_1 === 0 ? (  
+                            { userdata===null || userdata === null || userdata === 0 ? (  
                                 <button  
                                     className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 `}  
                                     onClick={() => handleAdd(item.id)}  
@@ -144,14 +151,14 @@ export default function CategoryList({ category }) {
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${userdata.box_quantities.Box_of_1 >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata.box_quantities.Box_of_1 >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                        className={`bg-white ml-5 border-3 ${userdata >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                         onClick={() => incrementQuantity(item.id)}  
-                                        disabled={userdata.box_quantities.Box_of_1 >= item.stock_1}  
+                                        disabled={userdata >= item.stock_1}  
                                     >  
                                         +  
                                     </button>  
-                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata.box_quantities.Box_of_1) || 0}</span>  
-                                    {userdata.box_quantities.Box_of_1 === 1 ? (  
+                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata) || 0}</span>  
+                                    {userdata === 1 ? (  
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
                                             onClick={() => {  
@@ -172,7 +179,7 @@ export default function CategoryList({ category }) {
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
                                             onClick={() => decrementQuantity(item.id)}  
-                                            disabled={userdata.box_quantities.Box_of_1 <= 1}  
+                                            disabled={userdata <= 1}  
                                         >  
                                             <span className="text-xl">-</span>  
                                         </button>  
