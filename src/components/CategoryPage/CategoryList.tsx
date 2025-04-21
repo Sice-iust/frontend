@@ -123,7 +123,7 @@ export default function CategoryList({ category }) {
                                 </div>  
                             </div>  
                         </div>  
-                        <div className="font-vazir text-xl font-semibold text-right mr-5">{item.name}</div>  
+                        <div className="font-vazir text-lg font-semibold text-right mr-5">{item.name}</div>  
                         <div className="flex flex-row-reverse">  
                             <div className='flex flex-col'>  
                                 <div className="font-vazir text-lg text-right mr-5 mt-2">  
@@ -142,7 +142,7 @@ export default function CategoryList({ category }) {
                             </div>  
                             { userdata===null || userdata === null || userdata === 0 ? (  
                                 <button  
-                                    className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-25 h-10 text-white text-lg font-vazir font-md mr-18 `}  
+                                    className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
                                     onClick={() => handleAdd(item.id)}  
                                     disabled={ item.stock_1==0}  
                                 >  
