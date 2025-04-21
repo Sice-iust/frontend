@@ -131,7 +131,7 @@ const Receipt: React.FC = () => {
                                         )}  
                                     </div>  
                                     <span className="text-[15px] text-right font-vazir font-medium">  
-                                        قیمت: {convertToPersianNumbers(Number(item.product.price).toLocaleString())} تومان  
+                                        قیمت: {convertToPersianNumbers(Number(item.product.price*(1-item.product.discount/100)).toLocaleString())} تومان  
                                     </span>  
                                 </div>  
                                 {item.product.discount > 0 && (  
@@ -139,7 +139,7 @@ const Receipt: React.FC = () => {
                                         <div className="bg-[#F18825] text-lg w-9 h-5 text-white text-[14px] pl-1.5 rounded-md">  
                                             %{convertToPersianNumbers(item.product.discount)}  
                                         </div>  
-                                        <div className="mr-2 text-gray-500 line-through">{convertToPersianNumbers(item.price.toLocaleString())}</div>  
+                                        <div className="mr-2 text-gray-500 line-through">{convertToPersianNumbers(Number(item.product.price)).toLocaleString()}</div>  
                                     </div>  
                                 )}  
                             </div>  
@@ -159,7 +159,7 @@ const Receipt: React.FC = () => {
                                 <span className="text-[17px] font-vazir font-medium text-right  mr-6">{item.product.name}</span>
                                 <span className="flex flex-row-reverse">
                                 <span className="ml-1 text-gray-500">× {convertToPersianNumbers(item.quantity)}</span>  
-                                <span>{convertToPersianNumbers(Number(item.product.price).toLocaleString())}</span>  
+                                <span>{convertToPersianNumbers(Number(item.product.price*(1-item.product.discount/100)).toLocaleString())}</span>  
                                 <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
                                 </span>  
                             </div>  
