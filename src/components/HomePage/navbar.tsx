@@ -7,7 +7,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Logo from "../../assets/logo.png";
 import DarkLogo from "../../assets/logo-dark.png"
-import HomePagePhoto from "../../assets/homePagePhoto.png";
+import HomePagePhoto from "../../assets/homePagePhoto_LE_upscale_balanced.jpg";
 import DrakHomePagePhoto from "../../assets/darkHomePagePhoto.png"
 import LoginModal from "../login/login"; 
 import { useTheme } from '../theme';   
@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({showImage=true}) => {
         // localStorage.removeItem('token');  
         else{
                 try {  
-                const response = await axios.get('https://nanziback.liara.run/cart/header/', {  
+                const response = await axios.get('https://nanziback.liara.run/header/', {  
                     headers: {  
                         'Authorization': `Bearer ${token}`, // Note: Make sure it starts with "Bearer "  
                     }  
