@@ -15,26 +15,22 @@ const Receipt: React.FC = () => {
 
     const incrementQuantity = async (id: number) => {  
         const token = localStorage.getItem('token'); 
-        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/`, {
-            update : 'add'
+        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"add"}`, {
           }, {
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+            headers: { Authorization: `Bearer ${token}`, }
           });
           alert("Cart updated!");
     };  
-    const removeItem = async (id: number) => {  
-        const token = localStorage.getItem('token');   
+    const removeItem = async (id: number) => {    
         await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {  
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }  
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" }  
         });  
         alert("Cart updated!");  
     }; 
     const decrementQuantity = async (id: number) => {  
-        const token = localStorage.getItem('token'); 
-        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/`, {
-            update : 'delete'
+        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"delete"}`, {
           }, {
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json", }
           });
           alert("Cart updated!");
     };  
@@ -137,7 +133,7 @@ const Receipt: React.FC = () => {
                                         )}  
                                     </div>  
                                     <span className="text-[15px] text-right font-vazir font-medium">  
-                                        قیمت: {convertToPersianNumbers(item.discounted_price.toLocaleString())} تومان  
+                                        قیمت: {convertToPersianNumbers(Number(item.product.price).toLocaleString())} تومان  
                                     </span>  
                                 </div>  
                                 {item.product.discount > 0 && (  
@@ -165,11 +161,23 @@ const Receipt: React.FC = () => {
                                 <span className="text-[17px] font-vazir font-medium text-right  mr-6">{item.product.name}</span>
                                 <span className="flex flex-row-reverse">
                                 <span className="ml-1 text-gray-500">× {convertToPersianNumbers(item.quantity)}</span>  
-                                <span>{convertToPersianNumbers(item.discounted_price.toLocaleString())}</span>  
+                                <span>{convertToPersianNumbers(Number(item.product.price).toLocaleString())}</span>  
                                 <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
                                 </span>  
                             </div>  
                         ))}  
+                        {data.total_discount >0 && (
+                            <>
+                            <div className="flex flex-row-reverse py-2 justify-between ">  
+                                <span className="text-[14px] font-vazir font-medium text-right mr-2 text-green-600 font-semibold mr-6 ">سود شما از این خرید</span>
+                                <span className="flex flex-row-reverse">
+                                <span className="text-green-600 font-semibold">{convertToPersianNumbers(data.total_discount.toLocaleString())}</span>    
+                                <span className="text-[14px] font-vazir font-medium text-right mr-2 text-green-600">تومان</span>    
+                                </span>
+                            </div>                            
+                            </>
+                        )
+                        }
                         <div className="flex flex-row-reverse py-2 border-t mt-6 ">  
                             <span className="font-vazir font-semibold ml-50 mr-6">جمع کل</span>  
                             <span className="font-bold font-2xl">{convertToPersianNumbers(data.total_actual_price.toLocaleString())}</span>  
