@@ -1,27 +1,34 @@
 import React from 'react';  
+import { useTheme } from '../theme';   
+import axios from "axios";
+import { useState ,useEffect} from 'react';
+import dynamic from 'next/dynamic';
+
 import Search from "./search";
 import styles from  './navbar.module.scss'; 
+import LoginModal from "../login/login"; 
+
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+
 import Logo from "../../assets/logo.png";
 import DarkLogo from "../../assets/logo-dark.png"
 import HomePagePhoto from "../../assets/homePagePhoto.png";
 import DrakHomePagePhoto from "../../assets/darkHomePagePhoto.png"
-import LoginModal from "../login/login"; 
-import { useTheme } from '../theme';   
 import Image from 'next/image';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
-import { useState ,useEffect} from 'react';
-import axios from "axios";
+import { LocalDining } from '@mui/icons-material';
 
-import { colors } from '@mui/material';
 
 interface HeaderProps {   
     showImage: boolean;   
   }  
-
+  const LazySearch = dynamic(() => import('./search'), {
+    loading: () => <p>Loading...</p>, 
+    ssr: false, 
+  });
 const Header: React.FC<HeaderProps> = ({showImage=true}) => {  
     const { isDarkMode, toggleDarkMode } = useTheme(); 
     const [isLoggedIn, setIsLoggedIn] = useState(false);  
@@ -40,7 +47,6 @@ const Header: React.FC<HeaderProps> = ({showImage=true}) => {
             console.log('No token found');  
             return;  
         }  
-        // localStorage.removeItem('token');  
         else{
                 try {  
                 const response = await axios.get('https://nanziback.liara.run/header/', {  
@@ -54,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({showImage=true}) => {
                     setIsLoggedIn(response.data.is_login);  
                     setShoppingNum(response.data.nums);  
                 }  
-                console.log('Username:', response.data.username); // Correctly log the username  
+                console.log('Username:', response.data.username);
             } catch (error) {  
                 console.error('Error fetching username:', error);  
             }  
@@ -107,10 +113,10 @@ const Header: React.FC<HeaderProps> = ({showImage=true}) => {
                  
                     {isDarkMode?<WbSunnyOutlinedIcon className={styles.drakModeIcon} /> : <Brightness2OutlinedIcon className={styles.drakModeIcon} /> } 
 
-                    <Search isDarkMode={isDarkMode} />
+                    <LazySearch isDarkMode={isDarkMode} />
 
-                        <div className={styles.logoContainerNav}>  
-                            <Image src={isDarkMode?DarkLogo:Logo} alt="Logo" className={styles.logoNav} />  
+                        <div className="flex ml-auto justify-end items-center ">  
+                            <Image src={isDarkMode?DarkLogo:Logo} alt="Logo" className="w-30" />  
                         </div>  
                 </div>  
           
