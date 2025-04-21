@@ -1,24 +1,21 @@
 import React, { useState } from "react";  
 
 interface Ordersnum {  
-  currentOrdersCount: number;    
-  finalOrdersCount: number;  
+  currentOrdersCount: string;    
+  finalOrdersCount: string;  
 }  
 
 const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => {  
 
   const [selectedTab, setSelectedTab] = useState(0); 
   
-  const convertToPersianNumbers = (num: string | number): string => {  
-    const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
-    return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
-  };  
+  
 
   return (  
     <div className="container mx-auto mt-10">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full mx-5
-                      md:w-1/2 mx-auto">    
+                      md:w-full mx-auto lg:w-[60%]">    
         <div   
           className={`flex-1 text-center py-2 cursor-pointer 
                       relative border border-gray-300 
@@ -30,7 +27,7 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => 
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm
-                           md:text-base">سفارش های جاری ({convertToPersianNumbers(currentOrdersCount)})</span>  
+                           md:text-base">سفارش های نهایی&zwnj;({(currentOrdersCount)})</span>  
           <div className={`absolute bottom-0 left-0 right-0 
                            h-1 bg-orange-500 rounded-2xl 
             ${selectedTab === 0 ? '' : 'hidden'}`}>
@@ -48,7 +45,7 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => 
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm 
-                           md:text-base">سفارش های نهایی ({convertToPersianNumbers(finalOrdersCount)})</span>  
+                           md:text-base">سفارش های جاری&zwnj;({(finalOrdersCount)})</span>  
           <div className={`absolute bottom-0 left-0 right-0 
                            h-1 bg-orange-500 rounded-2xl 
             ${selectedTab === 1 ? '' : 'hidden'}`}>
