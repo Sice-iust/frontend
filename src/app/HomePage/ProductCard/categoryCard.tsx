@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import bread from "../../assets/breads/barbari.png";
 import Link from 'next/link';
 
 export default function CategoryCard({ img_src, text, id }) {
@@ -12,7 +11,7 @@ export default function CategoryCard({ img_src, text, id }) {
                 borderRadius: '30px', padding: '10px',
                 display: 'flex', flexDirection: 'column', alignContent: 'center'
             }}>
-                <Image src={bread}
+                <Image src={`/assets/breads/barbari.png`}
                     width={100}
                     height={100}
                     alt="Nanzi Logo"

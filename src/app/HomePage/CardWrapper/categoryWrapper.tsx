@@ -1,7 +1,5 @@
 import React from 'react';
 import CategoryCard from '../ProductCard/categoryCard';
-import axios from 'axios';
-import { data } from 'react-router';
 const CardData = [
     {
         src: '/breads/barbari.png',

@@ -1,7 +1,5 @@
-import React, { useState,useEffect } from "react";  
-import Navbar from "../HomePage/navbar";  
+import React, { useState,useEffect } from "react"; 
 import { CgNotes } from "react-icons/cg";
-import axios from "axios";
 import emptyReceipt from "../../assets/emptyReceipt.png";
 import Image from 'next/image';
 interface Item {  

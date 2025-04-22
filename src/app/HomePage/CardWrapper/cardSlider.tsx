@@ -1,14 +1,15 @@
+'use client'
+
 import React, { useEffect, useState } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from '../ProductCard/productCard';
 import axios from 'axios';
-import { Percent } from '@mui/icons-material';
 
 
 export default function CardSlider({ text, color, url }) {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<any[]>([]);
     useEffect(() => {
         axios.get(url)
             .then(
@@ -69,7 +70,7 @@ export default function CardSlider({ text, color, url }) {
             </div>
             <Slider {...settings}>
                 {products.map((product) => (
-                    <ProductCard key={product.id} img_src={product.image} text={product.name} ref={product.id} percent={product.discount} price={product.price}/>
+                    <ProductCard key={product.id} img_src={product.image} text={product.name} ref={product.id} percent={product.discount} price={product.price} />
                 ))}
             </Slider>
         </div>

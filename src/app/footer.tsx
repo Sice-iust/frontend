@@ -1,11 +1,8 @@
+'use client'
+
 import React from 'react';
 import styles from './footer.module.scss';
 import Image from 'next/image';
-import Logo from "../../assets/logo.png";
-import Symbol from "../../assets/footerSymbol.png"
-import { useTheme } from '../theme';   
-import DarkLogo from "../../assets/logo-dark.png"
-import DarkSymbol from "../../assets/darkFooterSymbol.png";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faInstagram, 
@@ -13,6 +10,7 @@ import {
   faTelegram, 
   faFacebook
 } from '@fortawesome/free-brands-svg-icons';
+import { useTheme } from './theme';
 
 const Footer = () => {
     const { isDarkMode, toggleDarkMode } = useTheme(); 
@@ -27,7 +25,7 @@ const Footer = () => {
       <div className={styles.rightContainer}>
           <div className={styles.logoSection}>
             <Image 
-              src={isDarkMode?DarkLogo:Logo} 
+              src={isDarkMode?`/assets/logo-dark.png`:`/assets/logo.png`} 
               alt="Logo" 
               width={50} 
               height={50} 
@@ -127,7 +125,7 @@ const Footer = () => {
         <div className={styles.leftContainer}>
           <div className={styles.imageWrapper}>
             <Image 
-              src={isDarkMode?DarkSymbol:Symbol}
+              src={isDarkMode?`/assets/darkFooterSymbol.png`:`/assets/footerSymbol.png`}
               alt="First Image" 
               width={350} 
               height={150} 

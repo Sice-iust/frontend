@@ -1,7 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
-import bread from "../../assets/breads/barbari.png";
-import Link from 'next/link';
 
 export default function ProductCard({ img_src, text, ref, percent, price }) {
     return (

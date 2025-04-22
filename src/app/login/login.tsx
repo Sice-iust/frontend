@@ -9,7 +9,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Logo from "./assets/logo.png";
 import Logodark from "./assets/logo-dark.png";
 import styles from'./login.module.scss';
-import { useTheme } from '../theme';
+import { useTheme } from '../../app/theme';
 import FirstPage from './firstpage';
 import SecondPage from './secondpage';
 import ThirdPage from './thirdpage';

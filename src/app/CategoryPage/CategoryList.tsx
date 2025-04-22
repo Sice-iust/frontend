@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Receipt from '../ShoppingReceipt/ShoppingReceipt';
 import Image from 'next/image';
 import emptyReceipt from "../../assets/emptyReceipt.png";
 import { FaStar } from "react-icons/fa";
-import { useRouter } from 'next/router';
 
 interface Item {  
     id: number;  
