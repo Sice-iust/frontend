@@ -8,7 +8,7 @@ import { FaStar } from "react-icons/fa";
 export default function ProductPage({ open, onClose, itemid }) {  
     const [isFinished, setIsFinished] = useState(false);  
     const [data, setData] = useState(null); 
-
+    const [userdata, setuserData] = useState(null);
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
@@ -25,6 +25,30 @@ export default function ProductPage({ open, onClose, itemid }) {
                 console.log("item id : ",itemid);
                 console.log("Response Data:", response.data);   
                 setData(response.data);  
+            } catch (err) {  
+                console.error("Error fetching data:", err);  
+            } 
+        };  
+    
+        if (itemid) {  
+            fetchData();  
+        }  
+    }, [itemid]);  
+    useEffect(() => {  
+        const fetchData = async () => {  
+            try {  
+                const response = await axios.get("https://nanziback.liara.run/user/cart/quantity", {   
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
+                });  
+                console.log("item id : ",itemid);
+                console.log("Response Data:", response.data);  
+                const matchedItem = response.data.find(item => item.product_id === itemid);  
+
+                if (matchedItem) {  
+                    setuserData( matchedItem.quantity );  
+                } else {  
+                    console.log("No matching product found.");  
+                }    
             } catch (err) {  
                 console.error("Error fetching data:", err);  
             } 
@@ -150,7 +174,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     </div>  
                                 )}  
                             </div>  
-                            { userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
+                            { userdata === undefined || userdata === 0 ? (  
                                 <button  
                                     className={` ${data.stock==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
                                     onClick={() => handleAdd(data.id)}  
@@ -161,14 +185,14 @@ export default function ProductPage({ open, onClose, itemid }) {
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${userdata[item.id] >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                        className={`bg-white ml-5 border-3 ${userdata >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                         onClick={() => incrementQuantity(data.id)}  
-                                        disabled={userdata[item.id] >= data.stock}  
+                                        disabled={userdata >= data.stock}  
                                     >  
                                         +  
                                     </button>  
-                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata[item.id] || 0) || 0}</span>  
-                                    {userdata[item.id] === 1 ? (  
+                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata || 0) || 0}</span>  
+                                    {userdata === 1 ? (  
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
                                             onClick={() => {  
@@ -187,7 +211,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
                                             onClick={() => decrementQuantity(data.id)}  
-                                            disabled={userdata[item.id] <= 1}  
+                                            disabled={userdata <= 1}  
                                         >  
                                             <span className="text-xl">-</span>  
                                         </button>  
