@@ -35,7 +35,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         }  
     }, [itemid]);  
     useEffect(() => {  
-        const fetchData = async () => {  
+        const fetchDatauser = async () => {  
             try {  
                 const response = await axios.get("https://nanziback.liara.run/user/cart/quantity", {   
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
@@ -55,16 +55,11 @@ export default function ProductPage({ open, onClose, itemid }) {
         };  
     
         if (itemid) {  
-            fetchData();  
+            fetchDatauser();  
         }  
     }, [itemid]);  
     const handleAdd = async (itemId) => {
         const token = localStorage.getItem('token'); 
-        const response = await axios.get(`https://nanziback.liara.run/user/cart/quantity/${itemId}/`, {  
-            headers: { Authorization: `Bearer ${token}`},  
-        });  
-        setuserData((prev) => ({ ...prev, [itemId]: response.data[0].cart_item || 0 }));          
-        console.log("user data : ",userdata);
         try {
             
             await axios.post(`https://nanziback.liara.run/user/cart/creat/${itemId}/`, {
@@ -158,25 +153,25 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div>  
                     <div className="mt-7 ml-10 font-vazir text-lg font-medium text-right text-justify">{data.description}</div>
                     <div className={`box-contetnt rounded-2xl bg-${data.color}-300 border-1 p-2 mt-7 ml-10 font-vazir text-lg font-semibold text-right text-justify`}>{data.box_color}</div>
-                    <div className="flex flex-row-reverse">  
+                    <div className="flex flex-row-reverse mt-9 justify-between">  
                             <div className='flex flex-col'>  
-                                <div className="font-vazir text-lg text-right mr-5 mt-2">  
+                                <div className="font-vazir text-lg text-right font-semibold text-xl">  
                                     {convertToPersianNumbers(Math.round(parseFloat(data.discounted_price)).toLocaleString())} :قیمت  
                                 </div>  
                                 {data.discount > 0 && (  
-                                    <div className="flex flex-row-reverse mr-6">  
+                                    <div className="flex flex-row-reverse mr-5">  
                                         <div className="bg-[#F18825] text-lg w-9 h-5 text-white text-[14px] pl-1.5 rounded-md">  
                                             %{convertToPersianNumbers(data.discount)}  
                                         </div>  
-                                        <div className="mr-2 text-gray-500 line-through">  
+                                        <div className="mr-2 text-gray-500 line-through text-lg">  
                                             {convertToPersianNumbers(Math.round(Number(data.price)).toLocaleString())}  
                                         </div>  
                                     </div>  
                                 )}  
                             </div>  
-                            { userdata === undefined || userdata === 0 ? (  
+                            { userdata === null || userdata === 0 ? (  
                                 <button  
-                                    className={` ${data.stock==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
+                                    className={` ${data.stock==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-30 h-12 text-white text-2xl font-vazir font-md mr-24 ml-10 mb-5`}  
                                     onClick={() => handleAdd(data.id)}  
                                     disabled={ data.stock==0}  
                                 >  
