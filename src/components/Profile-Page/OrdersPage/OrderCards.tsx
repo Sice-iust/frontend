@@ -3,7 +3,9 @@ import { RiCheckboxCircleFill } from "react-icons/ri";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
 import { LuCalendar } from "react-icons/lu";
-import Image, { StaticImageData } from 'next/image';  
+import Image, { StaticImageData } from 'next/image'; 
+import { Product } from "./Orders"
+
 
 interface OrderCardProps {  
     id: string;  
@@ -12,7 +14,7 @@ interface OrderCardProps {
     delivery_clock: string;  
     distination: string;  
     product_count: string;  
-    product_photos: StaticImageData[]; 
+    product_photos: Product[]; 
   }  
 
 const OrderCard: React.FC<OrderCardProps> = ({  
@@ -85,24 +87,27 @@ const OrderCard: React.FC<OrderCardProps> = ({
             </button>  
         
 
-            <div className="-mt-3 flex flex-wrap items-center justify-start ml-auto">
-                <div className="flex space-x-1">
+            <div className="-mt-7 flex flex-wrap items-center  ml-auto lg:ml-85">
+               {product_count != "0" ? (<div className="flex space-x-1">
                     <span className="text-gray-500 text-sm sm:text-base md:text-md lg:text-lg">نان دیگر</span>
                     <span className="text-gray-500 text-sm  sm:text-base md:text-md lg:text-lg">{product_count}+</span>
-                </div>
+                </div>) : null }
 
                 <div className="flex space-x-2 ml-1">
-                    {product_photos.map((photo, index) => (
-                    <div key={index} className="relative">
+                    {product_photos.map((prod, index) => (
+                    <div key={index} className="relative ">
                         <Image
-                        src={photo}
+                        src={prod.photo}
                         alt="product"
-                        className="w-10 h-10 rounded-md -mt-2"
+                        className="w-10 h-10 rounded-md -mt-1 "
                         layout="intrinsic"
+                        width={500}
+                        height={300} 
                         />
-                        <span className="absolute bottom-0 left-0 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex 
+                        <span className="absolute bottom-1 left-0 bg-orange-500 text-white text-xs rounded-full 
+                                        w-5 h-5 flex 
                                         items-center justify-center -mb-1 -ml-1">
-                        {product_count}
+                        {prod.quantity}
                         </span>
                     </div>
                     ))}
