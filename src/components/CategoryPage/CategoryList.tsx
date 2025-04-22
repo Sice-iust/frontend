@@ -198,6 +198,7 @@ export default function CategoryList({ category }) {
             ) : (  
                 <div>No items found</div>  
             )}  
+            {/* {isOpen && <LoginModal onClose={handleCloseModal} open={isOpen} />} */}
         </div>  
     );  
 }  
