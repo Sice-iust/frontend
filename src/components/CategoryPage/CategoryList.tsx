@@ -22,7 +22,7 @@ export default function CategoryList({ category }) {
     }, [category]); 
     const [isOpen, setOpen] = useState(false);   
     const [data, setData] = useState(null);  
-    const [userdata, setuserData] = useState(null);  
+    const [userdata, setuserData] = useState({});  
     const [dataLength, setDataLength] = useState(0);  
     const [quantities, setQuantities] = useState({});  
     const convertToPersianNumbers = (num: string | number): string => {  
@@ -40,7 +40,7 @@ export default function CategoryList({ category }) {
         const fetchData = async () => {  
             try {  
                 const response = await axios.get("https://nanziback.liara.run/product/category/", {  
-                    params: { category: catNumber, box_type: 1 },  
+                    params: { category: catNumber },  
                 });  
                 setData(response.data);  
                 setDataLength(response.data.length);  
@@ -60,11 +60,11 @@ export default function CategoryList({ category }) {
         const response = await axios.get(`https://nanziback.liara.run/user/cart/quantity/${itemId}/`, {  
             headers: { Authorization: `Bearer ${token}`},  
         });  
-        setuserData(response.data.cart_item);
+        setuserData((prev) => ({ ...prev, [itemId]: response.data[0].cart_item || 0 }));          
         console.log("user data : ",userdata);
         try {
             
-            await axios.post(`https://nanziback.liara.run/user/cart/create/${itemId}/`, {
+            await axios.post(`https://nanziback.liara.run/user/cart/creat/${itemId}/`, {
               quantity: 1
             }, {
               headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
@@ -72,8 +72,7 @@ export default function CategoryList({ category }) {
             alert("Item added to cart!");
           } catch (error) {
             if (error.response?.data?.error === "You already have this product in your cart") {
-              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/`, {
-                update : 'add'
+              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/?update=${"add"}`, {
               }, {
                 headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
               });
@@ -84,27 +83,33 @@ export default function CategoryList({ category }) {
           }
     };
 
-    const incrementQuantity = (itemId) => {  
-        setQuantities((prev) => ({  
-            ...prev,  
-            [itemId]: (prev[itemId] || 0) + 1,  
-        }));  
+    const incrementQuantity = async (id: number) => {  
+        const token = localStorage.getItem('token'); 
+        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"add"}`, {
+          }, {
+            headers: { Authorization: `Bearer ${token}`, }
+          });
+          alert("Cart updated!");
     };  
-
-    const decrementQuantity = (itemId) => {  
-        setQuantities((prev) => {  
-            const newQuantity = (prev[itemId] || 0) - 1;  
-            return newQuantity > 0  
-                ? { ...prev, [itemId]: newQuantity }  
-                : { ...prev };  
+    const removeItem = async (id: number) => {    
+        await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {  
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" }  
         });  
+        alert("Cart updated!");  
+    }; 
+    const decrementQuantity = async (id: number) => {  
+        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"delete"}`, {
+          }, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json", }
+          });
+          alert("Cart updated!");
     };  
 
     return (  
-        <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6">  
+        <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 ">  
             {dataLength > 0 ? (  
                 data.map(item => (  
-                    <div key={item.id} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77">  
+                    <div key={item.id} onClick={handleOpenModal} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77  cursor-pointer hover:scale-105 transition duration-300 ">  
                         <div className="flex flex-row">  
                             <div className="mt-1 box-content place-items-start rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-1 mt-1">  
                                 <span className="flex flex-row text-xl font-vazir ml-3 mb-1">  
@@ -140,7 +145,7 @@ export default function CategoryList({ category }) {
                                     </div>  
                                 )}  
                             </div>  
-                            { userdata===null || userdata === null || userdata === 0 ? (  
+                            { userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
                                 <button  
                                     className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
                                     onClick={() => handleAdd(item.id)}  
@@ -151,20 +156,21 @@ export default function CategoryList({ category }) {
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${userdata >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                        className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                         onClick={() => incrementQuantity(item.id)}  
-                                        disabled={userdata >= item.stock_1}  
+                                        disabled={userdata[item.id] >= item.stock_1}  
                                     >  
                                         +  
                                     </button>  
-                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata) || 0}</span>  
-                                    {userdata === 1 ? (  
+                                    <span className="text-lg font-semibold">{convertToPersianNumbers(userdata[item.id] || 0) || 0}</span>  
+                                    {userdata[item.id] === 1 ? (  
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
                                             onClick={() => {  
-                                                const newQuantities = { ...quantities };  
+                                                const newQuantities = { ...userdata };    
                                                 delete newQuantities[item.id];   
                                                 setQuantities(newQuantities);  
+                                                removeItem(item.id);
                                             }}  
                                         >  
                                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  
@@ -179,7 +185,7 @@ export default function CategoryList({ category }) {
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
                                             onClick={() => decrementQuantity(item.id)}  
-                                            disabled={userdata <= 1}  
+                                            disabled={userdata[item.id] <= 1}  
                                         >  
                                             <span className="text-xl">-</span>  
                                         </button>  
