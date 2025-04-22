@@ -137,33 +137,33 @@ export default function ProductPage({ open, onClose, itemid }) {
                     <div className="flex flex-row-reverse">  
                             <div className='flex flex-col'>  
                                 <div className="font-vazir text-lg text-right mr-5 mt-2">  
-                                    {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
+                                    {convertToPersianNumbers(Math.round(parseFloat(data.discounted_price)).toLocaleString())} :قیمت  
                                 </div>  
-                                {item.discount > 0 && (  
+                                {data.discount > 0 && (  
                                     <div className="flex flex-row-reverse mr-6">  
                                         <div className="bg-[#F18825] text-lg w-9 h-5 text-white text-[14px] pl-1.5 rounded-md">  
-                                            %{convertToPersianNumbers(item.discount)}  
+                                            %{convertToPersianNumbers(data.discount)}  
                                         </div>  
                                         <div className="mr-2 text-gray-500 line-through">  
-                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}  
+                                            {convertToPersianNumbers(Math.round(Number(data.price)).toLocaleString())}  
                                         </div>  
                                     </div>  
                                 )}  
                             </div>  
                             { userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
                                 <button  
-                                    className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
-                                    onClick={() => handleAdd(item.id)}  
-                                    disabled={ item.stock_1==0}  
+                                    className={` ${data.stock==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
+                                    onClick={() => handleAdd(data.id)}  
+                                    disabled={ data.stock==0}  
                                 >  
                                     افزودن  
                                 </button>  
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
-                                        onClick={() => incrementQuantity(item.id)}  
-                                        disabled={userdata[item.id] >= item.stock_1}  
+                                        className={`bg-white ml-5 border-3 ${userdata[item.id] >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                        onClick={() => incrementQuantity(data.id)}  
+                                        disabled={userdata[item.id] >= data.stock}  
                                     >  
                                         +  
                                     </button>  
@@ -172,10 +172,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
                                             onClick={() => {  
-                                                const newQuantities = { ...userdata };    
-                                                delete newQuantities[item.id];   
-                                                setQuantities(newQuantities);  
-                                                removeItem(item.id);
+                                                removeItem(data.id);
                                             }}  
                                         >  
                                             <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  
@@ -189,7 +186,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     ) : (  
                                         <button  
                                             className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
-                                            onClick={() => decrementQuantity(item.id)}  
+                                            onClick={() => decrementQuantity(data.id)}  
                                             disabled={userdata[item.id] <= 1}  
                                         >  
                                             <span className="text-xl">-</span>  
