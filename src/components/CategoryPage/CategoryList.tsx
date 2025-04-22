@@ -111,7 +111,7 @@ export default function CategoryList({ category }) {
         <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 ">  
             {dataLength > 0 ? (  
                 data.map(item => (  
-                    <div key={item.id} onClick={() => handleOpenModal(item)} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77  cursor-pointer hover:scale-105 transition duration-300 ">  
+                    <div key={item.id} onClick={() => handleOpenModal(item.id)} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77  cursor-pointer hover:scale-105 transition duration-300 ">  
                         <div className="flex flex-row">  
                             <div className="mt-1 box-content place-items-start rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-1 mt-1">  
                                 <span className="flex flex-row text-xl font-vazir ml-3 mb-1">  
@@ -200,7 +200,7 @@ export default function CategoryList({ category }) {
             ) : (  
                 <div>No items found</div>  
             )}  
-            {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} />}
+            {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}  
         </div>  
     );  
 }  
