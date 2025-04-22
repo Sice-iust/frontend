@@ -19,6 +19,7 @@ export default function CategoryList({ category }) {
             localStorage.setItem('category', category);
             setCategoryNumber(category);
         }
+        fetchDatauser();
     }, [category]);
     const [selectedItem, setSelectedItem] = useState(null); 
     const [isOpen, setOpen] = useState(false);   
@@ -58,7 +59,7 @@ export default function CategoryList({ category }) {
  
     const fetchDatauser = async () => {  
         try {  
-            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity", {   
+            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
                 headers: {   
                     Authorization: `Bearer ${localStorage.getItem('token')}`,   
                     "Content-Type": "application/json",   
@@ -66,9 +67,10 @@ export default function CategoryList({ category }) {
             });  
             const userQuantities = {};  
             response.data.forEach(item => {  
-                userQuantities[item.product_id] = item.quantity; 
+                userQuantities[item.product_id] = item.quantity;
             });  
             setuserData(userQuantities); 
+            console.log(userdata)
         } catch (err) {  
             console.error("Error fetching data:", err);  
         }  
