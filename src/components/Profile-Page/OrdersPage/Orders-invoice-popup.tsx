@@ -58,14 +58,15 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
 
     return (  
         <div className="fixed inset-0 z-10 overflow-y-auto ">  
-            <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>  
-                <div className="flex items-center justify-center min-h-full p-4 text-center">  
-                    <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">  
+            <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div>  
+                <div className="flex items-center justify-center min-h-full  text-center lg:p-4">  
+                    <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all h-screen w-full
+                                    sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">  
                         <div className="bg-white px-6 pt-5 pb-4 text-right"> 
                             <RxCross1 className="cursor-pointer ml-auto" onClick={onClose}  />
 
-                            <div className="bg-white  font-vazir p-4 pb-4 ">  
-                                <h2 className="text-2xl font-bold font-vazir mb-1.5">فاکتور سفارش</h2>  
+                            <div className="bg-white  font-vazir  pb-4  overflow-y-auto lg:p-4 lg:mt-0">  
+                                <h2 className="text-2xl font-bold font-vazir mb-1.5 mt-4 lg:mt-0">فاکتور سفارش</h2>  
                                 {invoiceData ? (
                                 <Invoice orderId={orderId} 
                                 payment={invoiceData.payment} 
