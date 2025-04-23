@@ -55,6 +55,7 @@ const ProfileOrders: React.FC = () => {
         }
   };
 
+  console.log(Completed);
   const groupedOrders = Completed?.current_orders?.reduce((acc, orderItem) => {  
   const orderId = orderItem.order.id;  
 
@@ -89,13 +90,14 @@ const ProfileOrders: React.FC = () => {
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-7 
                 xl:mx-7 xl:mt-10 xl:w-[70%]">  
-      <Menu currentOrdersCount={convertToPersianNumbers(2)} finalOrdersCount={convertToPersianNumbers(3)} /> 
+      <Menu currentOrdersCount={convertToPersianNumbers(3)} finalOrdersCount={convertToPersianNumbers(1)} /> 
  
       
       {ordersArray && ordersArray.length > 0 ? (
         ordersArray.map(orderItem => (
           <OrderCard
             key={orderItem.id}
+            orderkey={orderItem.id}
             id={convertToPersianNumbers(orderItem.id)}
             total_price={convertPrice(orderItem.total_price)}
             delivery_day={convertDateInPersian(orderItem.delivery_day)}

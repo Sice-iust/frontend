@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState} from "react"; 
 import { RiCheckboxCircleFill } from "react-icons/ri";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
 import { LuCalendar } from "react-icons/lu";
 import Image, { StaticImageData } from 'next/image'; 
 import { Product } from "./Orders"
+import InvoicePopup from './Orders-invoice-popup';
+
+
 
 
 interface OrderCardProps {  
+    orderkey:number;
     id: string;  
     total_price: string;  
     delivery_day: string;  
@@ -18,6 +22,7 @@ interface OrderCardProps {
   }  
 
 const OrderCard: React.FC<OrderCardProps> = ({  
+  orderkey,
   id,  
   total_price,  
   delivery_day,  
@@ -26,6 +31,11 @@ const OrderCard: React.FC<OrderCardProps> = ({
   product_count,  
   product_photos,   
 }) => {  
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handlePopupOpen = () => setIsPopupOpen(true); 
+  const handlePopupClose = () => setIsPopupOpen(false); 
+
   return (  
     <div className="mx-auto bg-white rounded-2xl  
                     shadow-lg p-4 mt-4 mb-2 border border-black w-full xl:w-[98%] 
@@ -72,17 +82,19 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     sm:text-base 
                     md:text-base">  
             {"به سفارش خود چه امتیازی میدهید؟"}{' '}  
-            <span className="font-vazir text-green-500 font-semibold mt-1 underline">ثبت نظر</span>  
+            <span className="font-vazir text-green-500 font-semibold mt-1 underline cursor-pointer">ثبت نظر</span>  
         </p>
         <div className="flex space-x-4">  
-            <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-4 py-2 
+            <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-4 py-2  cursor-pointer
                                hover:bg-gray-300 transition duration-300 
                                lg:ml-7 text-xs sm:text-sm md:text-md lg:text-lg">  
             {"سفارش مجدد"}  
             </button>  
-            <button className="font-vazir bg-orange-500 text-white rounded-md px-4 py-2 
-                              hover:bg-orange-600 transition duration-300 
-                              text-xs sm:text-sm md:text-md lg:text-lg">  
+            <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-2  cursor-pointer
+                              hover:bg-orange-500 transition duration-300 
+                              text-xs sm:text-sm md:text-md lg:text-lg"
+                              onClick={handlePopupOpen}>  
+                              
             {"فاکتور سفارش"}  
             </button>  
         
@@ -104,7 +116,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                         width={500}
                         height={300} 
                         />
-                        <span className="absolute bottom-1 left-0 bg-orange-500 text-white text-xs rounded-full 
+                        <span className="absolute bottom-1 left-0 bg-[#F18825] text-white text-xs rounded-full  
                                         w-5 h-5 flex 
                                         items-center justify-center -mb-1 -ml-1">
                         {prod.quantity}
@@ -114,6 +126,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </div>
                 </div>
         </div>
+        <InvoicePopup isOpen={isPopupOpen} onClose={handlePopupClose} orderId={orderkey} total_price_after={total_price} />  
     </div>  
   );  
 };  

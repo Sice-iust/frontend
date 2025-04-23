@@ -27,9 +27,9 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => 
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm
-                           md:text-base">سفارش های نهایی&zwnj;({(currentOrdersCount)})</span>  
+                           md:text-base">سفارش های نهایی&zwnj;({(finalOrdersCount)})</span>  
           <div className={`absolute bottom-0 left-0 right-0 
-                           h-1 bg-orange-500 rounded-2xl 
+                           h-1 bg-[#F18825] rounded-2xl 
             ${selectedTab === 0 ? '' : 'hidden'}`}>
           </div>  
         </div>  
@@ -45,9 +45,9 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => 
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm 
-                           md:text-base">سفارش های جاری&zwnj;({(finalOrdersCount)})</span>  
+                           md:text-base">سفارش های جاری&zwnj;({(currentOrdersCount)})</span>  
           <div className={`absolute bottom-0 left-0 right-0 
-                           h-1 bg-orange-500 rounded-2xl 
+                           h-1 bg-[#F18825] rounded-2xl 
             ${selectedTab === 1 ? '' : 'hidden'}`}>
           </div>  
         </div>  
