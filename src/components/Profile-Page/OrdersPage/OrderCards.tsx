@@ -7,6 +7,7 @@ import Image, { StaticImageData } from 'next/image';
 import { Product } from "./Orders"
 import InvoicePopup from './Invoice/Orders-invoice-popup';
 import CommentsPopup from "./Comments/comments-popup";
+import ReorderPopup from "./Reorder/Reorder-Popup"
 
 
 
@@ -34,12 +35,16 @@ const OrderCard: React.FC<OrderCardProps> = ({
 }) => {  
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+  const [isReorderOpen, setIsReorderOpen] = useState(false);
 
   const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
   const handleInvoiceClose = () => setIsInvoiceOpen(false); 
 
   const handleCommentsOpen = () => setIsCommentsOpen(true); 
   const handleCommentsClose = () => setIsCommentsOpen(false); 
+
+  const handleReorderOpen = () => setIsReorderOpen(true); 
+  const handleReorderClose = () => setIsReorderOpen(false); 
 
   return (  
     <div className="mx-auto bg-white rounded-2xl  
@@ -92,7 +97,8 @@ const OrderCard: React.FC<OrderCardProps> = ({
         <div className="flex space-x-4">  
             <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-4 py-2  cursor-pointer
                                hover:bg-gray-300 transition duration-300 
-                               lg:ml-7 text-xs sm:text-sm md:text-md lg:text-lg">  
+                               lg:ml-7 text-xs sm:text-sm md:text-md lg:text-lg"
+                               onClick={handleReorderOpen}>  
             {"سفارش مجدد"}  
             </button>  
             <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-2  cursor-pointer
@@ -132,7 +138,8 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </div>
         </div>
         <InvoicePopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey} total_price_after={total_price} />  
-        <CommentsPopup isOpen={isCommentsOpen} onClose={handleCommentsClose} orderId={orderkey} total_price_after={total_price} />  
+        <CommentsPopup isOpen={isCommentsOpen} onClose={handleCommentsClose} orderId={orderkey} total_price_after={total_price} />
+        <ReorderPopup isOpen={isReorderOpen} onClose={handleReorderClose} />  
     </div>  
   );  
 };  
