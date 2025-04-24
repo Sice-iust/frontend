@@ -4,7 +4,7 @@ import Receipt from '../ShoppingReceipt/ShoppingReceipt';
 import Image from 'next/image';  
 import emptyReceipt from "../../assets/emptyReceipt.png";  
 import { FaStar } from "react-icons/fa";  
-import ProductPage from '../../app/ProductPage/ProductPage';
+import ProductPage from '../ProductPage/ProductPage';
 export default function CategoryList({ category }) {  
  
     const [catNumber, setCategoryNumber] = useState(() => {
@@ -19,7 +19,6 @@ export default function CategoryList({ category }) {
             localStorage.setItem('category', category);
             setCategoryNumber(category);
         }
-        fetchDatauser();
     }, [category]);
     const [selectedItem, setSelectedItem] = useState(null); 
     const [isOpen, setOpen] = useState(false);   
@@ -55,30 +54,18 @@ export default function CategoryList({ category }) {
         if (catNumber) {  
             fetchData();  
         }  
-    }, [catNumber]); 
- 
-    const fetchDatauser = async () => {  
-        try {  
-            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
-                headers: {   
-                    Authorization: `Bearer ${localStorage.getItem('token')}`,   
-                    "Content-Type": "application/json",   
-                }  
-            });  
-            const userQuantities = {};  
-            response.data.forEach(item => {  
-                userQuantities[item.product_id] = item.quantity;
-            });  
-            setuserData(userQuantities); 
-            console.log(userdata)
-        } catch (err) {  
-            console.error("Error fetching data:", err);  
-        }  
-    };  
+    }, [catNumber]);  
+
 
     const handleAdd = async (itemId) => {
         const token = localStorage.getItem('token'); 
+        const response = await axios.get(`https://nanziback.liara.run/user/cart/quantity/${itemId}/`, {  
+            headers: { Authorization: `Bearer ${token}`},  
+        });  
+        setuserData((prev) => ({ ...prev, [itemId]: response.data[0].cart_item || 0 }));          
+        console.log("user data : ",userdata);
         try {
+            
             await axios.post(`https://nanziback.liara.run/user/cart/creat/${itemId}/`, {
               quantity: 1
             }, {
@@ -121,7 +108,7 @@ export default function CategoryList({ category }) {
     };  
 
     return (  
-        <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6  ">  
+        <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 ">  
             {dataLength > 0 ? (  
                 data.map(item => (  
                     <div key={item.id} onClick={() => handleOpenModal(item.id)} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77  cursor-pointer hover:scale-105 transition duration-300 ">  
@@ -160,20 +147,20 @@ export default function CategoryList({ category }) {
                                     </div>  
                                 )}  
                             </div>  
-                            { userdata[item.id] === undefined || userdata[item.id] === null|| userdata[item.id] === 0 ? (  
+                            { userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
                                 <button  
-                                    className={` ${item.stock==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
+                                    className={` ${item.stock_1==0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
                                     onClick={() => handleAdd(item.id)}  
-                                    disabled={ item.stock==0}  
+                                    disabled={ item.stock_1==0}  
                                 >  
                                     افزودن  
                                 </button>  
                             ) : (  
                                 <div className="flex mr-19 mt-2 space-x-2">  
                                     <button  
-                                        className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= item.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                        className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                         onClick={() => incrementQuantity(item.id)}  
-                                        disabled={userdata[item.id] >= item.stock}  
+                                        disabled={userdata[item.id] >= item.stock_1}  
                                     >  
                                         +  
                                     </button>  
