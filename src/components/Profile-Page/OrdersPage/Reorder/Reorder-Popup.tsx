@@ -27,7 +27,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose}) => {
                             </p> 
                                 <div className="flex justify-center space-x-4 mt-5">
                                     <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-9 py-2 cursor-pointer 
-                                                        hover:bg-gray-300 transition duration-300 text-xs font-bold
+                                                        transition duration-300 text-xs font-bold
                                                         sm:text-sm md:text-md lg:text-base">
                                         {"ادامه با آدرس جدید"}
                                     </button>  

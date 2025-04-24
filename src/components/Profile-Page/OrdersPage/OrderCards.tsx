@@ -70,7 +70,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                                  sm:text-lg
                                  md:text-lg">{total_price}</span>  
             </div>  
-            <div className="flex items-center  mt-6 ml-85 mt-4 space-x-1 sm:space-x-2 md:space-x-3 ml-auto">  
+            <div className="flex flex-wrap items-center  mt-6 ml-85 mt-4 space-x-1 sm:space-x-2 md:space-x-3 ml-auto">  
                 <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
                         sm:text-sm
                         md:text-sm '>{delivery_clock}
@@ -87,7 +87,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </div>    
 
         
-        <p className="font-vazir text-black text-semibold mb-4 text-left mr-auto mt-1 lg:ml-7 
+        <p className="font-vazir text-black text-semibold mb-4 text-center ml-auto mt-1 lg:ml-7 sm:text-left sm:mr-auto
                     text-xs 
                     sm:text-base 
                     md:text-base">  
@@ -96,7 +96,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </p>
         <div className="flex space-x-4">  
             <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-4 py-2  cursor-pointer
-                               hover:bg-gray-300 transition duration-300 
+                               transition duration-300 
                                lg:ml-7 text-xs sm:text-sm md:text-md lg:text-lg"
                                onClick={handleReorderOpen}>  
             {"سفارش مجدد"}  
@@ -111,12 +111,12 @@ const OrderCard: React.FC<OrderCardProps> = ({
         
 
             <div className="-mt-7 flex flex-wrap items-center  ml-auto lg:ml-85">
-               {product_count != "0" ? (<div className="flex space-x-1">
+               {product_count != "0" ? (<div className="flex space-x-1 hidden sm:flex ">
                     <span className="text-gray-500 text-sm sm:text-base md:text-md lg:text-lg">نان دیگر</span>
                     <span className="text-gray-500 text-sm  sm:text-base md:text-md lg:text-lg">{product_count}+</span>
                 </div>) : null }
 
-                <div className="flex space-x-2 ml-1">
+                <div className="flex space-x-2 ml-1 hidden sm:flex">
                     {product_photos.map((prod, index) => (
                     <div key={index} className="relative ">
                         <Image
@@ -127,7 +127,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                         width={500}
                         height={300} 
                         />
-                        <span className="absolute bottom-1 left-0 bg-[#F18825] text-white text-xs rounded-full  
+                        <span className="absolute bottom-1 left-0 bg-[#F18825] text-white text-xs rounded-full 
                                         w-5 h-5 flex 
                                         items-center justify-center -mb-1 -ml-1">
                         {prod.quantity}
