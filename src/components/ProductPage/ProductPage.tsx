@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";  
-import { Dialog, DialogActions, DialogContent, DialogTitle, Button ,IconButton, Slider} from "@mui/material";  
+import { Dialog, DialogActions, DialogContent, DialogTitle, Button ,IconButton} from "@mui/material";  
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import axios from 'axios';  
 import Image from 'next/image'; 
@@ -10,7 +10,7 @@ export default function ProductPage({ open, onClose, itemid }) {
     const [isFinished, setIsFinished] = useState(false);  
     const [data, setData] = useState(null); 
     const [userdata, setuserData] = useState(null);
-    const [comments, setComments] = useState(null);
+    const [comments, setComments] = useState([]);  
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
@@ -66,8 +66,10 @@ export default function ProductPage({ open, onClose, itemid }) {
             try {  
                 const response = await axios.get(`https://nanziback.liara.run/product/comments/${itemid}/`, {   
                     headers: { "Content-Type": "application/json", }
-                });  
-                console.log("Response Data:", response.data);   
+                }); 
+                setComments(response.data) ;
+                console.log("Response Data:", response.data);  
+                console.log("comments: ",comments) ;
             } catch (err) {  
                 console.error("Error fetching data:", err);  
             } 
@@ -123,36 +125,54 @@ export default function ProductPage({ open, onClose, itemid }) {
           alert("Cart updated!");
     };  
 
-    const settings = {
-        dots: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        infinite: true,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        responsive: [
-            {
-                breakpoint: 1500,
-                settings: {
-                    slidesToShow: 3,
-                },
-            },
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 2,
-                },
-            },
-            {
-                breakpoint: 850,
-                settings: {
-                    slidesToShow: 1,
-                },
-            },
-        ],
-    };
-
+      
+          
+    const settings = {  
+        dots: true,  
+        infinite: true,  
+        speed: 500,  
+        slidesToShow: 3,  
+        slidesToScroll: 1,  
+        centerMode: true,  
+        centerPadding: '236px', 
+        swipe: true, 
+        swipeToSlide: true, 
+        touchMove: true,   
+        responsive: [  
+          {  
+            breakpoint: 1200,  
+            settings: {  
+              slidesToShow: 2,  
+              slidesToScroll: 1,  
+              centerPadding: '20px', // Adjusted for better visibility  
+            }  
+          },  
+          {  
+            breakpoint: 1024,  
+            settings: {  
+              slidesToShow: 2,  
+              slidesToScroll: 1,  
+              centerPadding: '10px',  
+            }  
+          },  
+          {  
+            breakpoint: 600,  
+            settings: {  
+              slidesToShow: 1,  
+              slidesToScroll: 1,  
+              centerPadding: '30px', // No padding for better fit  
+            }  
+          },  
+          {  
+            breakpoint: 480,  
+            settings: {  
+              slidesToShow: 1,  
+              slidesToScroll: 1,  
+              centerPadding: '5px', // No padding for better fit  
+            }  
+          },  
+        ]  
+      };
 
     return (  
         <Dialog 
@@ -274,17 +294,19 @@ export default function ProductPage({ open, onClose, itemid }) {
             <div className="flex justify-end">  
                 <span className="font-vazir font-bold text-2xl mr-10">نظرات کاربران</span>  
             </div>  
-            {comments ?( comments.map(comment => (
-                <>
-                    <Slider {...settings}>
-
-                    </Slider>
-                </>
-            ))
-            ) : (
-                <>
-                </>
-            )}
+            {comments.length > 0 ? (  
+                <Slider {...settings}>  
+                    {comments.slice(0, 5).map((comment, index) => (  
+                        <div key={index} className="box-content ml-10 mt-10 mb-10 min-h-40 w-40 rounded-2xl bg-white border-1 p-4">  
+                            <div className="username">{comment.user_name}</div>  
+                            <div className="comment">{comment.comment}</div>  
+                            <div className="rating">Rating: {comment.rating}</div>  
+                        </div>  
+                    ))}  
+                </Slider>  
+            ) : (  
+                <div>No comments available</div>  
+            )}   
             </div>
             </>
         ) : (
