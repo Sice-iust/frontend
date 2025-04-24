@@ -5,8 +5,8 @@ import { FaRegClock } from "react-icons/fa6";
 import { LuCalendar } from "react-icons/lu";
 import Image, { StaticImageData } from 'next/image'; 
 import { Product } from "./Orders"
-import InvoicePopup from './Orders-invoice-popup';
-import CommentsPopup from "./comments-popup";
+import InvoicePopup from './Invoice/Orders-invoice-popup';
+import CommentsPopup from "./Comments/comments-popup";
 
 
 
@@ -96,7 +96,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
             {"سفارش مجدد"}  
             </button>  
             <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-2  cursor-pointer
-                              hover:bg-orange-500 transition duration-300 
+                            transition duration-300 
                               text-xs sm:text-sm md:text-md lg:text-lg"
                               onClick={handleInvoiceOpen}>  
                               

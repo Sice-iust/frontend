@@ -1,8 +1,8 @@
 import React, {useEffect,useState} from 'react';  
 import { RxCross1 } from "react-icons/rx";
 import {Item} from './Orders-invoice-popup'
-import { convertToPersianNumbers } from '../../../utils/Coversionutils';
-import { convertPrice } from '../../../utils/Coversionutils';
+import { convertToPersianNumbers } from '../../../../utils/Coversionutils';
+import { convertPrice } from '../../../../utils/Coversionutils';
 
 interface InvoiceProps {  
     orderId: number;

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';  
 import { Item } from './comments-popup';
-import { convertPrice } from '../../../utils/Coversionutils';
+import { convertPrice } from '../../../../utils/Coversionutils';
 import { MdStar } from 'react-icons/md';
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
