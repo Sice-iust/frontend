@@ -1,13 +1,15 @@
+'use client'
 import React from 'react';
 import { useRouter } from 'next/router';
-import Header from '../navbar';
-import Receipt from '../ShoppingReceipt/ShoppingReceipt';
-import CategoryList from '../CategoryPage/CategoryList';
+import {useParams} from 'next/navigation';
+import Header from '../../navbar';
+import Receipt from '../../ShoppingReceipt/ShoppingReceipt';
+import CategoryList from '../../CategoryPage/CategoryList';
 
 
 export default function Bread() {
-    const router = useRouter();
-    const { id } = router.query;
+    const router = useParams();
+    const  id  = router?.id;
 
     return (
         <>
@@ -16,7 +18,7 @@ export default function Bread() {
                 <div className='flex-shrink-0'>
                     <Receipt />
                 </div>
-                <CategoryList catNumber={id} />
+                <CategoryList category={id} />
             </div>
         </>
     );

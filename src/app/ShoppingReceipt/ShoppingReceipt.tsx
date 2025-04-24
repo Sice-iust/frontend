@@ -1,6 +1,7 @@
-import React, { useState,useEffect } from "react"; 
+import React, { useState,useEffect } from "react";  
 import { CgNotes } from "react-icons/cg";
-import emptyReceipt from "../../assets/emptyReceipt.png";
+import axios from "axios";
+import emptyReceipt from "../../../public/assets/emptyReceipt.png";
 import Image from 'next/image';
 
 const Receipt: React.FC = () => {  

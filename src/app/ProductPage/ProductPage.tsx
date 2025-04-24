@@ -1,6 +1,5 @@
 import React, { useState } from "react";  
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button } from "@mui/material";  
-import styles from "./login.module.scss";  
 
 export default function ProductPage({ open, onClose, itemid }) {  
     const [isFinished, setIsFinished] = useState(false);  
