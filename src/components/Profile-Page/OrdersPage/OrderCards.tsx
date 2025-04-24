@@ -6,6 +6,7 @@ import { LuCalendar } from "react-icons/lu";
 import Image, { StaticImageData } from 'next/image'; 
 import { Product } from "./Orders"
 import InvoicePopup from './Orders-invoice-popup';
+import CommentsPopup from "./comments-popup";
 
 
 
@@ -31,10 +32,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
   product_count,  
   product_photos,   
 }) => {  
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
+  const [isCommentsOpen, setIsCommentsOpen] = useState(false);
 
-  const handlePopupOpen = () => setIsPopupOpen(true); 
-  const handlePopupClose = () => setIsPopupOpen(false); 
+  const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
+  const handleInvoiceClose = () => setIsInvoiceOpen(false); 
+
+  const handleCommentsOpen = () => setIsCommentsOpen(true); 
+  const handleCommentsClose = () => setIsCommentsOpen(false); 
 
   return (  
     <div className="mx-auto bg-white rounded-2xl  
@@ -82,7 +87,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     sm:text-base 
                     md:text-base">  
             {"به سفارش خود چه امتیازی میدهید؟"}{' '}  
-            <span className="font-vazir text-green-500 font-semibold mt-1 underline cursor-pointer">ثبت نظر</span>  
+            <span className="font-vazir text-green-500 font-semibold mt-1 underline cursor-pointer" onClick={handleCommentsOpen}>ثبت نظر</span>  
         </p>
         <div className="flex space-x-4">  
             <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-4 py-2  cursor-pointer
@@ -93,7 +98,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
             <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-2  cursor-pointer
                               hover:bg-orange-500 transition duration-300 
                               text-xs sm:text-sm md:text-md lg:text-lg"
-                              onClick={handlePopupOpen}>  
+                              onClick={handleInvoiceOpen}>  
                               
             {"فاکتور سفارش"}  
             </button>  
@@ -126,7 +131,8 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </div>
                 </div>
         </div>
-        <InvoicePopup isOpen={isPopupOpen} onClose={handlePopupClose} orderId={orderkey} total_price_after={total_price} />  
+        <InvoicePopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey} total_price_after={total_price} />  
+        <CommentsPopup isOpen={isCommentsOpen} onClose={handleCommentsClose} orderId={orderkey} total_price_after={total_price} />  
     </div>  
   );  
 };  

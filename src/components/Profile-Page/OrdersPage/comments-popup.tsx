@@ -1,8 +1,8 @@
 import React, {useEffect,useState} from 'react';  
 import { RxCross1 } from "react-icons/rx";
-import Invoice from "./invoice-detail";
+import Comments from "./Comments-detail";
 
-interface InvoicePopupProps {  
+interface CommentsPopupProps {  
     isOpen: boolean;  
     onClose: () => void;  
     orderId: number;
@@ -15,9 +15,10 @@ export interface Item {
     price:string; 
     photo: string; 
     quantity: number; 
+    
 }  
 
-const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,total_price_after }) => {
+const CommentsPopup: React.FC<CommentsPopupProps> = ({ isOpen, onClose, orderId ,total_price_after }) => {
     
     const [invoiceData, setInvoiceData] = useState<any>(null); 
     const [loading, setLoading] = useState(true);
@@ -60,16 +61,16 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
         <div className="fixed inset-0 z-10 overflow-y-auto ">  
             <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div>  
                 <div className="flex items-center justify-center min-h-full  text-center lg:p-4">  
-                    <div className="relative transform overflow-hidden rounded-lg bg-white text-left 
-                                    shadow-xl transition-all h-screen w-full
+                    <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl 
+                                    transition-all h-screen w-full
                                     sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">  
                         <div className="bg-white px-6 pt-5 pb-4 text-right"> 
                             <RxCross1 className="cursor-pointer ml-auto" onClick={onClose}  />
 
                             <div className="bg-white  font-vazir  pb-4  overflow-y-auto lg:p-4 lg:mt-0">  
-                                <h2 className="text-2xl font-bold font-vazir mb-1.5 mt-4 lg:mt-0">فاکتور سفارش</h2>  
+                                <h2 className="text-2xl font-bold font-vazir mb-1.5 mt-4 lg:mt-0">ثبت نظر</h2>  
                                 {invoiceData ? (
-                                <Invoice orderId={orderId} 
+                                <Comments orderId={orderId} 
                                 payment={invoiceData.payment} 
                                 shippingfee={invoiceData.shipping_fee} 
                                 discount={invoiceData.discount} 
@@ -89,4 +90,4 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
     );  
 };  
 
-export default InvoicePopup;  
+export default CommentsPopup;  

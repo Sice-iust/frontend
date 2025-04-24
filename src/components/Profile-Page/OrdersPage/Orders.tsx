@@ -84,7 +84,7 @@ const ProfileOrders: React.FC = () => {
   
   return ( 
     <>
-      {/* <Navbar showImage={false}/> */}
+      <Navbar showImage={false}/>
     <div className="rounded-2xl bg-white shadow-md p-4 mb-10 w-full h-screen mt-0 overflow-hidden mx-auto   
                 sm:w-[90%] sm:mx-7  
                 md:w-[70%] md:mx-7  
