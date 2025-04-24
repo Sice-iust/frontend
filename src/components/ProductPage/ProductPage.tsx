@@ -9,6 +9,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IoPerson } from "react-icons/io5";
 import moment from 'moment-jalaali';  
+import { BiLike } from "react-icons/bi";
+import { BiDislike } from "react-icons/bi";
 
 
 export default function ProductPage({ open, onClose, itemid }) {  
@@ -243,7 +245,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                             <span className="font-vazir font-bold text-2xl mt-6">{data.name}</span>  
                         </div>  
                         <div className="mt-7 ml-10 font-vazir text-lg font-medium text-right text-justify">{data.description}</div>
-                        <div className={`box-content rounded-2xl bg-${data.color}-300 border-1 p-2 mt-7 ml-10 font-vazir text-lg font-semibold text-right text-justify`}>{data.box_color}</div>
+                        <div className={`box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-7 ml-10 font-vazir text-lg font-semibold text-right text-justify`}>{data.box_color}</div>
                         <div className="flex flex-row-reverse mt-9 justify-between">  
                                 <div className='flex flex-col'>  
                                     <div className="font-vazir text-lg text-right font-semibold text-xl">  
@@ -334,7 +336,18 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     <span>{convertToPersianDate(comment.posted_at)[1]}</span>
                                     <span>{convertToPersianDate(comment.posted_at)[2]}</span>
                                 </div>
-                                <div className="box-contetnt rounded-4xl border-1 w-25 ml-1 mt-1 ">
+                                <div className={`box-contetnt rounded-4xl h-7 border-1 w-26 ml-1 mt-1 ${comment.suggested >2 ? "bg-green-300" : "bg-red-400"}`}>
+                                {comment.suggested >2 ? (
+                                        <div className="flex flex-row-reverse p-1">
+                                            <BiLike className="w-3 h-4 ml-1 mr-1"/>
+                                            <span className="font-vazir text-xs font-md">پیشنهاد می‌کنم</span>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-row-reverse p-1">
+                                            <BiDislike className="w-3 h-5 ml-1"/>
+                                            <span className="font-vazir text-xs ">پیشنهاد نمی‌کنم</span>
+                                        </div>
+                                    )}
 
                                 </div>
                             </div> 
