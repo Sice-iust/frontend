@@ -127,7 +127,7 @@ const Comments: React.FC<CommentsProps> = ({ orderId, payment, shippingfee, disc
                                 className="border border-[#D9D9D9] bg-[#D9D9D9] rounded-2xl px-3 py-2 w-[75%] ml-auto  text-right 
                                            font-vazir text-xs min-h-12  text-[#504E4E] focus:border-[#D9D9D9] 
                                            focus:outline-none focus:text-[#504E4E]" 
-                                placeholder="...تجربه خود را به اشتراک بگذارید"
+                                placeholder="تجربه خود را به اشتراک بگذارید..."
                                 dir="rtl"
                             />
                             </div>

@@ -23,7 +23,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose}) => {
 
                             <div className="bg-white  font-vazir   overflow-y-auto lg:p-1 lg:mt-0">  
                             <p className="font-vazir text-base text-center text-gray-800 mt-1 mb-4 font-bold">
-                                    {"لطفا برای سفارش دوباره آدرس خود را مشخص کنید"}
+                                    {"لطفا برای سفارش مجدد آدرس خود را مشخص کنید"}
                             </p> 
                                 <div className="flex justify-center space-x-4 mt-5">
                                     <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-9 py-2 cursor-pointer 
