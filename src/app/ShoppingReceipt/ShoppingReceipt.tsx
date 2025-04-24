@@ -157,11 +157,11 @@ const Receipt: React.FC = () => {
                     <div className="p-5 flex flex-col pt-2">  
                         {data.cart_items.map(item => (  
                             <div key={item.product.id} className="flex flex-row-reverse py-2 justify-between">  
-                                <span className="text-[17px] font-vazir font-medium text-right  mr-6">{item.product.name}</span>
+                                <span className="text-s font-vazir font-medium text-right  mr-6">{item.product.name}</span>
                                 <span className="flex flex-row-reverse">
                                 <span className="ml-1 text-gray-500">× {convertToPersianNumbers(item.quantity)}</span>  
                                 <span>{convertToPersianNumbers(Number(item.product.price*(1-item.product.discount/100)).toLocaleString())}</span>  
-                                <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
+                                <span className="text-s font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
                                 </span>  
                             </div>  
                         ))}  
@@ -177,10 +177,12 @@ const Receipt: React.FC = () => {
                             </>
                         )
                         }
-                        <div className="flex flex-row-reverse py-2 border-t mt-6 ">  
-                            <span className="font-vazir font-semibold ml-50 mr-6">جمع کل</span>  
+                        <div className="flex flex-row-reverse py-2 border-t mt-6 justify-between">  
+                            <span className="font-vazir font-semibold mr-6">جمع کل</span> 
+                            <div className="flex flex-row-reverse ">
                             <span className="font-bold font-2xl">{convertToPersianNumbers(data.total_actual_price.toLocaleString())}</span>  
                             <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
+                            </div> 
                         </div>  
                     </div>   
             <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white font-medium font-vazir font-2xl py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300 hover:scale-110">  
