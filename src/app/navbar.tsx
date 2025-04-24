@@ -7,13 +7,31 @@ import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Image from 'next/image';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import Search from './search';
 import { useTheme } from './theme';
 import LoginModal from './login/login';
+import dynamic from 'next/dynamic';
 
-
+const LazySearch = dynamic(() => import('./search'), {
+    loading: () =>(
+<div className="flex items-center rounded-3xl font-vazir p-2 dark:bg-[#383535]  bg-[#D9D9D9]   ml-10  min-w-[450px]" dir='rtl'>
+        <span className="text-[#B8681D]"><SearchOutlinedIcon /></span>
+        <input
+          type="text"
+          className=" px-2 py-1   focus:outline-none font-vazir   rounded-full  min-w-[450px] text-right bg-transparent text-black text-[16px] placeholder:[#696363]"
+          placeholder="نام کالای مورد نظر را جستجو کنید ..."
+          
+          dir="rtl"
+        />
+      </div>
+        ), 
+    ssr: false, 
+  });
 
 export default function Header({ showImage = true }) {
     const { isDarkMode, toggleDarkMode } = useTheme();
@@ -26,6 +44,7 @@ export default function Header({ showImage = true }) {
     const [username, setUsername] = useState(null);
 
     const getUsername = async () => {
+        // localStorage.removeItem('token');  
         const token = localStorage.getItem("token");
         console.log('Retrieved Token:', token);
 
@@ -33,7 +52,6 @@ export default function Header({ showImage = true }) {
             console.log('No token found');
             return;
         }
-        // localStorage.removeItem('token');  
         else {
             try {
                 const response = await axios.get('https://nanziback.liara.run/header/', {
@@ -80,35 +98,45 @@ export default function Header({ showImage = true }) {
     useEffect(() => {
         getUsername();
     }, []);
+    useEffect(() => {
+        console.log('ShoppingNum value:', shoppingNum);
+      }, [shoppingNum]);
     return (
-        <div className={isDarkMode ? styles.darkNav : styles.lightNav}>
-            <header className={styles.header} >
+        <div  className={isDarkMode ? styles.darkNav : styles.lightNav}>
+            <header className="flex space-between  w-full items-center px-5 py-2 bg-white darkMode: bg-balck " > 
+            
+                <div className="flex items-center w-full">  
+                    {isLoggedIn ?(
+                        <span className='font-vazir text-[15px] cursor-pointer'>  صفحه کاربر
+                         <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " /></span> 
 
-                <div className={styles.headerContent}>
-                    <button className={styles.loginButton} onClick={handleOpenModal}
-                    > {isLoggedIn ? username : 'ورود / عضویت'}   </button>
-                    <div className={styles.divider} />
-                    <div className={styles.cartContainer}>
-                        <h1 style={{ color: isDarkMode ? 'white' : 'black' }}>سبد خرید</h1>
-                        <ShoppingCartIcon className={styles.cartIcon} />
-                        { }
-                        {shoppingNum > 0 && <span className={styles.cartBadge}>{shoppingNum}</span>}
-                    </div>
-                    <div className={styles.divider} />
-                    <span className={styles.statusText} onClick={toggleDarkMode}   >
-                        {isDarkMode ? 'حالت روز' : 'حالت شب'}</span>
+                    ):(
+                    <button className="bg-[#F18825] font-vazir  cursor-pointer text-white border-none rounded-2xl px-2 py-3 focus:outline-none "         onClick={handleOpenModal}
+                    > ورود / عضویت   </button>
+                    ) }
+                  
+                    <div className="w-[1px] h-10 bg-[#B8681D] mx-5" /> 
+                    <div className="flex items-center font-vazir text-[15px] cursor-pointer">  
+                        <h1 style={{ color: isDarkMode ? 'white' : 'black'}}>سبد خرید</h1>
+                        <ShoppingCartIcon className="text-3xl" />  
+                        {shoppingNum > 0 && <span className="absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825] text-white rounded-[10px] px-[6px] py-[3px] text-[12px] ">{shoppingNum}</span>}   
+                    </div>  
+                    
+                    <div className="w-[1px] h-10 bg-[#B8681D] mx-5" /> 
+                    <span className="font-vaazir text-[15px]  cursor-pointer hover:underline"    onClick={toggleDarkMode}   >
+                        {isDarkMode? 'حالت روز':'حالت شب'}</span>
+                 
+                    {isDarkMode?<WbSunnyOutlinedIcon className="text-3xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-3xl ml-0.5" /> } 
 
-                    {isDarkMode ? <WbSunnyOutlinedIcon className={styles.drakModeIcon} /> : <Brightness2OutlinedIcon className={styles.drakModeIcon} />}
+                    <LazySearch isDarkMode={isDarkMode} />
 
-                    <Search isDarkMode={isDarkMode} />
-
-                    <div className={styles.logoContainerNav}>
-                        <Image width={100} height={100} src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`} alt="Logo" className={styles.logoNav} />
-                    </div>
-                </div>
-
-
-            </header>
+                        <div className="flex ml-auto justify-end items-center ">  
+                        <Image width={90} height={70} src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`} alt="Logo"  />
+                        </div>  
+                </div>  
+          
+            
+            </header>  
             {(!isLoggedIn && showImage) && (
                 <div className={styles.backgroundImageContainer}>
                     <Image width={100} height={100} src={isDarkMode ? `/assets/darkHomePagePhoto.png` : `/assets/homePagePhoto.png`} alt="Background" className={styles.backgroundImage} />

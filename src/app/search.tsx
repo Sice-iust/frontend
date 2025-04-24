@@ -75,7 +75,7 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
     );
   };
 
-  if (error) return <div>{error}</div>;
+  // if (error) return <div>{error}</div>;
 
   return (
     <div dir="rtl">
