@@ -121,7 +121,7 @@ export default function CategoryList({ category }) {
     };  
 
     return (  
-        <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 ">  
+        <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6  ">  
             {dataLength > 0 ? (  
                 data.map(item => (  
                     <div key={item.id} onClick={() => handleOpenModal(item.id)} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77  cursor-pointer hover:scale-105 transition duration-300 ">  
