@@ -5,6 +5,8 @@ import axios from 'axios';
 import Image from 'next/image'; 
 import { FaStar } from "react-icons/fa"; 
 import Slider from "react-slick"; 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function ProductPage({ open, onClose, itemid }) {  
     const [isFinished, setIsFinished] = useState(false);  
@@ -127,52 +129,52 @@ export default function ProductPage({ open, onClose, itemid }) {
 
       
           
-    const settings = {  
-        dots: true,  
-        infinite: true,  
-        speed: 500,  
-        slidesToShow: 3,  
-        slidesToScroll: 1,  
-        centerMode: true,  
-        centerPadding: '236px', 
-        swipe: true, 
-        swipeToSlide: true, 
-        touchMove: true,   
-        responsive: [  
-          {  
-            breakpoint: 1200,  
-            settings: {  
-              slidesToShow: 2,  
-              slidesToScroll: 1,  
-              centerPadding: '20px', // Adjusted for better visibility  
-            }  
-          },  
-          {  
-            breakpoint: 1024,  
-            settings: {  
-              slidesToShow: 2,  
-              slidesToScroll: 1,  
-              centerPadding: '10px',  
-            }  
-          },  
-          {  
-            breakpoint: 600,  
-            settings: {  
-              slidesToShow: 1,  
-              slidesToScroll: 1,  
-              centerPadding: '30px', // No padding for better fit  
-            }  
-          },  
-          {  
-            breakpoint: 480,  
-            settings: {  
-              slidesToShow: 1,  
-              slidesToScroll: 1,  
-              centerPadding: '5px', // No padding for better fit  
-            }  
-          },  
-        ]  
-      };
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        centerMode: true,
+        centerPadding: '100px', // Reduced padding for better centering
+        swipe: true,
+        swipeToSlide: true,
+        touchMove: true,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    centerPadding: '50px', // Adjusted for better visibility
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    centerPadding: '30px',
+                }
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    centerMode: false, // Disabled center mode for small screens
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    centerMode: false, // Disabled center mode for very small screens
+                }
+            },
+        ]
+    };
 
     return (  
         <Dialog 
@@ -205,7 +207,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         <hr className="border-t border-gray-700" /> 
         {data ? (
             <>
-            <div className="fex flex-col">
+            <div className="flex flex-col">
                 <div className="flex flex-row-reverse">
                     <Image
                         className="rounded-2xl mt-5 mb-10 mr-7 ml-4"
@@ -225,7 +227,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                             <span className="font-vazir font-bold text-2xl mt-6">{data.name}</span>  
                         </div>  
                         <div className="mt-7 ml-10 font-vazir text-lg font-medium text-right text-justify">{data.description}</div>
-                        <div className={`box-contetnt rounded-2xl bg-${data.color}-300 border-1 p-2 mt-7 ml-10 font-vazir text-lg font-semibold text-right text-justify`}>{data.box_color}</div>
+                        <div className={`box-content rounded-2xl bg-${data.color}-300 border-1 p-2 mt-7 ml-10 font-vazir text-lg font-semibold text-right text-justify`}>{data.box_color}</div>
                         <div className="flex flex-row-reverse mt-9 justify-between">  
                                 <div className='flex flex-col'>  
                                     <div className="font-vazir text-lg text-right font-semibold text-xl">  
@@ -295,9 +297,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                 <span className="font-vazir font-bold text-2xl mr-10">نظرات کاربران</span>  
             </div>  
             {comments.length > 0 ? (  
-                <Slider {...settings}>  
-                    {comments.slice(0, 5).map((comment, index) => (  
-                        <div key={index} className="box-content ml-10 mt-10 mb-10 min-h-40 w-40 rounded-2xl bg-white border-1 p-4">  
+                <Slider {...settings} className="overflow-hidden flex gap-4">  
+                    {comments.map((comment, index) => (  
+                        <div key={index} className="box-content ml-10 mt-10 mb-10 min-h-40 w-40 rounded-2xl bg-white border-1 p-4">
                             <div className="username">{comment.user_name}</div>  
                             <div className="comment">{comment.comment}</div>  
                             <div className="rating">Rating: {comment.rating}</div>  
