@@ -348,8 +348,10 @@ export default function ProductPage({ open, onClose, itemid }) {
                                             <span className="font-vazir text-xs ">پیشنهاد نمی‌کنم</span>
                                         </div>
                                     )}
-
                                 </div>
+                            </div>
+                            <div className="box-content w-full min-h-20 rounded-2xl mt-5  border-1 text-right overflow-hidden break-words">
+                                <span className="font-vazir  text-lg p-3">{comment.comment}</span>
                             </div> 
                         </div>  
                     ))}  
