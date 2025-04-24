@@ -7,6 +7,9 @@ import { FaStar } from "react-icons/fa";
 import Slider from "react-slick"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { IoPerson } from "react-icons/io5";
+import moment from 'moment-jalaali';  
+
 
 export default function ProductPage({ open, onClose, itemid }) {  
     const [isFinished, setIsFinished] = useState(false);  
@@ -18,6 +21,18 @@ export default function ProductPage({ open, onClose, itemid }) {
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
     }; 
 
+    const convertToPersianDate = (dateString: string): string[] => {  
+        moment.loadPersian({ dialect: 'persian-modern' });  
+        const date = dateString;   
+        if (date) {  
+            const day = convertToPersianNumbers(moment(date).locale('fa').format('jD'));  
+            const month = moment(date).locale('fa').format('jMMMM');  
+            const year = convertToPersianNumbers(moment(date).locale('fa').format('jYYYY'));  
+            return [day, month, year];  
+        } else {  
+            return ["Invalid date format", "", ""];  
+        }  
+    };  
     useEffect(() => {  
         const fetchData = async () => {  
             try {  
@@ -133,10 +148,10 @@ export default function ProductPage({ open, onClose, itemid }) {
         dots: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 2,
+        slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: true,
-        centerPadding: '100px', // Reduced padding for better centering
+        centerPadding: '100px', 
         swipe: true,
         swipeToSlide: true,
         touchMove: true,
@@ -146,7 +161,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    centerPadding: '50px', // Adjusted for better visibility
+                    centerPadding: '50px', 
                 }
             },
             {
@@ -162,7 +177,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    centerMode: false, // Disabled center mode for small screens
+                    centerMode: false, 
                 }
             },
             {
@@ -170,11 +185,23 @@ export default function ProductPage({ open, onClose, itemid }) {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    centerMode: false, // Disabled center mode for very small screens
+                    centerMode: false, 
                 }
             },
         ]
     };
+    const sliderStyles: React.CSSProperties = {  
+        padding: '20px', // فاصله داخلی برای زیبایی  
+    };  
+    
+    const slideStyles: React.CSSProperties = {  
+        margin: '10px', // فاصله بین اسلایدها  
+        background: '#ccc', // رنگ پس‌زمینه برای مشاهده بهتر  
+        height: '100px', // ارتفاع اسلاید  
+        display: 'flex',  
+        alignItems: 'center',  
+        justifyContent: 'center',  
+    };  
 
     return (  
         <Dialog 
@@ -299,10 +326,28 @@ export default function ProductPage({ open, onClose, itemid }) {
             {comments.length > 0 ? (  
                 <Slider {...settings} className="overflow-hidden flex gap-4">  
                     {comments.map((comment, index) => (  
-                        <div key={index} className="box-content ml-10 mt-10 mb-10 min-h-40 w-40 rounded-2xl bg-white border-1 p-4">
-                            <div className="username">{comment.user_name}</div>  
+                        <div key={index} className="m-10 min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col">
+                            <div className="flex flex-row-reverse justify-between">
+                                <div className="flex flex-row-reverse">
+                                    <IoPerson className="w-4 h-6 ml-1 mr-1"/> 
+                                    <span className="font-vazir font-semibild text-lg">{comment.user_name}</span>
+                                </div>
+                                <div className=" box-content rounded-2xl bg-[#d9d9d9] w-auto h-6 ml-1">  
+                                <span className="flex flex-row text-lg font-vazir ml-3 mb-1">  
+                                    {convertToPersianNumbers(comment.rating)}  
+                                    <FaStar className="m-1 mr-3" color="orange" />  
+                                </span>   
+                                </div> 
+                            </div>
+                            <div className="flex flex-row-reverse">
+                                <div className="flex flex-row-reverse mr-1 text-gray-600 font-vazir text-sm gap-1 mt-2">
+                                    <span>{convertToPersianDate(comment.posted_at)[0]}</span>
+                                    <span>{convertToPersianDate(comment.posted_at)[1]}</span>
+                                    <span>{convertToPersianDate(comment.posted_at)[2]}</span>
+                                </div>
+                            </div>
+                            <div className="username"></div>  
                             <div className="comment">{comment.comment}</div>  
-                            <div className="rating">Rating: {comment.rating}</div>  
                         </div>  
                     ))}  
                 </Slider>  
