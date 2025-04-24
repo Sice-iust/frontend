@@ -151,7 +151,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: true,
-        centerPadding: '100px', 
+        centerPadding: '30px', 
         swipe: true,
         swipeToSlide: true,
         touchMove: true,
@@ -190,18 +190,7 @@ export default function ProductPage({ open, onClose, itemid }) {
             },
         ]
     };
-    const sliderStyles: React.CSSProperties = {  
-        padding: '20px', // فاصله داخلی برای زیبایی  
-    };  
-    
-    const slideStyles: React.CSSProperties = {  
-        margin: '10px', // فاصله بین اسلایدها  
-        background: '#ccc', // رنگ پس‌زمینه برای مشاهده بهتر  
-        height: '100px', // ارتفاع اسلاید  
-        display: 'flex',  
-        alignItems: 'center',  
-        justifyContent: 'center',  
-    };  
+
 
     return (  
         <Dialog 
@@ -324,9 +313,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                 <span className="font-vazir font-bold text-2xl mr-10">نظرات کاربران</span>  
             </div>  
             {comments.length > 0 ? (  
-                <Slider {...settings} className="overflow-hidden flex gap-4">  
+                <Slider {...settings} className="overflow-hidden flex m-10 mx-10">  
                     {comments.map((comment, index) => (  
-                        <div key={index} className="m-10 min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col">
+                        <div key={index} className=" min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col ">
                             <div className="flex flex-row-reverse justify-between">
                                 <div className="flex flex-row-reverse">
                                     <IoPerson className="w-4 h-6 ml-1 mr-1"/> 
@@ -339,18 +328,19 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 </span>   
                                 </div> 
                             </div>
-                            <div className="flex flex-row-reverse">
+                            <div className="flex flex-row-reverse justify-between">
                                 <div className="flex flex-row-reverse mr-1 text-gray-600 font-vazir text-sm gap-1 mt-2">
                                     <span>{convertToPersianDate(comment.posted_at)[0]}</span>
                                     <span>{convertToPersianDate(comment.posted_at)[1]}</span>
                                     <span>{convertToPersianDate(comment.posted_at)[2]}</span>
                                 </div>
-                            </div>
-                            <div className="username"></div>  
-                            <div className="comment">{comment.comment}</div>  
+                                <div className="box-contetnt rounded-4xl border-1 w-25 ml-1 mt-1 ">
+
+                                </div>
+                            </div> 
                         </div>  
                     ))}  
-                </Slider>  
+                </Slider> 
             ) : (  
                 <div>No comments available</div>  
             )}   
