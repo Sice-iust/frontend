@@ -12,13 +12,14 @@ import { IoPerson } from "react-icons/io5";
 import moment from 'moment-jalaali';  
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
-
+import { useTheme } from '../theme';
 
 export default function ProductPage({ open, onClose, itemid }) {  
     const [isFinished, setIsFinished] = useState(false);  
     const [data, setData] = useState(null); 
     const [userdata, setuserData] = useState(null);
-    const [comments, setComments] = useState([]);  
+    const [comments, setComments] = useState([]); 
+    const { isDarkMode, toggleDarkMode } = useTheme(); 
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
@@ -227,30 +228,31 @@ export default function ProductPage({ open, onClose, itemid }) {
             open={open} 
             onClose={onClose} 
             sx={{  
+                backgroundColor: isDarkMode ? '#000000' : '#f5f5f5', 
                 '& .MuiPaper-root': {  
-                    borderRadius: '12px',
-                    minWidth: '900px',
+                    borderRadius: '12px',  
+                    minWidth: '900px',  
                 },  
-                '& .MuiDialogContent-root': {
-                    paddingBottom: 0,
-                    overflowY: 'hidden',
-                },
-          
-                '& .MuiDialogActions-root': {
-                    padding: '16px',
-                },
+                '& .MuiDialogContent-root': {  
+                    paddingBottom: 0,  
+                    overflowY: 'hidden',  
+                },  
+                '& .MuiDialogActions-root': {  
+                    padding: '16px',  
+                },  
             }}  
-        >  
+        > 
+        <div className={` ${isDarkMode ? "bg-[#191919]" : "bg-[#f5f5f5]"}`} >
         <div className="flex flex-row-reverse m-1"> 
             <IconButton  
                 onClick={onClose}  
                 className="text-black-500"
             >  
-                <ArrowForwardIosIcon/>  
+                <ArrowForwardIosIcon className={` ${isDarkMode ? "text-[#B2A7A7]" : "text-gray-600"}`}/>  
             </IconButton>  
-            <span className="font-vazir text-gray-700 text-md text-lg mt-2">بازگشت</span>
+            <span className={`font-vazir ${isDarkMode ? "text-[#B2A7A7]" : "text-gray-700"} text-md text-lg mt-2`}>بازگشت</span>
         </div> 
-        <hr className="border-t border-gray-700" /> 
+        <hr className={`border-t ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
         {data ? (
             <>
             <div className="flex flex-col">
@@ -270,13 +272,13 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     <FaStar className="m-1 mr-3" color="orange" />  
                                 </span>   
                             </div>  
-                            <span className="font-vazir font-bold text-2xl mt-6">{data.name}</span>  
+                            <span className={`font-vazir font-bold text-2xl mt-6 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>{data.name}</span>  
                         </div>  
-                        <div className="mt-7 ml-10 font-vazir text-lg font-medium text-right text-justify">{data.description}</div>
-                        <div className={`box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-7 ml-10 font-vazir text-lg font-semibold text-right text-justify`}>{data.box_color}</div>
+                        <div className={`mt-7 ml-10 font-vazir text-lg font-medium text-right text-justify ${isDarkMode ? "text-[#BAB2B2]" : "text-gray-700"}`}>{data.description}</div>
+                        <div className={`box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-7 ml-10 font-vazir text-lg text-right text-justify ${isDarkMode ? "text-[#ffffff] border-white font-medium" : "text-black font-semibold "}`}>{data.box_color}</div>
                         <div className="flex flex-row-reverse mt-9 justify-between">  
                                 <div className='flex flex-col'>  
-                                    <div className="font-vazir text-lg text-right font-semibold text-xl">  
+                                    <div className={`font-vazir text-lg text-right text-xl ${isDarkMode ? "text-[#ffffff] font-medium" : "text-black font-semibold "}`}>  
                                         {convertToPersianNumbers(Math.round(parseFloat(data.discounted_price)).toLocaleString())} :قیمت  
                                     </div>  
                                     {data.discount > 0 && (  
@@ -338,18 +340,18 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div> 
 
                 </div>
-            <hr className="border-t border-gray-700 mb-10" /> 
+            <hr className={`border-t mb-10 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
             <div className="flex justify-end">  
-                <span className="font-vazir font-bold text-2xl mr-10">نظرات کاربران</span>  
+                <span className={`font-vazir font-bold text-2xl mr-10 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>نظرات کاربران</span>  
             </div>  
             {comments.length > 0 ? (  
                 <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15 ">  
                     {comments.map((comment, index) => (  
-                        <div key={index} className=" min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col">
+                        <div key={index} className={`min-h-40 w-27 rounded-2xl ${isDarkMode ? "bg-black border-white" : "bg-white"} border-1 p-2 flex flex-col`}>
                             <div className="flex flex-row-reverse justify-between">
                                 <div className="flex flex-row-reverse">
-                                    <IoPerson className="w-4 h-6 ml-1 mr-1"/> 
-                                    <span className="font-vazir font-semibild text-lg">{comment.user_name}</span>
+                                    <IoPerson className={`w-4 h-6 ml-1 mr-1 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}/> 
+                                    <span className={`font-vazir font-semibild text-lg ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>{comment.user_name}</span>
                                 </div>
                                 <div className=" box-content rounded-2xl bg-[#d9d9d9] w-auto h-6 ml-1">  
                                 <span className="flex flex-row text-lg font-vazir ml-3 mb-1">  
@@ -359,7 +361,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 </div> 
                             </div>
                             <div className="flex flex-row-reverse justify-between">
-                                <div className="flex flex-row-reverse mr-1 text-gray-600 font-vazir text-sm gap-1 mt-2">
+                                <div className={`flex flex-row-reverse mr-1 ${isDarkMode ? "text-gray-300" : "text-gray-600"} font-vazir text-sm gap-1 mt-2`}>
                                     <span>{convertToPersianDate(comment.posted_at)[0]}</span>
                                     <span>{convertToPersianDate(comment.posted_at)[1]}</span>
                                     <span>{convertToPersianDate(comment.posted_at)[2]}</span>
@@ -378,8 +380,8 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     )}
                                 </div>
                             </div>
-                            <div className="box-content w-full min-h-20 rounded-2xl mt-5  border-1 text-right overflow-hidden break-words">
-                                <span className="font-vazir  text-lg p-3">{comment.comment}</span>
+                            <div className={`box-content w-full min-h-20 rounded-2xl mt-5 ${isDarkMode ? "border-white" : "border-black"} border-1 text-right overflow-hidden break-words`}>
+                                <span className={`font-vazir ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-lg p-3`}>{comment.comment}</span>
                             </div> 
                         </div>  
                     ))}  
@@ -391,8 +393,8 @@ export default function ProductPage({ open, onClose, itemid }) {
             </>
         ) : (
             <p>Loading...</p> 
-        )}
-        
+        )} 
+        </div>    
         </Dialog>  
     );  
 }  
