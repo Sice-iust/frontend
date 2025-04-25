@@ -80,7 +80,7 @@ const Receipt: React.FC = () => {
                     {data.cart_items.map(item => (  
                         <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full place-self-end mr-1 mt-4 pr-1">  
                             <button  
-                                className="bg-white cursor-pointer text-red-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-102"  
+                                className={`${isDarkMode ? "bg-[#191919]" : "bg-white"} cursor-pointer text-red-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-102`} 
                                 onClick={() => removeItem(item.product.id)}  
                                 aria-label={`Remove ${item.product.name}`}  
                             >  
