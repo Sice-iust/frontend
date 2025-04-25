@@ -20,6 +20,7 @@ export default function CardSlider({ text, color, url ,type}) {
                         image: item.photo_url,
                         discount: item.discount,
                         price: item.discounted_price,
+                        rate: item.average_rate
                     }));
                     setProducts(data);
                     console.log(response)
@@ -63,7 +64,15 @@ export default function CardSlider({ text, color, url ,type}) {
             </div>
             <Slider {...settings}>
                 {products.slice(0,5).map((product) => (
-                    <ProductCard key={product.id} img_src={product.image} text={product.name} ref={product.id} percent={product.discount} price={product.price} type={type} />
+                    <ProductCard 
+                    key={product.id} 
+                    img_src={product.image} 
+                    text={product.name} 
+                    ref={product.id} 
+                    percent={product.discount} 
+                    price={product.price}
+                    rate={product.rate} 
+                    type={type} />
                 ))}
             </Slider>
         </div>
