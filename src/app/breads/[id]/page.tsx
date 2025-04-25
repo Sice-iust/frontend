@@ -13,7 +13,7 @@ export default function Bread() {
     const { isDarkMode, toggleDarkMode } = useTheme();
     return (
         <>
-            <Header showImage={false} />
+            {/* <Header showImage={false} /> */}
             <div className={` flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} flex flex-row`}>
                 <div className={` flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}  `}>
                     <Receipt />

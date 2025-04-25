@@ -109,6 +109,7 @@ export default function CategoryList({ category }) {
     };  
 
 return (
+    <>
     <div className={` ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 `}>  
         {dataLength > 0 ? (  
             data.map(item => (  
@@ -218,7 +219,9 @@ return (
         ) : (  
             <div>No items found</div>  
         )}  
+        
+    </div> 
         {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}  
-    </div>  
+    </>
 );  
 }  
