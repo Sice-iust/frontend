@@ -228,7 +228,6 @@ export default function ProductPage({ open, onClose, itemid }) {
             open={open} 
             onClose={onClose} 
             sx={{  
-                backgroundColor: isDarkMode ? '#000000' : '#f5f5f5', 
                 '& .MuiPaper-root': {  
                     borderRadius: '12px',  
                     minWidth: '900px',  
@@ -242,7 +241,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                 },  
             }}  
         > 
-        <div className={` ${isDarkMode ? "bg-[#191919]" : "bg-[#f5f5f5]"}`} >
+        <div className={` ${isDarkMode ? "bg-[#191919]" : "bg-white"}`} >
         <div className="flex flex-row-reverse m-1"> 
             <IconButton  
                 onClick={onClose}  
@@ -303,7 +302,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 ) : (  
                                     <div className="flex mr-19 space-x-2 ml-5 mb-5">  
                                         <button  
-                                            className={`bg-white ml-5 border-3 ${userdata >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                            className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userdata >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                             onClick={() => incrementQuantity(data.id)}  
                                             disabled={userdata >= data.stock}  
                                         >  
@@ -312,7 +311,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         <span className="text-lg font-semibold">{convertToPersianNumbers(userdata || 0) || 0}</span>  
                                         {userdata === 1 ? (  
                                             <button  
-                                                className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                                className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`} 
                                                 onClick={() => {  
                                                     removeItem(data.id);
                                                 }}  
@@ -327,7 +326,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                             </button>  
                                         ) : (  
                                             <button  
-                                                className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                                className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`}  
                                                 onClick={() => decrementQuantity(data.id)}  
                                                 disabled={userdata <= 1}  
                                             >  
@@ -340,11 +339,13 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div> 
 
                 </div>
-            <hr className={`border-t mb-10 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
-            <div className="flex justify-end">  
-                <span className={`font-vazir font-bold text-2xl mr-10 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>نظرات کاربران</span>  
-            </div>  
-            {comments.length > 0 ? (  
+
+            {comments.length > 0 ? ( 
+            <>
+                <hr className={`border-t mb-10 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
+                <div className="flex justify-end">  
+                    <span className={`font-vazir font-bold text-2xl mr-10 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>نظرات کاربران</span>  
+                </div>   
                 <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15 ">  
                     {comments.map((comment, index) => (  
                         <div key={index} className={`min-h-40 w-27 rounded-2xl ${isDarkMode ? "bg-black border-white" : "bg-white"} border-1 p-2 flex flex-col`}>
@@ -386,8 +387,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                         </div>  
                     ))}  
                 </Slider> 
+                </>
             ) : (  
-                <div>No comments available</div>  
+                <div></div>  
             )}   
             </div>
             </>
