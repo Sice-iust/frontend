@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";  
 import { Dialog, DialogActions, DialogContent, DialogTitle, Button ,IconButton} from "@mui/material";  
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import axios from 'axios';  
 import Image from 'next/image'; 
 import { FaStar } from "react-icons/fa"; 
@@ -144,7 +145,29 @@ export default function ProductPage({ open, onClose, itemid }) {
           alert("Cart updated!");
     };  
 
-      
+    const CustomNextArrow = (props) => {
+        const { onClick } = props;
+        return (
+            <div 
+                className="absolute top-1/2 transform -translate-y-1/2 right-0 z-10 cursor-pointer" 
+                onClick={onClick}
+            >
+                <ArrowForwardIosIcon className="text-gray-400 w-5 h-5" />
+            </div>
+        );
+    };
+    
+    const CustomPrevArrow = (props) => {
+        const { onClick } = props;
+        return (
+            <div 
+                className="absolute top-1/2 transform -translate-y-1/2 left-0 z-10 cursor-pointer" 
+                onClick={onClick}
+            >
+                <ArrowBackIosIcon className="text-gray-400 w-5 h-5" />
+            </div>
+        );
+    };
           
     const settings = {
         dots: true,
@@ -157,13 +180,15 @@ export default function ProductPage({ open, onClose, itemid }) {
         swipe: true,
         swipeToSlide: true,
         touchMove: true,
+        nextArrow: <CustomNextArrow />, 
+        prevArrow: <CustomPrevArrow />, 
         responsive: [
             {
                 breakpoint: 1200,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
-                    centerPadding: '50px', 
+                    centerPadding: '40px', 
                 }
             },
             {
@@ -179,7 +204,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    centerMode: false, 
+                    centerMode: false,
                 }
             },
             {
@@ -187,11 +212,13 @@ export default function ProductPage({ open, onClose, itemid }) {
                 settings: {
                     slidesToShow: 1,
                     slidesToScroll: 1,
-                    centerMode: false, 
+                    centerMode: false,
                 }
             },
         ]
     };
+    
+
 
 
     return (  
@@ -315,9 +342,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                 <span className="font-vazir font-bold text-2xl mr-10">نظرات کاربران</span>  
             </div>  
             {comments.length > 0 ? (  
-                <Slider {...settings} className="overflow-hidden flex m-10 mx-10">  
+                <Slider {...settings} className="overflow-hidden  m-10 mx-10">  
                     {comments.map((comment, index) => (  
-                        <div key={index} className=" min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col ">
+                        <div key={index} className=" min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col margin-auto">
                             <div className="flex flex-row-reverse justify-between">
                                 <div className="flex flex-row-reverse">
                                     <IoPerson className="w-4 h-6 ml-1 mr-1"/> 
