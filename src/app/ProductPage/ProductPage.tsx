@@ -149,7 +149,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         const { onClick } = props;
         return (
             <div 
-                className="absolute top-1/2 transform -translate-y-1/2 right-0 z-10 cursor-pointer" 
+                className="absolute top-1/2 transform -translate-y-1/2 right-2 z-10 cursor-pointer hover:transition-transform hover:duration-200 hover:bg-gray-600 rounded-full hover:scale-110 " 
                 onClick={onClick}
             >
                 <ArrowForwardIosIcon className="text-gray-400 w-5 h-5" />
@@ -161,7 +161,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         const { onClick } = props;
         return (
             <div 
-                className="absolute top-1/2 transform -translate-y-1/2 left-0 z-10 cursor-pointer" 
+                className=" absolute top-1/2 transform -translate-y-1/2 left-2 z-10 cursor-pointer hover:transition-transform hover:duration-200 hover:bg-gray-600 rounded-full hover:scale-110" 
                 onClick={onClick}
             >
                 <ArrowBackIosIcon className="text-gray-400 w-5 h-5" />
@@ -182,6 +182,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         touchMove: true,
         nextArrow: <CustomNextArrow />, 
         prevArrow: <CustomPrevArrow />, 
+        adaptiveHeight: true,
         responsive: [
             {
                 breakpoint: 1200,
@@ -342,9 +343,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                 <span className="font-vazir font-bold text-2xl mr-10">نظرات کاربران</span>  
             </div>  
             {comments.length > 0 ? (  
-                <Slider {...settings} className="overflow-hidden  m-10 mx-10">  
+                <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15 ">  
                     {comments.map((comment, index) => (  
-                        <div key={index} className=" min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col margin-auto">
+                        <div key={index} className=" min-h-40 w-27 rounded-2xl bg-white border-1 p-2 flex flex-col">
                             <div className="flex flex-row-reverse justify-between">
                                 <div className="flex flex-row-reverse">
                                     <IoPerson className="w-4 h-6 ml-1 mr-1"/> 
