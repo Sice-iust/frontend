@@ -1,8 +1,7 @@
 @import "tailwindcss";
-
+/* @import "tailwindcss/preflight"; */
 @tailwind utilities;
 
-@tailwind utilities;
 @font-face {
     font-family: "Vazir";
 
