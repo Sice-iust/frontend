@@ -3,10 +3,10 @@ import { CgNotes } from "react-icons/cg";
 import axios from "axios";
 import emptyReceipt from "../../../public/assets/emptyReceipt.png";
 import Image from 'next/image';
-
+import { useTheme } from '../theme';
 const Receipt: React.FC = () => {  
 
-
+    const { isDarkMode, toggleDarkMode } = useTheme();
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
@@ -66,14 +66,14 @@ const Receipt: React.FC = () => {
     }  
 
     return (  
-        <div className="box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">  
-            <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold">  
+        <div className={`box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl ${isDarkMode ? "bg-[#191919] border-white" : "bg-white"} shadow-[5px_7px_5px_rgba(0,0,0,0.25)]`}>  
+            <h2 className={`text-[25px] text-center ${isDarkMode ? "text-[#ffffff]" : "text-black"} pt-5 pb-2 font-vazir font-bold`}>  
                 سبد خرید {data.counts > 0 ? `(${convertToPersianNumbers(data.counts)})` : ""}  
             </h2>  
             {data.cart_items.length === 0 ? ( 
                 <div className="flex flex-col justify-center items-center mt-10">  
                     <Image src={emptyReceipt} alt="emptyReceipt" className="w-70 h-70 "/>  
-                    <span className="font-vazir text-lg font-semibold mt-2">!سبد خرید شما خالی است</span>
+                    <span className={`font-vazir ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-lg font-semibold mt-2`}>!سبد خرید شما خالی است</span>
                 </div> 
             ) : (  
                 <div className={`${data.counts > 2 ? "overflow-y-scroll max-h-60" : ""}`}>  
@@ -93,23 +93,23 @@ const Receipt: React.FC = () => {
                                 </svg>  
                             </button>  
                             <div className="box-content ml-5 w-82 h-25 border border-gray-400 rounded-lg flex flex-col">  
-                                <span className="text-[18px] text-right mr-3 mt-2 font-vazir font-semibold">  
+                                <span className={`text-[18px] text-right mr-3 mt-2 font-vazir font-semibold ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>  
                                     {item.product.name}  
                                 </span>  
                                 <div className="flex justify-between items-center mr-6 mt-2 flex items-center space-x-2">  
                                     <div className="flex items-center space-x-2">  
                                         <button  
-                                            className={`bg-white ml-5 border-3 ${item.quantity >= item.product.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.product.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
+                                            className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${item.quantity >= item.product.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.product.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
                                             onClick={() => incrementQuantity(item.product.id)}  
                                             disabled={item.quantity >= item.product.stock}  
                                             aria-label={`Increase quantity of ${item.product.name}`}  
                                         >  
                                             +  
                                         </button>  
-                                        <span className="text-lg font-semibold">{convertToPersianNumbers(item.quantity)}</span>  
+                                        <span className={`text-lg ${isDarkMode ? "text-[#ffffff]" : "text-black"} font-semibold`}>{convertToPersianNumbers(item.quantity)}</span>  
                                         {item.quantity === 1 ? (  
                                             <button  
-                                                className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                                className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`}  
                                                 onClick={() => removeItem(item.product.id)}  
                                                 aria-label={`Remove ${item.product.name}`}  
                                             >  
@@ -123,7 +123,7 @@ const Receipt: React.FC = () => {
                                             </button>  
                                         ) : (  
                                             <button  
-                                                className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                                className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`} 
                                                 onClick={() => decrementQuantity(item.product.id)}  
                                                 aria-label={`Decrease quantity of ${item.product.name}`}  
                                             >  
@@ -131,7 +131,7 @@ const Receipt: React.FC = () => {
                                             </button>  
                                         )}  
                                     </div>  
-                                    <span className="text-[15px] text-right font-vazir font-medium">  
+                                    <span className={` ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-[15px] text-right font-vazir font-medium`}>  
                                         قیمت: {convertToPersianNumbers(Number(item.product.price*(1-item.product.discount/100)).toLocaleString())} تومان  
                                     </span>  
                                 </div>  
@@ -152,16 +152,16 @@ const Receipt: React.FC = () => {
                 <>  
                     <div className="flex flex-row-reverse space-x-reverse space-x-2 mt-7 mr-3">  
                         <CgNotes color="#F18825" className="w-6 h-5" />  
-                        <h2 className="text-[17px] font-vazir font-semibold text-right">خلاصه سفارش</h2>  
+                        <h2 className={`text-[17px] ${isDarkMode ? "text-[#ffffff]" : "text-black"} font-vazir font-semibold text-right`}>خلاصه سفارش</h2>  
                     </div>  
                     <div className="p-5 flex flex-col pt-2">  
                         {data.cart_items.map(item => (  
                             <div key={item.product.id} className="flex flex-row-reverse py-2 justify-between">  
-                                <span className="text-s font-vazir font-medium text-right  mr-6">{item.product.name}</span>
+                                <span className={`text-s ${isDarkMode ? "text-[#ffffff]" : "text-black"} font-vazir font-medium text-right  mr-6`}>{item.product.name}</span>
                                 <span className="flex flex-row-reverse">
-                                <span className="ml-1 text-gray-500">× {convertToPersianNumbers(item.quantity)}</span>  
-                                <span>{convertToPersianNumbers(Number(item.product.price*(1-item.product.discount/100)).toLocaleString())}</span>  
-                                <span className="text-s font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
+                                <span className={`ml-1 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>× {convertToPersianNumbers(item.quantity)}</span>  
+                                <span className={`${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>{convertToPersianNumbers(Number(item.product.price*(1-item.product.discount/100)).toLocaleString())}</span>  
+                                <span className={`text-s font-vazir font-medium text-right mr-2 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>تومان</span>  
                                 </span>  
                             </div>  
                         ))}  
@@ -178,10 +178,10 @@ const Receipt: React.FC = () => {
                         )
                         }
                         <div className="flex flex-row-reverse py-2 border-t mt-6 justify-between">  
-                            <span className="font-vazir font-semibold mr-6">جمع کل</span> 
+                            <span className={`font-vazir ${isDarkMode ? "text-white" : "text-black"} font-semibold mr-6`}>جمع کل</span> 
                             <div className="flex flex-row-reverse ">
-                            <span className="font-bold font-2xl">{convertToPersianNumbers(data.total_actual_price.toLocaleString())}</span>  
-                            <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
+                            <span className={`font-bold ${isDarkMode ? "text-white" : "text-black"} font-2xl`}>{convertToPersianNumbers(data.total_actual_price.toLocaleString())}</span>  
+                            <span className={`text-[14px] font-vazir font-medium text-right mr-2 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>تومان</span>  
                             </div> 
                         </div>  
                     </div>   
