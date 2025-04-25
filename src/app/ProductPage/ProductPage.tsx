@@ -339,11 +339,13 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div> 
 
                 </div>
-            <hr className={`border-t mb-10 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
-            <div className="flex justify-end">  
-                <span className={`font-vazir font-bold text-2xl mr-10 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>نظرات کاربران</span>  
-            </div>  
-            {comments.length > 0 ? (  
+
+            {comments.length > 0 ? ( 
+            <>
+                <hr className={`border-t mb-10 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
+                <div className="flex justify-end">  
+                    <span className={`font-vazir font-bold text-2xl mr-10 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>نظرات کاربران</span>  
+                </div>   
                 <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15 ">  
                     {comments.map((comment, index) => (  
                         <div key={index} className={`min-h-40 w-27 rounded-2xl ${isDarkMode ? "bg-black border-white" : "bg-white"} border-1 p-2 flex flex-col`}>
@@ -385,8 +387,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                         </div>  
                     ))}  
                 </Slider> 
+                </>
             ) : (  
-                <div>No comments available</div>  
+                <div></div>  
             )}   
             </div>
             </>
