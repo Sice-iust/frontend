@@ -164,7 +164,12 @@ return (
                         ) : (  
                             <div className="flex mr-19 mt-2 space-x-2">  
                                 <button  
-                                    className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
+                                    className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? 
+                                                "border-gray-300 text-gray-300 cursor-not-allowed" 
+                                                : "border-green-500 text-green-500 cursor-pointer"} 
+                                                font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
+                                                transition-transform duration-200 ${userdata[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white" 
+                                                    : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
                                     onClick={(e) => {  
                                         e.stopPropagation(); 
                                         incrementQuantity(item.id);  

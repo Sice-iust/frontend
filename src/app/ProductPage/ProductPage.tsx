@@ -13,13 +13,16 @@ import moment from 'moment-jalaali';
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
 import { useTheme } from '../theme';
+import { useCart } from "../../context/Receiptcontext";
 
-export default function ProductPage({ open, onClose, itemid }) {  
+export default function ProductPage({ open, onClose, itemid }) { 
+    const { userquantity, incrementQuantity, decrementQuantity, removeItem , handleAdd,fetchDatauser} = useCart(); 
     const [isFinished, setIsFinished] = useState(false);  
     const [data, setData] = useState(null); 
-    const [userdata, setuserData] = useState(null);
     const [comments, setComments] = useState([]); 
     const { isDarkMode, toggleDarkMode } = useTheme(); 
+
+
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
@@ -37,7 +40,9 @@ export default function ProductPage({ open, onClose, itemid }) {
             return ["Invalid date format", "", ""];  
         }  
     };  
-    useEffect(() => {  
+    useEffect(() => { 
+        
+        fetchDatauser(itemid);
         const fetchData = async () => {  
             try {  
                 const response = await axios.get(`https://nanziback.liara.run/product/${itemid}/`, {   
@@ -56,31 +61,9 @@ export default function ProductPage({ open, onClose, itemid }) {
         if (itemid) {  
             fetchData();  
         }  
-    }, [itemid]);  
-    useEffect(() => {  
-        const fetchDatauser = async () => {  
-            try {  
-                const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
-                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
-                });  
-                console.log("item id : ",itemid);
-                console.log("Response Data:", response.data);  
-                const matchedItem = response.data.find(item => item.product_id === itemid);  
+    }, [itemid]);
 
-                if (matchedItem) {  
-                    setuserData( matchedItem.quantity );  
-                } else {  
-                    console.log("No matching product found.");  
-                }    
-            } catch (err) {  
-                console.error("Error fetching data:", err);  
-            } 
-        };  
     
-        if (itemid) {  
-            fetchDatauser();  
-        }  
-    }, [itemid]);  
 
     useEffect(() => {  
         const fetchcomments = async () => {  
@@ -101,51 +84,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         }  
     }, [itemid]); 
 
-    const handleAdd = async (itemId) => {
-        const token = localStorage.getItem('token'); 
-        try {
-            
-            await axios.post(`https://nanziback.liara.run/user/cart/creat/${itemId}/`, {
-              quantity: 1
-            }, {
-              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
-            });
-            alert("Item added to cart!");
-          } catch (error) {
-            if (error.response?.data?.error === "You already have this product in your cart") {
-              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/?update=${"add"}`, {
-              }, {
-                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
-              });
-              alert("Cart updated!");
-            } else {
-              console.error(error.response?.data);
-            }
-          }
-    };
-
-    const incrementQuantity = async (id: number) => {  
-        const token = localStorage.getItem('token'); 
-        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"add"}`, {
-          }, {
-            headers: { Authorization: `Bearer ${token}`, }
-          });
-          alert("Cart updated!");
-    };  
-    const removeItem = async (id: number) => {    
-        await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {  
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" }  
-        });  
-        alert("Cart updated!");  
-    }; 
-    const decrementQuantity = async (id: number) => {  
-        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"delete"}`, {
-          }, {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json", }
-          });
-          alert("Cart updated!");
-    };  
-
+    
     const CustomNextArrow = (props) => {
         const { onClick } = props;
         return (
@@ -291,9 +230,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         </div>  
                                     )}  
                                 </div>  
-                                { userdata === null || userdata === 0 ? (  
+                                { userquantity === null || userquantity === 0 ? (  
                                     <button  
-                                        className={` ${data.stock==0 ||  userdata >= data.stock? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-30 h-12 text-white text-2xl font-vazir font-md mr-24 ml-10 mb-5`}  
+                                        className={` ${data.stock==0 ||  userquantity >= data.stock? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-30 h-12 text-white text-2xl font-vazir font-md mr-24 ml-10 mb-5`}  
                                         onClick={() => handleAdd(data.id)}  
                                         disabled={ data.stock==0}  
                                     >  
@@ -302,14 +241,14 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 ) : (  
                                     <div className="flex mr-19 space-x-2 ml-5 mb-5">  
                                         <button  
-                                            className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userdata >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userdata >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
+                                            className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userquantity >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${userquantity >= data.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                             onClick={() => incrementQuantity(data.id)}  
-                                            disabled={userdata >= data.stock}  
+                                            disabled={userquantity >= data.stock}  
                                         >  
                                             +  
                                         </button>  
-                                        <span className="text-lg font-semibold">{convertToPersianNumbers(userdata || 0) || 0}</span>  
-                                        {userdata === 1 ? (  
+                                        <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity || 0) || 0}</span>  
+                                        {userquantity === 1 ? (  
                                             <button  
                                                 className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`} 
                                                 onClick={() => {  
@@ -328,7 +267,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                             <button  
                                                 className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`}  
                                                 onClick={() => decrementQuantity(data.id)}  
-                                                disabled={userdata <= 1}  
+                                                disabled={userquantity <= 1}  
                                             >  
                                                 <span className="text-xl">-</span>  
                                             </button>  

@@ -9,9 +9,12 @@ interface CartContextType {
     counts: number,
     totalDiscount: number,
     totalActualPrice: number,
+    userquantity : number,
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
     removeItem: (id: number) => Promise<void>;
+    handleAdd: (id: number) => Promise<void>;
+    fetchDatauser: (itemId) => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType>({
@@ -20,9 +23,12 @@ const CartContext = createContext<CartContextType>({
     counts:0,
     totalDiscount:0,
     totalActualPrice:0,
+    userquantity:0,
     incrementQuantity: async () => Promise.resolve(), 
     decrementQuantity: async () => Promise.resolve(), 
-    removeItem: async () => Promise.resolve() 
+    removeItem: async () => Promise.resolve() ,
+    handleAdd: async () => Promise.resolve(), 
+    fetchDatauser: async () => Promise.resolve() 
 });
 
 export const CartProvider = ({ children }) => {
@@ -32,6 +38,7 @@ export const CartProvider = ({ children }) => {
     const [totalDiscount, setTotalDiscount] = useState(0);
     const [totalActualPrice, setTotalActualPrice] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [userquantity, setuserQuantity] = useState(0);
 
 
 
@@ -66,6 +73,7 @@ export const CartProvider = ({ children }) => {
     }, []);
 
     const incrementQuantity = async (id) => {
+        setuserQuantity((prev) => prev + 1);
         try {
             await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=add`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -77,6 +85,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const decrementQuantity = async (id) => {
+        setuserQuantity((prev) => prev - 1);
         try {
             await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=delete`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -88,6 +97,7 @@ export const CartProvider = ({ children }) => {
     };
 
     const removeItem = async (id) => {
+        setuserQuantity(0);
         try {
             await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -98,9 +108,53 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+    const handleAdd = async (itemId) => {
+        setuserQuantity(1);
+        const token = localStorage.getItem('token'); 
+        try {
+            
+            await axios.post(`https://nanziback.liara.run/user/cart/creat/${itemId}/`, {
+              quantity: 1
+            }, {
+              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+            });
+            fetchData();
+          } catch (error) {
+            if (error.response?.data?.error === "You already have this product in your cart") {
+              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/?update=${"add"}`, {
+              }, {
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+              });
+              fetchData();
+            } else {
+              console.error(error.response?.data);
+            }
+          }
+    };
+
+    const fetchDatauser = async (itemId) => {  
+        try {  
+            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
+            });  
+            const matchedItem = response.data.find(item => item.product_id === itemId);  
+            if (matchedItem) {  
+                setuserQuantity( matchedItem.quantity );  
+            } else {  
+                console.log("No matching product found.");  
+            }    
+        } catch (err) {  
+            console.error("Error fetching data:", err);  
+        } 
+    };  
+
+    
+
+
+
     return (
-        <CartContext.Provider value={{ cartItems, counts, totalDiscount, totalActualPrice, loading, 
-                                       incrementQuantity, decrementQuantity, removeItem }}>
+        <CartContext.Provider value={{ cartItems, counts, totalDiscount, totalActualPrice, loading, userquantity,
+                                       incrementQuantity, decrementQuantity, removeItem ,handleAdd ,fetchDatauser}}>
             {children}
         </CartContext.Provider>
 
