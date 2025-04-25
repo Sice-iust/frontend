@@ -138,9 +138,6 @@ export default function Header({ showImage = true }) {
                 </div>
             )}
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} />}
-
         </div>
-
-
     );
 };

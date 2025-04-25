@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Header from "../navbar";
-import CategoryWrapper from "./CardWrapper/categoryWrapper";
-import CardSlider from "./CardWrapper/cardSlider";
+import Header from "../header";
+import CategoryWrapper from "./category/categoryWrapper";
+import CardSlider from "./ProductCard/cardSlider";
 
 export default function HomePage() {
 
@@ -10,8 +10,8 @@ export default function HomePage() {
       <Header showImage={true} />
       <div style={{ padding: '10px'}}>
         <CategoryWrapper />
-        <CardSlider color={"#F18825"} text={" تخفیف های روز"} url={"https://nanziback.liara.run/product/discount/"}/>
-        <CardSlider color={"#B7B3AC"} text={"محبوب ترین نان ها"} url={"https://nanziback.liara.run/product/popular/"}/>
+        <CardSlider color={"#F18825"} text={" تخفیف های روز %"} url={"https://nanziback.liara.run/product/discount/"} type={"dis"}/>
+        <CardSlider color={"#B7B3AC"} text={" محبوب ترین نان ها "} url={"https://nanziback.liara.run/product/popular/"} type={"other"}/>
       </div>
     </>
   );
