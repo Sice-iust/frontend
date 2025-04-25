@@ -5,8 +5,9 @@ import Image from 'next/image';
 import emptyReceipt from "../../assets/emptyReceipt.png";  
 import { FaStar } from "react-icons/fa";  
 import ProductPage from '../ProductPage/ProductPage';
+import { useTheme } from '../theme';
 export default function CategoryList({ category }) {  
- 
+    const { isDarkMode, toggleDarkMode } = useTheme();
     const [catNumber, setCategoryNumber] = useState(() => {
         if (typeof window !== "undefined") {
             return localStorage.getItem('category') || category;
@@ -107,11 +108,11 @@ export default function CategoryList({ category }) {
           alert("Cart updated!");
     };  
 
-return (  
-    <div className="flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 ">  
+return (
+    <div className={` ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 `}>  
         {dataLength > 0 ? (  
             data.map(item => (  
-                <div key={item.id} className="flex flex-col box-content border rounded-2xl bg-white w-79 h-77 cursor-pointer hover:scale-105 transition duration-300"  
+                <div key={item.id} className={`flex flex-col box-content border rounded-2xl ${isDarkMode ? "bg-[#191919]" : "bg-white"} w-79 h-77 cursor-pointer hover:scale-105 transition duration-300`}  
                      onClick={() => handleOpenModal(item.id)} 
                 >  
                     <div className="flex flex-row">  
@@ -132,10 +133,10 @@ return (
                             </div>  
                         </div>  
                     </div>  
-                    <div className="font-vazir text-lg font-semibold text-right mr-5">{item.name}</div>  
+                    <div className={`${isDarkMode ? "text-white" : "text-black"} font-vazir text-lg font-semibold text-right mr-5`}>{item.name}</div>  
                     <div className="flex flex-row-reverse">  
                         <div className='flex flex-col'>  
-                            <div className="font-vazir text-lg text-right mr-5 mt-2">  
+                            <div className={` ${isDarkMode ? "text-white" : "text-black"} font-vazir text-lg text-right mr-5 mt-2`}>  
                                 {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
                             </div>  
                             {item.discount > 0 && (  
