@@ -3,81 +3,56 @@ import { CgNotes } from "react-icons/cg";
 import axios from "axios";
 import emptyReceipt from "../../../public/assets/emptyReceipt.png";
 import Image from 'next/image';
+import { CartProvider, useCart } from "../../context/Receiptcontext";
+import LoadingBox from "../../components/Loading/LoadingBox";
 
 const Receipt: React.FC = () => {  
-
+    const { cartItems, counts, totalDiscount, totalActualPrice, loading ,
+        incrementQuantity, decrementQuantity, removeItem} = useCart();
 
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
         return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
     };  
 
-    const incrementQuantity = async (id: number) => {  
-        const token = localStorage.getItem('token'); 
-        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"add"}`, {
-          }, {
-            headers: { Authorization: `Bearer ${token}`, }
-          });
-          alert("Cart updated!");
-    };  
-    const removeItem = async (id: number) => {    
-        await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {  
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" }  
-        });  
-        alert("Cart updated!");  
-    }; 
-    const decrementQuantity = async (id: number) => {  
-        await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=${"delete"}`, {
-          }, {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json", }
-          });
-          alert("Cart updated!");
-    };  
+    const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
 
+    
 
-    const [data, setData] = useState(null);
-    const [dataLength,setDataLength]=useState(0);
-    const [loading, setLoading] = useState(true);
-    const fetchData = async () => {  
-        setLoading(true); 
-        try {  
-            const response = await axios.get("https://nanziback.liara.run/user/cart/", {  
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },  
-            });  
-            setData(response.data);  
-            console.log(`Data from server:`, response.data); 
-        } catch (error) {  
-            console.error("Error fetching data:", error);  
-            setData(null); 
-        } finally {  
-            setLoading(false); 
-        }  
-    };  
+    if (loading) {
+        return (
+            <div className="relative">
+                {/* Cart Box */}
+                <div className="box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">
+                    <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold">
+                        سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}
+                    </h2>
+                </div>
 
-    useEffect(() => {  
-        fetchData();  
-    }, []);  
-
-    if (loading) {  
-        return <div className="text-center pt-10">...در حال بارگذاری</div>; 
-    }  
-    if (!data || !data.cart_items) {  
+                <div className="absolute top-0 left-10 right-0 bottom-0 rounded-2xl flex items-center justify-center bg-white bg-opacity-70">
+                    <LoadingBox />
+                </div>
+            </div>
+        );
+    }
+    
+    if (!cartItems ) {  
         return <div className="text-center pt-10">مشکلی پیش آمد. لطفا تست مجدد کنید.</div>; 
     }  
 
     return (  
         <div className="box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white shadow-[5px_7px_5px_rgba(0,0,0,0.25)]">  
             <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold">  
-                سبد خرید {data.counts > 0 ? `(${convertToPersianNumbers(data.counts)})` : ""}  
+                سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}  
             </h2>  
-            {data.cart_items.length === 0 ? ( 
+            {cartItems.length === 0 ? ( 
                 <div className="flex flex-col justify-center items-center mt-10">  
                     <Image src={emptyReceipt} alt="emptyReceipt" className="w-70 h-70 "/>  
                     <span className="font-vazir text-lg font-semibold mt-2">!سبد خرید شما خالی است</span>
                 </div> 
             ) : (  
-                <div className={`${data.counts > 2 ? "overflow-y-scroll max-h-60" : ""}`}>  
-                    {data.cart_items.map(item => (  
+                <div className={`${cartItems.length > 2 ? "overflow-y-scroll max-h-60" : ""}`}>  
+                    {sortedCartItems.map(item => (  
                         <div key={item.id} className="flex flex-row-reverse items-center justify-between w-full place-self-end mr-1 mt-4 pr-1">  
                             <button  
                                 className="bg-white cursor-pointer text-red-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-102"  
@@ -148,14 +123,14 @@ const Receipt: React.FC = () => {
                     ))}  
                 </div>  
             )}  
-            {data.cart_items.length > 0 && (  
+            {cartItems.length > 0 && (  
                 <>  
                     <div className="flex flex-row-reverse space-x-reverse space-x-2 mt-7 mr-3">  
                         <CgNotes color="#F18825" className="w-6 h-5" />  
                         <h2 className="text-[17px] font-vazir font-semibold text-right">خلاصه سفارش</h2>  
                     </div>  
                     <div className="p-5 flex flex-col pt-2">  
-                        {data.cart_items.map(item => (  
+                        {sortedCartItems.map(item => (  
                             <div key={item.product.id} className="flex flex-row-reverse py-2 justify-between">  
                                 <span className="text-s font-vazir font-medium text-right  mr-6">{item.product.name}</span>
                                 <span className="flex flex-row-reverse">
@@ -165,12 +140,12 @@ const Receipt: React.FC = () => {
                                 </span>  
                             </div>  
                         ))}  
-                        {data.total_discount >0 && (
+                        {totalDiscount >0 && (
                             <>
                             <div className="flex flex-row-reverse py-2 justify-between ">  
                                 <span className="text-[14px] font-vazir font-medium text-right mr-2 text-green-600 font-semibold mr-6 ">سود شما از این خرید</span>
                                 <span className="flex flex-row-reverse">
-                                <span className="text-green-600 font-semibold">{convertToPersianNumbers(data.total_discount.toLocaleString())}</span>    
+                                <span className="text-green-600 font-semibold">{convertToPersianNumbers(totalDiscount.toLocaleString())}</span>    
                                 <span className="text-[14px] font-vazir font-medium text-right mr-2 text-green-600">تومان</span>    
                                 </span>
                             </div>                            
@@ -180,7 +155,7 @@ const Receipt: React.FC = () => {
                         <div className="flex flex-row-reverse py-2 border-t mt-6 justify-between">  
                             <span className="font-vazir font-semibold mr-6">جمع کل</span> 
                             <div className="flex flex-row-reverse ">
-                            <span className="font-bold font-2xl">{convertToPersianNumbers(data.total_actual_price.toLocaleString())}</span>  
+                            <span className="font-bold font-2xl">{convertToPersianNumbers(totalActualPrice.toLocaleString())}</span>  
                             <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>  
                             </div> 
                         </div>  
