@@ -1,5 +1,4 @@
-import Sidebar from "./Sidebar/page";
-import Navbar from "../navbar";   
+import Sidebar from "./Sidebar/page";  
 
 export default function ProfileLayout({
     children,
@@ -8,7 +7,6 @@ export default function ProfileLayout({
   }) {
     return (
         <>
-            <Navbar showImage={false}/>
         
       <div className=" flex  flex-row ">
         {/* Main content comes FIRST (left side) */}

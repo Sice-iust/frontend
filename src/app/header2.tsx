@@ -28,7 +28,7 @@ const LazySearch = dynamic(() => import('./search'), {
     ssr: false,
 });
 
-export default function header2() {
+export default function Header2() {
     const { isDarkMode, toggleDarkMode } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const breadTypes = ["بربری", "سنگک", "تافتون", "لواش", "محلی", "فانتزی"];
@@ -136,6 +136,6 @@ export default function header2() {
                     <Image height={100} width={10000} src={`/assets/homePagePhoto.png`} alt={``} />
                 </div>
             </div>
-            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} />}
+            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn}/>}
         </>);
 }

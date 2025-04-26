@@ -8,8 +8,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* <Header showImage={true} /> */}
-      <Header2/>
       <div style={{ padding: '10px'}}>
         <CategoryWrapper />
         <CardSlider color={"#F18825"} text={" تخفیف های روز %"} url={"https://nanziback.liara.run/product/discount/"} type={"dis"}/>
