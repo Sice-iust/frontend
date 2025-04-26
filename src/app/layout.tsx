@@ -10,7 +10,7 @@ export default function Layout({ children }) {
         <CartProvider>
           <ThemeProvider>
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </ThemeProvider>
         </CartProvider>
       </body>

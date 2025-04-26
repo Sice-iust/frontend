@@ -265,7 +265,7 @@ export default function CategoryList({ category }) {
                             </div>  
                         </div>   
                         <div className=' sm:block hidden'>
-                        <div className={'{`${isDarkMode ? "text-white" : "text-black"}sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 hidden '+
+                        <div className={'{`${isDarkMode ? "text-white" : "text-black"}sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5  '+
                         ""}>
                             {item.name}</div>  
                         <div className="sm:flex sm:flex-row-reverse hidden">  
