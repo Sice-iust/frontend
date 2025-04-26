@@ -122,8 +122,8 @@ export default function CategoryList({ category }) {
                 data.map(item => (  
                     <div key={item.id} 
                     onClick={() => handleOpenModal(item.id)}
-                     className={'sm:flex sm:flex-col sm:box-content sm:border sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 '+
-                        " flex flex-row bg-white  border-b box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}> {/*fix bckground*/ } 
+                     className={`sm:flex sm:flex-col sm:box-content sm:border sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
+                        " flex flex-row   border-b box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
                          <div className={" hidden sm:flex sm:flex-row   "}>  
                            <div 
                             className={ "sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl sm:bg-[#d9d9d9] sm:w-auto sm:h-7 sm:ml-1 " 
