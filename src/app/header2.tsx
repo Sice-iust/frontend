@@ -100,20 +100,20 @@ export default function header2() {
             <div className="bg-white w-full">
                 <div dir="rtl" className="flex flex-col justify-center px-5 py-2 md:flex-row">
 
-                    <div className="my-auto">
+                    <div className=" basis-2/10 my-auto">
                         <Image src={`/assets/logo.png`}
                             alt="Logo"
                             width={200}
                             height={200}
-                            className="m-auto md:w-30 md:h-20" />
+                            className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
                     </div>
 
-                    <div className="m-auto my-10 md:my-auto mx-auto">
+                    <div className="basis-5/10 w-full my-10 md:my-auto mx-auto ">
                         <LazySearch isDarkMode={isDarkMode} />
 
                     </div>
 
-                    <div dir="ltr" className="flex my-auto gap-10 justify-between">
+                    <div dir="ltr" className="basis-3/10 flex my-auto gap-10">
                         {isLoggedIn ? (
                             <span className='text-[15px] cursor-pointer'>  صفحه کاربر
                                 <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " /></span>
@@ -128,7 +128,7 @@ export default function header2() {
                         </div>
                         <span className="cursor-pointer my-auto gap-2" onClick={toggleDarkMode}   >
                             {isDarkMode ? 'حالت روز' : 'حالت شب'}
-                            {isDarkMode ? <WbSunnyOutlinedIcon className="text-3xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-3xl ml-0.5" />}
+                            {isDarkMode ? <WbSunnyOutlinedIcon className="text-2xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-2xl ml-0.5" />}
                         </span>
                     </div>
                 </div>

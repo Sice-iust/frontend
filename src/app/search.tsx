@@ -99,7 +99,7 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
       </div>
 
       {isFocused && searchTerm && (
-        <div className="md:absolute mt-2  w-full  max-h-[500px] overflow-y-scroll z-[1000] rounded-3xl shadow-lg p-4 bg-[#D9D9D9]">
+        <div className="md:absolute mt-2  w-full md:w-182 max-h-[500px] overflow-y-scroll z-[1000] rounded-3xl shadow-lg p-4 bg-[#D9D9D9]">
           {Object.entries(groupedResults).length > 0 ? (
             Object.entries(groupedResults).map(([category, items]) => (
               <div key={category} className="mb-5 last:mb-0">
