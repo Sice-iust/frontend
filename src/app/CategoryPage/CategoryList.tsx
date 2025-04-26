@@ -119,7 +119,7 @@ export default function CategoryList({ category }) {
                                 افزودن  
                             </button>  
                         ) : (  
-                            <div className="flex mr-19 mt-2 space-x-2">  
+                            <div className="flex mr-0 mt-2 space-x-2">  
                                 <button  
                                     className={`bg-white ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
                                                 "border-gray-300 text-gray-300 cursor-not-allowed" 
@@ -133,6 +133,7 @@ export default function CategoryList({ category }) {
                                     }}  
                                     disabled={userquantity[item.id] >= item.stock_1}  
                                 >  
+                                +
                                     
                                 </button>  
                                 <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
@@ -275,7 +276,7 @@ export default function CategoryList({ category }) {
                             
                         ) : ( 
                             <div className='sm:block hidden '> 
-                            <div className="flex mr-19 mt-2 space-x-2">  
+                            <div className="flex mr-27 mt-2 space-x-2">  
                                 <button  
                                     className={`bg-white ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
                                                 "border-gray-300 text-gray-300 cursor-not-allowed" 
