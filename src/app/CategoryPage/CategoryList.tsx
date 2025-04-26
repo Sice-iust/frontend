@@ -242,11 +242,12 @@ export default function CategoryList({ category }) {
                                 
                                   {item.discount > 0 && (
                                     <div className="flex flex-row-reverse items-center mt-1">
-                                        <div className="text-gray-500 text-xs line-through mr-2">
-                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}
-                                        </div>
+                                        
                                         <div className="bg-[#F18825] text-white text-xs w-7 h-4  mr-1 flex items-center justify-center rounded-md">
                                             %{convertToPersianNumbers(item.discount)}
+                                        </div>
+                                        <div className="text-gray-500 text-xs line-through mr-2">
+                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}
                                         </div>
                                     </div>
                                 )}
