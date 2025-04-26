@@ -108,7 +108,7 @@ const ProfileOrders: React.FC = () => {
           />
         ))
       ) : (
-        <p>هیچ سفارشی یافت نشد</p>
+        <p className=" flex  mt-25  justify-center">هیچ سفارشی یافت نشد</p>
       )}
     
     </div> 

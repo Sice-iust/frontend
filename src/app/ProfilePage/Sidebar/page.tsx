@@ -69,7 +69,7 @@ export default function Sidebar() {
     <div className="w-full bg-white shadow-md rounded-xl p-4 font-vazir mt-10 mr-5 h-screen" dir="rtl">
       <div className="flex flex-col items-center mb-2 py-4 ">
         <div className="relative mb-4" onClick={handleImageClick}>
-          <div className="w-20 h-20 rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
+          <div className="w-20 h-20 border rounded-full bg-gray-200 overflow-hidden flex items-center justify-center">
             {profileImage ? (
               <Image
                 src={profileImage}
@@ -162,32 +162,32 @@ export default function Sidebar() {
     </div>
 
       {/* Navigation Menu */}
-      <ul className="space-y-7 border-b-black border-t-black">
-        <MenuItem 
-          icon={<FaBoxOpen />} 
-          text="سفارش های من" 
-          href="/profile/orders" 
-          isActive={isActive('/orders') } 
-        />
-        <MenuItem 
-          icon={<FaMapMarkerAlt />} 
-          text="آدرس های من" 
-          href="/profile/addresses" 
-          isActive={isActive('/addresses')} 
-        />
-        <MenuItem 
-          icon={<FaTicketAlt />} 
-          text="کدهای تخفیف" 
-          href="/profile/discounts" 
-          isActive={isActive('/discounts')} 
-        />
-        <MenuItem 
-          icon={<IoMdExit />} 
-          text="خروج" 
-          href="/profile/discounts" 
-          isActive={isActive('/discounts')} 
-        />
-      </ul>
+      <ul className="space-y-0">
+  <MenuItem 
+    icon={<FaBoxOpen />} 
+    text="سفارش های من" 
+    href="/ProfilePage/OrdersPage" 
+    isActive={pathname.includes('/profile/orders')} 
+  />
+  <MenuItem 
+    icon={<FaMapMarkerAlt />} 
+    text="آدرس های من" 
+    href="/profile/addresses" 
+    isActive={pathname.includes('/profile/addresses')} 
+  />
+  <MenuItem 
+    icon={<FaTicketAlt />} 
+    text="کدهای تخفیف" 
+    href="/profile/discounts" 
+    isActive={pathname.includes('/profile/discounts')} 
+  />
+  <MenuItem 
+    icon={<IoMdExit />} 
+    text="خروج" 
+    href="/logout" 
+    isActive={pathname.includes('/logout')} 
+  />
+</ul>
 
      
     </div>
@@ -201,16 +201,22 @@ function MenuItem({ icon, text, href, isActive }: {
   isActive: boolean;
 }) {
   return (
-    <li>
+    <li className="border-t border-black last:border-b-0">
       <Link
         href={href}
-        className={`flex items-center p-3 rounded-md transition-colors  ${
-          isActive ? 'bg-white text-yellow-700' : 'hover:bg-orange-200 text-black'
+        className={`flex items-center p-4 h-full transition-colors ${
+          isActive 
+            ? 'bg-[#FFE6C1] text-[#B8681D] font-medium hover:bg-[#FFE6C1]' 
+            : 'hover:bg-[#FFF5E9] text-gray-700'
         }`}
       >
-        <span className="text-black ml-2">{icon}</span>
-        {text}
+        <span className={`flex items-center justify-center w-6 ${
+          isActive ? 'text-[#B8681D]' : 'text-gray-600'
+        }`}>
+          {icon}
+        </span>
+        <span className="flex-1 text-right pr-3">{text}</span>
       </Link>
     </li>
-  );
+  )
 }

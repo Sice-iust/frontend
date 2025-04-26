@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar/Sidebar";
+import Sidebar from "./Sidebar/page";
 import Navbar from "../navbar";   
 
 export default function ProfileLayout({
