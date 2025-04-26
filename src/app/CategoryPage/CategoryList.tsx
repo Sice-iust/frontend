@@ -287,7 +287,8 @@ export default function CategoryList({ category }) {
                             </div>
                             </div>   
                             
-                            {userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
+                            {userdata[item.id] === undefined || userdata[item.id] === 0 ? (
+                                <div className='sm:block hidden '>  
                             <button  
                                 className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
                                 onClick={(e) => {  
@@ -298,7 +299,9 @@ export default function CategoryList({ category }) {
                             >  
                                 افزودن  
                             </button>  
-                        ) : (  
+                            </div>
+                        ) : ( 
+                            <div className='sm:block hidden '> 
                             <div className="flex mr-19 mt-2 space-x-2">  
                                 <button  
                                     className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? 
@@ -335,6 +338,7 @@ export default function CategoryList({ category }) {
                                             <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />  
                                         </svg>  
                                     </button>  
+                                    
                                 ) : (  
                                     <button  
                                         className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
@@ -348,8 +352,10 @@ export default function CategoryList({ category }) {
                                     </button>  
                                 )}  
                             </div>  
+                            </div>
                         )}  
-                    </div>  
+                    </div> 
+                     
                 </div>  
             ))  
         ) : (  
