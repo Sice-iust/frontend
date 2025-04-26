@@ -9,7 +9,7 @@ enum Step {
     REGISTER = 'REGISTER',
 }
 
-export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft, onClose ,isFinished,setIsFinished}) {
+export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft, setTimeLeft, onClose ,isFinished,setIsFinished,setIsLoggedIn}) {
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
@@ -137,6 +137,9 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                     const refershToken=response?.data?.refresh_token;
                     localStorage.setItem("token", accessToken);
                     localStorage.setItem("rtoken", refershToken);
+                    if (setIsLoggedIn) {
+                        setIsLoggedIn(true);
+                      }
                     onClose();
 
                 }

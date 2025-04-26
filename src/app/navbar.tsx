@@ -165,7 +165,11 @@ export default function Header({ showImage = true }) {
                     </div>
                 </div>
             )}
-            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} />}
+            {isModalOpen && <LoginModal 
+            onClose={handleCloseModal} 
+            open={isModalOpen} 
+            setIsLoggedIn={setIsLoggedIn} // Add this line
+/>}
 
         </div>
 

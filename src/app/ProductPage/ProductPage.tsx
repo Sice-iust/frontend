@@ -329,7 +329,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                        md:mr-10`}>نظرات کاربران</span>  
                 </div>   
                 <div className="hidden md:block">
-                <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15 ">  
+                <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15">  
                     {comments.map((comment, index) => (  
                         <div key={index} className={`min-h-40 w-27 rounded-2xl 
                                 ${isDarkMode ? "bg-black border-white" : "bg-white"} border-1 p-2 flex flex-col`}>
