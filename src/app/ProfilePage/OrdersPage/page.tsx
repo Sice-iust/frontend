@@ -8,6 +8,7 @@ import { convertDateInPersian } from "../../../utils/Coversionutils";
 import { convertPrice } from "../../../utils/Coversionutils";
 import { convertTimeToPersian } from "../../../utils/Coversionutils";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
+import { useTheme } from "../../theme";
 
 export interface Product {  
   photo: string; 
@@ -42,7 +43,8 @@ const ProfileOrders: React.FC = () => {
   
   const [Completed, setCompleted] = useState<CompletedOrdersResponse | null>(null);  
 
-  
+  const { isDarkMode, toggleDarkMode } = useTheme();
+
   const Completed_Orders = async () => {
         try {
           const response = await axios.get("https://nanziback.liara.run/user/order/myorder/", {
@@ -85,11 +87,11 @@ const ProfileOrders: React.FC = () => {
   return ( 
     <>
       
-    <div className="sm:rounded-xl sm:bg-white sm:shadow-md sm:p-4 sm:mb-10 sm:w-full sm:h-screen sm:mt-0 sm:overflow-hidden sm:mx-auto sm:block hidden   
+    <div className={`sm:rounded-xl    ${isDarkMode ? "bg-[#191919]" : "bg-white"}  sm:shadow-md sm:p-4 sm:mb-10 sm:w-full sm:h-screen sm:mt-0 sm:overflow-hidden sm:mx-auto sm:block hidden   
                 sm:w-[90%] sm:mx-7  
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-0 
-                xl:mx-7 xl:mt-10 xl:w-[70%]">  
+                xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
       <Menu currentOrdersCount={convertToPersianNumbers(3)} finalOrdersCount={convertToPersianNumbers(1)} /> 
  
       
@@ -108,7 +110,7 @@ const ProfileOrders: React.FC = () => {
           />
         ))
       ) : (
-        <p className=" flex  mt-25  justify-center">هیچ سفارشی یافت نشد</p>
+        <p className={` flex  mt-25  justify-center  ${isDarkMode ? "text-white" : "text-[#191919]"}`} >هیچ سفارشی یافت نشد</p>
       )}
     
     </div> 

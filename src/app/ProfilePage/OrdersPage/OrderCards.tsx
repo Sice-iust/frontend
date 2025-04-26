@@ -8,6 +8,7 @@ import { Product } from "./page"
 import InvoicePopup from './Invoice/Orders-invoice-popup';
 import CommentsPopup from "./Comments/comments-popup";
 import ReorderPopup from "./Reorder/Reorder-Popup"
+import { useTheme } from "../../theme";
 
 
 
@@ -36,6 +37,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [isReorderOpen, setIsReorderOpen] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
   const handleInvoiceClose = () => setIsInvoiceOpen(false); 
@@ -47,13 +49,13 @@ const OrderCard: React.FC<OrderCardProps> = ({
   const handleReorderClose = () => setIsReorderOpen(false); 
 
   return (  
-    <div className="mx-auto bg-white rounded-2xl  
-                    shadow-lg p-4 mt-4 mb-2 border border-black w-full xl:w-[98%] 
-                    text-right">
+    <div className={`mx-auto ${isDarkMode ? "bg-[#191919]" : "bg-white"} rounded-2xl  
+                    shadow-lg p-4 mt-4 mb-2 border ${isDarkMode ? "border-white" : "border-black"}  w-full xl:w-[98%] 
+                    text-right`}>
         <div className="flex justify-between items-center ">
-            <span className="flex font-vazir text-black font-bold ml-auto  text-sm 
+            <span className={`flex font-vazir  ${isDarkMode ? "text-white" : "text-[#191919]"} font-bold ml-auto  text-sm 
                             sm:text-lg
-                            md:text-xl">
+                            md:text-xl`}>
                 سفارش&zwnj;{id}
                 <RiCheckboxCircleFill className="text-green-600 rounded ml-1 text-lg relative 
                                                 sm:text-xl
@@ -63,12 +65,12 @@ const OrderCard: React.FC<OrderCardProps> = ({
         
         <div className="flex flex-wrap  items-center mb-2 ">  
             <div className="flex items-center mt-4">  
-                <span className="text-black font-vazir text-xs lg:ml-7
+                <span className={` ${isDarkMode ? "text-white" : "text-[#191919]"} font-vazir text-xs lg:ml-7
                                  sm:text-lg
-                                 md:text-lg ">تومان</span>  
-                <span className="text-black font-vazir ml-1 font-vazir font-bold text-sm
+                                 md:text-lg `}>تومان</span>  
+                <span className={` ${isDarkMode ? "text-white" : "text-[#191919]"}  font-vazir ml-1 font-vazir font-bold text-sm
                                  sm:text-lg
-                                 md:text-lg">{total_price}</span>  
+                                 md:text-lg`}>{total_price}</span>  
             </div>  
             <div className="flex flex-wrap items-center  mt-6 ml-85 mt-4 space-x-1 sm:space-x-2 md:space-x-3 ml-auto">  
                 <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
@@ -87,10 +89,10 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </div>    
 
         
-        <p className="font-vazir text-black text-semibold mb-4 text-center ml-auto mt-1 lg:ml-7 sm:text-left sm:mr-auto
+        <p className={` ${isDarkMode ? "text-white" : "text-[#191919]"} font-vazir  text-semibold mb-4 text-center ml-auto mt-1 lg:ml-7 sm:text-left sm:mr-auto
                     text-xs 
                     sm:text-base 
-                    md:text-base">  
+                    md:text-base`}>  
             {"به سفارش خود چه امتیازی میدهید؟"}{' '}  
             <span className="font-vazir text-green-500 font-semibold mt-1 underline cursor-pointer" onClick={handleCommentsOpen}>ثبت نظر</span>  
         </p>
