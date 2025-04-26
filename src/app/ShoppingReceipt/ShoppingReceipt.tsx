@@ -43,7 +43,8 @@ const Receipt: React.FC = () => {
     }  
 
     return ( 
-        // <div className={` ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}`}>  
+        <div className={` ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}`}> 
+        
         <div className={`box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl ${isDarkMode ? "bg-[#191919] border-white" : "bg-white"} shadow-[5px_7px_5px_rgba(0,0,0,0.25)]`}>  
             <h2 className={`text-[25px] text-center ${isDarkMode ? "text-[#ffffff]" : "text-black"} pt-5 pb-2 font-vazir font-bold`}>  
                 سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}  
@@ -169,7 +170,7 @@ const Receipt: React.FC = () => {
             </>  
             )}  
         </div>
-        // </div>  
+         </div>  
         
     );  
 };  
