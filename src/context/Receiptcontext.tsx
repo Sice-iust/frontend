@@ -9,12 +9,12 @@ interface CartContextType {
     counts: number,
     totalDiscount: number,
     totalActualPrice: number,
-    userquantity : number,
+    userquantity : Record<number, number>,
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
     removeItem: (id: number) => Promise<void>;
     handleAdd: (id: number) => Promise<void>;
-    fetchDatauser: (itemId) => Promise<void>;
+    fetchDatauser: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType>({
@@ -23,7 +23,7 @@ const CartContext = createContext<CartContextType>({
     counts:0,
     totalDiscount:0,
     totalActualPrice:0,
-    userquantity:0,
+    userquantity:{},
     incrementQuantity: async () => Promise.resolve(), 
     decrementQuantity: async () => Promise.resolve(), 
     removeItem: async () => Promise.resolve() ,
@@ -38,7 +38,7 @@ export const CartProvider = ({ children }) => {
     const [totalDiscount, setTotalDiscount] = useState(0);
     const [totalActualPrice, setTotalActualPrice] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [userquantity, setuserQuantity] = useState(0);
+    const [userquantity, setUserQuantity] = useState<Record<number, number>>({});
 
 
 
@@ -73,7 +73,12 @@ export const CartProvider = ({ children }) => {
     }, []);
 
     const incrementQuantity = async (id) => {
-        setuserQuantity((prev) => prev + 1);
+        setUserQuantity((prev) => ({
+            ...prev,
+            [id]: (prev[id]) + 1, 
+        }));
+    
+    
         try {
             await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=add`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -85,7 +90,11 @@ export const CartProvider = ({ children }) => {
     };
 
     const decrementQuantity = async (id) => {
-        setuserQuantity((prev) => prev - 1);
+        setUserQuantity((prev) => ({
+            ...prev,
+            [id]: (prev[id]) - 1, 
+        }));
+    
         try {
             await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=delete`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -97,7 +106,12 @@ export const CartProvider = ({ children }) => {
     };
 
     const removeItem = async (id) => {
-        setuserQuantity(0);
+        setUserQuantity((prev) => {
+            const updated = { ...prev };
+            delete updated[id]; 
+            return updated;
+        });
+    
         try {
             await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -109,7 +123,11 @@ export const CartProvider = ({ children }) => {
     };
 
     const handleAdd = async (itemId) => {
-        setuserQuantity(1);
+        setUserQuantity((prev) => ({
+            ...prev,
+            [itemId]: (prev[itemId] || 0) + 1, 
+        }));
+    
         const token = localStorage.getItem('token'); 
         try {
             
@@ -132,17 +150,18 @@ export const CartProvider = ({ children }) => {
           }
     };
 
-    const fetchDatauser = async (itemId) => {  
+    const fetchDatauser = async () => {  
         try {  
             const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
             });  
-            const matchedItem = response.data.find(item => item.product_id === itemId);  
-            if (matchedItem) {  
-                setuserQuantity( matchedItem.quantity );  
-            } else {  
-                console.log("No matching product found.");  
-            }    
+            const quantities = response.data.reduce((acc, item) => {
+                acc[item.product_id] = item.quantity; 
+                return acc;
+            }, {});
+    
+            setUserQuantity(quantities);
+    
         } catch (err) {  
             console.error("Error fetching data:", err);  
         } 

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useCart } from "../../context/Receiptcontext";
 import { useTheme } from '../theme';
 import LoadingBox from "../../components/Loading/LoadingBox";
+import { convertToPersianNumbers } from '../../utils/Coversionutils';
 
 const Receipt: React.FC = () => {  
     const { cartItems, counts, totalDiscount, totalActualPrice, loading ,
@@ -13,10 +14,7 @@ const Receipt: React.FC = () => {
     const { isDarkMode, toggleDarkMode } = useTheme();
     console.log("dark",isDarkMode);
 
-    const convertToPersianNumbers = (num: string | number): string => {  
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
-        return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
-    };  
+    
 
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
 
