@@ -4,7 +4,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
 import { LuCalendar } from "react-icons/lu";
 import Image, { StaticImageData } from 'next/image'; 
-import { Product } from "./Orders"
+import { Product } from "./page"
 import InvoicePopup from './Invoice/Orders-invoice-popup';
 import CommentsPopup from "./Comments/comments-popup";
 import ReorderPopup from "./Reorder/Reorder-Popup"

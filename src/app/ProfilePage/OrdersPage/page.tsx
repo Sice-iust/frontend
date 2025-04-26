@@ -1,8 +1,8 @@
+'use client'
 import React, { useState,useEffect } from "react";  
-import Navbar from "../../../components/HomePage/navbar";   
+import Navbar from "../../navbar";   
 import Menu from "./OrdersPage-menu";   
 import OrderCard from "./OrderCards";
-import sampleimg from "../../../assets/naan-10-1.jpg"  
 import axios from "axios";
 import { convertDateInPersian } from "../../../utils/Coversionutils";
 import { convertPrice } from "../../../utils/Coversionutils";
@@ -84,11 +84,11 @@ const ProfileOrders: React.FC = () => {
   
   return ( 
     <>
-      <Navbar showImage={false}/>
-    <div className="rounded-2xl bg-white shadow-md p-4 mb-10 w-full h-screen mt-0 overflow-hidden mx-auto   
+      
+    <div className="sm:rounded-xl sm:bg-white sm:shadow-md sm:p-4 sm:mb-10 sm:w-full sm:h-screen sm:mt-0 sm:overflow-hidden sm:mx-auto sm:block hidden   
                 sm:w-[90%] sm:mx-7  
                 md:w-[70%] md:mx-7  
-                lg:w-[70%] lg:mx-7 
+                lg:w-[70%] lg:mx-0 
                 xl:mx-7 xl:mt-10 xl:w-[70%]">  
       <Menu currentOrdersCount={convertToPersianNumbers(3)} finalOrdersCount={convertToPersianNumbers(1)} /> 
  

@@ -12,7 +12,6 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 
 import { useState, useEffect } from 'react';
 import axios from "axios";
-import Search from './search';
 import { useTheme } from './theme';
 import LoginModal from './login/login';
 import dynamic from 'next/dynamic';

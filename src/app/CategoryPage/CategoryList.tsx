@@ -115,7 +115,7 @@ export default function CategoryList({ category }) {
         <><Head>
         <meta name="viewport" content="width=device-width , initial-scale=1.0" />      
         </Head> 
-        <div className={'${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}  sm:flex sm:flex-row-reverse sm:flex-wrap sm:box-content sm:m-10 sm:ml-8  sm:w-full sm:h-auto sm:rounded-2xl sm:gap-6 '+
+        <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}  sm:flex sm:flex-row-reverse sm:flex-wrap sm:box-content sm:m-10 sm:ml-8  sm:w-full sm:h-auto sm:rounded-2xl sm:gap-6 `+
         "flex flex-col  flex-wrap box-content w-full h-auto  rounded-2xl"
         }>  
             {dataLength > 0 ? (  
@@ -242,11 +242,12 @@ export default function CategoryList({ category }) {
                                 
                                   {item.discount > 0 && (
                                     <div className="flex flex-row-reverse items-center mt-1">
-                                        <div className="text-gray-500 text-xs line-through mr-2">
-                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}
-                                        </div>
+                                        
                                         <div className="bg-[#F18825] text-white text-xs w-7 h-4  mr-1 flex items-center justify-center rounded-md">
                                             %{convertToPersianNumbers(item.discount)}
+                                        </div>
+                                        <div className="text-gray-500 text-xs line-through mr-2">
+                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}
                                         </div>
                                     </div>
                                 )}
