@@ -196,7 +196,7 @@ export default function ProductPage({ open, onClose, itemid }) {
     <div className="flex items-center justify-center min-h-full text-center lg:p-4">
         <div className="relative transform overflow-hidden rounded-lg  text-left bg-white
                         shadow-xl transition-all min-h-screen w-full 
-                        sm:my-8 sm:w-full sm:max-w-4xl sm:h-auto">
+                        md:my-8 sm:w-full sm:min-h-screen  md:max-w-[85%] lg:max-w-[65%] sm:h-auto">
              
             <div className="pb-4 text-right">
 
@@ -216,7 +216,7 @@ export default function ProductPage({ open, onClose, itemid }) {
             <div className="flex flex-col">
                 <div className="flex flex-row-reverse">
                     <Image
-                        className="rounded-2xl mt-5 mb-10 mr-7 ml-4"
+                        className="md-(rounded-2xl mt-5 mb-10 mr-7 ml-4 w-100) w-[25%] h-[25%]"
                         src={data.photo_url}
                         alt="productImg"
                         width={300}
@@ -225,22 +225,22 @@ export default function ProductPage({ open, onClose, itemid }) {
                     <div className="flex flex-col">
                         <div className="flex flex-row justify-between w-full">  
                             <div className="mt-6 box-content rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-10 mt-1">  
-                                <span className="flex flex-row text-xl font-vazir ml-3 mb-1">  
+                                <span className="flex flex-row mt-0.5 text-base font-vazir ml-3 mb-1 lg:text-xl lg:mt-0">  
                                     {convertToPersianNumbers(data.average_rate)}  
                                     <FaStar className="m-1 mr-3" color="orange" />  
                                 </span>   
                             </div>  
-                            <span className={`font-vazir font-bold text-2xl mt-6 ${isDarkMode ? "text-[#ffffff]" 
+                            <span className={`font-vazir font-bold text-base mt-6 lg:text-2xl ${isDarkMode ? "text-[#ffffff]" 
                                             : "text-black"}`}>{data.name}</span>  
                         </div>  
-                        <div className={`mt-7 ml-10 font-vazir text-lg font-medium text-right text-justify 
+                        <div className={`mt-2 ml-10 font-vazir text-sm font-medium text-right text-justify lg:text-lg lg:mt-7
                                         ${isDarkMode ? "text-[#BAB2B2]" : "text-gray-700"}`}>{data.description}</div>
-                        <div className={`box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-7 ml-10 font-vazir
-                                         text-lg text-right text-justify ${isDarkMode ? "text-[#ffffff] border-white font-medium" : 
+                        <div className={`box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-3 ml-10 font-vazir
+                                         text-sm text-right text-justify lg:text-lg lg:mt-7 ${isDarkMode ? "text-[#ffffff] border-white font-medium" : 
                                          "text-black font-semibold "}`}>{data.box_color}</div>
-                        <div className="flex flex-row-reverse mt-9 justify-between">  
+                        <div className="flex flex-row-reverse mt-2 justify-between lg:mt-9">  
                                 <div className='flex flex-col'>  
-                                    <div className={`font-vazir text-lg text-right text-xl 
+                                    <div className={`font-vazir text-lg text-right text-base lg:text-xl 
                                         ${isDarkMode ? "text-[#ffffff] font-medium" : "text-black font-semibold "}`}>  
                                         {convertToPersianNumbers(Math.round(parseFloat(data.discounted_price)).toLocaleString())} :قیمت  
                                     </div>  
@@ -252,7 +252,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                             </div>
 
 
-                                            <div className="mr-2 text-gray-500 line-through text-lg">  
+                                            <div className="mr-2 text-gray-500 line-through  text-base lg:text-lg">  
                                                 {convertToPersianNumbers(Math.round(Number(data.price)).toLocaleString())}  
                                             </div>  
                                         </div>  
@@ -262,7 +262,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     <button  
                                         className={` ${data.stock==0 ||  userquantity >= data.stock? "bg-gray-300 cursor-not-allowed" : 
                                             "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} 
-                                            rounded-xl w-30 h-12 text-white text-2xl font-vazir font-md mr-24 ml-10 mb-5`}  
+                                            rounded-xl w-20 h-10 mt-2 text-white text-base font-vazir font-md mr-24 ml-10 mb-5 lg:text-2xl lg:w-30 lg:h-12 lg:mt-0`}  
                                         onClick={() => handleAdd(data.id)}  
                                         disabled={ data.stock==0}  
                                     >  
@@ -323,7 +323,7 @@ export default function ProductPage({ open, onClose, itemid }) {
 
             {comments.length > 0 ? ( 
             <>
-                <hr className={`border-t mb-10 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
+                <hr className={`border-t mb-5 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"} lg:mb-10`} /> 
                 <div className="flex justify-end">  
                     <span className={`font-vazir font-bold text-2xl mr-5 ${isDarkMode ? "text-[#ffffff]" : "text-black"}
                                        md:mr-10`}>نظرات کاربران</span>  
