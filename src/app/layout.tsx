@@ -2,22 +2,19 @@ import './globals.css';
 import Footer from "./footer";
 import Footer2 from "./footer2";
 import { ThemeProvider } from "./theme";
-import './globals.css';
-
+import { CartProvider } from "../context/Receiptcontext";
 
 export default function Layout({ children }) {
   return (
-    <>
-      <html>
-        <body>
-          {
-            <ThemeProvider>
-              {children}
-              <Footer2 />
-            </ThemeProvider>
-          }
-        </body>
-      </html>
-    </>
-  )
+    <html lang="en">
+      <body>
+        <CartProvider>
+          <ThemeProvider>
+            {children}
+            <Footer2 />
+          </ThemeProvider>
+        </CartProvider>
+      </body>
+    </html>
+  );
 }

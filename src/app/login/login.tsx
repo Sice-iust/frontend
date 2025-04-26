@@ -20,7 +20,12 @@ enum Step {
   CODE = 'CODE',
   REGISTER = 'REGISTER',
 }
-export default function LoginModal({ open, onClose }) {
+interface LoginModalProps {
+  open: boolean;
+  onClose: () => void;
+  setIsLoggedIn: (value: boolean) => void;
+}
+export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalProps) {
 
   const { isDarkMode, toggleDarkMode } = useTheme(); // Get both isDarkMode and toggleDarkMode from context  
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -57,6 +62,7 @@ export default function LoginModal({ open, onClose }) {
           onClose={onClose} 
           isFinished={isFinished}
           setIsFinished={setIsFinished}
+          setIsLoggedIn={setIsLoggedIn}
           />);
       case Step.REGISTER:
         return (
@@ -70,6 +76,8 @@ export default function LoginModal({ open, onClose }) {
           phoneNumber={phoneNumber}
           isFinished={isFinished}
           setIsFinished={setIsFinished}
+          setIsLoggedIn={setIsLoggedIn}
+
           />
         );
       default:
