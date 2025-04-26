@@ -171,7 +171,5 @@ export default function Header({ showImage = true }) {
 />}
 
         </div>
-
-
     );
 };

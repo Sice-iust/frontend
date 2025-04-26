@@ -1,6 +1,7 @@
-import Footer from "./footer";
-import { ThemeProvider } from "./theme";
 import './globals.css';
+import Footer from "./footer";
+import Footer2 from "./footer2";
+import { ThemeProvider } from "./theme";
 import { CartProvider } from "../context/Receiptcontext";
 
 export default function Layout({ children }) {
@@ -10,7 +11,7 @@ export default function Layout({ children }) {
         <CartProvider>
           <ThemeProvider>
             {children}
-            {/* <Footer /> */}
+            <Footer2 />
           </ThemeProvider>
         </CartProvider>
       </body>

@@ -6,12 +6,12 @@ export default function CategoryCard({ img_src, text, id }) {
     return (
         <>
             <div style={{
-                background: 'white', border: '1px solid black',
+                background: 'white', border: '1px solid gray',
                 height: '145px', width: '145px',
                 borderRadius: '30px', padding: '10px',
                 display: 'flex', flexDirection: 'column', alignContent: 'center'
-            }}>
-                <Image src={`/assets/breads/barbari.png`}
+            }} className='drop-shadow-xl/15 hover:drop-shadow-xl/30'>
+                <Image src={img_src}
                     width={100}
                     height={100}
                     alt="Nanzi Logo"
