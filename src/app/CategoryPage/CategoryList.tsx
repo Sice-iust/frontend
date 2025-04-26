@@ -124,37 +124,7 @@ export default function CategoryList({ category }) {
                     onClick={() => handleOpenModal(item.id)}
                      className={`sm:flex sm:flex-col sm:box-content sm:border sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
                         " flex flex-row   border-b box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
-                         <div className={" hidden sm:flex sm:flex-row   "}>  
-                           <div 
-                            className={ "sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl sm:bg-[#d9d9d9] sm:w-auto sm:h-7 sm:ml-1 " 
-                               
-                               
-                                }>  
-                                <span className={" sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl " }>   
-                               
-                                    {convertToPersianNumbers(item.average_rate) }  
-                                    <FaStar className="sm:m-1 sm:mr-3  "
-                                     color="orange" />  
-                                </span>  
-                            </div>  
-                            <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">  
-                            <div className={
-                                    "sm:relative " +
-                                    "sm:w-40 sm:h-50 sm:mb-3 sm:ml-5 sm:mt-1 "  // desktop (adjust size as needed)
-                                   
-                                }>
-                                    <Image  
-                                        className="sm:rounded-2xl"  
-                                        src={item.photo_url}  
-                                        alt="productImg"  
-                                        layout="fill"  
-                                    />  
-                               
-                            </div>  
-                            </div>
-                        </div>  
-
-                        {/* phone */}
+                           {/* phone */}
                         <div className={" sm:hidden flex justify-between  w-full  "}>  
                            <div 
                             className={ "rounded-xl bg-[#d9d9d9]   flex items-center mt-5 flex-col " +
@@ -232,6 +202,7 @@ export default function CategoryList({ category }) {
                             </div>  
                         )}  
                             </div>  
+
                             <div className={`${isDarkMode ? "text-white" : "text-black"}  sm:hidden font-vazir text-sm font-semibold text-right mr-2 mt-10 `}>
                                 {item.name}
 
@@ -268,6 +239,36 @@ export default function CategoryList({ category }) {
                         </div>   
 
                         {/* end of phone */}
+                         
+                         
+                         <div className={" hidden sm:flex sm:flex-row   "}>  
+                           <div 
+                            className={ "sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl sm:bg-[#d9d9d9] sm:w-auto sm:h-7 sm:ml-1 "    }>  
+                                <span className={" sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl " }>   
+                               
+                                    {convertToPersianNumbers(item.average_rate) }  
+                                    <FaStar className="sm:m-1 sm:mr-3  "
+                                     color="orange" />  
+                                </span>  
+                            </div>  
+                            <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">  
+                            <div className={
+                                    "sm:relative " +
+                                    "sm:w-40 sm:h-50 sm:mb-3 sm:ml-5 sm:mt-1 "  // desktop (adjust size as needed)
+                                   
+                                }>
+                                    <Image  
+                                        className="sm:rounded-2xl"  
+                                        src={item.photo_url}  
+                                        alt="productImg"  
+                                        layout="fill"  
+                                    />  
+                               
+                            </div>  
+                            </div>
+                        </div>  
+
+                      
                         <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 ` }>
                             {item.name}</div>  
                         <div className="sm:flex sm:flex-row-reverse  hidden">  
@@ -353,9 +354,11 @@ export default function CategoryList({ category }) {
                                         <span className="text-xl">-</span>  
                                     </button>  
                                 )}  
-                            </div>  
+                            </div>
+                              
                             </div>
                         )}  
+                        
                     </div> 
                      
                 </div>  
