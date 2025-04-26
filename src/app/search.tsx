@@ -27,7 +27,7 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://nanziback.liara.run/product/all/'); 
+        const response = await axios.get('https://nanziback.liara.run/product/all/');
         setProducts(response.data);
       } catch (err) {
         setError('Failed to fetch products');
@@ -44,7 +44,7 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
     if (!searchTerm) return false;
     const searchTermLower = searchTerm.toLowerCase();
 
-    
+
     return (
       item.name.toLowerCase().includes(searchTermLower) ||
       item.category.toLowerCase().includes(searchTermLower)
@@ -59,16 +59,16 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
 
   const highlightMatch = (text) => {
     if (!searchTerm) return text;
-    
+
     const escapedTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const regex = new RegExp(`(${escapedTerm})`, 'gi');
     const parts = text.split(regex);
-    
+
     return (
-      <span className="whitespace-nowrap"> 
-        {parts.map((part, index) => 
-          part.toLowerCase() === searchTerm.toLowerCase() 
-            ? <span key={index} className="text-[#B8681D]">{part}</span> 
+      <span className="whitespace-nowrap">
+        {parts.map((part, index) =>
+          part.toLowerCase() === searchTerm.toLowerCase()
+            ? <span key={index} className="text-[#B8681D]">{part}</span>
             : part
         )}
       </span>
@@ -78,12 +78,17 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
   // if (error) return <div>{error}</div>;
 
   return (
-    <div dir="rtl">
-      <div className="flex items-center rounded-3xl font-vazir p-2 dark:bg-[#383535]  bg-[#D9D9D9]   ml-10  min-w-[450px]" dir='rtl'>
+    <div dir="rtl" >
+      <div
+        className="
+        flex 
+        items-center 
+        rounded-3xl p-2 
+        dark:bg-[#383535]  bg-[#D9D9D9] mx-auto " dir='rtl'>
         <span className="text-[#B8681D]"><SearchOutlinedIcon /></span>
         <input
           type="text"
-          className=" px-2 py-1   focus:outline-none font-vazir   rounded-full  min-w-[450px] text-right bg-transparent text-black text-[16px] placeholder:[#696363]"
+          className=" px-2 py-1 focus:outline-none font-vazir w-full rounded-full text-right bg-transparent text-black text-[16px] placeholder:[#696363]"
           placeholder="نام کالای مورد نظر را جستجو کنید ..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -92,55 +97,55 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
           dir="rtl"
         />
       </div>
-      
+
       {isFocused && searchTerm && (
-  <div className="absolute mt-2  w-full max-w-[490px] max-h-[500px] overflow-y-auto z-[1000] rounded-3xl shadow-lg p-4 bg-[#D9D9D9]">
-    {Object.entries(groupedResults).length > 0 ? (
-      Object.entries(groupedResults).map(([category, items]) => (
-        <div key={category} className="mb-5 last:mb-0">
-          <div className="flex   ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]">
-            دسته بندی: <span className='flex text-right  items-center'>{highlightMatch(category)}</span>
-          </div>
-          <div className="flex flex-col gap-2">
-            {items.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <div className="flex items-center">
-                  <span className="mr-2 font-bold text-gray-700 dark:text-gray-300 font-vazir">نام محصول:</span>
-                  <span className="text-[#B8681D] font-bold">🔍</span>
-                  {highlightMatch(item.name)}
+        <div className="md:absolute mt-2  w-full  max-h-[500px] overflow-y-scroll z-[1000] rounded-3xl shadow-lg p-4 bg-[#D9D9D9]">
+          {Object.entries(groupedResults).length > 0 ? (
+            Object.entries(groupedResults).map(([category, items]) => (
+              <div key={category} className="mb-5 last:mb-0">
+                <div className="flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]">
+                  دسته بندی: <span className='flex text-right  items-center'>{highlightMatch(category)}</span>
                 </div>
-                <div className="flex items-center ">
-                  <span className="mr-2 font-bold text-gray-700 dark:text-gray-300 font-vazir">قیمت:</span>
-                  <span>
-                    {item.price? item.
-                      discounted_price.toLocaleString()
-                      : item.price.toLocaleString()}{' '}
-                    تومان
-                  </span>
+                <div className="flex flex-col gap-2">
+                  {items.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex flex-col gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                      <div className="flex items-center">
+                        <span className="mr-2 font-bold text-gray-700 dark:text-gray-300 font-vazir">نام محصول:</span>
+                        <span className="text-[#B8681D] font-bold">🔍</span>
+                        {highlightMatch(item.name)}
+                      </div>
+                      <div className="flex items-center ">
+                        <span className="mr-2 font-bold text-gray-700 dark:text-gray-300 font-vazir">قیمت:</span>
+                        <span>
+                          {item.price ? item.
+                            discounted_price.toLocaleString()
+                            : item.price.toLocaleString()}{' '}
+                          تومان
+                        </span>
+                      </div>
+                      {item.stock > 0 ? (
+                        <div className="flex items-center">
+                          <span className="mr-2 font-bold font-vazir text-gray-700 dark:text-gray-300">موجودی: <span className='font-medium text-black'>{item.stock}</span></span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center">
+                          <span className="text-gray-700">ناموجود</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
-                {item.stock > 0 ? (
-                      <div className="flex items-center">
-                        <span className="mr-2 font-bold font-vazir text-gray-700 dark:text-gray-300">موجودی: <span className='font-medium text-black'>{item.stock}</span></span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center">
-                        <span className="text-gray-700">ناموجود</span>
-                      </div>
-                    )}
               </div>
-            ))}
-          </div>
+            ))
+          ) : (
+            <div className="text-center text-gray-700">نتیجه‌ای یافت نشد</div>
+          )}
         </div>
-      ))
-    ) : (
-      <div className="text-center text-gray-700">نتیجه‌ای یافت نشد</div>
-    )}
-  </div>
-)}
-</div>
+      )}
+    </div>
   );
 };
 
