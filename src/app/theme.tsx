@@ -1,52 +1,41 @@
+// contexts/ThemeContext.tsx
 'use client'
 
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react'
 
-interface ThemeContextType {
-  isDarkMode: boolean;
-  toggleDarkMode: () => void;
+type ThemeContextType = {
+  isDarkMode: boolean
+  toggleDarkMode: () => void
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+const ThemeContext = createContext<ThemeContextType>({
+  isDarkMode: false,
+  toggleDarkMode: () => {},
+})
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false); // Default to false during SSR
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  useEffect(() => {
+    const savedMode = localStorage.getItem('darkMode')
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    
+    setIsDarkMode(savedMode ? savedMode === 'true' : prefersDark)
+  }, [])
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev);
-  };
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedDarkMode = JSON.parse(localStorage.getItem('isDarkMode') || 'false');
-      setIsDarkMode(storedDarkMode);
-
-      const body = document.body;
-      body.classList.toggle('dark', storedDarkMode);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const body = document.body;
-      body.classList.toggle('dark', isDarkMode);
-      localStorage.setItem('isDarkMode', JSON.stringify(isDarkMode));
-    }
-  }, [isDarkMode]);
+    const newMode = !isDarkMode
+    setIsDarkMode(newMode)
+    localStorage.setItem('darkMode', String(newMode))
+  }
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
-      {children}
+      <div className={isDarkMode ? 'dark' : 'light'}>
+        {children}
+      </div>
     </ThemeContext.Provider>
-  );
-};
+  )
+}
 
-export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
-
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-
-  return context;
-};
+export const useTheme = () => useContext(ThemeContext)
