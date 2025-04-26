@@ -15,6 +15,7 @@ import { BiDislike } from "react-icons/bi";
 import { useTheme } from '../theme';
 import { useCart } from "../../context/Receiptcontext";
 import { RiUserFill } from "react-icons/ri";
+import { convertToPersianNumbers } from '../../utils/Coversionutils';
 
 interface DataType {
     photo_url: string;
@@ -51,10 +52,7 @@ export default function ProductPage({ open, onClose, itemid }) {
 
     console.log("quantity",userquantity[itemid])
 
-    const convertToPersianNumbers = (num: string | number): string => {  
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
-        return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
-    }; 
+    
 
     const convertToPersianDate = (dateString: string): string[] => {  
         moment.loadPersian({ dialect: 'persian-modern' });  
@@ -254,7 +252,8 @@ export default function ProductPage({ open, onClose, itemid }) {
 
 
                                             <div className="mr-2 text-gray-500 line-through  text-base lg:text-lg">  
-                                                {convertToPersianNumbers(Math.round(Number(data.price)).toLocaleString())}  
+                                                {convertToPersianNumbers(Math.round(Number(data.price)).toLocaleString())} 
+                                               
                                             </div>  
                                         </div>  
                                     )}  

@@ -8,6 +8,7 @@ import ProductPage from '../ProductPage/ProductPage';
 import { useTheme } from '../theme';
 import Head from "next/head";
 import { useCart } from "../../context/Receiptcontext";
+import { convertToPersianNumbers } from '../../utils/Coversionutils';
 
 
 interface DataType {
@@ -42,10 +43,10 @@ export default function CategoryList({ category }) {
     const [isOpen, setOpen] = useState(false);   
     const [data, setData] = useState<DataType[]>([]);  
     const [dataLength, setDataLength] = useState(0);  
-    const convertToPersianNumbers = (num: string | number): string => {  
-        const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
-        return num.toString().replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);  
-    }; 
+
+    
+
+    
     const handleOpenModal = (item) => {  
         setSelectedItem(item);  
         setOpen(true);  
@@ -287,7 +288,7 @@ export default function CategoryList({ category }) {
                                     }}  
                                     disabled={userquantity[item.id] >= item.stock_1}  
                                 >  
-                                    
+                                  +     
                                 </button>  
                                 <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
                                 {userquantity[item.id] === 1 ? (  
