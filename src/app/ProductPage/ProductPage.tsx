@@ -49,6 +49,7 @@ export default function ProductPage({ open, onClose, itemid }) {
     const [comments, setComments] = useState<CommentType[]>([]);
     const { isDarkMode, toggleDarkMode } = useTheme(); 
 
+    console.log("quantity",userquantity[itemid])
 
     const convertToPersianNumbers = (num: string | number): string => {  
         const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];  
@@ -69,7 +70,7 @@ export default function ProductPage({ open, onClose, itemid }) {
     };  
     useEffect(() => { 
         
-        fetchDatauser(itemid);
+        fetchDatauser();
         const fetchData = async () => {  
             try {  
                 const response = await axios.get(`https://nanziback.liara.run/product/${itemid}/`, {   
@@ -196,7 +197,7 @@ export default function ProductPage({ open, onClose, itemid }) {
     <div className="flex items-center justify-center min-h-full text-center lg:p-4">
         <div className="relative transform overflow-hidden rounded-lg  text-left bg-white
                         shadow-xl transition-all min-h-screen w-full 
-                        md:my-8 sm:w-full sm:min-h-screen  md:max-w-[85%] lg:max-w-[65%] sm:h-auto">
+                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-auto">
              
             <div className="pb-4 text-right">
 
@@ -258,9 +259,10 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         </div>  
                                     )}  
                                 </div>  
-                                { userquantity === null || userquantity === 0 ? (  
+                                
+                                { userquantity[itemid] === undefined || userquantity[itemid] === 0 ? (  
                                     <button  
-                                        className={` ${data.stock==0 ||  userquantity >= data.stock? "bg-gray-300 cursor-not-allowed" : 
+                                        className={` ${data.stock==0 ||  userquantity[itemid] >= data.stock? "bg-gray-300 cursor-not-allowed" : 
                                             "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} 
                                             rounded-xl w-20 h-10 mt-2 text-white text-base font-vazir font-md mr-24 ml-10 mb-5 lg:text-2xl lg:w-30 lg:h-12 lg:mt-0`}  
                                         onClick={() => handleAdd(data.id)}  
@@ -272,18 +274,18 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     <div className="flex mr-19 space-x-2 ml-5 mb-5">  
                                         <button  
                                             className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 
-                                                     ${userquantity >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : 
+                                                     ${userquantity[itemid] >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : 
                                                     "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 
                                                     flex items-center justify-center rounded-full transition-transform duration-200 
-                                                    ${userquantity >= data.stock ? "cursor-not-allowed hover:bg-white" : 
+                                                    ${userquantity[itemid] >= data.stock ? "cursor-not-allowed hover:bg-white" : 
                                                         "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                             onClick={() => incrementQuantity(data.id)}  
-                                            disabled={userquantity >= data.stock}  
+                                            disabled={userquantity[itemid] >= data.stock}  
                                         >  
                                             +  
                                         </button>  
-                                        <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity || 0) || 0}</span>  
-                                        {userquantity === 1 ? (  
+                                        <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[itemid] || 0) || 0}</span>  
+                                        {userquantity[itemid] === 1 ? (  
                                             <button  
                                                 className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 
                                                 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
@@ -309,7 +311,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                                             items-center justify-center rounded-full transition-transform \
                                                             duration-200 hover:bg-red-500 hover:text-white hover:scale-110`}  
                                                 onClick={() => decrementQuantity(data.id)}  
-                                                disabled={userquantity <= 1}  
+                                                disabled={userquantity[itemid] <= 1}  
                                             >  
                                                 <span className="text-xl">-</span>  
                                             </button>  
