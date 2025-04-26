@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";  
-import Navbar from "../../HomePage/navbar";   
+import Navbar from "../../../components/HomePage/navbar";   
 import Menu from "./OrdersPage-menu";   
 import OrderCard from "./OrderCards";
 import sampleimg from "../../../assets/naan-10-1.jpg"  
