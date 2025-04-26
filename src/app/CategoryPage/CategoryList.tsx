@@ -6,6 +6,7 @@ import emptyReceipt from "../../assets/emptyReceipt.png";
 import { FaStar } from "react-icons/fa";  
 import ProductPage from '../ProductPage/ProductPage';
 import { useTheme } from '../theme';
+import Head from "next/head";
 export default function CategoryList({ category }) {  
     const { isDarkMode, toggleDarkMode } = useTheme();
     const [catNumber, setCategoryNumber] = useState(() => {
@@ -108,52 +109,68 @@ export default function CategoryList({ category }) {
           alert("Cart updated!");
     };  
 
-return (
-    <>
-    <div className={` ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} flex flex-row-reverse flex-wrap box-content m-10 ml-8 w-full h-auto rounded-2xl gap-6 `}>  
-        {dataLength > 0 ? (  
-            data.map(item => (  
-                <div key={item.id} className={`flex flex-col box-content border rounded-2xl ${isDarkMode ? "bg-[#191919]" : "bg-white"} w-79 h-77 cursor-pointer hover:scale-105 transition duration-300`}  
-                     onClick={() => handleOpenModal(item.id)} 
-                >  
-                    <div className="flex flex-row">  
-                        <div className="mt-1 box-content place-items-start rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-1 mt-1">  
-                            <span className="flex flex-row text-xl font-vazir ml-3 mb-1">  
-                                {convertToPersianNumbers(item.average_rate)}  
-                                <FaStar className="m-1 mr-3" color="orange" />  
-                            </span>  
-                        </div>  
-                        <div className="flex flex-row justify-center items-center">  
-                            <div className="relative w-40 h-50 mb-3 ml-5 mt-1">  
-                                <Image  
-                                    className="rounded-2xl"  
-                                    src={item.photo_url}  
-                                    alt="productImg"  
-                                    layout="fill"  
-                                />  
+
+    return (  
+        
+        <><Head>
+        <meta name="viewport" content="width=device-width , initial-scale=1.0" />      
+        </Head> 
+        <div className={'${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}  sm:flex sm:flex-row-reverse sm:flex-wrap sm:box-content sm:m-10 sm:ml-8  sm:w-full sm:h-auto sm:rounded-2xl sm:gap-6 '+
+        "flex flex-col  flex-wrap box-content w-full h-auto  rounded-2xl"
+        }>  
+            {dataLength > 0 ? (  
+                data.map(item => (  
+                    <div key={item.id} 
+                    onClick={() => handleOpenModal(item.id)}
+                     className={'sm:flex sm:flex-col sm:box-content sm:border sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 '+
+                        " flex flex-row bg-white  border-b box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}> {/*fix bckground*/ } 
+                         <div className={" hidden sm:flex sm:flex-row   "}>  
+                           <div 
+                            className={ "sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl sm:bg-[#d9d9d9] sm:w-auto sm:h-7 sm:ml-1 " 
+                               
+                               
+                                }>  
+                                <span className={" sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl " }>   
+                               
+                                    {convertToPersianNumbers(item.average_rate) }  
+                                    <FaStar className="sm:m-1 sm:mr-3  "
+                                     color="orange" />  
+                                </span>  
                             </div>  
-                        </div>  
-                    </div>  
-                    <div className={`${isDarkMode ? "text-white" : "text-black"} font-vazir text-lg font-semibold text-right mr-5`}>{item.name}</div>  
-                    <div className="flex flex-row-reverse">  
-                        <div className='flex flex-col'>  
-                            <div className={` ${isDarkMode ? "text-white" : "text-black"} font-vazir text-lg text-right mr-5 mt-2`}>  
-                                {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
+                            <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">  
+                            <div className={
+                                    "sm:relative " +
+                                    "sm:w-40 sm:h-50 sm:mb-3 sm:ml-5 sm:mt-1 "  // desktop (adjust size as needed)
+                                   
+                                }>
+                                    <Image  
+                                        className="sm:rounded-2xl"  
+                                        src={item.photo_url}  
+                                        alt="productImg"  
+                                        layout="fill"  
+                                    />  
+                               
                             </div>  
-                            {item.discount > 0 && (  
-                                <div className="flex flex-row-reverse mr-6">  
-                                    <div className="bg-[#F18825] text-lg w-9 h-5 text-white text-[14px] pl-1.5 rounded-md">  
-                                        %{convertToPersianNumbers(item.discount)}  
-                                    </div>  
-                                    <div className="mr-2 text-gray-500 line-through">  
-                                        {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}  
-                                    </div>  
-                                </div>  
-                            )}  
+                            </div>
                         </div>  
-                        {userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
+
+                        {/* phone */}
+                        <div className={" sm:hidden flex justify-between  w-full  "}>  
+                           <div 
+                            className={ "rounded-2xl bg-[#d9d9d9]   flex items-center mt-5 flex-col " +
+                                "w-[60px] h-7 ml-4 mt-8.5 " // mobile
+                                }>  
+                                <span className={" flex flex-row font-vazir items-center justify-between px-1.5 " +
+                                "text-[15px]" // mobile
+                               }>   
+                               
+                                    {convertToPersianNumbers(4.5) }  
+                                    <FaStar className="     m-1.5  "
+                                     color="orange" />  
+                                </span>  
+                                {userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
                             <button  
-                                className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
+                                className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-2xl w-15 h-10 text-white text-[15px] font-vazir font-md mr-0 mt-10`}  
                                 onClick={(e) => {  
                                     e.stopPropagation(); 
                                     handleAdd(item.id);  
@@ -177,7 +194,7 @@ return (
                                     }}  
                                     disabled={userdata[item.id] >= item.stock_1}  
                                 >  
-                                    +  
+                                    
                                 </button>  
                                 <span className="text-lg font-semibold">{convertToPersianNumbers(userdata[item.id] || 0) || 0}</span>  
                                 {userdata[item.id] === 1 ? (  
@@ -213,15 +230,138 @@ return (
                                 )}  
                             </div>  
                         )}  
-                    </div>  
+                            </div>  
+                            <div className={`${isDarkMode ? "text-white" : "text-black"}  sm:hidden font-vazir text-sm font-semibold text-right mr-2 mt-10 `}>
+                                {item.name}
+
+                            <div className="sm:hidden flex flex-col items-end mt-7 ">
+                                <div className={`${isDarkMode ? "text-white" : "text-black"} font-vazir text-sm text-right`}>
+                                    {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت
+                                </div>
+                                
+                                  {item.discount > 0 && (
+                                    <div className="flex flex-row-reverse items-center mt-1">
+                                        <div className="text-gray-500 text-xs line-through mr-2">
+                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}
+                                        </div>
+                                        <div className="bg-[#F18825] text-white text-xs w-7 h-4  mr-1 flex items-center justify-center rounded-md">
+                                            %{convertToPersianNumbers(item.discount)}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            </div>
+                            <div className={
+                                    "relative " +
+                                    "w-30 h-25 mr-3 mt-5" // mobile
+                                }>
+                                    <Image  
+                                        className="rounded-2xl "  
+                                        src={item.photo_url}  
+                                        alt="productImg"  
+                                        layout="fill"  
+                                    />  
+                               
+                            </div>  
+                        </div>   
+                        <div className=' sm:block hidden'>
+                        <div className={'{`${isDarkMode ? "text-white" : "text-black"}sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 hidden '+
+                        ""}>
+                            {item.name}</div>  
+                        <div className="sm:flex sm:flex-row-reverse hidden">  
+                             <div className='sm:flex sm:flex-col'>  
+                               <div className={` ${isDarkMode ? "text-white" : "text-black"} sm:font-vazir sm:text-sm sm:text-right sm:mr-5 sm:mt-2`}>  
+                                    {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
+                                </div> 
+                                 
+                                {item.discount > 0 && (  
+                                    <div className="sm:flex sm:flex-row-reverse sm:mr-6">  
+                                        <div className="sm:bg-[#F18825] sm:text-sm sm:w-9 sm:h-5 sm:text-white sm:text-[14px] sm:pl-1.5 sm:rounded-md">  
+                                            %{convertToPersianNumbers(item.discount)}  
+                                        </div>  
+                                        <div className="sm:mr-2 sm:text-gray-500 sm:line-through)">  
+                                            {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}  
+                                        </div>  
+                                    </div>  
+                                )}  
+                            </div>
+                            </div>   
+                            
+                            {userdata[item.id] === undefined || userdata[item.id] === 0 ? (
+                                <div className='sm:block hidden '>  
+                            <button  
+                                className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
+                                onClick={(e) => {  
+                                    e.stopPropagation(); 
+                                    handleAdd(item.id);  
+                                }}  
+                                disabled={item.stock_1 === 0}  
+                            >  
+                                افزودن  
+                            </button>  
+                            </div>
+                        ) : ( 
+                            <div className='sm:block hidden '> 
+                            <div className="flex mr-19 mt-2 space-x-2">  
+                                <button  
+                                    className={`bg-white ml-5 border-3 ${userdata[item.id] >= item.stock_1 ? 
+                                                "border-gray-300 text-gray-300 cursor-not-allowed" 
+                                                : "border-green-500 text-green-500 cursor-pointer"} 
+                                                font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
+                                                transition-transform duration-200 ${userdata[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white" 
+                                                    : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
+                                    onClick={(e) => {  
+                                        e.stopPropagation(); 
+                                        incrementQuantity(item.id);  
+                                    }}  
+                                    disabled={userdata[item.id] >= item.stock_1}  
+                                >  
+                                    
+                                </button>  
+                                <span className="text-lg font-semibold">{convertToPersianNumbers(userdata[item.id] || 0) || 0}</span>  
+                                {userdata[item.id] === 1 ? (  
+                                    <button  
+                                        className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                        onClick={(e) => {  
+                                            e.stopPropagation();
+                                            const newQuantities = { ...userdata };    
+                                            delete newQuantities[item.id];   
+                                            setQuantities(newQuantities);  
+                                            removeItem(item.id);  
+                                        }}  
+                                    >  
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">  
+                                            <path d="M3 6h18" />  
+                                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />  
+                                            <path d="M10 11v6" />  
+                                            <path d="M14 11v6" />  
+                                            <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />  
+                                        </svg>  
+                                    </button>  
+                                    
+                                ) : (  
+                                    <button  
+                                        className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                        onClick={(e) => {  
+                                            e.stopPropagation();   
+                                            decrementQuantity(item.id);  
+                                        }}  
+                                        disabled={userdata[item.id] <= 1}  
+                                    >  
+                                        <span className="text-xl">-</span>  
+                                    </button>  
+                                )}  
+                            </div>  
+                            </div>
+                        )}  
+                    </div> 
+                     
                 </div>  
             ))  
         ) : (  
             <div>No items found</div>  
         )}  
-        
-    </div> 
         {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}  
-    </>
+    </div>  </>
 );  
 }  
