@@ -157,20 +157,21 @@ export default function CategoryList({ category }) {
                         {/* phone */}
                         <div className={" sm:hidden flex justify-between  w-full  "}>  
                            <div 
-                            className={ "rounded-2xl bg-[#d9d9d9]   flex items-center mt-5 flex-col " +
+                            className={ "rounded-xl bg-[#d9d9d9]   flex items-center mt-5 flex-col " +
                                 "w-[60px] h-7 ml-4 mt-8.5 " // mobile
                                 }>  
-                                <span className={" flex flex-row font-vazir items-center justify-between px-1.5 " +
+                                <span className={" flex flex-row font-vazir items-center justify-between px-1.5 ml-1 " +
                                 "text-[15px]" // mobile
                                }>   
                                
-                                    {convertToPersianNumbers(4.5) }  
+                                    {convertToPersianNumbers(item.average_rate) }  
                                     <FaStar className="     m-1.5  "
                                      color="orange" />  
                                 </span>  
+                                
                                 {userdata[item.id] === undefined || userdata[item.id] === 0 ? (  
                             <button  
-                                className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-2xl w-15 h-10 text-white text-[15px] font-vazir font-md mr-0 mt-10`}  
+                                className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-15 min-h-8 text-white text-[12px] font-vazir font-md mr-0 mt-7`}  
                                 onClick={(e) => {  
                                     e.stopPropagation(); 
                                     handleAdd(item.id);  
@@ -264,31 +265,31 @@ export default function CategoryList({ category }) {
                                
                             </div>  
                         </div>   
-                        <div className=' sm:block hidden'>
-                        <div className={'{`${isDarkMode ? "text-white" : "text-black"}sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5  '+
-                        ""}>
+
+                        {/* end of phone */}
+                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 ` }>
                             {item.name}</div>  
-                        <div className="sm:flex sm:flex-row-reverse hidden">  
+                        <div className="sm:flex sm:flex-row-reverse  hidden">  
                              <div className='sm:flex sm:flex-col'>  
                                <div className={` ${isDarkMode ? "text-white" : "text-black"} sm:font-vazir sm:text-sm sm:text-right sm:mr-5 sm:mt-2`}>  
                                     {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
                                 </div> 
                                  
                                 {item.discount > 0 && (  
-                                    <div className="sm:flex sm:flex-row-reverse sm:mr-6">  
+                                    <div className="sm:flex sm:flex-row-reverse sm:mr-5">  
                                         <div className="sm:bg-[#F18825] sm:text-sm sm:w-9 sm:h-5 sm:text-white sm:text-[14px] sm:pl-1.5 sm:rounded-md">  
                                             %{convertToPersianNumbers(item.discount)}  
                                         </div>  
-                                        <div className="sm:mr-2 sm:text-gray-500 sm:line-through)">  
+                                        <div className="sm:mr-2 sm:text-gray-500 sm:line-through">  
                                             {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}  
                                         </div>  
                                     </div>  
                                 )}  
-                            </div>
+                            
                             </div>   
                             
                             {userdata[item.id] === undefined || userdata[item.id] === 0 ? (
-                                <div className='sm:block hidden '>  
+                              
                             <button  
                                 className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}  
                                 onClick={(e) => {  
@@ -299,7 +300,7 @@ export default function CategoryList({ category }) {
                             >  
                                 افزودن  
                             </button>  
-                            </div>
+                            
                         ) : ( 
                             <div className='sm:block hidden '> 
                             <div className="flex mr-19 mt-2 space-x-2">  
