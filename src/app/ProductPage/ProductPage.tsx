@@ -193,9 +193,9 @@ export default function ProductPage({ open, onClose, itemid }) {
     <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>
 
     <div className="flex items-center justify-center min-h-full text-center lg:p-4">
-        <div className="relative transform overflow-hidden rounded-lg  text-left bg-white
+        <div className="relative transform overflow-hidden  text-left bg-white
                         shadow-xl transition-all min-h-screen w-full 
-                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-auto">
+                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-auto lg:rounded-lg">
              
             <div className="pb-4 text-right">
 
@@ -203,55 +203,66 @@ export default function ProductPage({ open, onClose, itemid }) {
         <div className="flex flex-row-reverse m-1"> 
             <IconButton  
                 onClick={onClose}  
-                className="text-black-500"
+                className="text-black-500 "
             >  
-                <ArrowForwardIosIcon className={` ${isDarkMode ? "text-[#B2A7A7]" : "text-gray-600"}`}/>  
+                <ArrowForwardIosIcon className={` ${isDarkMode ? "text-[#B2A7A7]" : "text-gray-600"} ` }
+                />  
             </IconButton>  
-            <span className={`font-vazir ${isDarkMode ? "text-[#B2A7A7]" : "text-gray-700"} text-md text-lg mt-2`}>بازگشت</span>
+            <span className={`font-vazir ${isDarkMode ? "text-[#B2A7A7]" : "text-gray-700"} text-base mt-2 sm:text-md text-lg `}>بازگشت</span>
         </div> 
         <hr className={`border-t ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"}`} /> 
         {data ? (
             <>
             <div className="flex flex-col">
-                <div className="flex flex-row-reverse">
+                <div className=" mr-[20px] ml-auto  flex-row-reverse sm:flex">
                     <Image
-                        className="md-(rounded-2xl mt-5 mb-10 mr-7 ml-4 w-100) w-[25%] h-[25%]"
-                        src={data.photo_url}
-                        alt="productImg"
-                        width={300}
-                        height={200}
+                            className="rounded-2xl mt-5 mb-10 w-[25%] h-[25%] hidden sm:flex"
+                            src={data.photo_url}
+                            alt="productImg"
+                            width={300}
+                            height={200}
                     />
+                    {/* phone */}
+                    <div className="flex justify-center items-center sm:hidden">
+                        <Image
+                            className="rounded-2xl mt-5 mb-0 w-[25%] h-[15%]"
+                            src={data.photo_url}
+                            alt="productImg"
+                            width={300}
+                            height={200}
+                        />
+                    </div>
                     <div className="flex flex-col">
-                        <div className="flex flex-row justify-between w-full">  
-                            <div className="mt-6 box-content rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-10 mt-1">  
+                        <div className="flex flex-row justify-between items-center w-full">  
+                            <div className="mt-0 box-content rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-4 sm:mt-6 sm:ml-10">  
                                 <span className="flex flex-row mt-0.5 text-base font-vazir ml-3 mb-1 lg:text-xl lg:mt-0">  
                                     {convertToPersianNumbers(data.average_rate)}  
                                     <FaStar className="m-1 mr-3" color="orange" />  
                                 </span>   
                             </div>  
-                            <span className={`font-vazir font-bold text-base mt-6 lg:text-2xl ${isDarkMode ? "text-[#ffffff]" 
+                            <span className={`font-vazir font-semibold text-md mt-0 sm:font-bold sm:text-base lg:text-2xl sm:mt-6 ${isDarkMode ? "text-[#ffffff]" 
                                             : "text-black"}`}>{data.name}</span>  
                         </div>  
-                        <div className={`mt-2 ml-10 font-vazir text-sm font-medium text-right text-justify lg:text-lg lg:mt-7
+                        <div className={`mt-2 ml-4 font-vazir text-sm font-medium text-right text-justify sm:text-lg lg:mt-7 sm:ml-10
                                         ${isDarkMode ? "text-[#BAB2B2]" : "text-gray-700"}`}>{data.description}</div>
-                        <div className={`box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-3 ml-10 font-vazir
-                                         text-sm text-right text-justify lg:text-lg lg:mt-7 ${isDarkMode ? "text-[#ffffff] border-white font-medium" : 
+                        <div className={` box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-3 ml-4 font-vazir sm:ml-10
+                                         text-xs text-right text-justify sm:text-base lg:text-lg lg:mt-7 ${isDarkMode ? "text-[#ffffff] border-white font-medium" : 
                                          "text-black font-semibold "}`}>{data.box_color}</div>
                         <div className="flex flex-row-reverse mt-2 justify-between lg:mt-9">  
                                 <div className='flex flex-col'>  
-                                    <div className={`font-vazir text-lg text-right text-base lg:text-xl 
+                                    <div className={`font-vazir text-sm text-right text-base sm:text-xl 
                                         ${isDarkMode ? "text-[#ffffff] font-medium" : "text-black font-semibold "}`}>  
                                         {convertToPersianNumbers(Math.round(parseFloat(data.discounted_price)).toLocaleString())} :قیمت  
                                     </div>  
                                     {data.discount > 0 && (  
-                                        <div className="flex flex-row-reverse mr-5">  
-                                            <div className="bg-[#F18825] text-lg w-9 h-5 text-white text-[14px] 
+                                        <div className="flex flex-row-reverse lg:mr-5">  
+                                            <div className="bg-[#F18825] text-xs w-8 h-5 text-white lg:text-[14px] sm:w-9
                                                             rounded-md flex items-center justify-center leading-[20px]">
                                                 %{convertToPersianNumbers(data.discount)}
                                             </div>
 
 
-                                            <div className="mr-2 text-gray-500 line-through  text-base lg:text-lg">  
+                                            <div className="mr-2 text-gray-500 line-through  text-sm sm:text-lg">  
                                                 {convertToPersianNumbers(Math.round(Number(data.price)).toLocaleString())} 
                                                
                                             </div>  
@@ -263,19 +274,20 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     <button  
                                         className={` ${data.stock==0 ||  userquantity[itemid] >= data.stock? "bg-gray-300 cursor-not-allowed" : 
                                             "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} 
-                                            rounded-xl w-20 h-10 mt-2 text-white text-base font-vazir font-md mr-24 ml-10 mb-5 lg:text-2xl lg:w-30 lg:h-12 lg:mt-0`}  
+                                            rounded-xl w-20 h-10  mt-2 text-white text-sm font-vazir font-md mr-24 ml-4 mb-5 
+                                            sm:ml-10 lg:text-2xl lg:w-30 lg:h-12 lg:mt-0 `}  
                                         onClick={() => handleAdd(data.id)}  
                                         disabled={ data.stock==0}  
                                     >  
                                         افزودن  
                                     </button>  
                                 ) : (  
-                                    <div className="flex mr-19 space-x-2 ml-5 mb-5">  
+                                    <div className="flex mr-19 space-x-2 ml-4 mt-1 mb-5 sm:ml-5 sm:mt-0">  
                                         <button  
-                                            className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 
+                                            className={`${isDarkMode ? "bg-black" : "bg-white"}  border-3 
                                                      ${userquantity[itemid] >= data.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : 
                                                     "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 
-                                                    flex items-center justify-center rounded-full transition-transform duration-200 
+                                                    flex items-center justify-center rounded-full transition-transform duration-200 sm:ml-5
                                                     ${userquantity[itemid] >= data.stock ? "cursor-not-allowed hover:bg-white" : 
                                                         "hover:bg-green-500 hover:text-white hover:scale-110"}`}                                        
                                             onClick={() => incrementQuantity(data.id)}  
@@ -326,7 +338,7 @@ export default function ProductPage({ open, onClose, itemid }) {
             <>
                 <hr className={`border-t mb-5 ${isDarkMode ? "border-[#ffffff]" : "border-gray-700"} lg:mb-10`} /> 
                 <div className="flex justify-end">  
-                    <span className={`font-vazir font-bold text-2xl mr-5 ${isDarkMode ? "text-[#ffffff]" : "text-black"}
+                    <span className={`font-vazir font-bold text-base sm:text-2xl mr-5 ${isDarkMode ? "text-[#ffffff]" : "text-black"}
                                        md:mr-10`}>نظرات کاربران</span>  
                 </div>   
                 <div className="hidden md:block">
@@ -373,6 +385,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                     ))}  
                 </Slider>
                 </div> 
+                {/* phone */}
                 {comments.map((comment, index) => (
                     <div key={index} className={` w-auto p-3 flex flex-col bg-white  
                         border-b last:border-b-0 md:hidden`}>
