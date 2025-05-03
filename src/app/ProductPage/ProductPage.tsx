@@ -142,7 +142,7 @@ export default function ProductPage({ open, onClose, itemid }) {
         slidesToShow: 3,
         slidesToScroll: 1,
         centerMode: true,
-        centerPadding: '30px', 
+        centerPadding: '70px', 
         swipe: true,
         swipeToSlide: true,
         touchMove: true,
@@ -344,8 +344,9 @@ export default function ProductPage({ open, onClose, itemid }) {
                 <div className="hidden md:block">
                 <Slider {...settings} className="mt-10 mr-5 ml-5 mb-15">  
                     {comments.map((comment, index) => (  
-                        <div key={index} className={`min-h-40 w-27 rounded-2xl 
-                                ${isDarkMode ? "bg-black border-white" : "bg-white"} border-1 p-2 flex flex-col`}>
+                        <div className="mx-10" key={index}>
+                        <div  className={`min-h-40 w-60 rounded-2xl 
+                                ${isDarkMode ? "bg-black " : "bg-[#f1f1f1]"} p-2 flex flex-col `} >
                             <div className="flex flex-row-reverse justify-between">
                                 <div className="flex flex-row-reverse">
                                     <IoPerson className={`w-4 h-6 ml-1 mr-1 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}/> 
@@ -378,10 +379,11 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     )}
                                 </div>
                             </div>
-                            <div className={`box-content w-full min-h-20 rounded-2xl mt-5 ${isDarkMode ? "border-white" : "border-black"} border-1 text-right overflow-hidden break-words`}>
-                                <span className={`font-vazir ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-lg p-3`}>{comment.comment}</span>
+                            <div className={`box-content w-full min-h-20 rounded-2xl mt-5 ${isDarkMode ? "bg-[#383535]" : "bg-white"}  text-right overflow-hidden break-words `}>
+                                <span className={`font-vazir ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-lg p-3 mr-2`}>{comment.comment}</span>
                             </div> 
-                        </div>  
+                        </div> 
+                        </div> 
                     ))}  
                 </Slider>
                 </div> 
@@ -431,7 +433,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div>
                     
                     <div className="mt-0 p-2 rounded-xl  text-righ text-gray-800 mr-1 ">
-                      <span className=" font-vazir text-sm font-medium">{comment.comment}</span>
+                      <span className=" font-vazir text-sm font-medium ">{comment.comment}</span>
                     </div>
                     
                   </div>
