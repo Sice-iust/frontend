@@ -121,7 +121,7 @@ export default function CategoryList({ category }) {
                         ) : (  
                             <div className="flex mr-0 mt-2 space-x-2">  
                                 <button  
-                                    className={`bg-white ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
+                                    className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
                                                 "border-gray-300 text-gray-300 cursor-not-allowed" 
                                                 : "border-green-500 text-green-500 cursor-pointer"} 
                                                 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
@@ -224,7 +224,7 @@ export default function CategoryList({ category }) {
                             <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">  
                             <div className={
                                     "sm:relative " +
-                                    "sm:w-30 sm:h-45 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
+                                    "sm:w-30 sm:h-40 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
                                    
                                 }>
                                     <Image  
@@ -239,7 +239,7 @@ export default function CategoryList({ category }) {
                         </div>  
 
                       
-                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 ` }>
+                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 sm:mt-4 ` }>
                             {item.name}</div>  
                         <div className="sm:flex sm:flex-row-reverse  hidden">  
                              <div className='sm:flex sm:flex-col'>  
