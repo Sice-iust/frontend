@@ -71,7 +71,7 @@ export default function CategoryList({ category }) {
         <meta name="viewport" content="width=device-width , initial-scale=1.0" />      
         </Head> 
         <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} 
-                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 m-auto mt-10 ml-8 mr-8 rounded-2xl`}>
+                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 m-auto mt-10 ml-8 mr-8 mb-10 rounded-2xl`}>
             {dataLength > 0 ? (  
                 data.map(item => (  
                     <div key={item.id} 
