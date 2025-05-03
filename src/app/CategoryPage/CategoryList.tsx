@@ -90,8 +90,8 @@ export default function CategoryList({ category }) {
                 data.map(item => (  
                     <div key={item.id} 
                     onClick={() => handleOpenModal(item.id)}
-                     className={`sm:flex sm:flex-col sm:box-content sm:border sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
-                        " flex flex-row   border-b box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
+                     className={`sm:flex sm:flex-col sm:box-content  sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
+                        " flex flex-row   box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
                            {/* phone */}
                         <div className={" sm:hidden flex justify-between  w-full  "}>  
                            <div 
@@ -228,7 +228,7 @@ export default function CategoryList({ category }) {
                                    
                                 }>
                                     <Image  
-                                        className="sm:rounded-2xl"  
+                                        className="sm:rounded-2xl items-center w-10 h-10"  
                                         src={item.photo_url}  
                                         alt="productImg"  
                                         layout="fill"  
