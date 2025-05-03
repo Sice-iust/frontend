@@ -136,10 +136,10 @@ export default function CategoryList({ category }) {
                                 +
                                     
                                 </button>  
-                                <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"}text-lg font-semibold`}>{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
                                 {userquantity[item.id] === 1 ? (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`}  
                                         onClick={(e) => {  
                                             e.stopPropagation();
                                             const newQuantities = { ...userquantity };    
@@ -159,7 +159,7 @@ export default function CategoryList({ category }) {
                                     </button>  
                                 ) : (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`} 
                                         onClick={(e) => {  
                                             e.stopPropagation();   
                                             decrementQuantity(item.id);  
