@@ -193,9 +193,9 @@ export default function ProductPage({ open, onClose, itemid }) {
     <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>
 
     <div className="flex items-center justify-center min-h-full text-center lg:p-4">
-        <div className="relative transform overflow-hidden  text-left bg-white
+        <div className={`relative transform overflow-hidden  text-left ${isDarkMode ? "bg-[#191919]" : "bg-white"}
                         shadow-xl transition-all min-h-screen w-full 
-                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-auto lg:rounded-lg">
+                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-auto lg:rounded-lg`}>
              
             <div className="pb-4 text-right">
 
