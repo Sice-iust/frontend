@@ -16,6 +16,7 @@ import { useTheme } from '../theme';
 import { useCart } from "../../context/Receiptcontext";
 import { RiUserFill } from "react-icons/ri";
 import { convertToPersianNumbers } from '../../utils/Coversionutils';
+import LoadingBox from "../../components/Loading/LoadingBox";
 
 interface DataType {
     photo_url: string;
@@ -195,7 +196,7 @@ export default function ProductPage({ open, onClose, itemid }) {
     <div className="flex items-center justify-center min-h-full text-center lg:p-4">
         <div className={`relative transform overflow-hidden  text-left ${isDarkMode ? "bg-[#191919]" : "bg-white"}
                         shadow-xl transition-all min-h-screen w-full 
-                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-auto lg:rounded-lg`}>
+                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-[420px] lg:rounded-lg`}>
              
             <div className="pb-4 text-right">
 
@@ -295,7 +296,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         >  
                                             +  
                                         </button>  
-                                        <span className={`${isDarkMode ? "text-white" : "text-black"}text-lg font-semibold`}>{convertToPersianNumbers(userquantity[itemid] || 0) || 0}</span>  
+                                        <span className={`${isDarkMode ? "text-white" : "text-black"} text-lg font-semibold`}>{convertToPersianNumbers(userquantity[itemid] || 0) || 0}</span>  
                                         {userquantity[itemid] === 1 ? (  
                                             <button  
                                                 className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 
@@ -445,7 +446,23 @@ export default function ProductPage({ open, onClose, itemid }) {
             </div>
             </>
         ) : (
-            <p>Loading...</p> 
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+                <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>
+                    <div className="flex items-center justify-center min-h-full text-center lg:p-4">
+        <               div className={`relative transform overflow-hidden  text-left ${isDarkMode ? "bg-[#191919]" : "bg-white"}
+                        shadow-xl transition-all min-h-screen w-full 
+                        md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-[420px] lg:rounded-lg`}>
+                            <div className="pb-4 text-right">
+                            <div className={` ${isDarkMode ? "bg-[#191919]" : "bg-white"}`} >
+                            <div className={`absolute top-0 left-10 right-0 bottom-0 rounded-2xl flex items-center justify-center 
+                                            ${isDarkMode ? "bg-[#191919] border-white" : "bg-white"} bg-opacity-70`}>
+                            <LoadingBox />
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
         )} 
         </div>    
         </div>
