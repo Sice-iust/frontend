@@ -12,6 +12,7 @@ import axios from "axios";
 import { useTheme } from "./theme";
 import LoginModal from "./login/login";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const LazySearch = dynamic(() => import('./search'), {
     loading: () => (
@@ -115,8 +116,15 @@ export default function Header2() {
 
                     <div dir="ltr" className="basis-3/10 flex my-auto gap-10">
                         {isLoggedIn ? (
-                            <span className='text-[15px] cursor-pointer'>  صفحه کاربر
-                                <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " /></span>
+                            <Link 
+                            href="/ProfilePage/OrdersPage" 
+                            className="text-[15px] cursor-pointer"
+                          >
+                            صفحه کاربر 
+                            <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " />
+                          </Link>
+                            // <span className='text-[15px] cursor-pointer'>  صفحه کاربر
+                            //     <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " /></span>
                         ) : (
                             <button className="bg-[#F18825] text-white rounded-2xl px-2 py-3 cursor-pointer" onClick={handleOpenModal}
                             > ورود / عضویت   </button>
