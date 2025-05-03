@@ -234,7 +234,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div>
                     <div className="flex flex-col">
                         <div className="flex flex-row justify-between items-center w-full">  
-                            <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#d9d9d9]"} mt-0 box-content rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-4 sm:mt-6 sm:ml-10`}>  
+                            <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#d9d9d9]"} mt-0 box-content rounded-2xl w-auto h-7 ml-4 sm:mt-6 sm:ml-10`}>  
                                 <span className={`${isDarkMode ? "text-white" : "text-black"} flex flex-row mt-0.5 text-base font-vazir ml-3 mb-1 lg:text-xl lg:mt-0`}>  
                                     {convertToPersianNumbers(data.average_rate)}  
                                     <FaStar className="m-1 mr-3" color="orange" />  
