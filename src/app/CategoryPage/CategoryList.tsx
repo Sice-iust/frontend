@@ -70,14 +70,13 @@ export default function CategoryList({ category }) {
         <><Head>
         <meta name="viewport" content="width=device-width , initial-scale=1.0" />      
         </Head> 
-        <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}  sm:flex sm:flex-row-reverse sm:flex-wrap sm:box-content sm:m-10 sm:ml-8  sm:w-full sm:h-auto sm:rounded-2xl sm:gap-6 `+
-        "flex flex-col  flex-wrap box-content w-full h-auto  rounded-2xl"
-        }>  
+        <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} 
+                grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 m-auto mt-10 ml-8 mr-8 mb-10 rounded-2xl`}>
             {dataLength > 0 ? (  
                 data.map(item => (  
                     <div key={item.id} 
                     onClick={() => handleOpenModal(item.id)}
-                     className={`sm:flex sm:flex-col sm:box-content  sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
+                     className={`sm:flex sm:flex-col sm:box-content  sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-auto sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
                         " flex flex-row   box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
                            {/* phone */}
                         <div className={" sm:hidden flex justify-between  w-full  "}>  
