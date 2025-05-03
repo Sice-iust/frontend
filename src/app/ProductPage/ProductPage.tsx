@@ -216,7 +216,7 @@ export default function ProductPage({ open, onClose, itemid }) {
             <div className="flex flex-col">
                 <div className=" mr-[20px] ml-auto  flex-row-reverse sm:flex">
                     <Image
-                            className="rounded-2xl mt-5 mb-10 w-[25%] h-[25%] hidden sm:flex"
+                            className="rounded-2xl mt-5 mb-10 ml-6 mr-5 w-[20%] h-[35%] hidden sm:flex"
                             src={data.photo_url}
                             alt="productImg"
                             width={300}
