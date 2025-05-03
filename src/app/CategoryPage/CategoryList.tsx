@@ -144,7 +144,6 @@ export default function CategoryList({ category }) {
                                             e.stopPropagation();
                                             const newQuantities = { ...userquantity };    
                                             delete newQuantities[item.id];   
-                                            // setQuantities(newQuantities);  
                                             removeItem(item.id);  
                                         }}  
                                     >  

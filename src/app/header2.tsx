@@ -132,9 +132,9 @@ export default function Header2() {
                         </span>
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <Image height={100} width={10000} src={`/assets/homePagePhoto.png`} alt={``} />
-                </div>
+                </div> */}
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn}/>}
         </>);
