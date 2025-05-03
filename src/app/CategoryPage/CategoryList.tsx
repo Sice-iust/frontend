@@ -224,11 +224,11 @@ export default function CategoryList({ category }) {
                             <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">  
                             <div className={
                                     "sm:relative " +
-                                    "sm:w-40 sm:h-50 sm:mb-3 sm:ml-5 sm:mt-1 "  // desktop (adjust size as needed)
+                                    "sm:w-30 sm:h-45 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
                                    
                                 }>
                                     <Image  
-                                        className="sm:rounded-2xl items-center w-10 h-10"  
+                                        className="sm:rounded-2xl"  
                                         src={item.photo_url}  
                                         alt="productImg"  
                                         layout="fill"  
