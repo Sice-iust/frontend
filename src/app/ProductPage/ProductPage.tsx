@@ -380,7 +380,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 </div>
                             </div>
                             <div className={`box-content w-full min-h-20 rounded-2xl mt-5 ${isDarkMode ? "bg-[#383535]" : "bg-white"}  text-right overflow-hidden break-words `}>
-                                <span className={`font-vazir ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-lg p-3 mr-2`}>{comment.comment}</span>
+                                <span className={`font-vazir ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-medium p-3 mr-2`}>{comment.comment}</span>
                             </div> 
                         </div> 
                         </div> 
