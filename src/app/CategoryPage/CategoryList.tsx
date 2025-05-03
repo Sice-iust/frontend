@@ -26,19 +26,6 @@ interface DataType {
 export default function CategoryList({ category }) {  
     const { userquantity, incrementQuantity, decrementQuantity, removeItem , handleAdd,fetchDatauser} = useCart(); 
     const { isDarkMode, toggleDarkMode } = useTheme();
-    const [catNumber, setCategoryNumber] = useState(() => {
-        if (typeof window !== "undefined") {
-            return localStorage.getItem('category') || category;
-        }
-        return category;
-    });
-
-    useEffect(() => {
-        if (typeof window !== "undefined" && category) {
-            localStorage.setItem('category', category);
-            setCategoryNumber(category);
-        }
-    }, [category]);
     const [selectedItem, setSelectedItem] = useState(null); 
     const [isOpen, setOpen] = useState(false);   
     const [data, setData] = useState<DataType[]>([]);  
@@ -60,7 +47,7 @@ export default function CategoryList({ category }) {
         const fetchData = async () => {  
             try {  
                 const response = await axios.get("https://nanziback.liara.run/product/category/", {  
-                    params: { category: catNumber },  
+                    params: { category: category },  
                 });  
                 setData(response.data);  
                 setDataLength(response.data.length);  
@@ -69,10 +56,10 @@ export default function CategoryList({ category }) {
             }  
         };  
 
-        if (catNumber) {  
+        if (category) {  
             fetchData();  
         }  
-    }, [catNumber]);  
+    }, [category]);  
 
 
     
