@@ -234,8 +234,8 @@ export default function ProductPage({ open, onClose, itemid }) {
                     </div>
                     <div className="flex flex-col">
                         <div className="flex flex-row justify-between items-center w-full">  
-                            <div className="mt-0 box-content rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-4 sm:mt-6 sm:ml-10">  
-                                <span className="flex flex-row mt-0.5 text-base font-vazir ml-3 mb-1 lg:text-xl lg:mt-0">  
+                            <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#d9d9d9]"} mt-0 box-content rounded-2xl bg-[#d9d9d9] w-auto h-7 ml-4 sm:mt-6 sm:ml-10`}>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"} flex flex-row mt-0.5 text-base font-vazir ml-3 mb-1 lg:text-xl lg:mt-0`}>  
                                     {convertToPersianNumbers(data.average_rate)}  
                                     <FaStar className="m-1 mr-3" color="orange" />  
                                 </span>   
@@ -295,7 +295,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                         >  
                                             +  
                                         </button>  
-                                        <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[itemid] || 0) || 0}</span>  
+                                        <span className={`${isDarkMode ? "text-white" : "text-black"}text-lg font-semibold`}>{convertToPersianNumbers(userquantity[itemid] || 0) || 0}</span>  
                                         {userquantity[itemid] === 1 ? (  
                                             <button  
                                                 className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 
@@ -351,8 +351,8 @@ export default function ProductPage({ open, onClose, itemid }) {
                                     <IoPerson className={`w-4 h-6 ml-1 mr-1 ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}/> 
                                     <span className={`font-vazir font-semibild text-lg ${isDarkMode ? "text-[#ffffff]" : "text-black"}`}>{comment.user_name}</span>
                                 </div>
-                                <div className=" box-content rounded-2xl bg-[#d9d9d9] w-auto h-6 ml-1">  
-                                <span className="flex flex-row text-lg font-vazir ml-3 mb-1">  
+                                <div className={`${isDarkMode ? "bg-[#383535]" : "bg-[#d9d9d9]"} box-content rounded-2xl  w-auto h-6 ml-1`}>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"} flex flex-row text-lg font-vazir ml-3 mb-1`}>  
                                     {convertToPersianNumbers(comment.rating)}  
                                     <FaStar className="m-1 mr-3" color="orange" />  
                                 </span>   
