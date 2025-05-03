@@ -213,8 +213,8 @@ export default function CategoryList({ category }) {
                          
                          <div className={" hidden sm:flex sm:flex-row   "}>  
                            <div 
-                            className={ "sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl sm:bg-[#d9d9d9] sm:w-auto sm:h-7 sm:ml-1 "    }>  
-                                <span className={" sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl " }>   
+                            className={ `${isDarkMode ? "bg-[#383535]" : "bg-[#d9d9d9]"} sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl  sm:w-auto sm:h-7 sm:ml-1 `    }>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"} sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl ` }>   
                                
                                     {convertToPersianNumbers(item.average_rate) }  
                                     <FaStar className="sm:m-1 sm:mr-3  "
@@ -239,11 +239,11 @@ export default function CategoryList({ category }) {
                         </div>  
 
                       
-                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 sm:mt-4 ` }>
+                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-medium sm:font-semibold sm:text-right sm:mr-5 sm:mt-4 ` }>
                             {item.name}</div>  
                         <div className="sm:flex sm:flex-row-reverse  hidden">  
                              <div className='sm:flex sm:flex-col'>  
-                               <div className={` ${isDarkMode ? "text-white" : "text-black"} sm:font-vazir sm:text-sm sm:text-right sm:mr-5 sm:mt-2`}>  
+                               <div className={` ${isDarkMode ? "text-white" : "text-black"} sm:font-vazir sm:text-sm sm:text-right sm:mr-6 sm:mt-2`}>  
                                     {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
                                 </div> 
                                  
@@ -277,7 +277,7 @@ export default function CategoryList({ category }) {
                             <div className='sm:block hidden '> 
                             <div className="flex mr-27 mt-2 space-x-2">  
                                 <button  
-                                    className={`bg-white ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
+                                    className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
                                                 "border-gray-300 text-gray-300 cursor-not-allowed" 
                                                 : "border-green-500 text-green-500 cursor-pointer"} 
                                                 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
@@ -291,10 +291,10 @@ export default function CategoryList({ category }) {
                                 >  
                                   +     
                                 </button>  
-                                <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"} text-lg font-semibold`}>{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
                                 {userquantity[item.id] === 1 ? (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`} 
                                         onClick={(e) => {  
                                             e.stopPropagation();
                                             const newQuantities = { ...userquantity };    
@@ -314,7 +314,7 @@ export default function CategoryList({ category }) {
                                     
                                 ) : (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`} 
                                         onClick={(e) => {  
                                             e.stopPropagation();   
                                             decrementQuantity(item.id);  
