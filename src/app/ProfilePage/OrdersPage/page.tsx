@@ -1,6 +1,5 @@
 'use client'
-import React, { useState,useEffect } from "react";  
-import Navbar from "../../navbar";   
+import React, { useState,useEffect } from "react"; 
 import Menu from "./OrdersPage-menu";   
 import OrderCard from "./OrderCards";
 import axios from "axios";
