@@ -98,11 +98,11 @@ export default function Header2() {
     }, [shoppingNum]);
     return (
         <>
-            <div className="bg-white w-full">
+            <div className={` ${isDarkMode ? "bg-[#191919]" : "bg-white"}  w-full`}>
                 <div dir="rtl" className="flex flex-col justify-center px-5 py-2 md:flex-row">
 
                     <div className=" basis-2/10 my-auto">
-                        <Image src={`/assets/logo.png`}
+                        <Image src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`}
                             alt="Logo"
                             width={200}
                             height={200}
@@ -114,11 +114,12 @@ export default function Header2() {
 
                     </div>
 
-                    <div dir="ltr" className="basis-3/10 flex my-auto gap-10">
+                    <div dir="ltr" className={`basis-3/10 flex my-auto gap-10 ${isDarkMode ? "text-white" : "text-black"}`}>
                         {isLoggedIn ? (
                             <Link 
                             href="/ProfilePage/OrdersPage" 
                             className="text-[15px] cursor-pointer"
+                            
                           >
                             صفحه کاربر 
                             <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " />
@@ -126,22 +127,22 @@ export default function Header2() {
                             // <span className='text-[15px] cursor-pointer'>  صفحه کاربر
                             //     <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " /></span>
                         ) : (
-                            <button className="bg-[#F18825] text-white rounded-2xl px-2 py-3 cursor-pointer" onClick={handleOpenModal}
+                            <button className={`bg-[#F18825] ${isDarkMode ? "text-black" : "text-white"} rounded-2xl px-2 py-3 cursor-pointer`} onClick={handleOpenModal}
                             > ورود / عضویت   </button>
                         )}
-                        <div className="flex my-auto cursor-pointer gap-2">
+                        <div className={`flex my-auto cursor-pointer gap-2 ${isDarkMode ? "text-white" : "text-black"}`}>
                             <h1>سبد خرید</h1>
                             <ShoppingCartIcon className="text-3xl" />
-                            {shoppingNum > 0 && <span className="absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825] text-white rounded-[10px] px-[6px] py-[3px] text-[12px] ">{shoppingNum}</span>}
+                            {shoppingNum > 0 && <span className={`absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825]  ${isDarkMode ? "text-black" : "text-white"} rounded-[10px] px-[6px] py-[3px] text-[12px] `}>{shoppingNum}</span>}
                         </div>
-                        <span className="cursor-pointer my-auto gap-2" onClick={toggleDarkMode}   >
+                        <span className={`cursor-pointer my-auto gap-2 ${isDarkMode ? "text-white" : "text-black"}`} onClick={toggleDarkMode}   >
                             {isDarkMode ? 'حالت روز' : 'حالت شب'}
                             {isDarkMode ? <WbSunnyOutlinedIcon className="text-2xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-2xl ml-0.5" />}
                         </span>
                     </div>
                 </div>
                 <div>
-                    <Image height={100} width={10000} src={`/assets/homePagePhoto.png`} alt={``} />
+                    {/* <Image height={100} width={10000} src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} /> */}
                 </div>
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn}/>}

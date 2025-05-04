@@ -80,15 +80,16 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
   return (
     <div dir="rtl" >
       <div
-        className="
+        className={`
         flex 
         items-center 
         rounded-3xl p-2 
-        dark:bg-[#383535]  bg-[#D9D9D9] mx-auto " dir='rtl'>
+        ${isDarkMode ? "bg-[#383535] " : "bg-[#D9D9D9]"}
+        mx-auto `} dir='rtl'>
         <span className="text-[#B8681D]"><SearchOutlinedIcon /></span>
         <input
           type="text"
-          className=" px-2 py-1 focus:outline-none font-vazir w-full rounded-full text-right bg-transparent text-black text-[16px] placeholder:[#696363]"
+          className={` px-2 py-1 focus:outline-none font-vazir w-full rounded-full text-right bg-transparent  text-[16px]  ${isDarkMode ? "placeholder:[#D9D9D9] " : "placeholder:[#696363]"}`}
           placeholder="نام کالای مورد نظر را جستجو کنید ..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -99,11 +100,11 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
       </div>
 
       {isFocused && searchTerm && (
-        <div className="md:absolute mt-2  w-full md:w-182 max-h-[500px] overflow-y-scroll z-[1000] rounded-3xl shadow-lg p-4 bg-[#D9D9D9]">
+        <div className={`md:absolute mt-2  w-full md:w-182 max-h-[500px] overflow-y-scroll z-[1000] rounded-3xl shadow-lg p-4 ${isDarkMode ? "bg-[#383535] " : "bg-[#D9D9D9]"}`}>
           {Object.entries(groupedResults).length > 0 ? (
             Object.entries(groupedResults).map(([category, items]) => (
               <div key={category} className="mb-5 last:mb-0">
-                <div className="flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]">
+                <div className={`${isDarkMode ? "text-white " : "text-black"}flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]`}>
                   دسته بندی: <span className='flex text-right  items-center'>{highlightMatch(category)}</span>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -112,13 +113,13 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
                       key={item.id}
                       className="flex flex-col gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
-                      <div className="flex items-center">
-                        <span className="mr-2 font-bold text-gray-700 dark:text-gray-300 font-vazir">نام محصول:</span>
+                      <div className={`flex items-center ${isDarkMode ? "text-gray-300 " : "text-gray-700"} `}>
+                        <span className={`mr-2 font-bold ${isDarkMode ? "text-gray-300 " : "text-gray-700"} font-vazir`}>نام محصول:</span>
                         <span className="text-[#B8681D] font-bold">🔍</span>
                         {highlightMatch(item.name)}
                       </div>
-                      <div className="flex items-center ">
-                        <span className="mr-2 font-bold text-gray-700 dark:text-gray-300 font-vazir">قیمت:</span>
+                      <div className={`flex items-center ${isDarkMode ? "text-gray-300 " : "text-gray-700"} `}>
+                        <span className={`mr-2 font-bold ${isDarkMode ? "text-gray-300 " : "text-gray-700"} font-vazir`}>قیمت:</span>
                         <span>
                           {item.price ? item.
                             discounted_price.toLocaleString()
@@ -127,8 +128,8 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
                         </span>
                       </div>
                       {item.stock > 0 ? (
-                        <div className="flex items-center">
-                          <span className="mr-2 font-bold font-vazir text-gray-700 dark:text-gray-300">موجودی: <span className='font-medium text-black'>{item.stock}</span></span>
+                      <div className={`flex items-center ${isDarkMode ? "text-gray-300 " : "text-gray-700"} `}>
+                          <span className={`mr-2 font-bold ${isDarkMode ? "text-gray-300 " : "text-gray-700"} font-vazir`}>موجودی: <span className={`font-medium ${isDarkMode ? "text-white " : "text-black"}`}>{item.stock}</span></span>
                         </div>
                       ) : (
                         <div className="flex items-center">
