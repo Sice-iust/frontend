@@ -2,33 +2,33 @@ import React from 'react';
 import CategoryCard from './categoryCard';
 const CardData = [
     {
-        src: '/assets/breads/barbari.png',
+        src: '/assets/breads/barbaric.png',
         text: 'بربری',
         id:1,
     },
     {
-        src: '/assets/breads/barbari.png',
+        src: '/assets/breads/sangak.png',
         text: 'سنگک',
         id:2,
     },
     {
-        src: '/assets/breads/barbari.png',
+        src: '/assets/breads/lavash.png',
         text: 'لواش',
         id:6,
     },
     {
-        src: '/assets/breads/barbari.png',
+        src: '/assets/breads/taftan.png',
         text: 'تافتون',
         id:3,
     },
     {
-        src: '/assets/breads/barbari.png',
+        src: '/assets/breads/baguette.png',
         text: 'نان فانتزی',
         id:5,
 
     },
     {
-        src: '/assets/breads/barbari.png',
+        src: '/assets/breads/mahali.png',
         text: 'نان های محلی',
         id:4,
     }
