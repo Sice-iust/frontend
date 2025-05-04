@@ -26,19 +26,6 @@ interface DataType {
 export default function CategoryList({ category }) {  
     const { userquantity, incrementQuantity, decrementQuantity, removeItem , handleAdd,fetchDatauser} = useCart(); 
     const { isDarkMode, toggleDarkMode } = useTheme();
-    const [catNumber, setCategoryNumber] = useState(() => {
-        if (typeof window !== "undefined") {
-            return localStorage.getItem('category') || category;
-        }
-        return category;
-    });
-
-    useEffect(() => {
-        if (typeof window !== "undefined" && category) {
-            localStorage.setItem('category', category);
-            setCategoryNumber(category);
-        }
-    }, [category]);
     const [selectedItem, setSelectedItem] = useState(null); 
     const [isOpen, setOpen] = useState(false);   
     const [data, setData] = useState<DataType[]>([]);  
@@ -60,7 +47,7 @@ export default function CategoryList({ category }) {
         const fetchData = async () => {  
             try {  
                 const response = await axios.get("https://nanziback.liara.run/product/category/", {  
-                    params: { category: catNumber },  
+                    params: { category: category },  
                 });  
                 setData(response.data);  
                 setDataLength(response.data.length);  
@@ -69,10 +56,10 @@ export default function CategoryList({ category }) {
             }  
         };  
 
-        if (catNumber) {  
+        if (category) {  
             fetchData();  
         }  
-    }, [catNumber]);  
+    }, [category]);  
 
 
     
@@ -90,8 +77,8 @@ export default function CategoryList({ category }) {
                 data.map(item => (  
                     <div key={item.id} 
                     onClick={() => handleOpenModal(item.id)}
-                     className={`sm:flex sm:flex-col sm:box-content sm:border sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
-                        " flex flex-row   border-b box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
+                     className={`sm:flex sm:flex-col sm:box-content  sm:rounded-2xl  ${isDarkMode ? "bg-[#191919]" : "bg-white"} sm:w-79 sm:h-77  sm:cursor-pointer hover:scale-105 transition duration-300 `+
+                        " flex flex-row   box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>  
                            {/* phone */}
                         <div className={" sm:hidden flex justify-between  w-full  "}>  
                            <div 
@@ -121,7 +108,7 @@ export default function CategoryList({ category }) {
                         ) : (  
                             <div className="flex mr-0 mt-2 space-x-2">  
                                 <button  
-                                    className={`bg-white ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
+                                    className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
                                                 "border-gray-300 text-gray-300 cursor-not-allowed" 
                                                 : "border-green-500 text-green-500 cursor-pointer"} 
                                                 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
@@ -136,10 +123,10 @@ export default function CategoryList({ category }) {
                                 +
                                     
                                 </button>  
-                                <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"}text-lg font-semibold`}>{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
                                 {userquantity[item.id] === 1 ? (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`}  
                                         onClick={(e) => {  
                                             e.stopPropagation();
                                             const newQuantities = { ...userquantity };    
@@ -159,7 +146,7 @@ export default function CategoryList({ category }) {
                                     </button>  
                                 ) : (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`} 
                                         onClick={(e) => {  
                                             e.stopPropagation();   
                                             decrementQuantity(item.id);  
@@ -213,8 +200,8 @@ export default function CategoryList({ category }) {
                          
                          <div className={" hidden sm:flex sm:flex-row   "}>  
                            <div 
-                            className={ "sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl sm:bg-[#d9d9d9] sm:w-auto sm:h-7 sm:ml-1 "    }>  
-                                <span className={" sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl " }>   
+                            className={ `${isDarkMode ? "bg-[#383535]" : "bg-[#d9d9d9]"} sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl  sm:w-auto sm:h-7 sm:ml-1 `    }>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"} sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl ` }>   
                                
                                     {convertToPersianNumbers(item.average_rate) }  
                                     <FaStar className="sm:m-1 sm:mr-3  "
@@ -224,7 +211,7 @@ export default function CategoryList({ category }) {
                             <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">  
                             <div className={
                                     "sm:relative " +
-                                    "sm:w-40 sm:h-50 sm:mb-3 sm:ml-5 sm:mt-1 "  // desktop (adjust size as needed)
+                                    "sm:w-30 sm:h-40 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
                                    
                                 }>
                                     <Image  
@@ -239,11 +226,11 @@ export default function CategoryList({ category }) {
                         </div>  
 
                       
-                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-sm sm:font-semibold sm:text-right sm:mr-5 ` }>
+                        <div className={`${isDarkMode ? "text-white" : "text-black"} hidden sm:block sm:font-vazir  sm:text-medium sm:font-semibold sm:text-right sm:mr-5 sm:mt-4 ` }>
                             {item.name}</div>  
                         <div className="sm:flex sm:flex-row-reverse  hidden">  
                              <div className='sm:flex sm:flex-col'>  
-                               <div className={` ${isDarkMode ? "text-white" : "text-black"} sm:font-vazir sm:text-sm sm:text-right sm:mr-5 sm:mt-2`}>  
+                               <div className={` ${isDarkMode ? "text-white" : "text-black"} sm:font-vazir sm:text-sm sm:text-right sm:mr-6 sm:mt-2`}>  
                                     {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت  
                                 </div> 
                                  
@@ -277,7 +264,7 @@ export default function CategoryList({ category }) {
                             <div className='sm:block hidden '> 
                             <div className="flex mr-27 mt-2 space-x-2">  
                                 <button  
-                                    className={`bg-white ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
+                                    className={`${isDarkMode ? "bg-black" : "bg-white"} ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ? 
                                                 "border-gray-300 text-gray-300 cursor-not-allowed" 
                                                 : "border-green-500 text-green-500 cursor-pointer"} 
                                                 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
@@ -291,10 +278,10 @@ export default function CategoryList({ category }) {
                                 >  
                                   +     
                                 </button>  
-                                <span className="text-lg font-semibold">{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
+                                <span className={`${isDarkMode ? "text-white" : "text-black"} text-lg font-semibold`}>{convertToPersianNumbers(userquantity[item.id] || 0) || 0}</span>  
                                 {userquantity[item.id] === 1 ? (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-gray-300 text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-gray-300 hover:text-gray-500 hover:scale-110`} 
                                         onClick={(e) => {  
                                             e.stopPropagation();
                                             const newQuantities = { ...userquantity };    
@@ -314,7 +301,7 @@ export default function CategoryList({ category }) {
                                     
                                 ) : (  
                                     <button  
-                                        className="bg-white cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110"  
+                                        className={`${isDarkMode ? "bg-black" : "bg-white"} cursor-pointer border-3 border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 hover:bg-red-500 hover:text-white hover:scale-110`} 
                                         onClick={(e) => {  
                                             e.stopPropagation();   
                                             decrementQuantity(item.id);  
@@ -334,7 +321,20 @@ export default function CategoryList({ category }) {
                 </div>  
             ))  
         ) : (  
-            <div>No items found</div>  
+
+            <div className="flex justify-center items-center w-full h-full">
+            <div className="font-vazir w-full h-full flex items-center justify-center py-2.5 px-5 text-xl font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                <svg aria-hidden="true" role="status" className="w-8 h-8 me-3 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                </svg>
+                <div className='flex flex-row-reverse'>
+                 در حال آماده سازی 
+                <span>... </span>
+                </div>
+            </div>
+            </div>
+
         )}  
         {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}  
     </div>  </>

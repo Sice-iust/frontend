@@ -239,7 +239,7 @@ export default function ThirdPage({ open, onClose, isDarkMode, timeLeft, setTime
                             <button
                                 type="submit"
                                 className={`${styles.btnPrimary2} ${isVerificationCodeEntered2 ? styles.disabled : ''}`}//${isPhoneButtonDisabled ? 'disabled' : ''}
-                                disabled={isVerificationCodeEntered2}
+                                disabled={!!isVerificationCodeEntered2}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     handleSubmit();

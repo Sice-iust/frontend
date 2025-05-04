@@ -149,23 +149,13 @@ export default function Sidebar() {
       <div className="flex flex-col items-center mb-2 py-4 ">
         <div className="relative mb-4" onClick={handleImageClick}>
           <div className="w-20 h-20 border rounded-full  overflow-hidden flex items-center justify-center">
-            {profileImage ? (
-              <Image
-                src={fileInputRef}
-                alt="Profile Photo"
-                width={80}
-                height={80}
-                className="object-cover w-full h-full"
-              />
-            ) : (
               <Image
                 src={`/assets/default_profile.jpg`}
                 alt="Default Profile"
                 width={80}
                 height={80}
                 className="object-cover w-full h-full"
-              />  
-            )}     
+              />
           </div>
           {/* <button className="absolute bottom-0 left-0 bg-[#B8681D] text-white p-1 rounded-full transition-all"
            >

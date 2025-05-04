@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "tailwindcss build next build ./src/app/globals.css -o dist/output.css",
+    "build": "next build",
     "start": "next start"
+    
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -16,6 +17,7 @@
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@mui/icons-material": "^6.4.7",
     "@mui/material": "^6.4.7",
+    "@tailwindcss/cli": "^4.1.5",
     "@tailwindcss/postcss": "^4.1.4",
     "axios": "^1.8.4",
     "moment-jalaali": "^0.10.4",
@@ -47,7 +49,7 @@
     "postcss": "^8.5.3",
     "postcss-nested": "^7.0.2",
     "sass-embedded": "^1.85.1",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.5",
     "typescript": "5.8.3",
     "vite": "^6.2.0",
     "vite-plugin-tailwind": "^0.0.4"
