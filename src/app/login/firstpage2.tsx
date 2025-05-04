@@ -88,7 +88,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
                         required
                         value={e2p(phoneNumber)}
                         onChange={handleInputChange}
-                        className="w-full focus:border outline-non outline-transparent"
+                        className="w-full focus:outline-none  outline-non outline-transparent"
                     />
                 </div>
                 {coutnError0 && <div className={styles.errorMessageLogin}>{coutnError0}</div>}
