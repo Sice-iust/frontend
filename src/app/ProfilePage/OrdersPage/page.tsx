@@ -91,7 +91,7 @@ const ProfileOrders: React.FC = () => {
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-0 
                 xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
-      <Menu currentOrdersCount={convertToPersianNumbers(3)} finalOrdersCount={convertToPersianNumbers(1)} /> 
+      <Menu currentOrdersCount={convertToPersianNumbers(3)} finalOrdersCount={convertToPersianNumbers(ordersArray.length)} /> 
  
       
       {ordersArray && ordersArray.length > 0 ? (

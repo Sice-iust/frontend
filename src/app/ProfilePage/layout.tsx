@@ -1,12 +1,19 @@
+'use client';
+
 import Sidebar from "./Sidebar/page";  
+import { useTheme } from '../theme';
+
 
 export default function ProfileLayout({
+ 
+
     children,
   }: {
     children: React.ReactNode
   }) {
+    const { isDarkMode, toggleDarkMode } = useTheme();
     return (
-        <>
+        <div  className={`${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}`} >
         
       <div className=" flex  flex-row ">
         {/* Main content comes FIRST (left side) */}
@@ -23,7 +30,7 @@ export default function ProfileLayout({
         {/* Clearfix for the float layout */}
         <div className="clear-both"></div>
       </div>
-      </>
+      </div>
     );
   }
 
