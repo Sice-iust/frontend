@@ -1,27 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AddressCard from '../../AddressCard/AddressCard';
 import { IoMdClose } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
+import axios from 'axios';
 
 export default function AddressModal({ onClose,id_user }) {
-  const addresses = [
-    {
-      id: 1,
-      label: "خانه",
-      isselect: true,
-      description:
-        "تهران، شهرفرش، پایتخت، بزرگراه شهید چمران، باغ‌مشت غربی، دنباله بعد از فریزنبل،سلام،نمیدونم، بلوک ۳۴، پلاک ۲، واحد ۲",
-    },
-    {
-      id: 2,
-      label: "دانشگاه",
-      isselect: false,
-      description:
-        "تهران، صنعت، غدیر، بلور، بلوار تکاوران، دانشگاه علم و صنعت ایران، دبیرستان و دانشگاه",
-    },
-  ];
-  
 
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("Fetching data...");
+      setLoading(true);
+      try {
+        const response = await axios.get("https://nanziback.liara.run/users/locations/mylocation", {
+          headers: { Authorization: `Bearer ${id_user}` },
+        });
+  
+        if (response.data) {
+            const formattedData = [
+              {
+                name: response.data.name,
+                address: response.data.address,
+                receiver: response.data.reciver,
+                phonenumber: response.data.phonenumber,
+              }
+            ];
+            setData(formattedData);
+    
+          console.log("Formatted data from server:", response.data);
+        } else {
+          setData([]);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchData();
+  }, []);
   return (
     <div className="fixed inset-0 flex justify-center items-center z-10 ">
     <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div> 
@@ -33,13 +54,13 @@ export default function AddressModal({ onClose,id_user }) {
               onClick={onClose} 
             />
           </div>
-        {addresses.map((add) => (
+        {data.map((add) => (
           <AddressCard
             key={add.id}
             id={add.id}
-            title={add.label}
-            address={add.description}
-            isSelected={add.isselect}
+            title={add.name}
+            address={add.address}
+            isSelected={add.is_choose}
             isprofile={false}
             name={"ss"}
             phone={"ss"}
