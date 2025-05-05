@@ -9,6 +9,7 @@ interface CartContextType {
     counts: number,
     totalDiscount: number,
     totalActualPrice: number,
+    shipping_fee : number,
     userquantity : Record<number, number>,
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
@@ -23,6 +24,7 @@ const CartContext = createContext<CartContextType>({
     counts:0,
     totalDiscount:0,
     totalActualPrice:0,
+    shipping_fee:0,
     userquantity:{},
     incrementQuantity: async () => Promise.resolve(), 
     decrementQuantity: async () => Promise.resolve(), 
@@ -39,7 +41,7 @@ export const CartProvider = ({ children }) => {
     const [totalActualPrice, setTotalActualPrice] = useState(0);
     const [loading, setLoading] = useState(true);
     const [userquantity, setUserQuantity] = useState<Record<number, number>>({});
-
+    const [shipping_fee , setShipping_fee] = useState(0);
 
 
     
@@ -55,6 +57,7 @@ export const CartProvider = ({ children }) => {
             setCounts(response.data.counts || 0);
             setTotalDiscount(response.data.total_discount || 0);
             setTotalActualPrice(response.data.total_actual_price || 0);
+            setShipping_fee(response.data.shipping_fee||0);
             console.log("Data from server:", response.data);
         } catch (error) {
             console.error("Error fetching cart:", error);
@@ -62,6 +65,7 @@ export const CartProvider = ({ children }) => {
             setCounts(0);
             setTotalDiscount(0);
             setTotalActualPrice(0);
+            setShipping_fee(0);
         } finally {
             setLoading(false);
         }
@@ -172,7 +176,7 @@ export const CartProvider = ({ children }) => {
 
 
     return (
-        <CartContext.Provider value={{ cartItems, counts, totalDiscount, totalActualPrice, loading, userquantity,
+        <CartContext.Provider value={{ cartItems, counts, totalDiscount, totalActualPrice, loading, shipping_fee, userquantity,
                                        incrementQuantity, decrementQuantity, removeItem ,handleAdd ,fetchDatauser}}>
             {children}
         </CartContext.Provider>
