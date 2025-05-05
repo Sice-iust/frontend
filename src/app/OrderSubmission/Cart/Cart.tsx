@@ -4,7 +4,7 @@ import Invoice from "../../ProfilePage/OrdersPage/Invoice/invoice-detail";
 import { useCart } from "../../../context/Receiptcontext";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import LoadingBox from "../../../components/Loading/LoadingBox";
-import Discount from "../Cart/Discount"
+import Discount from "./Discount"
 import { convertPrice } from "../../../utils/Coversionutils";
 
 const Cart: React.FC = () => {
