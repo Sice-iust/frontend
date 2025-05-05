@@ -39,7 +39,7 @@ export default function AddressPart() {
         </div>
       </div>
 
-      {isModalOpen && <AddressModal onClose={handleCloseModal} />}
+      {isModalOpen && <AddressModal onClose={handleCloseModal} id_user={localStorage.getItem("token")} />}
     </>
   );
 }
