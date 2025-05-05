@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
+import { FaCheck } from "react-icons/fa"; 
 
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
@@ -20,8 +21,10 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         </div>  
                     </div>
                     <div className="flex flex-row-reverse gap-2 mb-3">
-                    <button className={`h-5 w-5 mr-3 mt-1 rounded-full border-1
-                                            ${isSelected ? "bg-green-600" : "bg-white"}`}></button>
+                        <button className={`h-5 w-5 mr-3 mt-1 rounded-full border-1 
+                                            ${isSelected ? "bg-green-600 border-green-600" : "bg-white"}`}>
+                        {isSelected && <FaCheck className="h-3 w-4 text-white " />}
+                        </button>
                         <span className="text-right overflow-hidden break-words 
                                          font-medium text-md text-gray-500 max-w-160 leading-[2rem]">{address}</span>
                     </div>                      
@@ -31,3 +34,4 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
         </>
     );
 }
+
