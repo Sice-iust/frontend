@@ -1,6 +1,7 @@
 import React from 'react';
 import AddressCard from '../../AddressCard/AddressCard';
 import { IoMdClose } from "react-icons/io";
+import { FaPlus } from "react-icons/fa6";
 
 export default function AddressModal({ onClose }) {
   const addresses = [
@@ -43,8 +44,10 @@ export default function AddressModal({ onClose }) {
           />
         ))}
         <div className='flex flex-row-reverse'>
-          <button className='bg-[#F18825] rounded'>
-            افزودن آدرس جدید
+          <button className='bg-[#F18825] rounded-2xl w-auto p-2 pl-4 pr-3 
+                             flex items-center gap-2 text-white font-medium cursor-pointer 
+                             hover:bg-orange-400 transition duration-300 hover:scale-105'>
+            افزودن آدرس جدید <FaPlus/>
           </button>
         </div>
       </div>
