@@ -3,6 +3,7 @@ import { DialogActions, Button } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
+import { HiOutlineTrash } from "react-icons/hi";
 
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
@@ -38,8 +39,7 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         </div>
                         <div className="flex-flex-row-reverse">
                             <FaRegEdit className="color-green-600"/>
-                            <span className="mr-5 text-write overflow-hidden break-words 
-                                             font-medium text-md text-gray-500">{address}</span>
+                            <HiOutlineTrash className="color-red-500"/>
                         </div>                        
                     </div>
                 </div>

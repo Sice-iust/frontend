@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Receipt from '../ShoppingReceipt/ShoppingReceipt';
 import { useTheme } from "../theme"
 
-export default function Bread() {
+export default function OrderSubmission() {
 
   const { isDarkMode } = useTheme();
 
