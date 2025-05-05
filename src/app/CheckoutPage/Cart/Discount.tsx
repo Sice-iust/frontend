@@ -22,7 +22,7 @@ const DiscountCodeForm: React.FC = () => {
         <div className="flex mx-7">
             <button
             onClick={handleSubmit}
-            className="bg-[#F18825] mr-2 rounded-2xl text-white px-4 h-10 flex items-center justify-center"
+            className="bg-[#F18825] mr-2 rounded-2xl text-white px-4 h-10 flex items-center justify-center cursor-pointer"
             >
             ثبت کد
             </button>

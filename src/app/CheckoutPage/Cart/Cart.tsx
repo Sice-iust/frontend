@@ -95,7 +95,7 @@ const Cart: React.FC = () => {
 
                     <button
                         className="bg-[#F18825] mr-2 mb-4 rounded-2xl text-white px-4 h-10 flex items-center 
-                                   justify-center w-[70%]">
+                                   justify-center w-[70%]  cursor-pointer">
                         ثبت و پرداخت
                     </button>
                 </div>
