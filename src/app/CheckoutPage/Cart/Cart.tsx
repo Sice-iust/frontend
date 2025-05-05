@@ -4,6 +4,7 @@ import Invoice from "../../ProfilePage/OrdersPage/Invoice/invoice-detail";
 import { useCart } from "../../../context/Receiptcontext";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import LoadingBox from "../../../components/Loading/LoadingBox";
+import Discount from "../Cart/Discount"
 
 const Cart: React.FC = () => {
     const { cartItems, loading , totalActualPrice } = useCart();
@@ -32,23 +33,24 @@ const Cart: React.FC = () => {
                     سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}
                 </h2> 
                 <div className="mx-5">
-                {cartItems.length > 0 ? (
-                <Invoice 
-                        orderId={1}
-                        payment={String(totalActualPrice)}
-                        // profit={String(totalDiscount)}
-                        shippingfee="0"
-                        Product={sortedCartItems.map(item => ({
-                            id: item.product.id,
-                            name: item.product.name,
-                            price: item.product.price,
-                            photo: item.product.photo || "default-image-url",
-                            quantity: item.quantity,
-                        }))} discount={""}                />
-            ) : null}
-            </div> 
+                    {cartItems.length > 0 ? (
+                    <Invoice 
+                            orderId={1}
+                            payment={String(totalActualPrice)}
+                            // profit={String(totalDiscount)}
+                            shippingfee="0"
+                            Product={sortedCartItems.map(item => ({
+                                id: item.product.id,
+                                name: item.product.name,
+                                price: item.product.price,
+                                photo: item.product.photo || "default-image-url",
+                                quantity: item.quantity,
+                            }))} discount={""}                />
+                    ) : null}  
+                    <div className="border-t pt-4 mx-3"></div>
+                </div> 
+                    <Discount/>
             </div>
-
         </div>
     );
 };
