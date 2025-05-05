@@ -16,12 +16,14 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                     <div className="flex flex-row-reverse justify-between mr-10 mt-2 ml-5">
                         <span className="font-semibold text-lg text-right">{title}</span>
                         <div className="flex flex-row-reverse gap-4">
-                            <FaRegEdit className=" h-5 w-5 text-green-600"/>
-                            <HiOutlineTrash className="h-5 w-5 text-red-500"/>
+                            <FaRegEdit className=" h-5 w-5 text-green-600 cursor-pointer
+                                                    hover:transition duration-300 hover:scale-108"/>
+                            <HiOutlineTrash className="h-5 w-5 text-red-500 cursor-pointer
+                                                        hover:transition duration-300 hover:scale-108"/>
                         </div>  
                     </div>
                     <div className="flex flex-row-reverse gap-2 mb-3">
-                        <button className={`h-5 w-5 mr-3 mt-1 rounded-full border-1 
+                        <button className={`h-5 w-5 mr-3 mt-1 rounded-full border-1 cursor-pointer
                                             ${isSelected ? "bg-green-600 border-green-600" : "bg-white"}`}>
                         {isSelected && <FaCheck className="h-3 w-4 text-white " />}
                         </button>
