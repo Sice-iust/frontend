@@ -3,10 +3,27 @@ import React from "react";
 import Invoice from "../../ProfilePage/OrdersPage/Invoice/invoice-detail";
 import { useCart } from "../../../context/Receiptcontext";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
+import LoadingBox from "../../../components/Loading/LoadingBox";
 
 const Cart: React.FC = () => {
-    const { cartItems, totalDiscount, totalActualPrice } = useCart();
+    const { cartItems, loading , totalActualPrice } = useCart();
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
+
+    if (loading) {
+        return (
+            <div className="relative">
+                <div className={`box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white `}>
+                    <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold">
+                        سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}
+                    </h2>
+                </div>
+
+                <div className={`absolute top-0 left-10 right-0 bottom-0 rounded-2xl flex items-center justify-center bg-white bg-opacity-70`}>
+                    <LoadingBox />
+                </div>
+            </div>
+        );
+    }
    
     return (
         <div className="bg-[#f5f5f5]"> 
