@@ -1,14 +1,17 @@
 'use client'
-import React from "react";
+import React , { useState } from "react";
 import Invoice from "../../ProfilePage/OrdersPage/Invoice/invoice-detail";
 import { useCart } from "../../../context/Receiptcontext";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import LoadingBox from "../../../components/Loading/LoadingBox";
 import Discount from "../Cart/Discount"
+import { convertPrice } from "../../../utils/Coversionutils";
 
 const Cart: React.FC = () => {
-    const { cartItems, loading , totalActualPrice } = useCart();
+    const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee } = useCart();
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
+
+    const [detail, setDetail] = useState("");
 
     if (loading) {
         return (
@@ -38,7 +41,7 @@ const Cart: React.FC = () => {
                             orderId={1}
                             payment={String(totalActualPrice)}
                             // profit={String(totalDiscount)}
-                            shippingfee="0"
+                            shippingfee={String(shipping_fee)}
                             Product={sortedCartItems.map(item => ({
                                 id: item.product.id,
                                 name: item.product.name,
@@ -49,10 +52,60 @@ const Cart: React.FC = () => {
                     ) : null}  
                     <div className="border-t pt-4 mx-3"></div>
                 </div> 
-                    <Discount/>
-            </div>
+
+                <Discount/>
+
+                
+                <div className="flex flex-row-reverse py-2 justify-between mx-8 mt-2">  
+                    <span className="text-lg font-vazir text-right text-black font-bold "> قابل پرداخت </span>
+                    <span className="flex flex-row-reverse">
+                    <span className="text-lg text-gray-600 font-semibold">{
+                        convertPrice(String(totalActualPrice))}</span>    
+                    <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>    
+                    </span>
+                </div>       
+
+                {totalDiscount? totalDiscount >0 && (
+                    <div className="flex flex-row-reverse py-2 justify-between mx-8">  
+                        <span className="text-[14px] font-vazir font-medium text-right text-green-600 font-semibold "
+                            >سود شما از این خرید
+                        </span>
+                        <span className="flex flex-row-reverse">
+                            <span className="text-green-600 font-semibold">
+                                {convertPrice(String(totalDiscount))}
+                            </span>    
+                            <span className="text-[14px] font-vazir font-medium text-right mr-2 text-green-600">
+                                    تومان
+                            </span>    
+                        </span>
+                    </div>                            
+                    ) : null
+                }
+
+                <div className="flex flex-col space-y-3 mx-8 items-center">
+                    <input
+                        type="text"
+                        value={detail}
+                        onChange={(e) => setDetail(e.target.value)}
+                        placeholder="  ...توضیحات سفارش"
+                        className="bg-[#D9D9D9] text-[#383535]  text-base placeholder:text-xs border border-gray-300 
+                                rounded-xl p-2 h-30 text-right  mb-4 w-[100%] py-2
+                                focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]"
+                    /> 
+
+                    <button
+                        className="bg-[#F18825] mr-2 mb-4 rounded-2xl text-white px-4 h-10 flex items-center 
+                                   justify-center w-[70%]">
+                        ثبت و پرداخت
+                    </button>
+                </div>
+
+
+
+            </div>  
+
         </div>
     );
 };
 
-export default Cart;
+export default Cart; 
