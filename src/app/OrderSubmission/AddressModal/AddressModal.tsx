@@ -3,7 +3,7 @@ import AddressCard from '../../AddressCard/AddressCard';
 import { IoMdClose } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 
-export default function AddressModal({ onClose }) {
+export default function AddressModal({ onClose,id_user }) {
   const addresses = [
     {
       id: 1,
