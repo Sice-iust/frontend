@@ -20,10 +20,12 @@ export default function AddressModal({ onClose }) {
         "تهران، صنعت، غدیر، بلور، بلوار تکاوران، دانشگاه علم و صنعت ایران، دبیرستان و دانشگاه",
     },
   ];
+  
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-10 ">
-      <div className="bg-white p-4 rounded-lg shadow-lg  w-auto">
+    <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div> 
+      <div className="relative bg-white p-4 rounded-lg shadow-lg  w-auto">
           <div className="relative flex justify-center items-center">
             <h2 className="text-xl font-semibold mb-4">انتخاب آدرس</h2>
             <IoMdClose 
