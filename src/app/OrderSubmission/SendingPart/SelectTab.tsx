@@ -10,8 +10,8 @@ const Tab: React.FC= () => {
   
 
   return (  
-
-    <div className="container mx-auto mt-5 relative">  
+    <>
+    <div className="container mx-auto mt-5 relative w-full">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full mx-5
                       md:w-full mx-auto lg:w-[40%] absolute end-0">    
@@ -51,11 +51,12 @@ const Tab: React.FC= () => {
           </div>  
         </div>  
       </div> 
-      <div>
-        {selectedTab === 0 && <Reserve />}
-        {selectedTab === 1 && <TimeChoosing />}
-      </div> 
     </div>  
+    <div className="box-contetnt bg-white w-full min-h-40 rounded-2xl mt-10">
+      {selectedTab === 0 && <Reserve />}
+      {selectedTab === 1 && <TimeChoosing />}
+    </div> 
+    </>
   );  
 };  
 
