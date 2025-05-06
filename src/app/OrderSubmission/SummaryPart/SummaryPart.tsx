@@ -68,7 +68,10 @@ export default function SummaryPart() {
                                         <span className="text-xl">-</span>  
                                     </button>  
                                 )}  
-                            </div>  
+                            </div>
+                            <span className={` ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-[15px] text-right font-vazir font-medium`}>  
+                                قیمت: {convertToPersianNumbers(Number(item.discounted_price).toLocaleString())} تومان  
+                            </span>                               
                         </div>
                     </div>
                     
