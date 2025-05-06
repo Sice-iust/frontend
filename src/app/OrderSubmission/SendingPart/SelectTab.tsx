@@ -9,10 +9,11 @@ const Tab: React.FC= () => {
   
 
   return (  
-    <div className="container mx-auto mt-5">  
+
+    <div className="container mx-auto mt-5 relative">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full mx-5
-                      md:w-full mx-auto lg:w-[60%]">    
+                      md:w-full mx-auto lg:w-[60%] absolute end-0">    
         <div   
           className={`flex-1 text-center py-2 cursor-pointer 
                       relative border border-gray-300 
@@ -24,7 +25,7 @@ const Tab: React.FC= () => {
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm
-                           md:text-base">سفارش های نهایی</span>  
+                           md:text-base">رزرو ماهانه</span>  
           <div className={`absolute bottom-0 left-0 right-0 
                            h-1 bg-[#F18825] rounded-2xl 
             ${selectedTab === 0 ? '' : 'hidden'}`}>
@@ -42,7 +43,7 @@ const Tab: React.FC= () => {
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm 
-                           md:text-base">سفارش های جاری</span>  
+                           md:text-base">تحویل فوری</span>  
           <div className={`absolute bottom-0 left-0 right-0 
                            h-1 bg-[#F18825] rounded-2xl 
             ${selectedTab === 1 ? '' : 'hidden'}`}>
