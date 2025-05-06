@@ -72,7 +72,7 @@ const TimeChoosing: React.FC = () => {
               <IoMdTime className='h-5 w-5 text-[#F18825]'/>
               <span className='font-semibold text-xl'>انتخاب زمان تحویل</span>
             </div>
-            <div className='flex flex-row-reverse mt-6 mr-10 ml-10 mb-6 gap-7 overflow-x-auto '>
+            <div className='flex flex-row-reverse mt-6 mb-5 ml-10 gap-7 overflow-x-auto '>
                 {times.map((time)=>
                     <TimeCard 
                         id={time.id} 
