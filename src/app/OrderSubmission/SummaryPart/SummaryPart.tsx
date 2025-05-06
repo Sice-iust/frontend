@@ -32,8 +32,8 @@ export default function SummaryPart() {
           <div className='flex flex-row-reverse mt-6 mr-10 ml-10 mb-6 gap-7 overflow-x-auto max-w-230'>
                 {cartItems.map((item)=>(
                     <div className='box-content border-1 min-w-50 min-h-55 w-auto h-auto rounded-2xl flex-shrink-0 '>
-                        <div className='flex flex-col mt-3 gap-3 justify-center items-center'>
-                            <Image width={60} height={50} src={item.product.photo} alt='bread'/>
+                        <div className='flex flex-col mt-3 gap-1 justify-center items-center'>
+                            <Image width={60} height={50} src={item.product.photo} alt='bread' className='w-22 h-25'/>
                             <span className='p-3 text-right text-md font-semibold'>{item.product.name}</span>
                             <div className="flex items-center space-x-2">  
                                 <button  
@@ -70,10 +70,10 @@ export default function SummaryPart() {
                                 )}  
                             </div>
                             <div className='flex flex-row-reverse gap-2 mb-5'>
-                                <span className={` ${isDarkMode ? "text-[#ffffff]" : "text-gray-600"} text-[17px] text-right font-medium`}>  
+                                <span className={` ${isDarkMode ? "text-[#ffffff]" : "text-gray-600"} text-[17px] text-right font-medium mt-1`}>  
                                     {convertToPersianNumbers(Number(item.discounted_price).toLocaleString())}   
                                 </span> 
-                                <span className='text-gray-500 text-sm mt-1'>
+                                <span className='text-gray-500 text-sm mt-2'>
                                     تومان
                                 </span>
                             </div>                              
