@@ -69,9 +69,14 @@ export default function SummaryPart() {
                                     </button>  
                                 )}  
                             </div>
-                            <span className={` ${isDarkMode ? "text-[#ffffff]" : "text-black"} text-[15px] text-right font-vazir font-medium`}>  
-                                قیمت: {convertToPersianNumbers(Number(item.discounted_price).toLocaleString())} تومان  
-                            </span>                               
+                            <div className='flex flex-row-reverse gap-2'>
+                            <span className={` ${isDarkMode ? "text-[#ffffff]" : "text-gray-600"} text-[17px] text-right font-medium`}>  
+                                {convertToPersianNumbers(Number(item.discounted_price).toLocaleString())}   
+                            </span> 
+                            <span className='text-gray-500 text-sm mt-1'>
+                                تومان
+                            </span>
+                            </div>                              
                         </div>
                     </div>
                     
