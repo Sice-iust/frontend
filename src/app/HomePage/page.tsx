@@ -9,7 +9,7 @@ export default function HomePage() {
   const { isDarkMode, toggleDarkMode } = useTheme();
   return (
     <>
-      <Image height={100} width={10000} src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} />
+      <Image height={100} width={10000} src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/idk.jpg`} alt={``} />
     
       <div style={{ padding: '10px',
         backgroundColor: isDarkMode ? "#383535" : "#f5f5f5",
