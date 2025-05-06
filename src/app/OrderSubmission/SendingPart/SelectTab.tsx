@@ -1,5 +1,6 @@
 import React, { useState } from "react";  
-
+import Reserve from "./Reservation";
+import TimeChoosing from "./TimeChoosing";
 
 
 const Tab: React.FC= () => {  
@@ -13,7 +14,7 @@ const Tab: React.FC= () => {
     <div className="container mx-auto mt-5 relative">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full mx-5
-                      md:w-full mx-auto lg:w-[60%] absolute end-0">    
+                      md:w-full mx-auto lg:w-[40%] absolute end-0">    
         <div   
           className={`flex-1 text-center py-2 cursor-pointer 
                       relative border border-gray-300 
@@ -49,7 +50,11 @@ const Tab: React.FC= () => {
             ${selectedTab === 1 ? '' : 'hidden'}`}>
           </div>  
         </div>  
-      </div>  
+      </div> 
+      <div>
+        {selectedTab === 0 && <Reserve />}
+        {selectedTab === 1 && <TimeChoosing />}
+      </div> 
     </div>  
   );  
 };  
