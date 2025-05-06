@@ -6,32 +6,56 @@ import axios from 'axios';
 
 export default function AddressModal({ onClose,id_user }) {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Array<{
+    id: number;
+    username: string;
+    address: string;
+    name: string;
+    receiver: string;
+    phone: string;
+    isChosen: boolean;
+  }>>([]);
   const [loading, setLoading] = useState(true);
 
+  console.log("id: ",id_user);
   useEffect(() => {
     const fetchData = async () => {
       console.log("Fetching data...");
       setLoading(true);
       try {
-        const response = await axios.get("https://nanziback.liara.run/users/locations/mylocation", {
+        const response = await axios.get("https://nanziback.liara.run/users/locations/mylocation/", {
           headers: { Authorization: `Bearer ${id_user}` },
         });
-  
-        setData(response.data);
+
+        console.log("Raw Response:", response.data);
+
+        if (Array.isArray(response.data)) {
+          setData(response.data.map((item) => ({
+            id: item.id,
+            username: item.user?.username || "Unknown",
+            address: item.address,
+            name: item.name,
+            receiver: item.reciver,
+            phone: item.phonenumber,
+            isChosen: item.is_choose
+          })));
+        } else {
+          setData([]);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
         setData([]);
       } finally {
         setLoading(false);
       }
-    }; 
+    };
+
     fetchData();
   }, []);
   return (
     <div className="fixed inset-0 flex justify-center items-center z-10">
     <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div> 
-      <div className="relative bg-white p-4 rounded-lg shadow-lg  min-w-100 min-h-30 w-auto">
+      <div className="relative bg-white p-4 rounded-lg shadow-lg  min-w-120 min-h-30 w-auto">
           <div className="relative flex justify-center items-center">
             <h2 className="text-xl font-semibold mb-4">انتخاب آدرس</h2>
             <IoMdClose 
@@ -45,7 +69,7 @@ export default function AddressModal({ onClose,id_user }) {
             id={add.id}
             title={add.name}
             address={add.address}
-            isSelected={add.is_choose}
+            isSelected={add.isChosen}
             isprofile={false}
             name={"ss"}
             phone={"ss"}

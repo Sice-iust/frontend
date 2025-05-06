@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useTheme } from "../theme"
 import AddressPart from './AddressPart/AddressPart';
 import Cart from './Cart/Cart'
-
+import SummaryPart from './SummaryPart/SummaryPart';
 export default function OrderSubmission() {
 
   const { isDarkMode } = useTheme();
@@ -16,6 +16,7 @@ export default function OrderSubmission() {
         </div>
         <div className='flex flex-col w-full m-10 '>
             <AddressPart/>
+            <SummaryPart/>
         </div>
     </div>
   );
