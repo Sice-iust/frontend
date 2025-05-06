@@ -3,6 +3,7 @@ import { useTheme } from "../../theme"
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import AddressModal from "../AddressModal/AddressModal"
+import { CgNotes } from "react-icons/cg";
 
 export default function SummaryPart() {
   const { isDarkMode } = useTheme();
@@ -19,12 +20,12 @@ export default function SummaryPart() {
 
   return (
     <>
-      <div className='box-content bg-white rounded-2xl h-auto '>
+      <div className='box-content bg-white rounded-2xl h-auto mt-5'>
         <div className='flex flex-col'>
           <div className='flex flex-row-reverse justify-between mr-10 ml-10'>
             <div className='flex flex-row-reverse mt-3 gap-1 '>
-              <IoLocationOutline className='h-5 w-5 text-[#F18825]'/>
-              <span className='font-semibold text-xl'>آدرس</span>
+              <CgNotes className='h-5 w-5 text-[#F18825]'/>
+              <span className='font-semibold text-xl'>خلاصه سفارش</span>
             </div>
             <div onClick={handleEditClick} className='flex flex-row-reverse mt-3 gap-2 cursor-pointer'>
               <FaRegEdit className="h-4 w-4 text-green-600" />
