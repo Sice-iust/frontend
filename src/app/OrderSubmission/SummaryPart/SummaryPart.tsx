@@ -21,7 +21,7 @@ export default function SummaryPart() {
 
   return (
     <>
-      <div className='box-content bg-white rounded-2xl h-auto mt-5'>
+      <div className='box-content bg-white rounded-2xl h-auto mt-5  '>
         <div className='flex flex-col'>
           <div className='flex flex-row-reverse justify-between mr-10 ml-10'>
             <div className='flex flex-row-reverse mt-3 gap-1 '>
@@ -29,9 +29,9 @@ export default function SummaryPart() {
               <span className='font-semibold text-xl'>خلاصه سفارش</span>
             </div>
           </div>
-          <div className='flex flex-row-reverse mt-6 mr-10 ml-10 mb-6 gap-7 overflow-x-auto max-w-230'>
+          <div className='flex flex-row-reverse mt-6 mr-10 ml-10 mb-6 gap-7 overflow-x-auto '>
                 {cartItems.map((item)=>(
-                    <div className='box-content border-1 min-w-50 min-h-55 w-auto h-auto rounded-2xl flex-shrink-0 '>
+                    <div className='box-content border-1 min-w-50 min-h-55 w-[30%] h-auto rounded-2xl flex-shrink-0 '>
                         <div className='flex flex-col mt-3 gap-1 justify-center items-center'>
                             <Image width={60} height={50} src={item.product.photo} alt='bread' className='w-22 h-25'/>
                             <span className='p-3 text-right text-md font-semibold'>{item.product.name}</span>

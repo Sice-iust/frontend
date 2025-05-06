@@ -14,7 +14,7 @@ export default function OrderSubmission() {
         <div className={`flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} hidden sm:block`}>
             <Cart />
         </div>
-        <div className='flex flex-col w-full m-10 '>
+        <div className='flex flex-col w-full m-10 overflow-x-hidden'>
             <AddressPart/>
             <SummaryPart/>
         </div>
