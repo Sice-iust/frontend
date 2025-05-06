@@ -18,35 +18,20 @@ export default function AddressModal({ onClose,id_user }) {
           headers: { Authorization: `Bearer ${id_user}` },
         });
   
-        if (response.data) {
-            const formattedData = [
-              {
-                name: response.data.name,
-                address: response.data.address,
-                receiver: response.data.reciver,
-                phonenumber: response.data.phonenumber,
-              }
-            ];
-            setData(formattedData);
-    
-          console.log("Formatted data from server:", response.data);
-        } else {
-          setData([]);
-        }
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
         setData([]);
       } finally {
         setLoading(false);
       }
-    };
-  
+    }; 
     fetchData();
   }, []);
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-10 ">
+    <div className="fixed inset-0 flex justify-center items-center z-10">
     <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div> 
-      <div className="relative bg-white p-4 rounded-lg shadow-lg  w-auto">
+      <div className="relative bg-white p-4 rounded-lg shadow-lg  min-w-100 min-h-30 w-auto">
           <div className="relative flex justify-center items-center">
             <h2 className="text-xl font-semibold mb-4">انتخاب آدرس</h2>
             <IoMdClose 
@@ -66,7 +51,7 @@ export default function AddressModal({ onClose,id_user }) {
             phone={"ss"}
           />
         ))}
-        <div className='flex flex-row-reverse'>
+        <div className='flex flex-row-reverse mt-5'>
           <button className='bg-[#F18825] rounded-2xl w-auto p-2 pl-4 pr-3 
                              flex items-center gap-2 text-white font-medium cursor-pointer 
                              hover:bg-orange-400 transition duration-300 hover:scale-105'>
