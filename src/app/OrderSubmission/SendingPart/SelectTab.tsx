@@ -9,7 +9,7 @@ const Tab: React.FC= () => {
   
 
   return (  
-    <div className="container mx-auto mt-10">  
+    <div className="container mx-auto mt-5">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full mx-5
                       md:w-full mx-auto lg:w-[60%]">    

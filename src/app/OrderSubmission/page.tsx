@@ -5,6 +5,8 @@ import { useTheme } from "../theme"
 import AddressPart from './AddressPart/AddressPart';
 import Cart from './Cart/Cart'
 import SummaryPart from './SummaryPart/SummaryPart';
+import Tab from './SendingPart/SelectTab';
+
 export default function OrderSubmission() {
 
   const { isDarkMode } = useTheme();
@@ -17,6 +19,7 @@ export default function OrderSubmission() {
         <div className='flex flex-col w-full m-10 overflow-x-hidden'>
             <AddressPart/>
             <SummaryPart/>
+            <Tab/> 
         </div>
     </div>
   );

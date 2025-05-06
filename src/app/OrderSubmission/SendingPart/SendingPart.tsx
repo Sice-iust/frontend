@@ -8,7 +8,7 @@ import { useTheme } from "../../theme";
 import Tab from "./SelectTab";
 
 
-const ProfileOrders: React.FC = () => {  
+const SendingPart: React.FC = () => {  
   
 
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -31,4 +31,4 @@ const ProfileOrders: React.FC = () => {
   );  
 };  
 
-export default ProfileOrders;  
+export default SendingPart;  
