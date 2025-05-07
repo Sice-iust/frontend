@@ -38,10 +38,12 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
 
                 {profit? Number(profit) >0 && (
                     <div className="flex flex-row-reverse py-2 justify-between ">  
-                        <span className="text-[14px] font-vazir font-medium text-right text-green-600 font-semibold ">سود شما از این خرید</span>
+                        <span className="text-[14px] font-vazir font-medium 
+                                         text-right text-green-600 font-semibold ">سود شما از این خرید</span>
                         <span className="flex flex-row-reverse">
                         <span className="text-green-600 font-semibold">{convertPrice(profit)}</span>    
-                        <span className="text-[14px] font-vazir font-medium text-right mr-2 text-green-600">تومان</span>    
+                        <span className="text-[14px] font-vazir font-medium 
+                                         text-right mr-2 text-green-600">تومان</span>    
                         </span>
                     </div>                            
                     ) : null
@@ -49,28 +51,46 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
 
                 {[
                     { label: "جمع کل", value: convertPrice(payment)},
-                    shippingfee ? { 
-                        label: "هزینه ارسال", 
-                        value: Number(shippingfee) === 0 ? "رایگان" : convertPrice(shippingfee),
-                        showCurrency: Number(shippingfee) !== 0 
-                    } : null,
+                    shippingfee ? (
+                        Number(shippingfee) === -1 ? { 
+                          label:null, 
+                          value:-1,
+                          showCurrency: false
+                        } :
+                         {
+                          label: "هزینه ارسال",
+                          value: Number(shippingfee) === 0 ? "رایگان" : convertPrice(shippingfee),
+                          showCurrency: Number(shippingfee) !== 0
+                        }
+                      ) : null,
+                      
                     discount ? { label: "تخفیف", value: convertPrice(discount), color: "text-[#F18825]" }: null,
                     total_price ? { label: "مبلغ پرداخت شده", value: total_price, bold: true ,color: 'gray-400' } :null
-                    ].filter(entry => entry !== null) .map(({ label, value, color = "text-gray-500", bold = false , showCurrency=true }, index) => (
+                    ].filter(entry => entry !== null ) .map(({ label, value, color = "text-gray-500", bold = false , showCurrency=true }, index) => (
                     <div key={index} className={`flex flex-row-reverse py-2  ${index === 0 || index === 3 ? 
                         "border-t pt-4 mt-2" : ""}`}>
+                        {label !== null && (
                         <span className={`text-sm font-vazir font-medium text-right ml-auto -ml-auto sm:text-[17px] 
                             ${bold ? "font-semibold" : ""}`}>
                             {label}
-                        </span>
+                        </span>)}
                         {showCurrency && value !== "رایگان" && (
                             <>
                             <span className={`ml-1 ${color} ${bold ? "font-bold text-lg" : ""}`}>{value}</span>
-                            <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600 mt-0.5">تومان</span>
+                            <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600 mt-0.5">
+                                تومان
+                            </span>
                             </>
                         )}
                         {value === "رایگان" && (
                             <span className="text-[17px]  font-vazir font-medium text-[#F18825]">رایگان</span>
+                        )}
+                        {value===-1 && (
+                            <div className="bg-[#FFD0A4] text-[#6C6464] text-xs font-medium p-2 
+                                            text-right ml-auto rounded-2xl">
+                                هزینه ارسال پس از انتخاب زمان تحویل محاسبه میشود
+                            </div>
+                      
                         )}
                         
 

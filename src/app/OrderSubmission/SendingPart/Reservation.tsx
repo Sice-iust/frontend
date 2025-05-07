@@ -67,7 +67,7 @@ const Reservation = () => {
                         key={day}
                         onClick={() => handleDayClick(day)}
                         disabled={isPast}
-                        className={`p-3 rounded-full w-12 h-12 font-semibold transition
+                        className={`p-3 rounded-full w-12 h-12 font-semibold transition cursor-pointer
                             ${isSelected ? "bg-[#F18825] text-white" 
                             : isPast ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
                             : "bg-white text-gray-700 hover:bg-gray-200"}`}
@@ -97,7 +97,7 @@ const Reservation = () => {
                                 <button
                                     key={time}
                                     onClick={() => handleTimeSelection(time)}
-                                    className={`p-2 border-2 rounded text-center transition font-semibold 
+                                    className={`p-2 border-2 rounded text-center transition font-semibold cursor-pointer
                                         ${timeSlots[selectedDate] === time ? "bg-[#F18825] text-white" 
                                             : "bg-white border-[#F18825] text-black"}
                                     `}

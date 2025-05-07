@@ -22,7 +22,8 @@ const Cart: React.FC = () => {
                     </h2>
                 </div>
 
-                <div className={`absolute top-10 mb-10 left-10 right-0 bottom-0 rounded-2xl flex items-center justify-center bg-white bg-opacity-70`}>
+                <div className={`absolute top-10 mb-10 left-10 right-0 bottom-0 rounded-2xl flex items-center 
+                                 justify-center bg-white bg-opacity-70`}>
                     <LoadingBox />
                 </div>
             </div>
@@ -67,7 +68,8 @@ const Cart: React.FC = () => {
 
                 {totalDiscount? totalDiscount >0 && (
                     <div className="flex flex-row-reverse py-2 justify-between mx-8">  
-                        <span className="text-[14px] font-vazir font-medium text-right text-green-600 font-semibold "
+                        <span className="text-[14px] font-vazir font-medium text-right text-green-600 
+                                         font-semibold "
                             >سود شما از این خرید
                         </span>
                         <span className="flex flex-row-reverse">
