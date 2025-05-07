@@ -22,7 +22,7 @@ const Cart: React.FC = () => {
                     </h2>
                 </div>
 
-                <div className={`absolute top-0 left-10 right-0 bottom-0 rounded-2xl flex items-center justify-center bg-white bg-opacity-70`}>
+                <div className={`absolute top-10 mb-10 left-10 right-0 bottom-0 rounded-2xl flex items-center justify-center bg-white bg-opacity-70`}>
                     <LoadingBox />
                 </div>
             </div>
