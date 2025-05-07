@@ -93,7 +93,8 @@ const TimeChoosing: React.FC = () => {
                     </span>
                   </div>
                   {slot.max_orders - slot.current_fill < 1 && (
-                    <div className='box-content h-10 mt-2 rounded-4xl bg-orange-300 text-orange-400 ml-5'>
+                    <div className='box-content h-8 w-20  rounded-4xl bg-orange-300 
+                                    text-lg text-orange-600 pt-1 ml-5 mt-3 text-center items-center'>
                       تکمیل
                     </div>
                   )}
