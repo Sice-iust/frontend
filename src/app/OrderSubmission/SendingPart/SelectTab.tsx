@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";  
 import Reserve from "./Reservation";
 import TimeChoosing from "./TimeChoosing";

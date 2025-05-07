@@ -1,72 +1,65 @@
-import React from 'react';
+'use client'
+import React , {useState,useEffect} from 'react';
+import axios from "axios";
 import { IoMdTime } from "react-icons/io";
 import TimeCard from '../TimeCard/TimeCard';
+import { convertDateInPersianwithmonth, dayname } from '../../../utils/Coversionutils';
+import { convertPrice } from '../../../utils/Coversionutils';
+import { useCart } from "../../../context/Receiptcontext";
 
 const TimeChoosing: React.FC = () => {
-    const times = [
-        {
-          id: 10,
-          label: "چهارشنبه",
-          date:"۱۰ اسفند",
-          isSelected:true,
-        },
-        {
-            id: 9,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 8,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 7,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 6,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 5,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 4,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 3,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 2,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-          {
-            id: 1,
-            label: "شنبه",
-            date:"۱۰ اسفند",
-            isSelected:false,
-          },
-      ];
+  const [times, setTimes] = useState<any[]>([]); 
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    const fetchTimes = async () => {
+      try {
+        const response = await axios.get("https://nanziback.liara.run/user/delivery/");
+        const data = response.data;
+  
+        const formattedTimes = data.map((dateObj) => ({
+          id: dateObj.delivery_date, 
+          label: dayname(dateObj.delivery_date), 
+          date: convertDateInPersianwithmonth(dateObj.delivery_date), 
+          shippingFee: dateObj.slots.every(slot => slot.shipping_fee === "0.00")
+            ? "ارسال رایگان"
+            : `تومان ${convertPrice(dateObj.slots[0].shipping_fee)} `, 
+          slots: dateObj.slots.map((slot) => ({
+            startTime: slot.start_time,
+            endTime: slot.end_time,
+          })),
+          isSelected: false,
+        }));
+  
+        setTimes(formattedTimes);
+        setLoading(false);
+      } catch (err) {
+        setError(err.message);
+        setLoading(false);
+      }
+    };
+  
+    fetchTimes();
+  }, []);
+
+  const handleSelect = (id: string) => {
+    setTimes((prevTimes) =>
+        prevTimes.map((time) =>
+            ({ ...time, isSelected: time.id === id }) // Only select the clicked card
+        )
+    );
+    
+ };
+
   return (
     <>
+    {loading ? (
+          <p className="text-center">در حال بارگذاری...</p>
+        ) : error ? (
+          <p className="text-center text-red-500">{error}</p>
+        ) : 
         <div className='flex flex-col mr-10 mt-3'>
             <div className='flex flex-row-reverse mt-3 gap-1 '>
               <IoMdTime className='h-5 w-5 text-[#F18825]'/>
@@ -77,12 +70,14 @@ const TimeChoosing: React.FC = () => {
                     <TimeCard 
                         id={time.id} 
                         title={time.label} 
-                        date={time.date} 
-                        isSelected={time.isSelected}/>
+                        date={time.date}
+                        shippingfee={time.shippingFee}  
+                        isSelected={time.isSelected}
+                        onSelect={handleSelect}/>
                 )}               
             </div>           
 
-        </div>
+        </div>}
     </>
   );
 };
