@@ -10,6 +10,7 @@ import { FaCheck } from "react-icons/fa";
 export default function TimeCard({ id,shippingfee,title, date, isSelected , onSelect }) {
 
     const [day, month] = date.split(' ');
+    const [p1,p2]=shippingfee.split(' ');
     return (
         <>
             <div className={`box-content border-1 w-18 h-22 mb-5 rounded-2xl flex-shrink-0 cursor-pointer
@@ -21,7 +22,10 @@ export default function TimeCard({ id,shippingfee,title, date, isSelected , onSe
                         <span>{day}</span>
                         <span>{month}</span>
                     </span>
-                    <div className="box-content bg-gray-300 rounded-4xl text-xs p-1">{shippingfee}</div>
+                    <div className="flex flex-row-reverse box-content bg-gray-300 rounded-4xl text-xs p-1">
+                        <span>{p1}</span>
+                        <span className="mr-1">{p2}</span>
+                    </div>
                 </div>
             </div>  
         </>

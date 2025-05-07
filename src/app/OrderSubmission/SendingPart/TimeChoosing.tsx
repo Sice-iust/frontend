@@ -24,7 +24,7 @@ const TimeChoosing: React.FC = () => {
           date: convertDateInPersianwithmonth(dateObj.delivery_date), 
           shippingFee: dateObj.slots.every(slot => slot.shipping_fee === "0.00")
             ? "ارسال رایگان"
-            : ` ${convertPrice(dateObj.slots[0].shipping_fee)}تومان `, 
+            : `${convertPrice(dateObj.slots[0].shipping_fee)} تومان`, 
           slots: dateObj.slots.map((slot) => ({
             startTime: slot.start_time,
             endTime: slot.end_time,
