@@ -43,15 +43,19 @@ const TimeChoosing: React.FC = () => {
     fetchTimes();
   }, []);
 
-  const handleSelect = (id: string) => {
-    setTimes((prevTimes) =>
-        prevTimes.map((time) =>
-            ({ ...time, isSelected: time.id === id }) 
-        )
-    );
- };
-  const handleDateSelect = (id: string) => {
+  const handleDateSelect = async (id: string) => {
     setSelectedDateId(id);
+    const token = localStorage.getItem('token'); 
+    try {
+        
+        await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${id}/`, {
+          quantity: 1
+        }, {
+          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+        });
+      } catch (error) {
+          console.error(error.response?.data);
+      }
   };
   return (
     <>
