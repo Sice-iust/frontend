@@ -32,7 +32,8 @@ const TimeChoosing: React.FC = () => {
           })),
           isSelected: false,
         }));
-  
+
+        formattedTimes.sort((a, b) => new Date(a.id).getTime() - new Date(b.id).getTime());
         setTimes(formattedTimes);
         setLoading(false);
       } catch (err) {
@@ -47,7 +48,7 @@ const TimeChoosing: React.FC = () => {
   const handleSelect = (id: string) => {
     setTimes((prevTimes) =>
         prevTimes.map((time) =>
-            ({ ...time, isSelected: time.id === id }) // Only select the clicked card
+            ({ ...time, isSelected: time.id === id }) 
         )
     );
     
@@ -56,7 +57,7 @@ const TimeChoosing: React.FC = () => {
   return (
     <>
     {loading ? (
-          <p className="text-center">در حال بارگذاری...</p>
+          <p className="text-center min-h-40">در حال بارگذاری...</p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : 
