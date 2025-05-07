@@ -38,7 +38,7 @@ export const convertDateInPersianwithmonth = (dateString: string): string => {
     .locale('fa')
     .format('D MMMM');
   const [day, month] = persianDate.split(' ');
-  return `${convertToPersianNumbers(day)} ${month} `;
+  return `${month} ${convertToPersianNumbers(day)}  `;
 };
 
 const persianWeekDays = [

@@ -17,15 +17,14 @@ const TimeChoosing: React.FC = () => {
     const fetchTimes = async () => {
       try {
         const response = await axios.get("https://nanziback.liara.run/user/delivery/");
-        const data = response.data;
-  
+        const data = response.data; 
         const formattedTimes = data.map((dateObj) => ({
           id: dateObj.delivery_date, 
           label: dayname(dateObj.delivery_date), 
           date: convertDateInPersianwithmonth(dateObj.delivery_date), 
           shippingFee: dateObj.slots.every(slot => slot.shipping_fee === "0.00")
             ? "ارسال رایگان"
-            : `تومان ${convertPrice(dateObj.slots[0].shipping_fee)} `, 
+            : ` ${convertPrice(dateObj.slots[0].shipping_fee)}تومان `, 
           slots: dateObj.slots.map((slot) => ({
             startTime: slot.start_time,
             endTime: slot.end_time,
