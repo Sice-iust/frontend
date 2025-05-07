@@ -11,7 +11,7 @@ const TimeChoosing: React.FC = () => {
   const [times, setTimes] = useState<any[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDateId, setSelectedDateId] = useState<string | null>("1");
+  const [selectedDateId, setSelectedDateId] = useState<string | null>(null);
   const selectedDay = times.find((t) => t.id === selectedDateId);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
   useEffect(() => {
