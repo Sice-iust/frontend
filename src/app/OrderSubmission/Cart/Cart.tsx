@@ -45,7 +45,7 @@ const Cart: React.FC = () => {
                             Product={sortedCartItems.map(item => ({
                                 id: item.product.id,
                                 name: item.product.name,
-                                price: Number(item.product.price*(1-item.product.discount/100)),
+                                price: String(item.product.price*(1-item.product.discount/100)),
                                 photo: item.product.photo || "default-image-url",
                                 quantity: item.quantity,
                             }))} discount={""}                />

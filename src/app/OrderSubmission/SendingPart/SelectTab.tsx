@@ -5,7 +5,7 @@ import TimeChoosing from "./TimeChoosing";
 
 const Tab: React.FC= () => {  
 
-  const [selectedTab, setSelectedTab] = useState(0); 
+  const [selectedTab, setSelectedTab] = useState(1); 
   
   
 
@@ -14,7 +14,7 @@ const Tab: React.FC= () => {
     <div className="container mx-auto mt-5 relative w-full">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full mx-5
-                      md:w-full mx-auto lg:w-[40%] absolute end-0">    
+                      md:w-full md:mx-auto lg:w-[25%]  absolute end-0">    
         <div   
           className={`flex-1 text-center py-2 cursor-pointer 
                       relative border border-gray-300 
@@ -26,7 +26,7 @@ const Tab: React.FC= () => {
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm
-                           md:text-base">رزرو ماهانه</span>  
+                           md:text-md">رزرو ماهانه</span>  
           <div className={`absolute bottom-0 left-0 right-0 
                            h-1 bg-[#F18825] rounded-2xl 
             ${selectedTab === 0 ? '' : 'hidden'}`}>
@@ -44,7 +44,7 @@ const Tab: React.FC= () => {
         >  
           <span className="font-vazir text-black font-bold text-xs 
                            sm:text-sm 
-                           md:text-base">تحویل فوری</span>  
+                           md:text-md">تحویل فوری</span>  
           <div className={`absolute bottom-0 left-0 right-0 
                            h-1 bg-[#F18825] rounded-2xl 
             ${selectedTab === 1 ? '' : 'hidden'}`}>
