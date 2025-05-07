@@ -3,7 +3,7 @@ import React , {useState,useEffect} from 'react';
 import axios from "axios";
 import { IoMdTime } from "react-icons/io";
 import TimeCard from '../TimeCard/TimeCard';
-import { convertDateInPersianwithmonth, dayname } from '../../../utils/Coversionutils';
+import { convertDateInPersianwithmonth, convertToPersianNumbers, dayname } from '../../../utils/Coversionutils';
 import { convertPrice } from '../../../utils/Coversionutils';
 import { useCart } from "../../../context/Receiptcontext";
 
@@ -25,10 +25,7 @@ const TimeChoosing: React.FC = () => {
           shippingFee: dateObj.slots.every(slot => slot.shipping_fee === "0.00")
             ? "ارسال رایگان"
             : `${convertPrice(dateObj.slots[0].shipping_fee)} تومان`, 
-          slots: dateObj.slots.map((slot) => ({
-            startTime: slot.start_time,
-            endTime: slot.end_time,
-          })),
+          slots: dateObj.slots,
           isSelected: false,
         }));
         if (formattedTimes.length > 0) {
@@ -68,7 +65,7 @@ const TimeChoosing: React.FC = () => {
               <IoMdTime className='h-5 w-5 text-[#F18825]'/>
               <span className='font-semibold text-xl'>انتخاب زمان تحویل</span>
             </div>
-            <div className='flex flex-row-reverse mt-6 mb-5 ml-10 gap-5 overflow-x-auto '>
+            <div className='flex flex-row-reverse mt-6 ml-10 gap-5 overflow-x-auto '>
                 {times.map((time)=>
                     <TimeCard 
                         id={time.id} 
@@ -80,8 +77,25 @@ const TimeChoosing: React.FC = () => {
                 )}               
             </div>           
             {selectedDay && (
-            <div className='box-content'>
+            <div className='box-content border-1 ml-10 h-auto rounded-2xl mb-5'>
+              {selectedDay.slots.map((slot, index) => (
+                <div
+                  key={index}
+                  className={`box-content h-14 w-full flex flex-row justify-between ${
+                    index !== selectedDay.slots.length - 1 ? 'border-b' : ''
+                  }`}
+                >
+                  <div className='flex flex-row-revrse gap-4'>
+                    <button className='rounded-full border h-6 w-6 mt-4'></button>
+                    <span className='mt-4 font-bold text-lg'>
+                      {convertToPersianNumbers(slot.start_time.split(':')[0])} - {convertToPersianNumbers(slot.end_time.split(':')[0])} 
+                    </span>
+                  </div>
+                  {slot.max_orders-slot.current_fill<1 
 
+                  }
+                </div>
+              ))}
             </div>
           )}
         </div>}
