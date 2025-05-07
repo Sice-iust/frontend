@@ -51,11 +51,10 @@ const TimeChoosing: React.FC = () => {
   const handleSlotSelect = async (slotId: string) => {
     setSelectedSlotId(slotId);
     const token = localStorage.getItem('token'); 
+    console.log("token: ",token);
     try {
         
         await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${slotId}/`, {
-          quantity: 1
-        }, {
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
         });
       } catch (error) {
