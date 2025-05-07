@@ -11,8 +11,9 @@ const TimeChoosing: React.FC = () => {
   const [times, setTimes] = useState<any[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDateId, setSelectedDateId] = useState<string | null>(null);
+  const [selectedDateId, setSelectedDateId] = useState<string | null>("1");
   const selectedDay = times.find((t) => t.id === selectedDateId);
+  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
   useEffect(() => {
     const fetchTimes = async () => {
       try {
@@ -43,12 +44,16 @@ const TimeChoosing: React.FC = () => {
     fetchTimes();
   }, []);
 
-  const handleDateSelect = async (id: string) => {
+  const handleDateSelect = (id: string) => {
     setSelectedDateId(id);
+
+  };
+  const handleSlotSelect = async (slotId: string) => {
+    setSelectedSlotId(slotId);
     const token = localStorage.getItem('token'); 
     try {
         
-        await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${id}/`, {
+        await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${slotId}/`, {
           quantity: 1
         }, {
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
@@ -90,8 +95,15 @@ const TimeChoosing: React.FC = () => {
                   }`}
                 >
                   <div className='flex flex-row-reverse gap-4'>
-                    <button className={`rounded-full border h-6 w-6 mt-4 mr-5 
-                                      ${slot.max_orders - slot.current_fill < 1 ? "border-gray-400 cursor-not-allowed" : "border-black cursor-pointer"}`}></button>
+                  <button
+                      className={`rounded-full border h-6 w-6 mt-4 mr-5 flex items-center justify-center
+                        ${slot.max_orders - slot.current_fill < 1 ? "border-gray-400 cursor-not-allowed" : "border-black cursor-pointer"} 
+                        ${selectedSlotId === slot.id ? "bg-[#F18825]" : "bg-white" }`}
+                      disabled={slot.max_orders - slot.current_fill < 1}
+                      onClick={() => handleSlotSelect(slot.id)}
+                    >
+                      {selectedSlotId === slot.id && <div className='bg-white w-2 h-2 rounded-full'></div>}
+                    </button>
                     <span className={`mt-4 font-bold text-lg ${slot.max_orders - slot.current_fill < 1 ? "text-gray-400" : "text-black"}`}>
                       {convertToPersianNumbers(slot.start_time.split(':')[0])} - {convertToPersianNumbers(slot.end_time.split(':')[0])} 
                     </span>
