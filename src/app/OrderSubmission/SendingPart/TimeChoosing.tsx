@@ -11,8 +11,8 @@ const TimeChoosing: React.FC = () => {
   const [times, setTimes] = useState<any[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
-
+  const [selectedDateId, setSelectedDateId] = useState<string | null>(null);
+  const selectedDay = times.find((t) => t.id === selectedDateId);
   useEffect(() => {
     const fetchTimes = async () => {
       try {
@@ -31,7 +31,9 @@ const TimeChoosing: React.FC = () => {
           })),
           isSelected: false,
         }));
-
+        if (formattedTimes.length > 0) {
+          setSelectedDateId(formattedTimes[0].id);
+        }
         formattedTimes.sort((a, b) => new Date(a.id).getTime() - new Date(b.id).getTime());
         setTimes(formattedTimes);
         setLoading(false);
@@ -50,9 +52,10 @@ const TimeChoosing: React.FC = () => {
             ({ ...time, isSelected: time.id === id }) 
         )
     );
-    
  };
-
+  const handleDateSelect = (id: string) => {
+    setSelectedDateId(id);
+  };
   return (
     <>
     {loading ? (
@@ -72,11 +75,15 @@ const TimeChoosing: React.FC = () => {
                         title={time.label} 
                         date={time.date}
                         shippingfee={time.shippingFee}  
-                        isSelected={time.isSelected}
-                        onSelect={handleSelect}/>
+                        isSelected={time.id === selectedDateId}
+                        onSelect={handleDateSelect} />
                 )}               
             </div>           
+            {selectedDay && (
+            <div className='box-content'>
 
+            </div>
+          )}
         </div>}
     </>
   );
