@@ -81,19 +81,22 @@ const TimeChoosing: React.FC = () => {
               {selectedDay.slots.map((slot, index) => (
                 <div
                   key={index}
-                  className={`box-content h-14 w-full flex flex-row justify-between ${
+                  className={`box-content h-14 w-full flex flex-row-reverse justify-between ${
                     index !== selectedDay.slots.length - 1 ? 'border-b' : ''
                   }`}
                 >
-                  <div className='flex flex-row-revrse gap-4'>
-                    <button className='rounded-full border h-6 w-6 mt-4'></button>
-                    <span className='mt-4 font-bold text-lg'>
+                  <div className='flex flex-row-reverse gap-4'>
+                    <button className={`rounded-full border h-6 w-6 mt-4 mr-5 
+                                      ${slot.max_orders - slot.current_fill < 1 ? "border-gray-400 cursor-not-allowed" : "border-black cursor-pointer"}`}></button>
+                    <span className={`mt-4 font-bold text-lg ${slot.max_orders - slot.current_fill < 1 ? "text-gray-400" : "text-black"}`}>
                       {convertToPersianNumbers(slot.start_time.split(':')[0])} - {convertToPersianNumbers(slot.end_time.split(':')[0])} 
                     </span>
                   </div>
-                  {slot.max_orders-slot.current_fill<1 
-
-                  }
+                  {slot.max_orders - slot.current_fill < 1 && (
+                    <div className='box-content h-10 mt-2 rounded-4xl bg-orange-300 text-orange-400 ml-5'>
+                      تکمیل
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
