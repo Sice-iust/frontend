@@ -21,7 +21,7 @@ export default function SummaryPart() {
 
   return (
     <>
-      <div className='box-content bg-white rounded-2xl h-auto mt-5  '>
+      <div className='box-content bg-white rounded-2xl h-auto mt-5  min-h-85 '>
         <div className='flex flex-col'>
           <div className='flex flex-row-reverse justify-between mr-10 ml-10'>
             <div className='flex flex-row-reverse mt-3 gap-1 '>
