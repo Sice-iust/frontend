@@ -50,7 +50,7 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                 }
 
                 {[
-                    { label: "جمع کل", value: convertPrice(payment)},
+                    { label: "جمع کل", value: convertPrice(payment) , color: 'black'},
                     shippingfee ? (
                         Number(shippingfee) === -1 ? { 
                           label:null, 
