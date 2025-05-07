@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { format, getMonth, getDaysInMonth } from "date-fns-jalali";
+import {startOfMonth, format, getMonth, getDaysInMonth } from "date-fns-jalali";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import { IoMdClose } from "react-icons/io";
 
@@ -16,8 +16,9 @@ const Reservation = () => {
     const currentMonth = persianMonths[monthIndex];
     const daysInMonth = getDaysInMonth(currentDate);
     const today = format(currentDate, "dd");
-    const firstDayOfMonth = format(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1), "EEEE");
+    const firstDayOfMonth = format(startOfMonth(currentDate), "EEEE"); 
     const firstDayIndex = persianWeekDays.indexOf(firstDayOfMonth);
+
     
     const handleDayClick = (day: number) => {
         if (day >= parseInt(today)) 
