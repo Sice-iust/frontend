@@ -14,7 +14,8 @@ const TimeChoosing: React.FC = () => {
   const [times, setTimes] = useState<any[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const selectedDay = times.find((t) => t.id === (selectedDateId ?? times[0]?.id));
+  const [changed , setchanged] = useState<string | null>(null);
+  const selectedDay = times.find((t) => t.id === (changed));
 
   
  
@@ -36,6 +37,7 @@ const TimeChoosing: React.FC = () => {
         }));
         formattedTimes.sort((a, b) => new Date(a.id).getTime() - new Date(b.id).getTime());
         setTimes(formattedTimes);
+        setchanged(selectedDateId ?? times[0]?.id);
         setLoading(false);
       } catch (err) {
         setError(err.message);
@@ -48,7 +50,8 @@ const TimeChoosing: React.FC = () => {
 
 
   const handleDateSelect = (id: string) => {
-    setSelectedDateId(id);
+    // selectedDay(id);
+    setchanged(selectedDateId)
 
   };
   
@@ -71,7 +74,7 @@ const TimeChoosing: React.FC = () => {
                         title={time.label} 
                         date={time.date}
                         shippingfee={time.shippingFee}  
-                        isSelected={time.id === selectedDateId}
+                        isSelected={time.id === changed}
                         onSelect={handleDateSelect} />
                 )}               
             </div>           
