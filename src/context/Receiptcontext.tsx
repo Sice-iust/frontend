@@ -196,7 +196,15 @@ export const CartProvider = ({ children }) => {
             setSelectedSlotId(response.data.id);
             setSelectedDateId(response.data.delivery_date);
         } catch (err) {  
-            console.error("Error fetching data:", err);  
+            if (err.response && err.response.status === 404) {
+                console.error("No delivery data available (404 Not Found).");
+                setUserdelivery([]);
+                setSelectedSlotId("");
+                setSelectedDateId("0");
+            } else {
+                console.error("Error fetching data:", err);
+            }
+    
         } 
     };  
 
