@@ -12,6 +12,7 @@ const Cart: React.FC = () => {
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
 
     const [detail, setDetail] = useState("");
+    
 
     if (loading) {
         return (

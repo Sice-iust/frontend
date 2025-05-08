@@ -8,13 +8,18 @@ import { convertPrice } from '../../../utils/Coversionutils';
 import { useCart } from "../../../context/Receiptcontext";
 
 const TimeChoosing: React.FC = () => {
+
+  const {fetchdeliverydata,handleSlotSelect,selectedDateId,selectedSlotId} = useCart();
+
   const [times, setTimes] = useState<any[]>([]); 
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDateId, setSelectedDateId] = useState<string | null>(null);
-  const selectedDay = times.find((t) => t.id === selectedDateId);
-  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
+  const selectedDay = times.find((t) => t.id === (selectedDateId ?? times[0]?.id));
+
+  
+ 
   useEffect(() => {
+    fetchdeliverydata();
     const fetchTimes = async () => {
       try {
         const response = await axios.get("https://nanziback.liara.run/user/delivery/");
@@ -29,9 +34,6 @@ const TimeChoosing: React.FC = () => {
           slots: dateObj.slots,
           isSelected: false,
         }));
-        if (formattedTimes.length > 0) {
-          setSelectedDateId(formattedTimes[0].id);
-        }
         formattedTimes.sort((a, b) => new Date(a.id).getTime() - new Date(b.id).getTime());
         setTimes(formattedTimes);
         setLoading(false);
@@ -44,24 +46,12 @@ const TimeChoosing: React.FC = () => {
     fetchTimes();
   }, []);
 
+
   const handleDateSelect = (id: string) => {
     setSelectedDateId(id);
 
   };
-  const handleSlotSelect = async (slotId: string) => {
-    setSelectedSlotId(slotId);
-    const token = localStorage.getItem('token'); 
-    try {
-        
-        await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${slotId}/`, {
-          quantity: 1
-        }, {
-          headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
-        });
-      } catch (error) {
-          console.error(error.response?.data);
-      }
-  };
+  
   return (
     <>
     {loading ? (
@@ -97,7 +87,8 @@ const TimeChoosing: React.FC = () => {
                   <div className='flex flex-row-reverse gap-4'>
                   <button
                       className={`rounded-full border h-6 w-6 mt-4 mr-5 flex items-center justify-center
-                        ${slot.max_orders - slot.current_fill < 1 ? "border-gray-400 cursor-not-allowed" : "border-black cursor-pointer"} 
+                                 ${slot.max_orders - slot.current_fill < 1 ? "border-gray-400 cursor-not-allowed" 
+                                : "border-black cursor-pointer"} 
                         ${selectedSlotId === slot.id ? "bg-[#F18825]" : "bg-white" }`}
                       disabled={slot.max_orders - slot.current_fill < 1}
                       onClick={() => handleSlotSelect(slot.id)}
