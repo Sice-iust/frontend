@@ -28,7 +28,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
 
   const { isDarkMode, toggleDarkMode } = useTheme(); // Get both isDarkMode and toggleDarkMode from context  
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [step, setStep] = useState<Step>(Step.PHONE);
+  const [step, setStep] = useState<Step>(Step.CODE);
   const [timeLeft, setTimeLeft] = useState(120);
   const [isFinished, setIsFinished] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
@@ -65,8 +65,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
           />);
       case Step.REGISTER:
         return (
-          <ThirdPage 
-          open={open} 
+          <ThirdPage
           onClose={onClose} 
           isDarkMode={isDarkMode} 
           timeLeft={timeLeft} 

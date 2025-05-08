@@ -76,7 +76,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
             <h1 className="mx-auto font-semibold text-3xl mt-10 mb-7">
                 ورود <span className="font-light">یا</span> عضویت
             </h1>
-            <div className="mx-20">
+            <div className="mx-5 md:mx-20">
                 <div className="border rounded-lg p-2">
                     <PhoneOutlined style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} className="absolute" />
                     <input
@@ -88,7 +88,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
                         required
                         value={e2p(phoneNumber)}
                         onChange={handleInputChange}
-                        className="w-full focus:border outline-non outline-transparent"
+                        className="w-full outline-none"
                     />
                 </div>
                 {coutnError0 && <div className={styles.errorMessageLogin}>{coutnError0}</div>}

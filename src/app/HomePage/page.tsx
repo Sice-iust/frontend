@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import CategoryWrapper from "./category/categoryWrapper";
 import CardSlider from "./ProductCard/cardSlider";
