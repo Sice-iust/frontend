@@ -8,7 +8,6 @@ import { useTheme } from '../../theme';
 
 export default function Bread() {
   const params = useParams(); 
-  const pathname = usePathname(); 
   const { isDarkMode } = useTheme();
 
   const [id, setId] = useState<string | null>(null);
@@ -24,8 +23,8 @@ export default function Bread() {
   }, [params]);
 
   return (
-    <div className={`flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} flex flex-row`}>
-      <div className={`flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} hidden sm:block`}>
+    <div className={`flex-shrink-0 bg-[#f5f5f5] dark:bg-[#383535] flex flex-row`}>
+      <div className={`flex-shrink-0 hidden sm:block`}>
         <Receipt />
       </div>
       <CategoryList category={id} />

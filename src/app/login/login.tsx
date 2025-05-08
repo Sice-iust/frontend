@@ -6,8 +6,6 @@ import { Dialog, DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-import Logo from "./assets/logo.png";
-import Logodark from "./assets/logo-dark.png";
 import styles from'./login.module.scss';
 import { useTheme } from '../../app/theme';
 import FirstPage from './firstpage2';
@@ -28,7 +26,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
 
   const { isDarkMode, toggleDarkMode } = useTheme(); // Get both isDarkMode and toggleDarkMode from context  
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [step, setStep] = useState<Step>(Step.CODE);
+  const [step, setStep] = useState<Step>(Step.PHONE);
   const [timeLeft, setTimeLeft] = useState(120);
   const [isFinished, setIsFinished] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string[]>(Array(4).fill(null));
@@ -127,7 +125,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
         )}
         <div className={styles.dialogTitle}>
           <div className={styles.logoContainer}>
-            <Image src={isDarkMode ? Logodark : Logo} alt="Nanzi Logo" />
+            <Image width={100} height={100} src={isDarkMode ? '/assets/logo-dark.png' : '/assets/logo.png'} alt="Nanzi Logo" />
           </div>
           <div className={styles.fullScreenContainer}>
             <h1 className={styles.nanziText}>Nanzi</h1>

@@ -37,7 +37,6 @@ const OrderCard: React.FC<OrderCardProps> = ({
   const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
   const [isReorderOpen, setIsReorderOpen] = useState(false);
-  const { isDarkMode, toggleDarkMode } = useTheme();
 
   const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
   const handleInvoiceClose = () => setIsInvoiceOpen(false); 
@@ -49,11 +48,11 @@ const OrderCard: React.FC<OrderCardProps> = ({
   const handleReorderClose = () => setIsReorderOpen(false); 
 
   return (  
-    <div className={`mx-auto ${isDarkMode ? "bg-[#191919]" : "bg-white"} rounded-2xl  
-                    shadow-lg p-4 mt-4 mb-2 border ${isDarkMode ? "border-white" : "border-black"}  w-full xl:w-[98%] 
+    <div className={`mx-auto dark:bg-[#191919] bg-white rounded-2xl  
+                    shadow-lg p-4 mt-4 mb-2 border dark:border-white border-black  w-full xl:w-[98%] 
                     text-right`}>
         <div className="flex justify-between items-center ">
-            <span className={`flex font-vazir  ${isDarkMode ? "text-white" : "text-[#191919]"} font-bold ml-auto  text-sm 
+            <span className={`flex font-vazir dark:text-white text-[#191919] font-bold ml-auto text-sm 
                             sm:text-lg
                             md:text-xl`}>
                 سفارش&zwnj;{id}
@@ -65,14 +64,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
         
         <div className="flex flex-wrap  items-center mb-2 ">  
             <div className="flex items-center mt-4">  
-                <span className={` ${isDarkMode ? "text-white" : "text-[#191919]"} font-vazir text-xs lg:ml-7
+                <span className={`dark:text-white text-[#191919] font-vazir text-xs lg:ml-7
                                  sm:text-lg
                                  md:text-lg `}>تومان</span>  
-                <span className={` ${isDarkMode ? "text-white" : "text-[#191919]"}  font-vazir ml-1 font-vazir font-bold text-sm
+                <span className={`dark:text-white text-[#191919]  font-vazir ml-1 font-vazir font-bold text-sm
                                  sm:text-lg
                                  md:text-lg`}>{total_price}</span>  
             </div>  
-            <div className="flex flex-wrap items-center  mt-6 ml-85 mt-4 space-x-1 sm:space-x-2 md:space-x-3 ml-auto">  
+            <div className="flex flex-wrap items-center  mt-6 space-x-1 sm:space-x-2 md:space-x-3 ml-auto">  
                 <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
                         sm:text-sm
                         md:text-sm '>{delivery_clock}
@@ -89,7 +88,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </div>    
 
         
-        <p className={` ${isDarkMode ? "text-white" : "text-[#191919]"} font-vazir  text-semibold mb-4 text-center ml-auto mt-1 lg:ml-7 sm:text-left sm:mr-auto
+        <p className={`dark:text-white text-[#191919] font-vazir  text-semibold mb-4 text-center ml-auto mt-1 lg:ml-7 sm:text-left sm:mr-auto
                     text-xs 
                     sm:text-base 
                     md:text-base`}>  
@@ -113,12 +112,12 @@ const OrderCard: React.FC<OrderCardProps> = ({
         
 
             <div className="-mt-7 flex flex-wrap items-center  ml-auto lg:ml-85">
-               {product_count != "0" ? (<div className="flex space-x-1 hidden sm:flex ">
+               {product_count != "0" ? (<div className="flex space-x-1 sm:flex ">
                     <span className="text-gray-500 text-sm sm:text-base md:text-md lg:text-lg">نان دیگر</span>
                     <span className="text-gray-500 text-sm  sm:text-base md:text-md lg:text-lg">{product_count}+</span>
                 </div>) : null }
 
-                <div className="flex space-x-2 ml-1 hidden sm:flex">
+                <div className="flex space-x-2 ml-1 sm:flex">
                     {product_photos.map((prod, index) => (
                     <div key={index} className="relative ">
                         <Image
