@@ -11,9 +11,7 @@ export default function SummaryPart() {
       incrementQuantity, decrementQuantity, removeItem} = useCart(); 
   const [isModalOpen, setModalOpen] = useState(false);
   
-  const handleEditClick = () => {
-    setModalOpen(true);
-  };
+  
 
   const handleCloseModal = () => {
     setModalOpen(false);

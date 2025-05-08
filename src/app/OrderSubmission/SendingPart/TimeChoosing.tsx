@@ -16,8 +16,7 @@ const TimeChoosing: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [changed , setchanged] = useState<string | null>(null);
   const selectedDay = times.find((t) => t.id === (changed));
-  // console.log(selectedDateId);
-  // // console.log(times[0].id)
+ 
   
 
   
@@ -67,7 +66,7 @@ const TimeChoosing: React.FC = () => {
   return (
     <>
     {loading ? (
-          <p className="text-center min-h-40">در حال بارگذاری...</p>
+          <p className="text-center min-h-90"> </p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
         ) : 
