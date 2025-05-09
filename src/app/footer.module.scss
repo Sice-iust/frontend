@@ -1,0 +1,287 @@
+.lightFooter{
+    --backgroundColor:rgba(255, 255, 255, 1);
+    --lineColor:rgba(183, 179, 172, 1);
+    --textColor:#000000;
+    --sloganColor:#444141;
+}
+.darkFooter{
+    --backgroundColor:rgba(25, 25, 25, 1);
+    --lineColor:#2B2929;
+    --textColor:#FFFFFF;
+    --sloganColor:#B2A9A9;
+
+}
+.footer {
+    background-color: var(--backgroundColor);
+    padding-top: 5px;
+    padding-bottom: 10px;
+    direction: rtl; // For RTL languages like Arabic/Persian
+    border-top: 4px solid var(--lineColor); // Add this line for the gray border
+
+  
+    .container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 .5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  
+    // Left Container Styles
+    .leftContainer {
+        flex: 0; /* Prevent stretching */
+        align-items: center;
+      }
+      
+      .imageWrapper {
+        display: flex;
+        gap: 5rem; /* Space between images (if multiple) */
+        margin-top: 10px;
+        // margin-right: 5px;
+      }
+      
+      .image {
+        // object-fit: contain; /* Preserve aspect ratio */
+        width: 390px;
+        height: 350px;
+        margin-left: -100px;
+        // margin-right: -50px;
+      }
+  
+    // Center Container Styles
+    .centerContainer {
+        flex: 1;
+        min-width: 390px;
+        direction: rtl;
+        text-align: right;
+        padding: .5rem;
+        font-family: "calibri";
+        margin-right: -150px;
+        margin-top: 60px;
+      
+        .faqSection {
+          display: flex;
+          gap: .1rem;
+          flex-wrap: wrap;
+          margin-right: 25px;
+          margin-left: 15px;
+          justify-content: space-between;
+        }
+      
+        .faqColumn {
+          display: flex;
+          flex-direction: column;
+          gap: 25px;
+        //   flex: 1;
+          min-width: 150px;
+          margin-left: 20px;
+        }
+      
+        .faqItem {
+          padding:  0;
+        }
+      
+        .faqTitle {
+          margin: 0;
+        //   margin-top: .75rem;
+          font-size: 1.15rem;
+          font-weight: 400;
+          color:var(--textColor)
+        }
+      
+        .faqText {
+          margin: 0;
+          font-size: 1.15rem;
+          font-weight: 400;
+
+          color: var(--textColor);
+          margin-top: 30px;
+        //   margin-left: -;
+        }
+      
+        .faqDivider {
+          height: 0.5px;
+          background-color: rgba(184, 104, 29, 1);
+          width: 50%;
+          margin-top: 30px;
+          margin-left: 0;
+          margin-right: -5px;
+        //   right:20px;
+        //   margin-bottom: 20px;
+          
+        }
+      }
+    // Right Container Styles
+    .rightContainer {
+      flex: 0;
+      min-width: 500px;
+  
+      .logoSection {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 10px;
+        margin-top: 0;
+        margin-right: -150px;
+  
+        .logo {
+        //   border-radius: 50%;
+        width:150px;
+        height: 80px;
+        // margin-top: 15px;// height: 80px;
+
+        }
+  
+        .logoText {
+            font-family: 'Traditional Arabic', 'Scheherazade New', 'Arial', sans-serif;
+            .title {
+            margin: 0;
+            font-weight: 100;
+            font-size: 45px;
+            color: rgba(184, 104, 29, 1);
+            margin-bottom: 0;
+            margin-top: 9px;
+          }
+  
+          .slogan {
+            margin: 0.2rem 0 0;
+            font-size: 1.5rem;
+            margin-top: 0;
+            color: var(--sloganColor);
+          }
+        }
+      }
+  
+      .description {
+        direction: rtl;
+        text-align: justify;
+        margin-right: -140px;
+        text-justify: inter-word; // For better Persian/Arabic justification
+        hyphens: auto; // For better word breaking
+        line-height: 1.8; // Adjust for better readability
+        unicode-bidi: plaintext; // Ensures proper RTL rendering
+        color:var(--textColor);
+        width:85%;
+        font-family: "calibri";
+        font-size: 20px;
+      }
+  
+      .roundedSocialButtons {
+        text-align: right;
+        direction: ltr; // Ensure proper alignment for social icons
+        margin-top: 10px;
+        margin-right: -140px;
+      }
+      
+      .socialButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        cursor: pointer;
+        width: 35px;
+        height: 35px;
+        border: 0.125rem solid transparent;
+        padding: 0;
+        text-decoration: none;
+        color: var(--backgroundColor);
+        font-size: 1.5625rem;
+        font-weight: normal;
+        border-radius: 1.6875rem;
+        transition: all 0.5s ease;
+        margin-left:20px;
+        margin-bottom: 0.25rem;
+        margin-top: 5px;
+      
+        svg {
+          width: 25px;
+          height: 25px;
+        }
+      
+        &:hover, &:focus {
+          transform: rotate(360deg);
+        }
+      }
+      
+      .twitter {
+        color: rgba(184, 104, 29, 1);
+        background: var(--backgroundColor);
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: var(--backgroundColor);
+          background: rgba(184, 104, 29, 1);
+          border-color: var(--backgroundColor);
+        }
+      }
+      
+      .linkedin {
+        color: rgba(184, 104, 29, 1);
+        background: var(--backgroundColor);
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: var(--backgroundColor);
+          background: rgba(184, 104, 29, 1);
+          border-color: var(--backgroundColor);
+        }
+      }
+      
+      .youtube {
+        color: rgba(184, 104, 29, 1);
+        background: var(--backgroundColor);
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: var(--backgroundColor);
+          background: rgba(184, 104, 29, 1);
+          border-color: var(--backgroundColor);
+        }
+      }
+      
+      .instagram {
+        color: rgba(184, 104, 29, 1);
+        background: var(--backgroundColor);
+        border-color: rgba(184, 104, 29, 1);
+      
+        &:hover, &:focus {
+          color: var(--backgroundColor);
+          background: rgba(184, 104, 29, 1);
+          border-color: var(--backgroundColor);
+        }
+      }
+    }
+  
+    // Responsive adjustments
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+  
+      .leftContainer, .centerContainer, .rightContainer {
+        min-width: 100%;
+      }
+  
+      .imageWrapper {
+        justify-content: center !important;
+      }
+  
+      .centerGrid {
+        justify-content: center;
+      }
+  
+      .rightContainer {
+        text-align: center;
+  
+        .logoSection {
+          justify-content: center;
+        }
+  
+        .socialIcons {
+          justify-content: center;
+        }
+      }
+    }
+  }
