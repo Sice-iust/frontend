@@ -118,7 +118,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     <span className="text-gray-500 text-sm  sm:text-base md:text-md lg:text-lg">{product_count}+</span>
                 </div>) : null }
 
-                <div className="flex space-x-2 ml-1 hidden sm:flex">
+                <div className="flex space-x-2 ml-auto hidden sm:flex">
                     {product_photos?.map((prod, index) => (
                     <div key={index} className="relative ">
                         <Image
