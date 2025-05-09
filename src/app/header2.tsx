@@ -32,12 +32,8 @@ const LazySearch = dynamic(() => import('./search'), {
 export default function Header2() {
     const { isDarkMode, toggleDarkMode } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const breadTypes = ["بربری", "سنگک", "تافتون", "لواش", "محلی", "فانتزی"];
-    const [currentBreadType, setCurrentBreadType] = useState(breadTypes[0]);
-    const [fading, setFading] = useState(false);
     const [shoppingNum, setShoppingNum] = useState(2);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [username, setUsername] = useState(null);
     const getUsername = async () => {
         // localStorage.removeItem('token');  
         const token = localStorage.getItem("token");
@@ -56,7 +52,6 @@ export default function Header2() {
                 });
 
                 if (response.data.is_login) {
-                    setUsername(response.data.username);
                     setIsLoggedIn(response.data.is_login);
                     setShoppingNum(response.data.nums);
                 }
@@ -75,22 +70,6 @@ export default function Header2() {
     };
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setFading(true);
-            setTimeout(() => {
-                setCurrentBreadType(prev => {
-                    const currentIndex = breadTypes.indexOf(prev);
-                    const nextIndex = (currentIndex + 1) % breadTypes.length;
-                    return breadTypes[nextIndex];
-                });
-                setFading(false);
-            }, 1000);
-        }, 2000);
-
-        return () => clearInterval(interval);
-    }, [breadTypes]);
-
-    useEffect(() => {
         getUsername();
     }, []);
     useEffect(() => {
@@ -98,53 +77,55 @@ export default function Header2() {
     }, [shoppingNum]);
     return (
         <>
-            <div className={` ${isDarkMode ? "bg-[#191919]" : "bg-white"}  w-full`}>
+            <div className={` dark:bg-[#191919] bg-white  w-full`}>
                 <div dir="rtl" className="flex flex-col justify-center px-5 py-2 md:flex-row">
 
                     <div className=" basis-2/10 my-auto">
-                        <Image src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`}
-                            alt="Logo"
-                            width={200}
-                            height={200}
-                            className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
+                        <Link href="/">
+                            <Image src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`}
+                                alt="Logo"
+                                width={200}
+                                height={200}
+                                className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
+                        </Link>
                     </div>
 
                     <div className="basis-5/10 w-full my-10 md:my-auto mx-auto ">
                         <LazySearch isDarkMode={isDarkMode} />
-
                     </div>
 
-                    <div dir="ltr" className={`basis-3/10 flex my-auto gap-10 ${isDarkMode ? "text-white" : "text-black"}`}>
+                    <div dir="ltr" className={`hidden basis-3/10 md:flex my-auto gap-10 dark:text-white text-black`}>
                         {isLoggedIn ? (
-                            <Link 
-                            href="/ProfilePage/OrdersPage" 
-                            className="text-[15px] cursor-pointer"
-                            
-                          >
-                            صفحه کاربر 
-                            <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " />
-                          </Link>
+                            <Link
+                                href="/ProfilePage/OrdersPage"
+                                className="text-[15px] cursor-pointer"
+
+                            >
+                                صفحه کاربر
+                                <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " />
+                            </Link>
                             // <span className='text-[15px] cursor-pointer'>  صفحه کاربر
                             //     <AccountCircleRoundedIcon className="!text-3xl w-2.5 ml-0.5 " /></span>
                         ) : (
-                            <button className={`bg-[#F18825] ${isDarkMode ? "text-black" : "text-white"} rounded-2xl px-2 py-3 cursor-pointer`} onClick={handleOpenModal}
+                            <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={handleOpenModal}
                             > ورود / عضویت   </button>
                         )}
-                        <div className={`flex my-auto cursor-pointer gap-2 ${isDarkMode ? "text-white" : "text-black"}`}>
+                        <div className={`flex my-auto cursor-pointer gap-2 dark:text-white text-black`}>
                             <h1>سبد خرید</h1>
                             <ShoppingCartIcon className="text-3xl" />
-                            {shoppingNum > 0 && <span className={`absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825]  ${isDarkMode ? "text-black" : "text-white"} rounded-[10px] px-[6px] py-[3px] text-[12px] `}>{shoppingNum}</span>}
+                            {shoppingNum > 0 && <span className={`absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825]  dark:text-black text-white rounded-[10px] px-[6px] py-[3px] text-[12px] `}>{shoppingNum}</span>}
                         </div>
-                        <span className={`cursor-pointer my-auto gap-2 ${isDarkMode ? "text-white" : "text-black"}`} onClick={toggleDarkMode}   >
+                        <span className={`
+                            cursor-pointer my-auto gap-2
+                             dark:text-white text-black
+                             `} onClick={toggleDarkMode}   >
                             {isDarkMode ? 'حالت روز' : 'حالت شب'}
                             {isDarkMode ? <WbSunnyOutlinedIcon className="text-2xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-2xl ml-0.5" />}
                         </span>
                     </div>
                 </div>
-                <div>
-                    {/* <Image height={100} width={10000} src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} /> */}
-                </div>
             </div>
-            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn}/>}
-        </>);
+            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
+        </>
+    );
 }

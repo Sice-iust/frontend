@@ -17,7 +17,7 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount, selec
   return (  
     <div className="container mx-auto mt-10">  
       <div className="flex bg-gray-300 rounded-2xl 
-                      overflow-hidden w-full mx-5
+                      overflow-hidden w-full
                       md:w-full mx-auto lg:w-[60%]">    
         <div   
           className={`flex-1 text-center py-2 cursor-pointer 

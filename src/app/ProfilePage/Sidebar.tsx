@@ -6,13 +6,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdExit } from "react-icons/io";
 
-import { 
-  FaUserEdit, 
+import {  
   FaWallet, 
   FaBoxOpen, 
   FaMapMarkerAlt, 
-  FaTicketAlt, 
-  FaSignOutAlt,
+  FaTicketAlt,
   FaChevronDown,
   FaChevronLeft,
   FaEdit
@@ -27,8 +25,6 @@ interface UserData {
   profile_photo?: string;
 }
 export default function Sidebar() {
-  const { isDarkMode, toggleDarkMode } = useTheme();
-  
   const pathname = usePathname();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
@@ -175,7 +171,7 @@ export default function Sidebar() {
 
   
   return (
-    <div className={`w-full  ${isDarkMode ? "bg-[#191919]" : "bg-white"} shadow-md rounded-xl p-4 font-vazir mt-10 mr-5 h-screen`} dir="rtl">
+    <div className={`w-full  dark:bg-[#191919] bg-white shadow-md rounded-xl p-4 font-vazir mt-10 mr-5 h-screen`} dir="rtl">
       <div className="flex flex-col items-center mb-2 py-4 ">
         <div className="relative mb-4" onClick={handleImageClick}>
           <div className="w-20 h-20 border rounded-full  overflow-hidden flex items-center justify-center">
@@ -206,7 +202,7 @@ export default function Sidebar() {
 
         <div className="w-full">
           <div className="flex justify-between items-center flex-col" >
-            <h3 className={`text-lg font-semibold  ${isDarkMode ? "text-white" : "text-black"} mt-2`}>{userData.username} </h3>
+            <h3 className={`text-lg font-semibold dark:text-white text-black mt-2`}>{userData.username} </h3>
             <button 
               className="flex justify-end ml-auto text-[#34A853] text-[15px] mt-4"
               onClick={toggleUsernameSection}
@@ -222,16 +218,16 @@ export default function Sidebar() {
           </div>
 
           {isUsernameExpanded && (
-            <div className={`mt-4 flex items-center gap-7  ${isDarkMode ? "text-white" : "text-black"}`}>
+            <div className={`mt-4 flex items-center gap-7 dark:text-white text-black`}>
               <input
                 type="text"
                 value={editUsername}
                 onChange={(e) => setEditUsername(e.target.value)}
-                className={`border-none focus:outline-none rounded-md px-5 py-2 flex-1 text-sm  ${isDarkMode ? "bg-[#383535]" : "bg-[#D9D9D9]"}  w-20`}
+                className={`border-none focus:outline-none rounded-md px-5 py-2 flex-1 text-sm dark:bg-[#383535] bg-[#D9D9D9] w-20`}
                 placeholder="نام جدید را وارد کنید"
               />
               <button 
-                className={`bg-[#5BCD79]  ${isDarkMode ? "text-black" : "text-white"} px-5 py-2 rounded-lg text-sm `}
+                className={`bg-[#5BCD79] dark:text-black text-white px-5 py-2 rounded-lg text-sm `}
                 onClick={handleProfileUpdate}
               >
                 ثبت
@@ -246,10 +242,10 @@ export default function Sidebar() {
         <div className="flex flex-row gap-25">
         <div className="flex items-center">
             <FaWallet className="text-[#B8681D] ml-2" />
-            <span className={` ${isDarkMode ? "text-white" : "text-black"} font-bold`}>کیف پول من</span>
+            <span className={` dark:text-white text-black font-bold`}>کیف پول من</span>
           </div>
         <div className="text-left">
-          <span className={` ${isDarkMode ? "text-gray-500" : "text-black"} text-xl  `}>  {convertToPersianNumbers(credit )}  تومان </span>
+          <span className={` text-xl dark:text-white  `}>  {convertToPersianNumbers(credit )}  تومان </span>
         </div>
         </div>
         
@@ -306,10 +302,9 @@ function MenuItem({ icon, text, href, isActive }: {
 
 
 }) {
-    const { isDarkMode, toggleDarkMode } = useTheme();
 
   return (
-    <li className={` ${isDarkMode ? "border-white" : "border-black"} border-t  last:border-b-0`}>
+    <li className={`dark:border-white border-black border-t  last:border-b-0`}>
       <Link
         href={href}
         className={`flex items-center p-7 h-full transition-colors ${

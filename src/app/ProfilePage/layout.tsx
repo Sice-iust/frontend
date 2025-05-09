@@ -11,9 +11,8 @@ export default function ProfileLayout({
   }: {
     children: React.ReactNode
   }) {
-    const { isDarkMode, toggleDarkMode } = useTheme();
     return (
-        <div  className={`${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"}`} >
+        <div  className={`dark:bg-[#383535] bg-[#f5f5f5]`} >
         
       <div className=" flex  flex-row ">
         {/* Main content comes FIRST (left side) */}

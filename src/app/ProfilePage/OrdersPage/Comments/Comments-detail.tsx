@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React, { useState } from 'react';  
 import { Item } from './comments-popup';
-import { convertPrice } from '../../../../utils/Coversionutils';
 import { MdStar } from 'react-icons/md';
 import { BiLike } from "react-icons/bi";
 import { BiDislike } from "react-icons/bi";
@@ -87,7 +86,7 @@ const Comments: React.FC<CommentsProps> = ({ orderId, payment, shippingfee, disc
                                     {"  خرید این کالا را به دیگران    "}
                                 </p>    
                             </div>
-                            <div className="flex items-center w-full mt-1 mr-3 justify-between mt-3 mb-2.5"> 
+                            <div className="flex items-center w-full mr-3 justify-between mt-3 mb-2.5"> 
                                 <div className="flex space-x-1.5">
                                     {[...Array(5)].map((_, index) => (
                                         <MdStar  

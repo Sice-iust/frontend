@@ -17,23 +17,26 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
+    if (typeof window === 'undefined') return // SSR guard
+
     const savedMode = localStorage.getItem('darkMode')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    
-    setIsDarkMode(savedMode ? savedMode === 'true' : prefersDark)
+    const isDark = savedMode ? savedMode === 'true' : prefersDark
+
+    setIsDarkMode(isDark)
+    document.documentElement.classList.toggle('dark', isDark)
   }, [])
 
   const toggleDarkMode = () => {
     const newMode = !isDarkMode
     setIsDarkMode(newMode)
     localStorage.setItem('darkMode', String(newMode))
+    document.documentElement.classList.toggle('dark', newMode)
   }
 
   return (
     <ThemeContext.Provider value={{ isDarkMode, toggleDarkMode }}>
-      <div className={isDarkMode ? 'dark' : 'light'}>
-        {children}
-      </div>
+      {children}
     </ThemeContext.Provider>
   )
 }

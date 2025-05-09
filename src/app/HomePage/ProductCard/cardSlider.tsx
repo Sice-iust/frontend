@@ -6,10 +6,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from '../ProductCard/productCard';
 import axios from 'axios';
-import { useTheme } from '../../theme';
 
 
-export default function CardSlider({ text, color, url ,type}) {
+export default function CardSlider({ text, color, url, type }) {
     const [products, setProducts] = useState<any[]>([]);
     useEffect(() => {
         axios.get(url)
@@ -57,24 +56,23 @@ export default function CardSlider({ text, color, url ,type}) {
             },
         ],
     };
-    const { isDarkMode, toggleDarkMode } = useTheme();
 
     return (
         <div className='rounded-2xl px-8 py-1 pb-8 m-10 drop-shadow-xl/25' style={{ backgroundColor: color }}>
-            <div className={`${isDarkMode ? "text-black " : "text-white"}flex justify-end text-3xl font-bold my-4 `}>
+            <div className={`text-white dark:text-black flex text-right justify-end text-3xl font-bold my-4 `}>
                 {text}
             </div>
             <Slider {...settings}>
-                {products.slice(0,5).map((product) => (
-                    <ProductCard 
-                    key={product.id} 
-                    img_src={product.image} 
-                    text={product.name} 
-                    ref={product.id} 
-                    percent={product.discount} 
-                    price={product.price}
-                    rate={product.rate} 
-                    type={type} />
+                {products.slice(0, 5).map((product) => (
+                    <ProductCard
+                        key={product.id}
+                        img_src={product.image}
+                        text={product.name}
+                        ref={product.id}
+                        percent={product.discount}
+                        price={product.price}
+                        rate={product.rate}
+                        type={type} />
                 ))}
             </Slider>
         </div>

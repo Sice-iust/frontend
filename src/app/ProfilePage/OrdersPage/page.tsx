@@ -44,7 +44,7 @@ interface OrderItem {
   order: Order;  
   product: Product;  
   quantity: number;
-}  
+}
 
 interface CompletedOrdersResponse {  
   past_orders: OrderItem[];  
@@ -118,16 +118,20 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
   
     
   useEffect(() => {
-        Completed_Orders();
+    Completed_Orders();
   }, []);
 
 
-  
-  return ( 
+
+  return (
     <>
-      
-    <div className={`sm:rounded-xl    ${isDarkMode ? "bg-[#191919]" : "bg-white"}  sm:shadow-md sm:p-4 sm:mb-10 sm:w-full sm:h-screen sm:mt-0 sm:overflow-hidden sm:mx-auto sm:block hidden   
-                sm:w-[90%] sm:mx-7  
+
+      <div className={`sm:rounded-xl dark:bg-[#191919]
+     bg-white sm:shadow-md 
+     sm:p-4 sm:mb-10 
+     sm:w-full sm:h-screen 
+     sm:mt-0 sm:overflow-hidden 
+     sm:mx-auto sm:block hidden   
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-0 
                 xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
@@ -177,7 +181,7 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
       />
         ))
       ) : (
-        <p className={`flex mt-25 justify-center ${isDarkMode ? "text-white" : "text-[#191919]"}`}>
+        <p className={`flex mt-25 justify-center dark:text-white`}>
           هیچ سفارشی یافت نشد
         </p>
       )

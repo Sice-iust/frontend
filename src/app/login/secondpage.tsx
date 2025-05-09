@@ -225,7 +225,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                         <button
                             type="submit"
                             className={`${styles.btnPrimary}  ${isVerificationCodeEntered ? styles.disabled : ''}`}
-                            disabled={isVerificationCodeEntered}
+                            disabled={!!isVerificationCodeEntered}
                             onClick={(e) => {
                                 e.preventDefault();
                                 handleCodeSubmit();

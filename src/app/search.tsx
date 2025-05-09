@@ -26,8 +26,8 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const [isOpen, setIsOpen] = useState(false); // 👈 Popup state
-  const [selectedItem, setSelectedItem] = useState<number | null>(null); // 👈 Selected product ID
+  const [isOpen, setIsOpen] = useState(false); 
+  const [selectedItem, setSelectedItem] = useState<number | null>(null); 
 
 
   useEffect(() => {
@@ -100,12 +100,15 @@ const handleOpenModal = (itemId: number) => {
         flex 
         items-center 
         rounded-3xl p-2 
-        ${isDarkMode ? "bg-[#383535] " : "bg-[#D9D9D9]"}
+        dark:bg-[#383535] bg-[#D9D9D9]
         mx-auto `} dir='rtl'>
         <span className="text-[#B8681D]"><SearchOutlinedIcon /></span>
         <input
           type="text"
-          className={` px-2 py-1 focus:outline-none font-vazir w-full rounded-full text-right bg-transparent  text-[16px]  ${isDarkMode ? "placeholder:[#D9D9D9] " : "placeholder:[#696363]"}`}
+          className={` px-2 py-1 
+            focus:outline-none font-vazir
+             w-full rounded-full text-right
+              bg-transparent  text-[16px]  dark:placeholder:[#D9D9D9] placeholder:[#696363]`}
           placeholder="نام کالای مورد نظر را جستجو کنید ..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -116,11 +119,13 @@ const handleOpenModal = (itemId: number) => {
       </div>
 
       {isFocused && searchTerm && (
-        <div className={`md:absolute mt-2  w-full md:w-182 max-h-[500px] overflow-y-scroll z-[1000] rounded-3xl shadow-lg p-4 ${isDarkMode ? "bg-[#383535] " : "bg-[#D9D9D9]"}`}>
+        <div className={`md:absolute mt-2 
+        w-full md:w-182 max-h-[500px] overflow-y-scroll z-[1000] 
+        rounded-3xl shadow-lg p-4 dark:bg-[#383535] bg-[#D9D9D9]`}>
           {Object.entries(groupedResults).length > 0 ? (
             Object.entries(groupedResults).map(([category, items]) => (
               <div key={category} className="mb-5 last:mb-0">
-                <div className={`${isDarkMode ? "text-white " : "text-black"} flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]`}>
+                <div className={`dark:text-white text-black flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]`}>
                   <span>دسته بندی:</span> 
                   <span className='flex text-right items-center'>{highlightMatch(category)}</span>
                 </div>
@@ -131,13 +136,13 @@ const handleOpenModal = (itemId: number) => {
                       className="flex flex-col gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                     onClick={() => handleOpenModal(item.id)}
                     >
-                      <div className={`flex items-center ${isDarkMode ? "text-gray-300 " : "text-gray-700"} `}>
-                        <span className={`mr-2 font-bold ${isDarkMode ? "text-gray-300 " : "text-gray-700"} font-vazir`}>نام محصول:</span>
+                      <div className={`flex items-center dark:text-gray-300 text-gray-700 `}>
+                        <span className={`mr-2 font-bold dark:text-gray-300 text-gray-700 font-vazir`}>نام محصول:</span>
                         <span className="text-[#B8681D] font-bold">🔍</span>
                         {highlightMatch(item.name)}
                       </div>
-                      <div className={`flex items-center ${isDarkMode ? "text-gray-300 " : "text-gray-700"} `}>
-                        <span className={`mr-2 font-bold ${isDarkMode ? "text-gray-300 " : "text-gray-700"} font-vazir`}>قیمت:</span>
+                      <div className={`flex items-center dark:text-gray-300 `}>
+                        <span className={`mr-2 font-bold dark:text-gray-300 font-vazir`}>قیمت:</span>
                        <span>
                           {convertToPersianNumbers(item.price ? item.
                             discounted_price.toLocaleString()
@@ -146,8 +151,8 @@ const handleOpenModal = (itemId: number) => {
                         </span>
                       </div>
                       {item.stock > 0 ? (
-                      <div className={`flex items-center ${isDarkMode ? "text-gray-300 " : "text-gray-700"} `}>
-                          <span className={`mr-2 font-bold ${isDarkMode ? "text-gray-300 " : "text-gray-700"} font-vazir`}>موجودی: <span className={`font-medium ${isDarkMode ? "text-white " : "text-gray-700"}`}>{convertToPersianNumbers(item.stock)}</span></span>
+                      <div className={`flex items-center dark:text-gray-300 `}>
+                          <span className={`mr-2 font-bold dark:text-gray-300  font-vazir`}>موجودی: <span className={`font-medium ${isDarkMode ? "text-white " : "text-gray-700"}`}>{convertToPersianNumbers(item.stock)}</span></span>
                         </div>
                       ) : (
                         <div className="flex items-center">
