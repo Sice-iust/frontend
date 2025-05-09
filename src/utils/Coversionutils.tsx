@@ -20,13 +20,16 @@ export const convertPrice = (price: string): string => {
 
 // Date
 export const convertDateInPersian = (dateString: string): string => {  
-    const parts = dateString.split(' '); 
-    const [day, persianDate] = parts; 
-    const [year, month, dayOfMonth] = persianDate.split('/'); 
-    const persianYear = convertToPersianNumbers(year);  
-    const persianMonth = convertToPersianNumbers(month);  
-    const persianDayOfMonth = convertToPersianNumbers(dayOfMonth);  
+    const parts = dateString.split('-'); 
+    const [year,month, day] = parts; 
+    // console.log(parts)
+    // const [year, month, dayOfMonth] = persianDate.split(' '); 
+    // const persianYear = convertToPersianNumbers(year);  
+    // const persianMonth = convertToPersianNumbers(month);  
+    // const persianDayOfMonth = convertToPersianNumbers(dayOfMonth);  
 
-    return `${persianYear}/${persianMonth}/${persianDayOfMonth}`; 
+    return `${convertToPersianNumbers(year)}/${convertToPersianNumbers(month)}/${convertToPersianNumbers(day)}`; 
 };  
+
+
 

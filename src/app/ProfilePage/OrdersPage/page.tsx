@@ -18,8 +18,10 @@ export interface Product {
 interface Order {  
   id: number;  
   total_price: string;  
-  delivery_day: string;  
-  delivery_clock: string;  
+  delivery : {
+    delivery_date: string;  
+    end_time: string; 
+  } 
   location: {  
     name: string; 
   };  
@@ -44,6 +46,7 @@ const ProfileOrders: React.FC = () => {
   const [Completed, setCompleted] = useState<CompletedOrdersResponse | null>(null);  
  const [selectedTab, setSelectedTab] = useState(0);
   const { isDarkMode, toggleDarkMode } = useTheme();
+  
 
   const Completed_Orders = async () => {
         try {
@@ -51,7 +54,7 @@ const ProfileOrders: React.FC = () => {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           });
           setCompleted(response.data);
-          console.log(`data from back: ${Completed}`);
+          console.log(`data from back: ${response.data}`);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -107,8 +110,8 @@ const ProfileOrders: React.FC = () => {
         orderkey={orderItem.id}
         id={convertToPersianNumbers(orderItem.id)}
         total_price={convertPrice(orderItem.total_price)}
-        delivery_day={orderItem.delivery_day ? convertDateInPersian(orderItem.delivery_day) : "Date not available"}
-        delivery_clock={orderItem.delivery_clock ? convertTimeToPersian(orderItem.delivery_clock) : "Time not valid"}
+        delivery_day={orderItem.delivery.delivery_date ? convertDateInPersian(orderItem.delivery.delivery_date) : "Date not available"}
+        delivery_clock={orderItem.delivery.end_time ? convertTimeToPersian(orderItem.delivery.end_time) : "Time not valid"}
         distination={orderItem.location.name}
         product_count={convertToPersianNumbers(orderItem.products.length - 3)}
         product_photos={orderItem.products.slice(0, 3).map(prod => prod)}
