@@ -31,5 +31,8 @@ export const convertDateInPersian = (dateString: string): string => {
     return `${convertToPersianNumbers(year)}/${convertToPersianNumbers(month)}/${convertToPersianNumbers(day)}`; 
 };  
 
-
-
+//Number
+export const convertPhoneNumberToPersian = (phoneNumber: string): string => {
+    const localNumber = phoneNumber.startsWith("+98") ? "0" + phoneNumber.slice(3) : phoneNumber;
+    return convertToPersianNumbers(localNumber);
+};

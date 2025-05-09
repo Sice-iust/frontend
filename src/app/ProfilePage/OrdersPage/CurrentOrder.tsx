@@ -1,99 +1,85 @@
-// app/profile/orders/[orderId]/page.tsx
 'use client';
 
 import { useParams } from 'next/navigation';
 import { FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaInfoCircle } from 'react-icons/fa';
+import { IoMdPerson } from "react-icons/io";
 
-type OrderStatus = {
-  status: string;
-  destination: string;
-  recipient: string;
-  deliveryDate: string;
-  deliveryTime: string;
-  notes: string;
-  phoneNumber: string;
-};
+type OrderStatus = 'تحویل داده شد' | 'در حال پردازش' | 'لغو شده' | 'در راه';
 
-export default function OrderStatusPage() {
-  const { orderId } = useParams();
-  
-  // Sample data - replace with your actual data fetching logic
-  const orderData: OrderStatus = {
-    status: "سفارش شما به یک تحویل داده شد",
-    destination: "خانه - تهران، شهریار، خیابان فلان کوچه پهمان یانک ۲۳۰ طبقه ۷",
-    recipient: "نام تحویل گیرنده",
-    deliveryDate: "شنبه ۷ اسفند",
-    deliveryTime: "بازه ۱۶ تا ۱۷",
-    notes: "به درب منزل تحویل داده شود",
-    phoneNumber: "۹۱۲۳۴۵۶۷۸۹"
-  };
+interface OrderStatusPageProps { 
+  orderkey: number;
+  id: string;  
+  total_price: string;  
+  delivery_day: string;  
+  delivery_clock: string;  
+  distination: string;  
+  address: string;
+  reciver: string;
+  product_count: string;  
+  status: number;
+  phone_number: string;
+}
+
+export default function OrderStatusPage({ orderkey, id, total_price, delivery_day, delivery_clock, distination, address, reciver, product_count, status, phone_number }: OrderStatusPageProps) {  
+  const params = useParams();
+  const orderId = params.orderId as string; 
 
   return (
-    <div className="p-4 font-vazir" dir="rtl">
-      {/* Order Status Header */}
-      <h1 className="text-xl font-bold mb-6">وضعیت سفارش: {orderId}</h1>
-      <div className="bg-green-100 text-green-800 p-3 rounded-lg mb-6">
-        {orderData.status}
-      </div>
+    <div className="mx-auto bg-white rounded-2xl shadow-lg p-4 mt-4 mb-2 border border-black w-full xl:w-[98%] text-right">
+      <div className="flex flex-col lg:flex-row gap-6 lg:flex-row-reverse"> 
+        {/* Right Side: Order Details */}
+        <div className="w-full lg:w-1/2" dir="rtl">
+          {/* Order Status Tracker */}
+          <div className="flex justify-center items-center gap-4 mb-6">
+            {[1, 2, 3].map(step => (
+              <div key={step} className={`w-8 h-8 rounded-full flex items-center justify-center 
+                ${step <= status ? "bg-green-500 text-white" : "bg-gray-300 text-gray-700"}`}>
+                {step}
+              </div>
+            ))}
+          </div>
 
-      {/* Delivery Details */}
-      <h2 className="text-xl font-semibold mb-4">جزئیات ارسال:</h2>
-      
-      <div className="space-y-4">
-        {/* Destination */}
-        <div className="flex items-start gap-2">
-          <FaMapMarkerAlt className="text-[#B8681D] mt-1" />
-          <div>
-            <p className="font-medium text-[#B8681D]">مقصد: <span className='text-[#2A2828]'>{orderData.destination}</span></p>
-            
+          {/* Order Status Header */}
+          <div className={`p-3 rounded-lg mb-6 ${status === 3 ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800'}`}>
+            <div className="flex items-center gap-2">
+              {status === 4 && (
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              )}
+              <span className="font-medium">{status}</span>
+            </div>
+          </div>
+
+          {/* Order Details */}
+          <h2 className="text-xl font-semibold mb-4">جزئیات ارسال:</h2>
+          <div className="space-y-4">
+            <div className="flex items-start gap-2">
+              <FaMapMarkerAlt className="text-[#B8681D] mt-1" />
+              <p className="font-medium text-[#B8681D]">مقصد: 
+                <span className='text-[#2A2828] mr-1.5 font-bold'>{distination} - 
+                  <span className='font-normal'>{address}</span>
+                </span>
+              </p>
+            </div>
+            <div className="flex items-start gap-2">
+              <IoMdPerson className="text-[#B8681D] mt-1" />
+              <p className="font-medium text-[#B8681D] ">تحویل گیرنده: <span className='text-[#2A2828] mr-1.5'>{reciver}</span></p>
+            </div>
+            <div className="flex items-start gap-2">
+              <FaCalendarAlt className="text-[#B8681D] mt-1" />
+              <p className="font-medium text-[#B8681D]">تاریخ تحویل: <span className='text-[#2A2828] mr-1.5'>{delivery_day}</span></p>
+            </div>
+            <div className="flex items-start gap-2">
+              <FaInfoCircle className="text-[#B8681D] mt-1" />
+              <p className="font-medium text-[#B8681D]">توضیحات سفارش: <span className='text-[#2A2828] mr-1.5'>فاقد توضیحات.</span></p>
+            </div>
+            <div className="flex items-start gap-2">
+              <FaPhone className="text-[#B8681D] mt-1" />
+              <p className="font-medium text-[#B8681D]">شماره تماس: <span className='text-[#2A2828] mr-1.5'>{phone_number}</span></p>
+            </div>
           </div>
         </div>
-
-        {/* Recipient */}
-        <div className="flex items-start gap-2">
-          <FaMapMarkerAlt className="text-[#B8681D]  mt-1" />
-          <div>
-            <p className="font-medium text-[#B8681D] ">تحویل گیرنده:</p>
-            <p>{orderData.recipient}</p>
-          </div>
-        </div>
-
-        {/* Delivery Date/Time */}
-        <div className="flex items-start gap-2">
-          <FaCalendarAlt className="text-gray-500 mt-1" />
-          <div>
-            <p className="font-medium">تاریخ تحویل:</p>
-            <p>{orderData.deliveryDate} - {orderData.deliveryTime}</p>
-          </div>
-        </div>
-
-        {/* Order Notes */}
-        <div className="flex items-start gap-2">
-          <FaInfoCircle className="text-gray-500 mt-1" />
-          <div>
-            <p className="font-medium">توضیحات سفارش:</p>
-            <p>{orderData.notes}</p>
-          </div>
-        </div>
-
-        {/* Phone Number */}
-        <div className="flex items-start gap-2">
-          <FaPhone className="text-gray-500 mt-1" />
-          <div>
-            <p className="font-medium">شماره تماس:</p>
-            <p>{orderData.phoneNumber}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="mt-8 flex gap-3">
-        <button className="bg-amber-600 text-white px-4 py-2 rounded-lg">
-          پیگیری پیک
-        </button>
-        <button className="border border-amber-600 text-amber-600 px-4 py-2 rounded-lg">
-          تماس با پشتیبانی
-        </button>
       </div>
     </div>
   );

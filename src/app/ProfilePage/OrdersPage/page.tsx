@@ -8,6 +8,8 @@ import { convertDateInPersian } from "../../../utils/Coversionutils";
 import { convertPrice } from "../../../utils/Coversionutils";
 import { convertTimeToPersian } from "../../../utils/Coversionutils";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
+import { convertPhoneNumberToPersian } from "../../../utils/Coversionutils";
+
 import { useTheme } from "../../theme";
 import CurrentOrder from "./CurrentOrder";
 export interface Product {  
@@ -18,12 +20,16 @@ export interface Product {
 interface Order {  
   id: number;  
   total_price: string;  
+  status:number,
   delivery : {
     delivery_date: string;  
     end_time: string; 
   } 
   location: {  
     name: string; 
+    reciver:string;
+    address:string;
+    phonenumber:string;
   };  
   
 }  
@@ -35,16 +41,21 @@ interface OrderItem {
 }  
 
 interface CompletedOrdersResponse {  
+  past_orders: OrderItem[];  
+}  
+
+interface CurrentOrdersResponse {  
   current_orders: OrderItem[];  
 }  
 
 
 
-
 const ProfileOrders: React.FC = () => {  
   
-  const [Completed, setCompleted] = useState<CompletedOrdersResponse | null>(null);  
- const [selectedTab, setSelectedTab] = useState(0);
+const [Completed, setCompleted] = useState<CompletedOrdersResponse | null>({ past_orders: [] });
+const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_orders: [] }); 
+
+  const [selectedTab, setSelectedTab] = useState(0);
   const { isDarkMode, toggleDarkMode } = useTheme();
   
 
@@ -53,7 +64,8 @@ const ProfileOrders: React.FC = () => {
           const response = await axios.get("https://nanziback.liara.run/user/order/myorder/", {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           });
-          setCompleted(response.data);
+          setCompleted({ past_orders: response.data.past_orders ?? [] });
+          setCurrent({ current_orders: response.data.current_orders ?? [] });    
           console.log(`data from back: ${response.data}`);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -61,7 +73,7 @@ const ProfileOrders: React.FC = () => {
   };
 
   console.log(Completed);
-  const groupedOrders = Completed?.current_orders?.reduce((acc, orderItem) => {  
+  const groupedOrders = Completed?.past_orders?.reduce((acc, orderItem) => {  
   const orderId = orderItem.order.id;  
 
     if (!acc[orderId]) {  
@@ -77,8 +89,26 @@ const ProfileOrders: React.FC = () => {
   
     return acc;  
   }, {} as Record<number, Order & { products: Product[] }>);  
+  const groupedCurrentOrders = Current?.current_orders?.reduce((acc, orderItem) => {  
+  const orderId = orderItem.order.id;  
+
+  if (!acc[orderId]) {  
+    acc[orderId] = {  
+      ...orderItem.order,   
+      products: []   
+    };  
+  }  
+
+  acc[orderId].products.push({  
+    photo: orderItem.product.photo,  
+    quantity: orderItem.quantity  
+  });  
+
+  return acc;  
+}, {} as Record<number, Order & { products: Product[] }>);
  
-  const ordersArray = groupedOrders ? Object.values(groupedOrders) : [];  
+  const PastArray = groupedOrders ? Object.values(groupedOrders) : [];
+  const CurrentArray=  groupedCurrentOrders ? Object.values(groupedCurrentOrders) : [];
   
     
   useEffect(() => {
@@ -95,16 +125,16 @@ const ProfileOrders: React.FC = () => {
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-0 
                 xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
-      <Menu currentOrdersCount={convertToPersianNumbers(3)}
-       finalOrdersCount={convertToPersianNumbers(ordersArray.length)} 
+      <Menu currentOrdersCount={convertToPersianNumbers(CurrentArray.length)}
+       finalOrdersCount={convertToPersianNumbers(PastArray.length)} 
        selectedTab={selectedTab} // 👈 Pass selectedTab  
         setSelectedTab={setSelectedTab} // 👈 Pass setSelectedTab  
 /> 
         {/* <CurrentOrder></CurrentOrder> */}
       
      {selectedTab == 0 ? (
-  ordersArray && ordersArray.length > 0 ? (
-    ordersArray.map(orderItem => (
+  PastArray && PastArray.length > 0 ? (
+    PastArray.map(orderItem => (
       <OrderCard
         key={orderItem.id}
         orderkey={orderItem.id}
@@ -123,7 +153,28 @@ const ProfileOrders: React.FC = () => {
         </p>
       )
     ) : (
-      <CurrentOrder />
+      CurrentArray && CurrentArray.length > 0 ? (
+    CurrentArray.map(orderItem => (
+      <CurrentOrder
+        key={orderItem.id}
+        orderkey={orderItem.id}
+        id={convertToPersianNumbers(orderItem.id)}
+        total_price={convertPrice(orderItem.total_price)}
+        delivery_day={orderItem.delivery.delivery_date ? convertDateInPersian(orderItem.delivery.delivery_date) : "Date not available"}
+        delivery_clock={orderItem.delivery.end_time ? convertTimeToPersian(orderItem.delivery.end_time) : "Time not valid"}
+        distination={orderItem.location.name}
+        address={orderItem.location.address}
+        reciver={orderItem.location.reciver}
+        product_count={convertToPersianNumbers(orderItem.products.length )}
+        status={orderItem.status}
+        phone_number={convertPhoneNumberToPersian(orderItem.location.phonenumber)}
+      />
+        ))
+      ) : (
+        <p className={`flex mt-25 justify-center ${isDarkMode ? "text-white" : "text-[#191919]"}`}>
+          هیچ سفارشی یافت نشد
+        </p>
+      )
     )}
     </div> 
     </> 
