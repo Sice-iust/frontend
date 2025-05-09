@@ -13,6 +13,7 @@ export default function HomePage() {
       src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} 
       className="hidden md:flex"
       />
+
     
       <div
       className="p-2 bg-neutral-200 dark:bg-neutral-700">

@@ -27,7 +27,7 @@ export default function Layout({ children }) {
     <html lang="en">
       <body>
         <CartProvider>
-          <AddressProvider>
+   <AddressProvider>
           <ThemeProvider>
             <div className='relative'>
               <Header2 />
@@ -64,7 +64,7 @@ export default function Layout({ children }) {
               </div>
             </div>
           </ThemeProvider>
-          </AddressProvider>
+   </AddressProvider>
         </CartProvider>
       </body>
     </html>
