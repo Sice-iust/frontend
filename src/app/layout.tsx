@@ -32,8 +32,8 @@ export default function Layout({ children }) {
               {children}
               <Footer2 />
               <div className='fixed bottom-0
-               bg-white w-full h-20  content-center p-2 flex justify-center
-               gap-20
+               bg-white w-full h-20  content-center p-2 md:hidden flex justify-center
+               gap-20 
                '>
                 <div dir="ltr" className={`basis-3/10 flex my-auto gap-10 dark:text-white text-black`}>
                   {isLoggedIn ? (
