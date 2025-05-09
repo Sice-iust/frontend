@@ -3,6 +3,7 @@ import axios from 'axios';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import {convertToPersianNumbers} from "../utils/Coversionutils"
 import ProductPage from "./ProductPage/ProductPage";
+import { ClassNames } from '@emotion/react';
 
 
 interface Product {
@@ -93,8 +94,8 @@ const handleOpenModal = (itemId: number) => {
   // if (error) return <div>{error}</div>;
 
   return (
-    <div dir="rtl" >
-      <div
+    <div  dir="rtl">
+      <div 
         className={`
         flex 
         items-center 
@@ -119,8 +120,9 @@ const handleOpenModal = (itemId: number) => {
           {Object.entries(groupedResults).length > 0 ? (
             Object.entries(groupedResults).map(([category, items]) => (
               <div key={category} className="mb-5 last:mb-0">
-                <div className={`${isDarkMode ? "text-white " : "text-black"}flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]`}>
-                  دسته بندی: <span className='flex text-right  items-center'>{highlightMatch(category)}</span>
+                <div className={`${isDarkMode ? "text-white " : "text-black"} flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]`}>
+                  <span>دسته بندی:</span> 
+                  <span className='flex text-right items-center'>{highlightMatch(category)}</span>
                 </div>
                 <div className="flex flex-col gap-2">
                   {items.map((item) => (
@@ -162,8 +164,11 @@ const handleOpenModal = (itemId: number) => {
           )}
         </div>
       )}
-{isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}
+      <div dir='ltr'>
+       {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}
+</div>
     </div>
+   
   );
 };
 
