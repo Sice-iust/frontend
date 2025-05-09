@@ -1,5 +1,4 @@
-import React, {useEffect,useState} from 'react';  
-import { RxCross1 } from "react-icons/rx";
+import React from 'react';
 import {Item} from './Orders-invoice-popup'
 import { convertToPersianNumbers } from '../../../../utils/Coversionutils';
 import { convertPrice } from '../../../../utils/Coversionutils';
