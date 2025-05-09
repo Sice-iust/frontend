@@ -19,7 +19,7 @@ import {
 import Image from "next/image";
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-import { useTheme } from '../../theme';
+import { useTheme } from '../theme';
 
 interface UserData {
   username: string;
@@ -253,13 +253,13 @@ export default function Sidebar() {
   <MenuItem 
     icon={<FaMapMarkerAlt />} 
     text="آدرس های من" 
-    href="/profile/addresses" 
+    href="/ProfilePage/addresses" 
     isActive={pathname.includes('/profile/addresses')} 
   />
   <MenuItem 
     icon={<FaTicketAlt />} 
     text="کدهای تخفیف" 
-    href="/profile/discounts" 
+    href="/ProfilePage/OrdersPage" 
     isActive={pathname.includes('/profile/discounts')} 
   />
   <MenuItem 

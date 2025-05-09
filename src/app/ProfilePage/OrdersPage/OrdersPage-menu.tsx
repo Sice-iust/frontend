@@ -1,13 +1,16 @@
 import React, { useState } from "react";  
-
+import FinalOrders from "./OrderCards";
+import CurrentOrders from './CurrentOrder';
 interface Ordersnum {  
   currentOrdersCount: string;    
   finalOrdersCount: string;  
+  selectedTab: number;
+  setSelectedTab: (tab: number) => void;
 }  
 
-const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => {  
+const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount, selectedTab, setSelectedTab  }) => {  
 
-  const [selectedTab, setSelectedTab] = useState(0); 
+  // const [selectedTab, setSelectedTab] = useState(0); 
   
   
 
@@ -52,6 +55,7 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount }) => 
           </div>  
         </div>  
       </div>  
+     
     </div>  
   );  
 };  

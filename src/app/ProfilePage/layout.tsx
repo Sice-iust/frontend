@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from "./Sidebar/page";  
+import Sidebar from "./Sidebar";  
 import { useTheme } from '../theme';
 
 

@@ -119,7 +119,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </div>) : null }
 
                 <div className="flex space-x-2 ml-1 hidden sm:flex">
-                    {product_photos.map((prod, index) => (
+                    {product_photos?.map((prod, index) => (
                     <div key={index} className="relative ">
                         <Image
                         src={prod.photo}

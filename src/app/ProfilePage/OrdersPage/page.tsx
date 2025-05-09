@@ -1,6 +1,6 @@
 'use client'
 import React, { useState,useEffect } from "react";  
-import Navbar from "../../navbar";   
+// import Navbar from "../../navbar"; -  
 import Menu from "./OrdersPage-menu";   
 import OrderCard from "./OrderCards";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { convertPrice } from "../../../utils/Coversionutils";
 import { convertTimeToPersian } from "../../../utils/Coversionutils";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import { useTheme } from "../../theme";
-
+import CurrentOrder from "./CurrentOrder";
 export interface Product {  
   photo: string; 
   quantity: number; 
@@ -42,7 +42,7 @@ interface CompletedOrdersResponse {
 const ProfileOrders: React.FC = () => {  
   
   const [Completed, setCompleted] = useState<CompletedOrdersResponse | null>(null);  
-
+ const [selectedTab, setSelectedTab] = useState(0);
   const { isDarkMode, toggleDarkMode } = useTheme();
 
   const Completed_Orders = async () => {
@@ -92,27 +92,36 @@ const ProfileOrders: React.FC = () => {
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-0 
                 xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
-      <Menu currentOrdersCount={convertToPersianNumbers(3)} finalOrdersCount={convertToPersianNumbers(ordersArray.length)} /> 
- 
+      <Menu currentOrdersCount={convertToPersianNumbers(3)}
+       finalOrdersCount={convertToPersianNumbers(ordersArray.length)} 
+       selectedTab={selectedTab} // 👈 Pass selectedTab  
+        setSelectedTab={setSelectedTab} // 👈 Pass setSelectedTab  
+/> 
+        {/* <CurrentOrder></CurrentOrder> */}
       
-      {ordersArray && ordersArray.length > 0 ? (
-        ordersArray.map(orderItem => (
-          <OrderCard
-            key={orderItem.id}
-            orderkey={orderItem.id}
-            id={convertToPersianNumbers(orderItem.id)}
-            total_price={convertPrice(orderItem.total_price)}
-            delivery_day={convertDateInPersian(orderItem.delivery_day)}
-            delivery_clock={convertTimeToPersian(orderItem.delivery_clock)}
-            distination={orderItem.location.name}
-            product_count={convertToPersianNumbers(orderItem.products.length-3)}
-            product_photos={orderItem.products.slice(0, 3).map(prod => prod)}
-          />
+     {selectedTab == 0 ? (
+  ordersArray && ordersArray.length > 0 ? (
+    ordersArray.map(orderItem => (
+      <OrderCard
+        key={orderItem.id}
+        orderkey={orderItem.id}
+        id={convertToPersianNumbers(orderItem.id)}
+        total_price={convertPrice(orderItem.total_price)}
+        delivery_day={orderItem.delivery_day ? convertDateInPersian(orderItem.delivery_day) : "Date not available"}
+        delivery_clock={orderItem.delivery_clock ? convertTimeToPersian(orderItem.delivery_clock) : "Time not valid"}
+        distination={orderItem.location.name}
+        product_count={convertToPersianNumbers(orderItem.products.length - 3)}
+        product_photos={orderItem.products.slice(0, 3).map(prod => prod)}
+      />
         ))
       ) : (
-        <p className={` flex  mt-25  justify-center  ${isDarkMode ? "text-white" : "text-[#191919]"}`} >هیچ سفارشی یافت نشد</p>
-      )}
-    
+        <p className={`flex mt-25 justify-center ${isDarkMode ? "text-white" : "text-[#191919]"}`}>
+          هیچ سفارشی یافت نشد
+        </p>
+      )
+    ) : (
+      <CurrentOrder />
+    )}
     </div> 
     </> 
   );  
