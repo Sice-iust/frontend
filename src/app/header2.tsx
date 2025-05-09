@@ -115,7 +115,10 @@ export default function Header2() {
                             <ShoppingCartIcon className="text-3xl" />
                             {shoppingNum > 0 && <span className={`absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825]  dark:text-black text-white rounded-[10px] px-[6px] py-[3px] text-[12px] `}>{shoppingNum}</span>}
                         </div>
-                        <span className={`cursor-pointer my-auto gap-2 dark:text-white text-black`} onClick={toggleDarkMode}   >
+                        <span className={`
+                            cursor-pointer my-auto gap-2
+                             dark:text-white text-black
+                             `} onClick={toggleDarkMode}   >
                             {isDarkMode ? 'حالت روز' : 'حالت شب'}
                             {isDarkMode ? <WbSunnyOutlinedIcon className="text-2xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-2xl ml-0.5" />}
                         </span>
