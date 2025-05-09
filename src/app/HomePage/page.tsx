@@ -9,10 +9,12 @@ export default function HomePage() {
   const { isDarkMode, toggleDarkMode } = useTheme();
   return (
     <>
+
       <Image height={100} width={10000} 
       src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} 
       className="hidden md:flex"
       />
+
     
       <div
       className="p-2 bg-neutral-200 dark:bg-neutral-700">

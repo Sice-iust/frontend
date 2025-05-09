@@ -9,26 +9,45 @@ interface CartContextType {
     counts: number,
     totalDiscount: number,
     totalActualPrice: number,
-    userquantity: Record<number, number>,
+
+    shipping_fee : number,
+    userquantity : Record<number, number>,
+    userdelivery : any[],
+    selectedSlotId : string,
+    selectedDateId : string,
+
+  
+
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
     removeItem: (id: number) => Promise<void>;
     handleAdd: (id: number) => Promise<void>;
     fetchDatauser: () => Promise<void>;
+    fetchdeliverydata : () => Promise<void>;
+    handleSlotSelect : (id: string) => Promise<void>;
+    
 }
 
 const CartContext = createContext<CartContextType>({
     cartItems: [],
     loading: true,
-    counts: 0,
-    totalDiscount: 0,
-    totalActualPrice: 0,
-    userquantity: {},
-    incrementQuantity: async () => Promise.resolve(),
-    decrementQuantity: async () => Promise.resolve(),
-    removeItem: async () => Promise.resolve(),
-    handleAdd: async () => Promise.resolve(),
-    fetchDatauser: async () => Promise.resolve()
+
+    counts:0,
+    totalDiscount:0,
+    totalActualPrice:0,
+    shipping_fee:0,
+    userquantity:{},
+    userdelivery :[],
+    selectedSlotId : "",
+    selectedDateId : "",
+    incrementQuantity: async () => Promise.resolve(), 
+    decrementQuantity: async () => Promise.resolve(), 
+    removeItem: async () => Promise.resolve() ,
+    handleAdd: async () => Promise.resolve(), 
+    fetchDatauser: async () => Promise.resolve() ,
+    fetchdeliverydata: async () => Promise.resolve(),
+    handleSlotSelect :  async () => Promise.resolve()
+
 });
 
 export const CartProvider = ({ children }) => {
@@ -39,9 +58,10 @@ export const CartProvider = ({ children }) => {
     const [totalActualPrice, setTotalActualPrice] = useState(0);
     const [loading, setLoading] = useState(true);
     const [userquantity, setUserQuantity] = useState<Record<number, number>>({});
-
-
-
+    const [shipping_fee , setShipping_fee] = useState(0);
+    const [userdelivery , setUserdelivery] = useState([]);
+    const [selectedSlotId, setSelectedSlotId] = useState<string>("");
+    const [selectedDateId, setSelectedDateId] = useState<string>("");
 
 
     const fetchData = async () => {
@@ -55,6 +75,7 @@ export const CartProvider = ({ children }) => {
             setCounts(response.data.counts || 0);
             setTotalDiscount(response.data.total_discount || 0);
             setTotalActualPrice(response.data.total_actual_price || 0);
+            setShipping_fee(response.data.shipping_fee||0);
             console.log("Data from server:", response.data);
         } catch (error) {
             console.error("Error fetching cart:", error);
@@ -62,6 +83,7 @@ export const CartProvider = ({ children }) => {
             setCounts(0);
             setTotalDiscount(0);
             setTotalActualPrice(0);
+            setShipping_fee(0);
         } finally {
             setLoading(false);
         }
@@ -72,6 +94,7 @@ export const CartProvider = ({ children }) => {
         console.log(cartItems)
     }, []);
 
+    //Start of Adding or Removing from Cart
     const incrementQuantity = async (id) => {
         setUserQuantity((prev) => ({
             ...prev,
@@ -149,10 +172,13 @@ export const CartProvider = ({ children }) => {
             }
         }
     };
+    //End
 
-    const fetchDatauser = async () => {
-        try {
-            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {
+    //fetching Quantity of Product in user cart
+    const fetchDatauser = async () => {  
+        try {  
+            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
+
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
             });
             const quantities = response.data.reduce((acc, item) => {
@@ -162,20 +188,56 @@ export const CartProvider = ({ children }) => {
 
             setUserQuantity(quantities);
 
-        } catch (err) {
-            console.error("Error fetching data:", err);
-        }
+
+    //fetching user deliverydata
+    const fetchdeliverydata = async () => {  
+        try {  
+            const response = await axios.get("https://nanziback.liara.run/user/cart/delivery/", {   
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
+            });   
+            setUserdelivery(response.data);
+            setSelectedSlotId(response.data.id);
+            setSelectedDateId(response.data.delivery_date);
+        } catch (err) {  
+            if (err.response && err.response.status === 404) {
+                console.error("No delivery data available (404 Not Found).");
+                setUserdelivery([]);
+                setSelectedSlotId("");
+                setSelectedDateId("0");
+            } else {
+                console.error("Error fetching data:", err);
+            }
+    
+        } 
+    };  
+
+      
+
+
+
+    const handleSlotSelect = async (slotId: string) => {
+        setSelectedSlotId(slotId);
+        const token = localStorage.getItem('token'); 
+        try {
+            
+            await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${slotId}/`, {
+            }, {
+              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+            });
+            fetchData();
+          } catch (error) {
+              console.error(error.response?.data);
+          }
     };
 
-
-
-
-
+    
     return (
-        <CartContext.Provider value={{
-            cartItems, counts, totalDiscount, totalActualPrice, loading, userquantity,
-            incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser
-        }}>
+
+        <CartContext.Provider value={{ cartItems, counts, totalDiscount, totalActualPrice, loading, shipping_fee, 
+                                       userquantity,userdelivery,selectedSlotId,selectedDateId,
+                                       incrementQuantity, decrementQuantity, removeItem ,handleAdd ,fetchDatauser,
+                                       fetchdeliverydata, handleSlotSelect}}>
+
             {children}
         </CartContext.Provider>
 

@@ -10,8 +10,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { ThemeProvider, useTheme } from "./theme";
 import { CartProvider } from "../context/Receiptcontext";
+
+import {AddressProvider} from "../context/GetAddress";
+
 import Link from 'next/link';
 import { useState } from 'react';
+
 
 export default function Layout({ children }) {
 
@@ -26,6 +30,7 @@ export default function Layout({ children }) {
     <html lang="en">
       <body>
         <CartProvider>
+   <AddressProvider>
           <ThemeProvider>
             <div className='relative'>
               <Header2 />
@@ -62,6 +67,7 @@ export default function Layout({ children }) {
               </div>
             </div>
           </ThemeProvider>
+   </AddressProvider>
         </CartProvider>
       </body>
     </html>

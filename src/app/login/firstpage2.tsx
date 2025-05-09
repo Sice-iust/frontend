@@ -44,6 +44,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
             console.log('Verification code sent to:', phonenumber);
 
             try {
+                setStep(Step.CODE);
                 const response = await axios.post('https://nanziback.liara.run/users/sendotp/',
                     { phonenumber },
                     {
