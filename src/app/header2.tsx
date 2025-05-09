@@ -111,7 +111,7 @@ export default function Header2() {
                             > ورود / عضویت   </button>
                         )}
                         <div className={`flex my-auto cursor-pointer gap-2 dark:text-white text-black`}>
-                            <h1>سبد خرید</h1>
+                             <Link href={"/OrderSubmission"}><h1>سبد خرید</h1></Link>
                             <ShoppingCartIcon className="text-3xl" />
                             {shoppingNum > 0 && <span className={`absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825]  dark:text-black text-white rounded-[10px] px-[6px] py-[3px] text-[12px] `}>{shoppingNum}</span>}
                         </div>
