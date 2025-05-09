@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect,useState} from 'react';  
+import { RxCross1 } from "react-icons/rx";
 import {Item} from './Orders-invoice-popup'
 import { convertToPersianNumbers } from '../../../../utils/Coversionutils';
 import { convertPrice } from '../../../../utils/Coversionutils';
@@ -8,7 +9,7 @@ interface InvoiceProps {
     payment:string;
     profit ? : string;
     shippingfee?:string;
-    discount:string;
+    discount?:string;
     Product:Item[];
     total_price?:string;
 
@@ -19,10 +20,10 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
     console.log("price:",total_price);
     return ( 
         <>
-        {Product.length > 0 && (
+        { Array.isArray(Product) && Product.length > 0 && (
             <div className=" flex flex-col pt-2 lg:p-3">
                 {Product.map(({ id, name, price, quantity }) => (
-                    <div key={id} className="flex flex-wrap flex-row-reverse py-2">
+                    <div key={id} className="flex flex-wrap flex-row-reverse py-2 ">
                        <span className="text-sm font-vazir font-medium text-right ml-auto -ml-auto 
                                         break-words whitespace-wrap max-w-[100%] 
                                         sm:w-auto sm:text-base">{name}</span>

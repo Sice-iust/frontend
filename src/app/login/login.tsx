@@ -6,8 +6,6 @@ import { Dialog, DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-import Logo from "./assets/logo.png";
-import Logodark from "./assets/logo-dark.png";
 import styles from'./login.module.scss';
 import { useTheme } from '../../app/theme';
 import FirstPage from './firstpage2';
@@ -65,8 +63,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
           />);
       case Step.REGISTER:
         return (
-          <ThirdPage 
-          open={open} 
+          <ThirdPage
           onClose={onClose} 
           isDarkMode={isDarkMode} 
           timeLeft={timeLeft} 
@@ -128,7 +125,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
         )}
         <div className={styles.dialogTitle}>
           <div className={styles.logoContainer}>
-            <Image src={isDarkMode ? Logodark : Logo} alt="Nanzi Logo" />
+            <Image width={100} height={100} src={isDarkMode ? '/assets/logo-dark.png' : '/assets/logo.png'} alt="Nanzi Logo" />
           </div>
           <div className={styles.fullScreenContainer}>
             <h1 className={styles.nanziText}>Nanzi</h1>
