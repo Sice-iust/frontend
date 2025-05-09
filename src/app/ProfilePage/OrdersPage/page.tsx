@@ -12,9 +12,13 @@ import { convertPhoneNumberToPersian } from "../../../utils/Coversionutils";
 
 import { useTheme } from "../../theme";
 import CurrentOrder from "./CurrentOrder";
-export interface Product {  
+export interface Product { 
+
+   
+  
   photo: string; 
   quantity: number; 
+  
 }  
 
 interface Order {  
@@ -24,6 +28,8 @@ interface Order {
   delivery : {
     delivery_date: string;  
     end_time: string; 
+    shipping_fee: string;
+
   } 
   location: {  
     name: string; 

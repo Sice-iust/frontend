@@ -75,9 +75,9 @@ export default function Sidebar() {
     fetchUserData();
   }, []);
 
-  if (loading) {
-    return <div className="p-4">در حال بارگذاری...</div>;
-  }
+  // if (loading) {
+  //   return <div className="p-4">در حال بارگذاری...</div>;
+  // }
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
