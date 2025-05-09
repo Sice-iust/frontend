@@ -4,10 +4,11 @@ import { IoMdClose } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import axios from 'axios';
 import { useADDRESS } from '../../../context/GetAddress';
+import LocationPopup from './AddLocation';
 
 export default function AddressModal({ onClose,id_user }) {
   const { data } = useADDRESS();
-
+  const [showPopup, setShowPopup] = useState(false);
   return (
     <div className="fixed inset-0 flex justify-center items-center z-10">
     <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div> 
@@ -34,11 +35,14 @@ export default function AddressModal({ onClose,id_user }) {
         <div className='flex flex-row-reverse mt-5'>
           <button className='bg-[#F18825] rounded-2xl w-auto p-2 pl-4 pr-3 
                              flex items-center gap-2 text-white font-medium cursor-pointer 
-                             hover:bg-orange-400 transition duration-300 hover:scale-105'>
+                             hover:bg-orange-400 transition duration-300 hover:scale-105'
+                             onClick={() => setShowPopup(true)}>
             افزودن آدرس جدید <FaPlus/>
           </button>
         </div>
       </div>
+      {showPopup && <LocationPopup onClose={() => setShowPopup(false)} />}
     </div>
   );
 }
+
