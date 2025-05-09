@@ -3,10 +3,12 @@ import { useTheme } from "../../theme"
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import AddressModal from "../AddressModal/AddressModal"
+import { useADDRESS } from '../../../context/GetAddress';
 
 export default function AddressPart() {
   const { isDarkMode } = useTheme();
-  
+  const { data } = useADDRESS();  
+  const selected = data.find((add) => add.isChosen === true);
   const [isModalOpen, setModalOpen] = useState(false);
   
   const handleEditClick = () => {
@@ -33,7 +35,7 @@ export default function AddressPart() {
           </div>
           <div className='flex flex-row-reverse mt-3 mr-15 mb-5'>
             <span className='font-medium text-md text-gray-500'>
-              تهران، شهرآرا، خیابان فلان، کوچه بهمان، پلاک ۱۰ واحد ۳
+              {selected?.address}
             </span>
           </div>
         </div>
