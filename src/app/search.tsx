@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import {convertToPersianNumbers} from "../utils/Coversionutils"
+import ProductPage from "./ProductPage/ProductPage";
+import { ClassNames } from '@emotion/react';
 
 
 interface Product {
@@ -22,6 +25,10 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const [isOpen, setIsOpen] = useState(false); 
+  const [selectedItem, setSelectedItem] = useState<number | null>(null); 
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -50,6 +57,15 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
       item.category.toLowerCase().includes(searchTermLower)
     );
   });
+const handleOpenModal = (itemId: number) => {
+    setSelectedItem(itemId);
+    setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+    setSelectedItem(null);
+  };
 
   const groupedResults = filteredItems.reduce((acc, item) => {
     if (!acc[item.category]) acc[item.category] = [];
@@ -78,8 +94,8 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
   // if (error) return <div>{error}</div>;
 
   return (
-    <div dir="rtl" >
-      <div
+    <div  dir="rtl">
+      <div 
         className={`
         flex 
         items-center 
@@ -110,36 +126,33 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
             Object.entries(groupedResults).map(([category, items]) => (
               <div key={category} className="mb-5 last:mb-0">
                 <div className={`dark:text-white text-black flex ml-1 items-center pb-2 mb-2 font-bold border-b border-[#696363]`}>
-                  دسته بندی: <span className='flex text-right  items-center'>{highlightMatch(category)}</span>
+                  <span>دسته بندی:</span> 
+                  <span className='flex text-right items-center'>{highlightMatch(category)}</span>
                 </div>
                 <div className="flex flex-col gap-2">
                   {items.map((item) => (
                     <div
                       key={item.id}
                       className="flex flex-col gap-2 p-2 rounded-md cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                    onClick={() => handleOpenModal(item.id)}
                     >
                       <div className={`flex items-center dark:text-gray-300 text-gray-700 `}>
                         <span className={`mr-2 font-bold dark:text-gray-300 text-gray-700 font-vazir`}>نام محصول:</span>
                         <span className="text-[#B8681D] font-bold">🔍</span>
                         {highlightMatch(item.name)}
                       </div>
-                      <div className={`flex items-center dark:text-gray-300 text-gray-700 `}>
-                        <span className={`mr-2 font-bold dark:text-gray-300 text-gray-700 font-vazir`}>قیمت:</span>
-                        <span>
-                          {item.price ? item.
+                      <div className={`flex items-center dark:text-gray-300 `}>
+                        <span className={`mr-2 font-bold dark:text-gray-300 font-vazir`}>قیمت:</span>
+                       <span>
+                          {convertToPersianNumbers(item.price ? item.
                             discounted_price.toLocaleString()
-                            : item.price.toLocaleString()}{' '}
+                            : item.price.toLocaleString())}{' '}
                           تومان
                         </span>
                       </div>
                       {item.stock > 0 ? (
-                        <div className={`flex items-center dark:text-gray-300 text-gray-700 `}>
-                          <span className={`mr-2 font-bold
-                             dark:text-gray-300 text-gray-700 font-vazir`}
-                          >موجودی: <span className={`font-medium dark:text-white text-black`}>
-                              {item.stock}
-                            </span>
-                          </span>
+                      <div className={`flex items-center dark:text-gray-300 `}>
+                          <span className={`mr-2 font-bold dark:text-gray-300  font-vazir`}>موجودی: <span className={`font-medium ${isDarkMode ? "text-white " : "text-gray-700"}`}>{convertToPersianNumbers(item.stock)}</span></span>
                         </div>
                       ) : (
                         <div className="flex items-center">
@@ -156,7 +169,11 @@ const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
           )}
         </div>
       )}
+      <div dir='ltr'>
+       {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}
+</div>
     </div>
+   
   );
 };
 

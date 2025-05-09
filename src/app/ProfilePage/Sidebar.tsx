@@ -1,6 +1,7 @@
 // components/Profile/Sidebar.tsx
 'use client';
 import { useRef, useState,useEffect  } from 'react';
+import {convertToPersianNumbers} from "../../utils/Coversionutils"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { IoMdExit } from "react-icons/io";
@@ -17,7 +18,7 @@ import {
 import Image from "next/image";
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-import { useTheme } from '../../theme';
+import { useTheme } from '../theme';
 
 interface UserData {
   username: string;
@@ -31,7 +32,9 @@ export default function Sidebar() {
   const [editUsername, setEditUsername] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [credit,SetCredit]=useState(0);
   const [userData, setUserData] = useState<UserData>({
+
     username: 'در حال بارگذاری...',
     profile_photo: ''
   });
@@ -70,10 +73,37 @@ export default function Sidebar() {
 
     fetchUserData();
   }, []);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const token = getToken();
+  //       if (!token) {
+  //         throw new Error('No token found');
+  //       }
 
-  if (loading) {
-    return <div className="p-4">در حال بارگذاری...</div>;
-  }
+  //       const response = await axios.get('https://nanziback.liara.run/users/wallet/', {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`
+  //         }
+  //       });
+
+  //       setUserData({
+  //         username: response.data.username,
+  //         profile_photo: response.data.profile_photo
+  //       });
+  //     } catch (error) {
+  //       console.error('Error fetching user data:', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchUserData();
+  // }, []);
+
+  // if (loading) {
+  //   return <div className="p-4">در حال بارگذاری...</div>;
+  // }
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -145,13 +175,16 @@ export default function Sidebar() {
       <div className="flex flex-col items-center mb-2 py-4 ">
         <div className="relative mb-4" onClick={handleImageClick}>
           <div className="w-20 h-20 border rounded-full  overflow-hidden flex items-center justify-center">
+            
+             
               <Image
                 src={`/assets/default_profile.jpg`}
                 alt="Default Profile"
                 width={80}
                 height={80}
                 className="object-cover w-full h-full"
-              />
+              />  
+                 
           </div>
           {/* <button className="absolute bottom-0 left-0 bg-[#B8681D] text-white p-1 rounded-full transition-all"
            >
@@ -212,7 +245,7 @@ export default function Sidebar() {
             <span className={` dark:text-white text-black font-bold`}>کیف پول من</span>
           </div>
         <div className="text-left">
-          <span className={`dark:text-gray-500 text-black text-xl  `}>  ۱۴۰,۰۰۰   تومان </span>
+          <span className={` text-xl dark:text-white  `}>  {convertToPersianNumbers(credit )}  تومان </span>
         </div>
         </div>
         
@@ -239,13 +272,13 @@ export default function Sidebar() {
   <MenuItem 
     icon={<FaMapMarkerAlt />} 
     text="آدرس های من" 
-    href="/profile/addresses" 
+    href="/ProfilePage/addresses" 
     isActive={pathname.includes('/profile/addresses')} 
   />
   <MenuItem 
     icon={<FaTicketAlt />} 
     text="کدهای تخفیف" 
-    href="/profile/discounts" 
+    href="/ProfilePage/OrdersPage" 
     isActive={pathname.includes('/profile/discounts')} 
   />
   <MenuItem 

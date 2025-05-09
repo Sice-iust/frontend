@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from "./Sidebar/page";  
+import Sidebar from "./Sidebar";  
 import { useTheme } from '../theme';
 
 
@@ -21,7 +21,7 @@ export default function ProfileLayout({
         
         
         {/* Sidebar comes SECOND (right side) */}
-        <div className="w-full  flex flex-grow lg:w-[10%] ml-auto">
+        <div className="w-full  flex flex-grow lg:w-[10%] ml-auto sm:block">
           <Sidebar />
         </div>
         </div>
