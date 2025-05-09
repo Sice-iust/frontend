@@ -159,15 +159,15 @@ const Receipt: React.FC = () => {
                                 <div key={item.product.id} className="flex flex-row-reverse py-2 justify-between">
                                     <span className={`text-s dark:text-black text-white font-vazir
                                          font-medium text-right  mr-6`}>
-                                            {item.product.name}
-                                            </span>
+                                        {item.product.name}
+                                    </span>
                                     <span className="flex flex-row-reverse">
                                         <span className={`ml-1 dark:text-gray-400 text-gray-500`}>
                                             × {convertToPersianNumbers(item.quantity)}
-                                            </span>
+                                        </span>
                                         <span className={`dark:text-white text-black`}>
                                             {convertToPersianNumbers(Number(item.product.price * (1 - item.product.discount / 100)).toLocaleString())}
-                                            </span>
+                                        </span>
                                         <span className={`text-s font-vazir font-medium text-right mr-2 dark:text-gray-400 text-gray-500`}>تومان</span>
                                     </span>
                                 </div>

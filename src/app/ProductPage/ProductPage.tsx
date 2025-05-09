@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import axios from 'axios';
@@ -40,17 +40,12 @@ interface CommentType {
     comment: string;
 }
 
-
-
-
 export default function ProductPage({ open, onClose, itemid }) {
     const { userquantity, incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser } = useCart();
     const [data, setData] = useState<DataType | null>(null);
     const [comments, setComments] = useState<CommentType[]>([]);
 
     console.log("quantity", userquantity[itemid])
-
-
 
     const convertToPersianDate = (dateString: string): string[] => {
         moment.loadPersian({ dialect: 'persian-modern' });
@@ -87,8 +82,6 @@ export default function ProductPage({ open, onClose, itemid }) {
         }
     }, [itemid]);
 
-
-
     useEffect(() => {
         const fetchcomments = async () => {
             try {
@@ -107,7 +100,6 @@ export default function ProductPage({ open, onClose, itemid }) {
             fetchcomments();
         }
     }, [itemid]);
-
 
     const CustomNextArrow = (props) => {
         const { onClick } = props;
@@ -182,7 +174,6 @@ export default function ProductPage({ open, onClose, itemid }) {
             },
         ]
     };
-
 
 
 
@@ -452,7 +443,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 <div className="fixed inset-0 z-10 overflow-y-auto">
                                     <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>
                                     <div className="flex items-center justify-center min-h-full text-center lg:p-4">
-                                        <               div className={`relative transform overflow-hidden  text-left dark:bg-[#191919] bg-white
+                                        <div className={`relative transform overflow-hidden  text-left dark:bg-[#191919] bg-white
                         shadow-xl transition-all min-h-screen w-full 
                         md:my-8 sm:w-full  md:max-w-[85%] lg:max-w-[65%] sm:min-h-[420px] lg:rounded-lg`}>
                                             <div className="pb-4 text-right">

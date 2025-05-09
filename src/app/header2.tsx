@@ -94,7 +94,7 @@ export default function Header2() {
                         <LazySearch isDarkMode={isDarkMode} />
                     </div>
 
-                    <div dir="ltr" className={`basis-3/10 flex my-auto gap-10 dark:text-white text-black`}>
+                    <div dir="ltr" className={`hidden basis-3/10 md:flex my-auto gap-10 dark:text-white text-black`}>
                         {isLoggedIn ? (
                             <Link
                                 href="/ProfilePage/OrdersPage"
@@ -124,10 +124,8 @@ export default function Header2() {
                         </span>
                     </div>
                 </div>
-                {/* <div>
-                    <Image height={100} width={10000} src={`/assets/homePagePhoto.png`} alt={``} />
-                </div> */}
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
-        </>);
+        </>
+    );
 }
