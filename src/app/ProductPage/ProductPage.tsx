@@ -89,7 +89,7 @@ export default function ProductPage({ open, onClose, itemid }) {
                     headers: { "Content-Type": "application/json", }
                 });
                 setComments(response.data);
-                console.log("Response Data:", response.data);
+                console.log("Response Data: comment", response.data);
                 console.log("comments: ", comments);
             } catch (err) {
                 console.error("Error fetching data:", err);
@@ -346,8 +346,8 @@ export default function ProductPage({ open, onClose, itemid }) {
                                                                         </div>
                                                                         <div className={`dark:bg-[#383535] bg-[#d9d9d9] box-content rounded-2xl  w-auto h-6 ml-1`}>
                                                                             <span className={`dark:text-white text-black flex flex-row text-lg font-vazir ml-3 mb-1`}>
-                                                                                {convertToPersianNumbers(comment.rating)}
-                                                                                <FaStar className="m-1 mr-3" color="orange" />
+                                                                            {convertToPersianNumbers(comment.rating? comment.rating : 0)}
+                                                                            <FaStar className="m-1 mr-3" color="orange" />
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -391,7 +391,7 @@ export default function ProductPage({ open, onClose, itemid }) {
 
                                                             <div className=" box-content rounded-2xl bg-white border w-auto h-5 ml-2">
                                                                 <span className="flex flex-row text-sm font-vazir ml-2 mb-1">
-                                                                    {convertToPersianNumbers(comment.rating)}
+                                                                    {convertToPersianNumbers(comment.rating? comment.rating : 0)}
                                                                     <FaStar className="m-0.5 mr-2 ml-1" color="orange" />
                                                                 </span>
                                                             </div>
