@@ -7,13 +7,12 @@ export default function ProductCard({ img_src, text, ref, percent, price, type, 
 
     return (
         <>
-            <div style={{
-                background: 'white', border: '1px solid black',
-                height: '250px', width: '250px',
-                borderRadius: '15px', padding: '15px',
-                display: 'flex', flexDirection: 'column', alignContent: 'center',
-                margin: 'auto', marginBottom: '20px'
-            }} className=' hover:drop-shadow-xl/30'>
+            <div className=' flex flex-col content-center
+            bg-white dark:bg-neutral-900 dark:text-white
+            mx-3
+            border-1
+            h-60 rounded-2xl p-4
+            hover:drop-shadow-xl/30'>
                 <Image src={img_src}
                     width={100}
                     height={100}

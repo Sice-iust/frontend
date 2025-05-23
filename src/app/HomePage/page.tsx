@@ -1,9 +1,9 @@
 'use client'
 import React from "react";
-import CategoryWrapper from "./category/categoryWrapper";
-import CardSlider from "./ProductCard/cardSlider";
+import CategoryWrapper from "../../components/HomePage/category/categoryWrapper";
+import CardSlider from "../../components/HomePage/ProductCard/cardSlider";
 import Image from "next/image";
-import { useTheme } from "../theme";
+import { useTheme } from "../../components/theme";
 
 export default function HomePage() {
   const { isDarkMode, toggleDarkMode } = useTheme();
@@ -13,6 +13,7 @@ export default function HomePage() {
       src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} 
       className="hidden md:flex"
       />
+
     
       <div
       className="p-2 bg-neutral-200 dark:bg-neutral-700">

@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from "./Sidebar";
 import HamburgerButton from './hamburgerbutton';
-// import { useTheme } from '../../components/theme';
+import { useTheme } from '../../components/theme';
 import OrdersPage from './OrdersPage/OrdersPage';
 import AddressesPage from "./AddressPage/Address"
 

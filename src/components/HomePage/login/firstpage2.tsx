@@ -1,5 +1,4 @@
 import { PhoneOutlined } from "@mui/icons-material";
-import { DialogActions, Button } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./login.module.scss";
@@ -44,6 +43,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
             console.log('Verification code sent to:', phonenumber);
 
             try {
+                setStep(Step.CODE);
                 const response = await axios.post('https://nanziback.liara.run/users/sendotp/',
                     { phonenumber },
                     {
