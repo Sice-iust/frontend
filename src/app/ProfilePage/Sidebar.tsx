@@ -169,12 +169,12 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
 
   return (
     <div className={`w-full h-full dark:bg-[#191919] bg-white p-4 font-vazir max-w-md`} dir="rtl">
-      <button 
+      {/* <button 
         className="lg:hidden absolute top-4 left-4 text-gray-500 text-2xl"
         onClick={() => setIsMobileOpen && setIsMobileOpen(false)}
       >
         ×
-      </button>
+      </button> */}
 
       <div className="flex flex-col items-center mb-2 py-4 mt-6 lg:mt-0">
         <div className="relative mb-4" onClick={handleImageClick}>
