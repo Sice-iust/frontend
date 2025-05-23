@@ -61,7 +61,7 @@ const ProfileOrders: React.FC = () => {
 const [Completed, setCompleted] = useState<CompletedOrdersResponse | null>({ past_orders: [] });
 const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_orders: [] }); 
 
-  const [selectedTab, setSelectedTab] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(1);
   const { isDarkMode, toggleDarkMode } = useTheme();
   
 
@@ -137,10 +137,10 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
                 xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
       <Menu currentOrdersCount={convertToPersianNumbers(CurrentArray.length)}
        finalOrdersCount={convertToPersianNumbers(PastArray.length)} 
-       selectedTab={selectedTab} // 👈 Pass selectedTab  
-        setSelectedTab={setSelectedTab} // 👈 Pass setSelectedTab  
+       selectedTab={selectedTab} 
+        setSelectedTab={setSelectedTab} 
 /> 
-        {/* <CurrentOrder></CurrentOrder> */}
+      
       
      {selectedTab == 0 ? (
   PastArray && PastArray.length > 0 ? (

@@ -6,6 +6,8 @@ import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import LoadingBox from "../../../components/Loading/LoadingBox";
 import Discount from "./Discount"
 import { convertPrice } from "../../../utils/Coversionutils";
+import handlePayment from './handlePyament';
+
 
 const Cart: React.FC = () => {
     const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee } = useCart();
@@ -96,7 +98,7 @@ const Cart: React.FC = () => {
                                 focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]"
                     /> 
 
-                    <button
+                    <button onClick={handlePayment}
                         className="bg-[#F18825] mr-2 mb-4 rounded-2xl text-white px-4 h-10 flex items-center 
                                    justify-center w-[70%]  cursor-pointer">
                         ثبت و پرداخت
