@@ -1,9 +1,9 @@
 'use client'
 import React from "react";
-import CategoryWrapper from "./category/categoryWrapper";
-import CardSlider from "./ProductCard/cardSlider";
+import CategoryWrapper from "../../components/HomePage/category/categoryWrapper";
+import CardSlider from "../../components/HomePage/ProductCard/cardSlider";
 import Image from "next/image";
-import { useTheme } from "../theme";
+import { useTheme } from "../../components/theme";
 
 export default function HomePage() {
   const { isDarkMode, toggleDarkMode } = useTheme();

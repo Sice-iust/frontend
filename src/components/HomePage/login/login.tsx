@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 import styles from'./login.module.scss';
-import { useTheme } from '../../app/theme';
+import { useTheme } from '../../theme';
 import FirstPage from './firstpage2';
 import SecondPage from './secondpage';
 import ThirdPage from './thirdpage';

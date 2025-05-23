@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import {convertToPersianNumbers} from "../utils/Coversionutils"
-import ProductPage from "./ProductPage/ProductPage";
-import { ClassNames } from '@emotion/react';
+import {convertToPersianNumbers} from "../../utils/Coversionutils"
+import ProductPage from "../ProductPage/ProductPage";
 
 
 interface Product {

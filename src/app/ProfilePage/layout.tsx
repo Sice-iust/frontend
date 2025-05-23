@@ -1,7 +1,7 @@
 'use client';
 
 import Sidebar from "./Sidebar";  
-import { useTheme } from '../theme';
+import { useTheme } from '../../components/theme';
 
 
 export default function ProfileLayout({
