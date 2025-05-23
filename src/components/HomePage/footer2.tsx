@@ -2,7 +2,7 @@
 import { faFacebook, faInstagram, faTelegram, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { useTheme } from "./theme";
+import { useTheme } from "../theme";
 
 
 export default function Footer2() {

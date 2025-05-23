@@ -58,8 +58,11 @@ export default function CardSlider({ text, color, url, type }) {
     };
 
     return (
-        <div className='rounded-2xl px-8 py-1 pb-8 m-10 drop-shadow-xl/25' style={{ backgroundColor: color }}>
-            <div className={`text-white dark:text-black flex text-right justify-end text-3xl font-bold my-4 `}>
+        <div className='rounded-2xl md:px-8 py-1 pb-8 m-6 px-8 md:m-10 drop-shadow-xl/25' style={{ backgroundColor: color }}>
+            <div className='text-white dark:text-black
+            text-xl
+            flex text-right justify-end md:text-3xl 
+            font-bold my-4'>
                 {text}
             </div>
             <Slider {...settings}>

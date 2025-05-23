@@ -8,7 +8,7 @@ import { Product } from "./page"
 import InvoicePopup from './Invoice/Orders-invoice-popup';
 import CommentsPopup from "./Comments/comments-popup";
 import ReorderPopup from "./Reorder/Reorder-Popup"
-import { useTheme } from "../../theme";
+import { useTheme } from "../../../components/theme";
 
 
 

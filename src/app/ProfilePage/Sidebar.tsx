@@ -18,7 +18,7 @@ import {
 import Image from "next/image";
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-import { useTheme } from '../theme';
+import { useTheme } from '../../components/theme';
 
 interface UserData {
   username: string;

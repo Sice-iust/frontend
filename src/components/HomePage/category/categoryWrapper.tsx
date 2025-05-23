@@ -37,11 +37,12 @@ export default function CategoryWrapper() {
 
     return (
         <>
-            <div style={{ display: 'flex', flexDirection: 'column', padding: '30px' }}>
-                <div className='flex justify-end text-xl font-bold my-4'>
+            <div className='flex flex-col p-3 md:p-7'>
+                <div className='flex justify-end text-xl font-bold mb-3 md:my-4 dark:text-white'>
                         دسته بندی ها
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row-reverse', flexWrap: 'wrap', justifyContent: 'space-around', columnGap: '50px',rowGap: '50px'}}>
+                <div className='flex flex-row-reverse flex-wrap justify-around gap-y-4 md:gap-10'
+                >
                     {CardData.map((card, index) => <CategoryCard key={index} img_src={card.src} text={card.text} id={card.id} />)}
                 </div>
             </div >
