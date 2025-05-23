@@ -131,7 +131,7 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
      sm:p-4 sm:mb-10 
      sm:w-full sm:h-screen 
      sm:mt-0 sm:overflow-hidden 
-     sm:mx-auto sm:block hidden   
+     sm:mx-auto sm:block  
                 md:w-[70%] md:mx-7  
                 lg:w-[70%] lg:mx-0 
                 xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
