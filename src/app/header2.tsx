@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Map from "./locationWindow/MapPopUp";
 
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
@@ -30,10 +31,14 @@ const LazySearch = dynamic(() => import('./search'), {
 });
 
 export default function Header2() {
+    const [isMapOpen,SetIsMapOpen]=useState(false);
     const { isDarkMode, toggleDarkMode } = useTheme();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [shoppingNum, setShoppingNum] = useState(2);
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const OpenMap=()=>SetIsMapOpen(true);
+    const CloseMap=()=>SetIsMapOpen(false);
     const getUsername = async () => {
         // localStorage.removeItem('token');  
         const token = localStorage.getItem("token");
@@ -89,7 +94,8 @@ export default function Header2() {
                                 className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
                         </Link>
                     </div>
-
+  <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={OpenMap}
+                            > tempmap  </button>
                     <div className="basis-5/10 w-full my-10 md:my-auto mx-auto ">
                         <LazySearch isDarkMode={isDarkMode} />
                     </div>
@@ -128,6 +134,7 @@ export default function Header2() {
                 </div>
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
+            {isMapOpen && <Map onClose={CloseMap} isOpen={isMapOpen}/>}
         </>
     );
 }
