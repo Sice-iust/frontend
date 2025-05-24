@@ -14,11 +14,13 @@ interface AddressItemsType {
         isChosen: boolean;
       }>;
     removeAddress: (id: number) => Promise<void>;
+    selectAddress:(id: number) => Promise<void>;
 }
 
 const CartContext = createContext<AddressItemsType>({
     data:[],
     removeAddress: async () => Promise.resolve() ,
+    selectAddress:async () => Promise.resolve(),
 });
 
 export const AddressProvider = ({ children }) => {
@@ -47,6 +49,16 @@ export const AddressProvider = ({ children }) => {
           } catch (error) {
               console.error("Error deleting item:", error);
               fetchData();
+          }
+      };
+      const selectAddress = async (id) => {   
+          try {
+              await axios.put(`https://nanziback.liara.run/users/locations/choose/location/${id}`, {}, {
+                  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              });
+              fetchData(); 
+          } catch (error) {
+              console.error("Error adding to cart:", error);
           }
       };
         const fetchData = async () => {
@@ -79,7 +91,7 @@ export const AddressProvider = ({ children }) => {
     
 
 
-    const value = { data,removeAddress };     
+    const value = { data,removeAddress,selectAddress };     
     return (
         <CartContext.Provider value={value}>
             {children}
