@@ -42,7 +42,7 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         </div>
                         <div className="flex flex-row-reverse gap-2 mr-4 mb-1 ">
                             <MdPhoneEnabled className="h-4 w-4"/>
-                            <span className="mb-1 text-gray-600 text-sm">{convertToPersianNumbers()}</span>
+                            <span className="mb-1 text-gray-600 text-sm">{phone}</span>
                         </div>
                     </div>
                 }
