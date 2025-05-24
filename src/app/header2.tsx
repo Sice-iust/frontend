@@ -41,10 +41,13 @@ export default function Header2() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [shoppingNum, setShoppingNum] = useState(2);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpenAddress, setModalOpenAddress] = useState(false);
     const { data = [] } = useADDRESS();  
     const selected = data?.find((add) => add.isChosen === true);
-    const OpenMap=()=>SetIsMapOpen(true);
-    const CloseMap=()=>SetIsMapOpen(false);
+    const OpenMap=()=>setModalOpenAddress(true);
+    const handleCloseModalAddress = () => {
+        setModalOpenAddress(false);
+    };
     const getUsername = async () => {
         // localStorage.removeItem('token');  
         const token = localStorage.getItem("token");
@@ -150,7 +153,7 @@ export default function Header2() {
                 </div>
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
-            {isMapOpen && <AddressModal onClose={handleCloseModal} id_user={localStorage.getItem("token")} />}
+            {isModalOpenAddress && <AddressModal onClose={handleCloseModalAddress} id_user={localStorage.getItem("token")} />}
         </>
     );
 }
