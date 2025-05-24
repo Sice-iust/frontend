@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Map from "./locationWindow/MapPopUp";
-
+import { IoLocationOutline } from "react-icons/io5";
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
@@ -14,7 +14,11 @@ import { useTheme } from "./theme";
 import LoginModal from "./login/login";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-
+import { useADDRESS } from "../context/GetAddress";
+import {  
+  FaChevronDown,
+  FaChevronLeft,
+} from "react-icons/fa";
 const LazySearch = dynamic(() => import('./search'), {
     loading: () => (
         <div className="flex items-center rounded-3xl p-2 dark:bg-[#383535] bg-[#D9D9D9] mx-auto " dir='rtl'>
@@ -36,7 +40,8 @@ export default function Header2() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [shoppingNum, setShoppingNum] = useState(2);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const { data = [] } = useADDRESS();  
+    const selected = data?.find((add) => add.isChosen === true);
     const OpenMap=()=>SetIsMapOpen(true);
     const CloseMap=()=>SetIsMapOpen(false);
     const getUsername = async () => {
@@ -85,7 +90,7 @@ export default function Header2() {
             <div className={` dark:bg-[#191919] bg-white  w-full`}>
                 <div dir="rtl" className="flex flex-col justify-center px-5 py-2 md:flex-row">
 
-                    <div className=" basis-2/10 my-auto">
+                    <div className=" basis-1/10 my-auto">
                         <Link href="/">
                             <Image src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`}
                                 alt="Logo"
@@ -94,8 +99,18 @@ export default function Header2() {
                                 className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
                         </Link>
                     </div>
-  <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={OpenMap}
-                            > tempmap  </button>
+  {/* <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={OpenMap}
+                            > tempmap  </button> */}
+                    <div className="flex flex-col mt-4 ml-20 leading-relaxed">
+                        <span className="text-md text-black font-bold mr-5">{selected?.name}</span>
+                        <div className="flex flex-row-reverse gap-1">
+                            <FaChevronDown className="text-[#f18825] h-3 w-3 mt-1"/>
+                            <span className='font-medium text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis'>
+                                {selected?.address}
+                            </span>  
+                            <IoLocationOutline/>
+                        </div>             
+                    </div>
                     <div className="basis-5/10 w-full my-10 md:my-auto mx-auto ">
                         <LazySearch isDarkMode={isDarkMode} />
                     </div>

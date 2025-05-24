@@ -30,7 +30,7 @@ export default function AddressModal({ onClose,id_user }) {
             title={add.name}
             address={add.address}
             isSelected={add.isChosen}
-            isprofile={true}
+            isprofile={false}
             name={add.receiver}
             phone={add.phone}
           />
