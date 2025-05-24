@@ -27,9 +27,9 @@ export default function AddressModal({ onClose,id_user }) {
             title={add.name}
             address={add.address}
             isSelected={add.isChosen}
-            isprofile={false}
+            isprofile={true}
             name={"ss"}
-            phone={"ss"}
+            phone={"0912334455"}
           />
         ))}
         <div className='flex flex-row-reverse mt-5'>

@@ -6,6 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa"; 
 import { useADDRESS } from '../../context/GetAddress';
+import { IoPerson } from "react-icons/io5";
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
     const { removeAddress } = useADDRESS();
@@ -32,7 +33,14 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                                          font-medium text-md text-gray-500 max-w-160 leading-[2rem]">{address}</span>
                     </div>                      
                 </div>
-
+                {isprofile && 
+                    <div>
+                        <div className="flex flex-row-reverse gap-2 mr-4 mb-1 ">
+                            <IoPerson className="h-4 w-4 mt-1"/>
+                            <span className="mb-1">{name}</span>
+                        </div>
+                    </div>
+                }
             </div>
         </>
     );
