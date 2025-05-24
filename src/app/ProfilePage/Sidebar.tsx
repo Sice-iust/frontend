@@ -18,9 +18,10 @@ interface SidebarProps {
   setIsMobileOpen?: (value: boolean) => void;
   setActiveTab: (tab: string) => void;
   activeTab: string;
+  isMobileOpen : boolean
 }
 
-export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: SidebarProps) {
+export default function Sidebar({ setIsMobileOpen,isMobileOpen, setActiveTab, activeTab }: SidebarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isUsernameExpanded, setIsUsernameExpanded] = useState(false);
@@ -152,12 +153,13 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
           onClick={handleClick}
           className={`w-full flex items-center p-7 h-full transition-colors ${
             isActive 
-              ? 'bg-[#FFE6C1] text-[#B8681D] font-medium' 
-              : 'hover:bg-[#FFF5E9] text-gray-500'
+              ? 'lg:bg-[#FFE6C1] lg:text-[#B8681D] lg:font-medium hover:bg-[#FFE6C1] text-gray-500 ' 
+              : 'text-gray-500 hover:bg-[#FFF5E9]'
           }`}
         >
-          <span className={`flex items-center justify-center w-6 ${
-            isActive ? 'text-[#B8681D]' : 'text-gray-500'
+          <span className={`flex items-center justify-center w-6 
+          ${
+            isActive ? 'lg:text-[#B8681D] text-gray-500' : 'text-gray-500'
           }`}>
             {icon}
           </span>
