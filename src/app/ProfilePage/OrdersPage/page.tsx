@@ -11,7 +11,7 @@ import {
   convertToPersianNumbers,
   convertPhoneNumberToPersian 
 } from "../../../utils/Coversionutils";
-import { useTheme } from "../../theme";
+import { useTheme } from "../../../components/theme";
 
 interface Product {
   photo: string;
