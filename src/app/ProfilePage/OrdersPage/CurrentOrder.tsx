@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaInfoCircle, FaTruck } from 'react-icons/fa';
 import { IoMdPerson } from "react-icons/io";
 import Invoice from './Invoice/invoice-detail';
-import { Product } from './page';
+// import { Product } from './page';
 
 export interface Item { 
     id : number;
@@ -62,7 +62,8 @@ export default function OrderStatusPage({ orderkey, id, total_price, delivery_da
 
 
   return (
-<div className="mx-auto bg-white rounded-2xl shadow-lg p-4 mt-4 mb-2 border border-black w-full xl:w-[98%] text-right overflow-auto max-h-screen">      <div className="flex flex-col  gap-6 lg:flex-row-reverse"> 
+<div className="mx-auto bg-white rounded-2xl shadow-lg p-4 mt-4 mb-2 border border-black w-full xl:w-[98%] text-right overflow-auto max-h-screen">    
+    <div className="flex flex-col  gap-6 lg:flex-row-reverse"> 
         <div className="w-full lg:w-1/2" dir="rtl">
             <h2 className="text-xl font-bold mb-4">جزئیات سفارش:</h2>
           

@@ -73,33 +73,31 @@ export default function Sidebar() {
 
     fetchUserData();
   }, []);
-  // useEffect(() => {
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const token = getToken();
-  //       if (!token) {
-  //         throw new Error('No token found');
-  //       }
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = getToken();
+        if (!token) {
+          throw new Error('No token found');
+        }
 
-  //       const response = await axios.get('https://nanziback.liara.run/users/wallet/', {
-  //         headers: {
-  //           'Authorization': `Bearer ${token}`
-  //         }
-  //       });
+        const response = await axios.get('https://nanziback.liara.run/user/wallet/', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
-  //       setUserData({
-  //         username: response.data.username,
-  //         profile_photo: response.data.profile_photo
-  //       });
-  //     } catch (error) {
-  //       console.error('Error fetching user data:', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+                 SetCredit(response.data.balance);
 
-  //   fetchUserData();
-  // }, []);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   // if (loading) {
   //   return <div className="p-4">در حال بارگذاری...</div>;
@@ -108,28 +106,120 @@ export default function Sidebar() {
     fileInputRef.current?.click();
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      alert('لطفاً یک تصویر انتخاب کنید');
+
+
+const payment = async () => {
+  console.log("Initiating payment...");
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("No authorization token found.");
       return;
     }
 
-    if (file.size > 2 * 1024 * 1024) {
-      alert('حجم تصویر باید کمتر از ۲ مگابایت باشد');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setProfileImage(event.target.result as string);
+    // Step 1: Initiate payment
+    const response = await axios.post(
+      "https://nanziback.liara.run/user/wallet/",
+      {
+        type: 1,
+        value: "10121",
+        description: "test",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
-    };
-    reader.readAsDataURL(file);
-  };
+    );
+
+    console.log("Payment data:", response.data);
+    const redirectUrl = response.data.payment_url;
+    const orderId = response.data.order_id;
+
+    if (!redirectUrl) {
+      alert("Payment processed, but no redirect URL was provided.");
+      return;
+    }
+
+    // Step 2: Store order ID for verification
+    localStorage.setItem("current_order_id", orderId);
+
+    // Step 3: Open payment gateway in new tab
+    const paymentWindow = window.open(redirectUrl, "_blank", "width=600,height=600");
+
+    if (!paymentWindow) {
+      console.error("Failed to open payment window.");
+      return;
+    }
+
+    // Step 4: Start checking for payment completion
+    const checkPayment = setInterval(async () => {
+      if (paymentWindow.closed) {
+        clearInterval(checkPayment);
+        
+        // Step 5: Verify payment immediately after window closes
+        try {
+          await verifyPayment();
+        } catch (error) {
+          console.error("Payment verification failed:", error);
+          alert("Payment verification failed. Please check your balance.");
+        }
+      }
+    }, 2000);
+
+  } catch (error) {
+    console.error("Error processing payment:", error);
+    alert("Payment failed. Please try again.");
+  }
+};
+
+// Verification function that checks every payment
+const verifyPayment = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No authorization token found.");
+    return;
+  }
+
+  
+
+  try {
+    // Make verification request to the correct endpoint
+    const response = await axios.get(
+      `https://nanziback.liara.run/user/wallet-verify/`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      }
+    );
+
+    console.log("Verification response:", response.data);
+
+    if (response.data.status === "OK") {
+      alert("Payment verified successfully!");
+      // Optional: Clear the stored order ID after successful verification
+      localStorage.removeItem("current_order_id");
+    } else {
+      alert("Payment verification failed. Please contact support.");
+    }
+  } catch (error) {
+    console.error("Error verifying payment:", error);
+    throw error; // Re-throw to handle in the payment function
+  }
+};
+
+// Also verify when page loads in case user refreshes
+window.addEventListener('load', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has("Authority")) {
+    verifyPayment();
+  }
+});
+
+ 
   const toggleUsernameSection = () => {
     setIsUsernameExpanded(!isUsernameExpanded);
   };
@@ -251,12 +341,12 @@ export default function Sidebar() {
         
         <div className="flex justify-between items-center">
           
-          <Link 
-            href="/profile/wallet" 
+          <button onClick={payment}
+            
             className="text-[#B8681D] text-sm   px-3 py-1 rounded-md  mr-5 transition-colors"
           >
             + افزایش موجودی
-          </Link>
+          </button>
         </div>
       </div>
     </div>
