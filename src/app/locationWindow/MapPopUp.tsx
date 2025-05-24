@@ -18,6 +18,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
   useEffect(() => {
     if (!isOpen) return;
 
+
     const scriptId = "neshan-map-sdk";
     const styleId = "leaflet-style";
 
@@ -30,14 +31,14 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
       if (!document.getElementById(styleId)) {
         const link = document.createElement("link");
         link.rel = "stylesheet";
-        link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        link.href = "https://static.neshan.org/sdk/leaflet/v1.9.4/neshan-sdk/v1.0.8/index.css";
         link.id = styleId;
         document.head.appendChild(link);
       }
 
       if (!mapRef.current) {
         mapRef.current = new window.L.Map("map", {
-          key: "web.22af1a5a63b741ec80c20d2c00a31174", 
+          key: "web.449b3e29ce6b4a19952518f63277f678", 
           maptype: "neshan",
           poi: true,
           traffic: true,
@@ -57,7 +58,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
 
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
-      script.src = "https://static.neshan.org/sdk/leaflet/v1.9.4/neshan-sdk/v1.0.4/index.js";
+      script.src = "https://static.neshan.org/sdk/leaflet/v1.9.4/neshan-sdk/v1.0.8/index.js";
       script.async = true;
       script.id = scriptId;
       document.body.appendChild(script);
@@ -79,7 +80,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   return isOpen ? (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 ">
       <div className="bg-white rounded-md shadow-lg w-full max-w-2xl p-4 relative border border-gray-200">
         <CloseIcon
           className="cursor-pointer rounded-full p-1 hover:bg-gray-100 text-2xl absolute top-2 right-2"
