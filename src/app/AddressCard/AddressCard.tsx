@@ -1,4 +1,4 @@
-import { PhoneOutlined, Remove } from "@mui/icons-material";
+import { MdPhoneEnabled } from "react-icons/md";
 import { DialogActions, Button } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
@@ -7,6 +7,7 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa"; 
 import { useADDRESS } from '../../context/GetAddress';
 import { IoPerson } from "react-icons/io5";
+import { convertToPersianNumbers } from "../../utils/Coversionutils";
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
     const { removeAddress } = useADDRESS();
@@ -34,10 +35,14 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                     </div>                      
                 </div>
                 {isprofile && 
-                    <div>
+                    <div className="flex flex-row-reverse gap-5">
                         <div className="flex flex-row-reverse gap-2 mr-4 mb-1 ">
-                            <IoPerson className="h-4 w-4 mt-1"/>
-                            <span className="mb-1">{name}</span>
+                            <IoPerson className="h-4 w-4"/>
+                            <span className="mb-1 text-gray-600 text-sm">{name}</span>
+                        </div>
+                        <div className="flex flex-row-reverse gap-2 mr-4 mb-1 ">
+                            <MdPhoneEnabled className="h-4 w-4"/>
+                            <span className="mb-1 text-gray-600 text-sm">{convertToPersianNumbers()}</span>
                         </div>
                     </div>
                 }
