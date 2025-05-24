@@ -37,22 +37,18 @@ export const AddressProvider = ({ children }) => {
           fetchData();
       }, []);   
 
-        const removeAddress = async (id) => {
-            setData((prev) => {
-                const updated = { ...prev };
-                delete updated[id]; 
-                return updated;
-            });
-        
-            try {
-                await axios.delete(`https://nanziback.liara.run/users/locations/modify/${id}/`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                });
-                fetchData();
-            } catch (error) {
-                console.error("Error deleting item:", error);
-            }
-        };
+      const removeAddress = async (id: number) => {
+          setData(prev => prev.filter(item => item.id !== id));
+
+          try {
+              await axios.delete(`https://nanziback.liara.run/users/locations/modify/${id}/`, {
+                  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              });
+          } catch (error) {
+              console.error("Error deleting item:", error);
+              fetchData();
+          }
+      };
         const fetchData = async () => {
           console.log("Fetching data...");
           try {
