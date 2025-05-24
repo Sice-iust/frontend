@@ -126,15 +126,9 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
   return (
     <>
 
-      <div className={`sm:rounded-xl dark:bg-[#191919]
-     bg-white sm:shadow-md 
-     sm:p-4 sm:mb-10 
-     sm:w-full sm:h-screen 
-     sm:mt-0 sm:overflow-hidden 
-     sm:mx-auto sm:block  
-                md:w-[70%] md:mx-7  
-                lg:w-[70%] lg:mx-0 
-                xl:mx-7 xl:mt-10 xl:w-[70%]`}>  
+      <div className={`sm:rounded-xl dark:bg-[#191919] lg:mx-6 p-4
+                bg-white sm:shadow-md 
+                 xl:mt-4 min-h-screen mb-4`}>  
       <Menu currentOrdersCount={convertToPersianNumbers(CurrentArray.length)}
        finalOrdersCount={convertToPersianNumbers(PastArray.length)} 
        selectedTab={selectedTab} // 👈 Pass selectedTab  
