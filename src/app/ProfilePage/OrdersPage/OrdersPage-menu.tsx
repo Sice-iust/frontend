@@ -15,7 +15,7 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount, selec
   
 
   return (  
-    <div className="container mx-auto mt-10">  
+    <div className="container mx-auto mt-10 ">  
       <div className="flex bg-gray-300 rounded-2xl 
                       overflow-hidden w-full
                       md:w-full mx-auto lg:w-[60%]">    
@@ -50,7 +50,7 @@ const Menu: React.FC<Ordersnum> = ({ currentOrdersCount, finalOrdersCount, selec
                            sm:text-sm 
                            md:text-base">سفارش های جاری&zwnj;({(currentOrdersCount)})</span>  
           <div className={`absolute bottom-0 left-0 right-0 
-                           h-1 bg-[#F18825] rounded-2xl 
+                           h-1 bg-[#F18825] rounded-2xl    overflow-y-scroll
             ${selectedTab === 1 ? '' : 'hidden'}`}>
           </div>  
         </div>  

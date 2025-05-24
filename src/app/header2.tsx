@@ -35,7 +35,7 @@ export default function Header2() {
     const [shoppingNum, setShoppingNum] = useState(2);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const getUsername = async () => {
-        // localStorage.removeItem('token');  
+        localStorage.removeItem('token');  
         const token = localStorage.getItem("token");
         console.log('Retrieved Token:', token);
 

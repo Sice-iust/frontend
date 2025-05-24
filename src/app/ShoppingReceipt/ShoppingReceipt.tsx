@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useCart } from "../../context/Receiptcontext";
 import LoadingBox from "../../components/Loading/LoadingBox";
 import { convertToPersianNumbers } from '../../utils/Coversionutils';
+import Link from "next/link";
 
 const Receipt: React.FC = () => {
     const { cartItems, counts, totalDiscount, totalActualPrice, loading,
@@ -193,7 +194,7 @@ const Receipt: React.FC = () => {
                             </div>
                         </div>
                         <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white font-medium font-vazir font-2xl py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300 hover:scale-110">
-                            ثبت و ادامه
+                            <Link href={"/OrderSubmission"}><h1> ثبت و ادامه</h1></Link>
                         </button>
                     </>
                 )}
