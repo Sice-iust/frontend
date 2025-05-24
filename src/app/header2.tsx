@@ -19,6 +19,7 @@ import {
   FaChevronDown,
   FaChevronLeft,
 } from "react-icons/fa";
+import AddressModal from "./OrderSubmission/AddressModal/AddressModal";
 const LazySearch = dynamic(() => import('./search'), {
     loading: () => (
         <div className="flex items-center rounded-3xl p-2 dark:bg-[#383535] bg-[#D9D9D9] mx-auto " dir='rtl'>
@@ -101,7 +102,7 @@ export default function Header2() {
                     </div>
   {/* <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={OpenMap}
                             > tempmap  </button> */}
-                    <div className="flex flex-col mt-4 ml-20 leading-relaxed">
+                    <div className="flex flex-col mt-4 ml-20 leading-relaxed cursor-pointer" onClick={OpenMap}>
                         <span className="text-md text-black font-bold mr-5">{selected?.name}</span>
                         <div className="flex flex-row-reverse gap-1">
                             <FaChevronDown className="text-[#f18825] h-3 w-3 mt-1"/>
@@ -149,7 +150,7 @@ export default function Header2() {
                 </div>
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
-            {isMapOpen && <Map onClose={CloseMap} isOpen={isMapOpen}/>}
+            {isMapOpen && <AddressModal onClose={handleCloseModal} id_user={localStorage.getItem("token")} />}
         </>
     );
 }
