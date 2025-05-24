@@ -77,7 +77,7 @@ export default function Header2() {
     };
     const handleOpenModal = () => {
         setIsModalOpen(true);
-    };
+handleCloseModalAddress();    };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
