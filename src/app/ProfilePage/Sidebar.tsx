@@ -18,10 +18,10 @@ interface SidebarProps {
   setIsMobileOpen?: (value: boolean) => void;
   setActiveTab: (tab: string) => void;
   activeTab: string;
-  isMobileOpen : boolean
+  
 }
 
-export default function Sidebar({ setIsMobileOpen,isMobileOpen, setActiveTab, activeTab }: SidebarProps) {
+export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: SidebarProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isUsernameExpanded, setIsUsernameExpanded] = useState(false);
@@ -170,7 +170,7 @@ export default function Sidebar({ setIsMobileOpen,isMobileOpen, setActiveTab, ac
   };
 
   return (
-    <div className={`w-full h-full dark:bg-[#191919] bg-white p-4 font-vazir max-w-md`} dir="rtl">
+    <div className={`w-full h-full dark:bg-[#191919] bg-white p-4 font-vazir max-w-md rounded-xl`} dir="rtl">
       {/* <button 
         className="lg:hidden absolute top-4 left-4 text-gray-500 text-2xl"
         onClick={() => setIsMobileOpen && setIsMobileOpen(false)}
