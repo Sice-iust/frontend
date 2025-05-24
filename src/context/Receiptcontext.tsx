@@ -9,39 +9,39 @@ interface CartContextType {
     counts: number,
     totalDiscount: number,
     totalActualPrice: number,
-    shipping_fee : number,
-    userquantity : Record<number, number>,
-    userdelivery : any[],
-    selectedSlotId : string,
-    selectedDateId : string,
+    shipping_fee: number,
+    userquantity: Record<number, number>,
+    userdelivery: any[],
+    selectedSlotId: string,
+    selectedDateId: string,
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
     removeItem: (id: number) => Promise<void>;
     handleAdd: (id: number) => Promise<void>;
     fetchDatauser: () => Promise<void>;
-    fetchdeliverydata : () => Promise<void>;
-    handleSlotSelect : (id: string) => Promise<void>;
-    
+    fetchdeliverydata: () => Promise<void>;
+    handleSlotSelect: (id: string) => Promise<void>;
+
 }
 
 const CartContext = createContext<CartContextType>({
     cartItems: [],
     loading: true,
-    counts:0,
-    totalDiscount:0,
-    totalActualPrice:0,
-    shipping_fee:0,
-    userquantity:{},
-    userdelivery :[],
-    selectedSlotId : "",
-    selectedDateId : "",
-    incrementQuantity: async () => Promise.resolve(), 
-    decrementQuantity: async () => Promise.resolve(), 
-    removeItem: async () => Promise.resolve() ,
-    handleAdd: async () => Promise.resolve(), 
-    fetchDatauser: async () => Promise.resolve() ,
+    counts: 0,
+    totalDiscount: 0,
+    totalActualPrice: 0,
+    shipping_fee: 0,
+    userquantity: {},
+    userdelivery: [],
+    selectedSlotId: "",
+    selectedDateId: "",
+    incrementQuantity: async () => Promise.resolve(),
+    decrementQuantity: async () => Promise.resolve(),
+    removeItem: async () => Promise.resolve(),
+    handleAdd: async () => Promise.resolve(),
+    fetchDatauser: async () => Promise.resolve(),
     fetchdeliverydata: async () => Promise.resolve(),
-    handleSlotSelect :  async () => Promise.resolve()
+    handleSlotSelect: async () => Promise.resolve()
 });
 
 export const CartProvider = ({ children }) => {
@@ -52,8 +52,8 @@ export const CartProvider = ({ children }) => {
     const [totalActualPrice, setTotalActualPrice] = useState(0);
     const [loading, setLoading] = useState(true);
     const [userquantity, setUserQuantity] = useState<Record<number, number>>({});
-    const [shipping_fee , setShipping_fee] = useState(0);
-    const [userdelivery , setUserdelivery] = useState([]);
+    const [shipping_fee, setShipping_fee] = useState(0);
+    const [userdelivery, setUserdelivery] = useState([]);
     const [selectedSlotId, setSelectedSlotId] = useState<string>("");
     const [selectedDateId, setSelectedDateId] = useState<string>("");
 
@@ -65,12 +65,13 @@ export const CartProvider = ({ children }) => {
             const response = await axios.get("https://nanziback.liara.run/user/cart/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
+            console.log(localStorage.getItem("token"));
+            console.log("Data from server:", response.data);
             setCartItems(response.data.cart_items || []);
             setCounts(response.data.counts || 0);
             setTotalDiscount(response.data.total_discount || 0);
             setTotalActualPrice(response.data.total_actual_price || 0);
-            setShipping_fee(response.data.shipping_fee||0);
-            console.log("Data from server:", response.data);
+            setShipping_fee(response.data.shipping_fee || 0);
         } catch (error) {
             console.error("Error fetching cart:", error);
             setCartItems([]);
@@ -92,15 +93,15 @@ export const CartProvider = ({ children }) => {
     const incrementQuantity = async (id) => {
         setUserQuantity((prev) => ({
             ...prev,
-            [id]: (prev[id]) + 1, 
+            [id]: (prev[id]) + 1,
         }));
-    
-    
+
+
         try {
             await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=add`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            fetchData(); 
+            fetchData();
         } catch (error) {
             console.error("Error adding to cart:", error);
         }
@@ -109,9 +110,9 @@ export const CartProvider = ({ children }) => {
     const decrementQuantity = async (id) => {
         setUserQuantity((prev) => ({
             ...prev,
-            [id]: (prev[id]) - 1, 
+            [id]: (prev[id]) - 1,
         }));
-    
+
         try {
             await axios.put(`https://nanziback.liara.run/user/cart/modify/${id}/?update=delete`, {}, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -125,10 +126,10 @@ export const CartProvider = ({ children }) => {
     const removeItem = async (id) => {
         setUserQuantity((prev) => {
             const updated = { ...prev };
-            delete updated[id]; 
+            delete updated[id];
             return updated;
         });
-    
+
         try {
             await axios.delete(`https://nanziback.liara.run/user/cart/modify/${id}/`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -142,60 +143,60 @@ export const CartProvider = ({ children }) => {
     const handleAdd = async (itemId) => {
         setUserQuantity((prev) => ({
             ...prev,
-            [itemId]: (prev[itemId] || 0) + 1, 
+            [itemId]: (prev[itemId] || 0) + 1,
         }));
-    
-        const token = localStorage.getItem('token'); 
+
+        const token = localStorage.getItem('token');
         try {
-            
+
             await axios.post(`https://nanziback.liara.run/user/cart/creat/${itemId}/`, {
-              quantity: 1
+                quantity: 1
             }, {
-              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
             });
             fetchData();
-          } catch (error) {
+        } catch (error) {
             if (error.response?.data?.error === "You already have this product in your cart") {
-              await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/?update=${"add"}`, {
-              }, {
-                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
-              });
-              fetchData();
+                await axios.put(`https://nanziback.liara.run/user/cart/modify/${itemId}/?update=${"add"}`, {
+                }, {
+                    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+                });
+                fetchData();
             } else {
-              console.error(error.response?.data);
+                console.error(error.response?.data);
             }
-          }
+        }
     };
     //End
 
     //fetching Quantity of Product in user cart
-    const fetchDatauser = async () => {  
-        try {  
-            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {   
+    const fetchDatauser = async () => {
+        try {
+            const response = await axios.get("https://nanziback.liara.run/user/cart/quantity/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
-            });  
+            });
             const quantities = response.data.reduce((acc, item) => {
-                acc[item.product_id] = item.quantity; 
+                acc[item.product_id] = item.quantity;
                 return acc;
             }, {});
-    
+
             setUserQuantity(quantities);
-    
-        } catch (err) {  
-            console.error("Error fetching data:", err);  
-        } 
-    };  
+
+        } catch (err) {
+            console.error("Error fetching data:", err);
+        }
+    };
 
     //fetching user deliverydata
-    const fetchdeliverydata = async () => {  
-        try {  
-            const response = await axios.get("https://nanziback.liara.run/user/cart/delivery/", {   
+    const fetchdeliverydata = async () => {
+        try {
+            const response = await axios.get("https://nanziback.liara.run/user/cart/delivery/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem('token')}`, "Content-Type": "application/json", }
-            });   
+            });
             setUserdelivery(response.data);
             setSelectedSlotId(response.data.id);
             setSelectedDateId(response.data.delivery_date);
-        } catch (err) {  
+        } catch (err) {
             if (err.response && err.response.status === 404) {
                 console.error("No delivery data available (404 Not Found).");
                 setUserdelivery([]);
@@ -204,31 +205,33 @@ export const CartProvider = ({ children }) => {
             } else {
                 console.error("Error fetching data:", err);
             }
-    
-        } 
-    };  
+
+        }
+    };
 
     const handleSlotSelect = async (slotId: string) => {
         setSelectedSlotId(slotId);
-        const token = localStorage.getItem('token'); 
+        const token = localStorage.getItem('token');
         try {
-            
+
             await axios.post(`https://nanziback.liara.run/user/cart/delivery/create/${slotId}/`, {
             }, {
-              headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+                headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
             });
             fetchData();
-          } catch (error) {
-              console.error(error.response?.data);
-          }
+        } catch (error) {
+            console.error(error.response?.data);
+        }
     };
 
-    
+
     return (
-        <CartContext.Provider value={{ cartItems, counts, totalDiscount, totalActualPrice, loading, shipping_fee, 
-                                       userquantity,userdelivery,selectedSlotId,selectedDateId,
-                                       incrementQuantity, decrementQuantity, removeItem ,handleAdd ,fetchDatauser,
-                                       fetchdeliverydata, handleSlotSelect}}>
+        <CartContext.Provider value={{
+            cartItems, counts, totalDiscount, totalActualPrice, loading, shipping_fee,
+            userquantity, userdelivery, selectedSlotId, selectedDateId,
+            incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser,
+            fetchdeliverydata, handleSlotSelect
+        }}>
             {children}
         </CartContext.Provider>
 
