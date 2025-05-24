@@ -10,7 +10,7 @@ import { IoPerson } from "react-icons/io5";
 import { convertToPersianNumbers } from "../../utils/Coversionutils";
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
-    const { removeAddress } = useADDRESS();
+    const { removeAddress,selectAddress } = useADDRESS();
     return (
         <>
             <div className={`box-content w-full border-1 rounded-2xl ${isSelected ? "border-green-600" : "border-black"} mb-5 `}>
@@ -27,7 +27,8 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                     </div>
                     <div className="flex flex-row-reverse gap-2 mb-3">
                         <button className={`h-5 w-5 mr-3 mt-1 rounded-full border-1 cursor-pointer
-                                            ${isSelected ? "bg-green-600 border-green-600" : "bg-white"}`}>
+                                            ${isSelected ? "bg-green-600 border-green-600" : "bg-white"}`}
+                                            onClick={() => selectAddress(id)}>
                         {isSelected && <FaCheck className="h-3 w-4 text-white " />}
                         </button>
                         <span className="text-right overflow-hidden break-words 
