@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
+import { useADDRESS } from '../../context/GetAddress';
 declare global {
   interface Window {
     L?: any;
@@ -23,6 +24,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
   const [lng, setLng] = useState<number>(51.338076);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [sdkLoaded, setSdkLoaded] = useState(false);
+  const { data,fetchData } = useADDRESS();
   const [addressData, setAddressData] = useState({
     mainAddress: "",
     detailedAddress: "",
@@ -180,44 +182,34 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
       setShowAddressForm(true);
     }
   };
-  const addAddress=async()=>{
-          const token = localStorage.getItem('token');
-
-    try{
-        const response = await axios.post ("https://nanziback.liara.run/users/locations/mylocation/",
-        {
-          address: addressData.mainAddress,
-          name: addressData.addressTitle,
-          home_floor: addressData.floor,
-          home_unit: addressData.unit,
-          home_plaque: addressData.plaque,
-          ischoose: "true",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-    console.log("Address added successfully:", response.data);
-    } catch (error) {
-      console.error("Error adding address:", error);
-    }
-
-  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddressData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    addAddress();
+    const token = localStorage.getItem('token');
+    try {
+
+        await axios.post(`https://nanziback.liara.run/users/locations/mylocation/`, {
+            address: addressData.mainAddress,
+            home_plaque: addressData.plaque,
+            home_unit: addressData.unit,
+            home_floor : addressData.floor,
+            name:addressData.addressTitle,
+        }, {
+            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+        });
+        fetchData();
+    } catch (error) {
+            console.error(error.response?.data);
+    }
+    console.log("Address submitted:", addressData);
     onClose();
   };
+
 
   if (!isOpen) return null;
 
