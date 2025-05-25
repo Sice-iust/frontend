@@ -56,8 +56,6 @@ export default function AddressModal({ onClose, id_user }) {
                     </div>
                 </div>
             )}
-
-            {showPopup && <LocationPopup onClose={() => setShowPopup(false)} />}
             {isMapOpen && <Map onClose={CloseMap} isOpen={isMapOpen} />}
         </div>
     );

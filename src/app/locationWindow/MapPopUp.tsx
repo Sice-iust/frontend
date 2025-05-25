@@ -180,6 +180,33 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
       setShowAddressForm(true);
     }
   };
+  const addAddress=async()=>{
+          const token = localStorage.getItem('token');
+
+    try{
+        const response = await axios.post ("https://nanziback.liara.run/users/locations/mylocation/",
+        {
+          address: addressData.mainAddress,
+          name: addressData.addressTitle,
+          home_floor: addressData.floor,
+          home_unit: addressData.unit,
+          home_plaque: addressData.plaque,
+          ischoose: "true",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+    console.log("Address added successfully:", response.data);
+    } catch (error) {
+      console.error("Error adding address:", error);
+    }
+
+  }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -188,7 +215,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Address submitted:", addressData);
+    addAddress();
     onClose();
   };
 
