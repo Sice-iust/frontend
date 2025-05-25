@@ -6,8 +6,9 @@ import { IoMdExit } from "react-icons/io";
 import Image from "next/image";
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
-// import { useTheme } from '../../components/theme';
-import Link from "next/link";
+import { useTheme } from '../../components/theme';
+import CreditPopup from './increaseCredit';
+import Link from 'next/link';
 
 interface UserData {
   username: string;
@@ -28,7 +29,9 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
   const [editUsername, setEditUsername] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [credit, setCredit] = useState(0);
+  const [credit,SetCredit]=useState(0);
+  const [showCreditPopup, setShowCreditPopup] = useState(false);
+
   const [userData, setUserData] = useState<UserData>({
     username: 'در حال بارگذاری...',
     profile_photo: ''
@@ -78,24 +81,67 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      alert('لطفاً یک تصویر انتخاب کنید');
-      return;
-    }
 
-    if (file.size > 2 * 1024 * 1024) {
-      alert('حجم تصویر باید کمتر از ۲ مگابایت باشد');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      if (event.target?.result) {
-        setProfileImage(event.target.result as string);
+const handlePayment = async (amount: number) => {
+    console.log("Initiating payment for amount:", amount);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("No authorization token found.");
+        return;
       }
-    };
-    reader.readAsDataURL(file);
+
+      const response = await axios.post(
+        "https://nanziback.liara.run/user/wallet/",
+        { 
+          type: 1, 
+          value: amount.toString(), 
+          description: "Wallet charge" 
+        },
+        { 
+          headers: { 
+            Authorization: `Bearer ${token}`, 
+            "Content-Type": "application/json" 
+          } 
+        }
+      );
+
+      console.log("Payment data:", response.data);
+      const redirectUrl = response.data.payment_url;
+
+      if (!redirectUrl) {
+        alert("Payment processed, but no redirect URL was provided.");
+        return;
+      }
+
+      window.open(redirectUrl, "_blank", "width=600,height=600");
+      setShowCreditPopup(false);
+      await fetchCredit();
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      alert("Payment failed. Please try again.");
+    }
   };
+
+  // Update your existing payment function to just open the popup
+  const handlePaymentClick = () => {
+    setShowCreditPopup(true);
+  };
+
+const fetchCredit = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("No token found");
+
+    const response = await axios.get("https://nanziback.liara.run/user/wallet/", {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+
+    SetCredit(response.data.balance); // Update the wallet balance
+  } catch (error) {
+    console.error("Error fetching wallet balance:", error);
+  }
+};
 
   const toggleUsernameSection = () => {
     setIsUsernameExpanded(!isUsernameExpanded);
@@ -252,15 +298,16 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
           </div>
           
           <div className="flex justify-end">
-            <button
-              onClick={() => {
-                setActiveTab('wallet');
-                setIsMobileOpen && setIsMobileOpen(false);
-              }}
-              className="text-[#B8681D] text-sm px-3 py-1 rounded-md transition-colors"
-            >
-              + افزایش موجودی
-            </button>
+           <button
+            onClick={() => {
+              setActiveTab("wallet");
+              setIsMobileOpen && setIsMobileOpen(false);
+              handlePaymentClick(); // Call payment function here
+            }}
+            className="text-[#B8681D] text-sm px-3 py-1 rounded-md transition-colors"
+          >
+            + افزایش موجودی
+          </button>
           </div>
         </div>
       </div>
@@ -295,6 +342,6 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
         </li>
       </ul>
     </div>
+    
     </div>
   );
-}
