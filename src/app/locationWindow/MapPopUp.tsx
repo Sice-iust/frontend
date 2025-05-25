@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { convertToPersianNumbers } from "../../utils/Coversionutils";
-
+import { useADDRESS } from '../../context/GetAddress';
 declare global {
   interface Window {
     L?: any;
@@ -21,6 +21,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
   const [lat, setLat] = useState<number>(35.699756);
   const [lng, setLng] = useState<number>(51.338076);
   const [showAddressForm, setShowAddressForm] = useState(false);
+  const { data,fetchData } = useADDRESS();
   const [addressData, setAddressData] = useState({
     mainAddress: "",
     detailedAddress: "",
@@ -151,7 +152,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
         }, {
             headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
         });
-        handleShowAddress();
+        fetchData();
     } catch (error) {
             console.error(error.response?.data);
     }

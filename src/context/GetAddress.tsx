@@ -15,12 +15,14 @@ interface AddressItemsType {
       }>;
     removeAddress: (id: number) => Promise<void>;
     selectAddress:(id: number) => Promise<void>;
+    fetchData:() => Promise<void>;
 }
 
 const CartContext = createContext<AddressItemsType>({
     data:[],
     removeAddress: async () => Promise.resolve() ,
     selectAddress:async () => Promise.resolve(),
+    fetchData:async () => Promise.resolve(),   
 });
 
 export const AddressProvider = ({ children }) => {
@@ -95,7 +97,7 @@ export const AddressProvider = ({ children }) => {
         
 
 
-    const value = { data,removeAddress,selectAddress };     
+    const value = { data,removeAddress,selectAddress,fetchData };     
     return (
         <CartContext.Provider value={value}>
             {children}
