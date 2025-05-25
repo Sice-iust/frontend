@@ -11,7 +11,6 @@ export default function AddressModal({ onClose, id_user }) {
     const { data } = useADDRESS();
     const [showPopup, setShowPopup] = useState(false);
     const [isMapOpen, SetIsMapOpen] = useState(false);
-
     const OpenMap = () => {
         SetIsMapOpen(true);  
     };

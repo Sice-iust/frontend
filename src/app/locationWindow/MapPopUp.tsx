@@ -138,9 +138,24 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
     setAddressData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
+    const token = localStorage.getItem('token');
+    try {
+
+        await axios.post(`https://nanziback.liara.run/users/locations/mylocation/`, {
+            address: addressData.mainAddress,
+            home_plaque: addressData.plaque,
+            home_unit: addressData.unit,
+            home_floor : addressData.floor,
+            name:addressData.addressTitle,
+        }, {
+            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
+        });
+        handleShowAddress();
+    } catch (error) {
+            console.error(error.response?.data);
+    }
     console.log("Address submitted:", addressData);
     onClose();
   };
