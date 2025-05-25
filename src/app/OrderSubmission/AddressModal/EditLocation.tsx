@@ -32,31 +32,68 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
     home_unit:"",
     home_plaque:""
   });
-  const [addressData, setAddressData] = useState({
-    mainAddress: "",
-    detailedAddress: "",
-    plaque: "",
-    floor: "",
-    unit: "",
-    addressTitle: ""
-  });
+
 
   useEffect(() => {
-    getAddressData(itemid)
+    getAddressData()
   }, [itemid]);
 
+  const [addressData, setAddressData] = useState({
+      mainAddress: "",
+      plaque: "",
+      floor: "",
+      unit: "",
+      addressTitle: "",
+  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData(prev => ({ ...prev, [name]: value }));
+  const getAddressData = async () => {
+      try {
+          const response = await axios.get(`https://nanziback.liara.run/users/locations/modify/${itemid}/`, {
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          });
+
+          console.log("Raw Response:", response.data);
+
+          if (response.data) {
+              const sortedData = {
+                  id: response.data.id,
+                  username: response.data.user?.username || "Unknown",
+                  address: response.data.address,
+                  title: response.data.name,
+                  home_floor: response.data.home_floor, 
+                  home_unit: response.data.home_unit,
+                  home_plaque: response.data.home_plaque,
+              };
+
+              setData(sortedData); 
+              setAddressData({ 
+                  mainAddress: sortedData.address || "",
+                  plaque: sortedData.home_plaque || "",
+                  floor: sortedData.home_floor || "",
+                  unit: sortedData.home_unit || "",
+                  addressTitle: sortedData.title || "",
+              });
+          }
+      } catch (error) {
+          console.error("Error fetching data:", error);
+      }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setAddressData((prev) => ({
+          ...prev,
+          [name]: value,
+      }));
+  };
+
+
+  const handleSubmit = async (e: React.FormEvent ) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
 
-        await axios.post(`https://nanziback.liara.run/users/locations/mylocation/`, {
+        await await axios.put(`https://nanziback.liara.run/users/locations/modify/${itemid}/`, {
             address: addressData.mainAddress,
             home_plaque: addressData.plaque,
             home_unit: addressData.unit,
@@ -72,33 +109,6 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
     console.log("Address submitted:", addressData);
     onClose();
   };
-  const getAddressData = async(id)=>{
-        try {
-            const response = await axios.get(`https://nanziback.liara.run/users/locations/modify/${id}/`, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-            });
-
-            console.log("Raw Response:", response.data);
-
-            if (response.data) {
-                const sortedData = {
-                    id: response.data.id,
-                    username: response.data.user?.username || "Unknown",
-                    address: response.data.address,
-                    title: response.data.name,
-                    home_floor: response.data.home_floor, 
-                    home_unit: response.data.home_unit,
-                    home_plaque: response.data.home_plaque
-                };
-
-                setData(sortedData);
-            } else {
-                console.log("errorrrrr")
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-  }
 
 
   return (
@@ -130,10 +140,9 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
               <input
                 type="text"
                 name="mainAddress"
-                value={dataAddress.address}
+                value={addressData.mainAddress}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded"
-                // placeholder={dataAddress.address}
               />
             </div>
 
@@ -143,10 +152,9 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
                 <input
                   type="text"
                   name="plaque"
-                  value={dataAddress.home_plaque}
+                  value={addressData.plaque}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
-                  // placeholder={dataAddress.home_plaque}
                 />
               </div>
               <div>
@@ -154,10 +162,9 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
                 <input
                   type="text"
                   name="floor"
-                  value={dataAddress.home_floor}
+                  value={addressData.floor}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
-                  // placeholder={dataAddress.home_floor}
                 />
               </div>
               <div>
@@ -165,10 +172,9 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
                 <input
                   type="text"
                   name="unit"
-                  value={dataAddress.home_unit}
+                  value={addressData.unit}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
-                  // placeholder={dataAddress.home_unit}
                 />
               </div>
             </div>
@@ -178,10 +184,9 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
               <input
                 type="text"
                 name="addressTitle"
-                value={dataAddress.title}
+                value={addressData.addressTitle}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded"
-                // placeholder={dataAddress.title}
               />
             </div>
 
