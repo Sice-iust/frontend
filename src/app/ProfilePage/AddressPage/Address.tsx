@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useADDRESS } from '../../../context/GetAddress';
 import LocationPopup from '../../OrderSubmission/AddressModal/EditLocation';
 import Map from "../../locationWindow/MapPopUp";
-
+import { IoLocationOutline } from "react-icons/io5";
 
 
 const Address: React.FC = () => {  
@@ -22,22 +22,25 @@ const Address: React.FC = () => {
     const CloseMap = () => SetIsMapOpen(false);
 
     return (
-        <div className="container bg-white rounded-xl mt-4 mx-4 ml-4 p-10 w-auto mb-4">
-            <h2 className="text-xl font-semibold mb-4">انتخاب آدرس</h2>
+        <div className="container bg-white rounded-xl mt-4 mx-4 ml-4 p-10 w-auto mb-4 ">
+            <div className='flex flex-row-reverse mb-7 gap-1 '>
+              <IoLocationOutline className='h-6 w-6 text-[#F18825]'/>
+              <span className='font-semibold text-2xl'>آدرس‌های من</span>
+            </div>
 
 
-                    {data.map((add) => (
-                        <AddressCard
-                            key={add.id}
-                            id={add.id}
-                            title={add.name}
-                            address={add.address}
-                            isSelected={add.isChosen}
-                            isprofile={false}
-                            name={add.receiver}
-                            phone={add.phone}
-                        />
-                    ))}
+            {data.map((add) => (
+                <AddressCard
+                    key={add.id}
+                    id={add.id}
+                    title={add.name}
+                    address={add.address}
+                    isSelected={add.isChosen}
+                    isprofile={false}
+                    name={add.receiver}
+                    phone={add.phone}
+                />
+            ))}
 
             <div className="flex flex-row-reverse mt-5">
                 <button
