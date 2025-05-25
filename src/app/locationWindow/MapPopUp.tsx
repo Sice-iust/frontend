@@ -128,7 +128,6 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
       setShowAddressForm(true);
     } catch (error) {
       console.error("Error fetching address:", error);
-      // Fallback to empty form if API fails
       setShowAddressForm(true);
     }
   };

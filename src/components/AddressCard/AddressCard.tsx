@@ -13,7 +13,7 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
     const { removeAddress,selectAddress } = useADDRESS();
     return (
         <>
-            <div className={`box-content w-full border-1 rounded-2xl ${isSelected ? "border-green-600" : "border-black"} mb-5 `}>
+            <div className={`box-content w-full border-1 rounded-2xl ${isSelected ? "border-green-600" : "border-black"} mb-5 ml-1 mr-1`}>
                 <div className="flex flex-col">
                     <div className="flex flex-row-reverse justify-between mr-10 mt-2 ml-5">
                         <span className="font-semibold text-lg text-right">{title}</span>
