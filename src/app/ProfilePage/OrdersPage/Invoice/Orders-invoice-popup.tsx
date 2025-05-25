@@ -34,7 +34,8 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
                         throw new Error('Failed to fetch invoice data');  
                     }  
                     const data = await response.json();  
-                    setInvoiceData(data);  
+                    setInvoiceData(data); 
+                    console.log(data) 
                 } catch (err) {  
                     setError(err.message);  
                 } finally {  

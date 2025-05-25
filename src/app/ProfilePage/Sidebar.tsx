@@ -148,7 +148,7 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
     };
 
     return (
-      <li className={`dark:border-white border-black border-t last:border-b-0`}>
+      <li className={`dark:border-white border-black border-t last:border-b-0 `}>
         <button
           onClick={handleClick}
           className={`w-full flex items-center p-7 h-full transition-colors ${
@@ -170,7 +170,8 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
   };
 
   return (
-    <div className={`w-full h-full dark:bg-[#191919] bg-white p-4 font-vazir max-w-md rounded-xl`} dir="rtl">
+    <div className={`w-full  dark:bg-[#191919] bg-white p-4 font-vazir overscroll-contain max-w-md rounded-xl overflow-y-auto`}>
+    <div  dir="rtl">
       {/* <button 
         className="lg:hidden absolute top-4 left-4 text-gray-500 text-2xl"
         onClick={() => setIsMobileOpen && setIsMobileOpen(false)}
@@ -293,6 +294,7 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
           </Link>
         </li>
       </ul>
+    </div>
     </div>
   );
 }
