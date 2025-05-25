@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from "../../theme"
+import { useTheme } from "../../../components/theme"
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import AddressModal from "../AddressModal/AddressModal"

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AddressCard from '../../AddressCard/AddressCard';
+import AddressCard from '../../../components/AddressCard/AddressCard';
 import { IoMdClose } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import axios from 'axios';

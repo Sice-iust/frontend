@@ -2,13 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, usePathname } from 'next/navigation';
-import Receipt from '../../ShoppingReceipt/ShoppingReceipt';
-import CategoryList from '../../CategoryPage/CategoryList';
-import { useTheme } from '../../theme';
+import CategoryList from '../../../components/CategoryPage/CategoryList';
+import Receipt from '../../../components/ShoppingReceipt/ShoppingReceipt';
 
 export default function Bread() {
-  const params = useParams(); 
-  const { isDarkMode } = useTheme();
+  const params = useParams();
 
   const [id, setId] = useState<string | null>(null);
 

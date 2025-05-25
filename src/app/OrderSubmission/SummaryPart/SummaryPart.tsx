@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from "../../theme"
+import { useTheme } from "../../../components/theme"
 import AddressModal from "../AddressModal/AddressModal"
 import { CgNotes } from "react-icons/cg";
 import { useCart } from "../../../context/Receiptcontext";

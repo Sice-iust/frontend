@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaInfoCircle, FaTruck } from 'react-icons/fa';
 import { IoMdPerson } from "react-icons/io";
 import Invoice from './Invoice/invoice-detail';
-import { Product } from './page';
+import { Product } from './OrdersPage';
 
 export interface Item { 
     id : number;

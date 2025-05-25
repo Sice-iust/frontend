@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import {convertToPersianNumbers} from "../utils/Coversionutils"
-import ProductPage from "./ProductPage/ProductPage";
-import { ClassNames } from '@emotion/react';
+import {convertToPersianNumbers} from "../../utils/Coversionutils"
+import ProductPage from "../ProductPage/ProductPage";
 
 
 interface Product {
@@ -107,7 +106,7 @@ const handleOpenModal = (itemId: number) => {
           type="text"
           className={` px-2 py-1 
             focus:outline-none font-vazir
-             w-full rounded-full text-right
+             w-full rounded-full text-right dark:text-white
               bg-transparent  text-[16px]  dark:placeholder:[#D9D9D9] placeholder:[#696363]`}
           placeholder="نام کالای مورد نظر را جستجو کنید ..."
           value={searchTerm}
