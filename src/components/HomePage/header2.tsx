@@ -98,7 +98,7 @@ export default function Header2() {
                     <div dir="ltr" className={`hidden basis-3/10 md:flex my-auto gap-10 dark:text-white text-black`}>
                         {isLoggedIn ? (
                             <Link
-                                href="/ProfilePage/OrdersPage"
+                                href="/ProfilePage"
                                 className="text-[15px] cursor-pointer"
 
                             >
@@ -135,7 +135,7 @@ export default function Header2() {
                '>
                 {isLoggedIn ? (
                     <Link
-                        href="/ProfilePage/OrdersPage"
+                        href="/ProfilePage"
                         className='
                          text-black dark:text-white bg-orange-400
                          rounded-2xl p-3 cursor-pointer
