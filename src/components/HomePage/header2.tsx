@@ -97,7 +97,7 @@ handleCloseModalAddress();    };
             <div className={` dark:bg-[#191919] bg-white  w-full`}>
                 <div dir="rtl" className="flex flex-col justify-center px-5 py-2 md:flex-row">
 
-                    <div className="hidden md:flex basis-2/10 my-auto">
+                    <div className="hidden md:flex basis-1/10 my-auto">
                         <Link href="/">
                             <Image src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`}
                                 alt="Logo"
