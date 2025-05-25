@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { Map } from "@mui/icons-material";
 import { IoLocationOutline } from "react-icons/io5";
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 

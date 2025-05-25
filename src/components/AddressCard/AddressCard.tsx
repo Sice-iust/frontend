@@ -8,9 +8,16 @@ import { FaCheck } from "react-icons/fa";
 import { useADDRESS } from '../../context/GetAddress';
 import { IoPerson } from "react-icons/io5";
 import { convertToPersianNumbers } from "../../utils/Coversionutils";
+import Map from "../../app/locationWindow/MapPopUp";
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
     const { removeAddress,selectAddress } = useADDRESS();
+    const [isMapOpen, SetIsMapOpen] = useState(false);
+    const OpenMap = () => {
+        SetIsMapOpen(true);  
+    };
+
+    const CloseMap = () => SetIsMapOpen(false);
     return (
         <>
             <div className={`box-content w-full border-1 rounded-2xl ${isSelected ? "border-green-600" : "border-black"} mb-5 ml-1 mr-1`}>
@@ -19,7 +26,8 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         <span className="font-semibold text-lg text-right">{title}</span>
                         <div className="flex flex-row-reverse gap-4">
                             <FaRegEdit className=" h-5 w-5 text-green-600 cursor-pointer
-                                                    hover:transition duration-300 hover:scale-108"/>
+                                                    hover:transition duration-300 hover:scale-108"
+                                                    onClick={OpenMap} />
                             <HiOutlineTrash className="h-5 w-5 text-red-500 cursor-pointer
                                                         hover:transition duration-300 hover:scale-108"
                                                         onClick={() => removeAddress(id)}/>
@@ -47,6 +55,7 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         </div>
                     </div>
                 }
+                {isMapOpen && <Map onClose={CloseMap} isOpen={isMapOpen} />}
             </div>
         </>
     );
