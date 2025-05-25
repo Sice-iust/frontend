@@ -22,40 +22,33 @@ const Address: React.FC = () => {
     const CloseMap = () => SetIsMapOpen(false);
 
     return (
-        <div className="fixed inset-0 flex justify-center items-center z-10">
-            <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>
+        <div className="container bg-white rounded-xl mt-4 mx-4 ml-4 p-10 w-auto mb-4">
+            <h2 className="text-xl font-semibold mb-4">انتخاب آدرس</h2>
 
-            {!isMapOpen && (
-                <div className="relative bg-white p-4 rounded-lg shadow-lg min-w-120 min-h-30 w-auto ">
-                    <div className="relative flex justify-center items-center">
-                        <h2 className="text-xl font-semibold mb-4">انتخاب آدرس</h2>
-                    </div>
-                    <div className='overflow-y-scroll overflow-x-hidden max-h-90 ml-4 mr-4'>
-                      <div className='mr-3 ml-2'>
-                        {data.map((add) => (
-                            <AddressCard
-                                key={add.id}
-                                id={add.id}
-                                title={add.name}
-                                address={add.address}
-                                isSelected={add.isChosen}
-                                isprofile={false}
-                                name={add.receiver}
-                                phone={add.phone}
-                            />
-                        ))}
-                      </div>
-                    </div>
-                    <div className='flex flex-row-reverse mt-5'>
-                        <button className='bg-[#F18825] rounded-2xl w-auto p-2 pl-4 pr-3 
-                                flex items-center gap-2 text-white font-medium cursor-pointer 
-                                hover:bg-orange-400 transition duration-300 hover:scale-105'
-                            onClick={OpenMap}>
-                            افزودن آدرس جدید <FaPlus />
-                        </button>
-                    </div>
-                </div>
-            )}
+
+                    {data.map((add) => (
+                        <AddressCard
+                            key={add.id}
+                            id={add.id}
+                            title={add.name}
+                            address={add.address}
+                            isSelected={add.isChosen}
+                            isprofile={false}
+                            name={add.receiver}
+                            phone={add.phone}
+                        />
+                    ))}
+
+            <div className="flex flex-row-reverse mt-5">
+                <button
+                    className="bg-[#F18825] rounded-2xl w-auto p-2 pl-4 pr-3 flex items-center gap-2 text-white font-medium cursor-pointer 
+                        hover:bg-orange-400 transition duration-300 hover:scale-105"
+                    onClick={OpenMap}
+                >
+                    افزودن آدرس جدید <FaPlus />
+                </button>
+            </div>
+
             {isMapOpen && <Map onClose={CloseMap} isOpen={isMapOpen} />}
         </div>
     );
