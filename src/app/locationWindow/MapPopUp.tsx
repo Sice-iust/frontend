@@ -148,6 +148,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
       keyboard: false,
     });
 
+
     const orangeIcon = new window.L.Icon({
       iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
       shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
@@ -161,6 +162,9 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
       icon: orangeIcon,
     }).addTo(miniMapRef.current);
   };
+    const backtomap = () => {
+      setShowAddressForm(false);
+    };
 
   const handleShowAddress = async () => {
     try {
@@ -246,7 +250,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
                 className="absolute bottom-2 right-2 bg-white text-gray-800 py-1 px-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-100 transition"
                 style={{ zIndex: 1000 }}
               >
-                <div className="flex flex-row-reverse gap-1">
+                <div className="flex flex-row-reverse gap-1 cursor-pointer" onClick={backtomap}>
                   <span className="text-green-600">تغییر آدرس روی نقشه</span>
                   <FaRegEdit className="text-green-600 h-4 w-4"/>
                 </div>
