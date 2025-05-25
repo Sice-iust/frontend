@@ -14,11 +14,9 @@ const CreditPopup: React.FC<CreditPopupProps> = ({ currentBalance, onClose, onPa
   const [displayAmount, setDisplayAmount] = useState<string>('');
 
   const presetAmounts = [
-    { value: 1000, label: '۱ هزار تومان' },
-    { value: 5000, label: '۵ هزار تومان' },
     { value: 10000, label: '۱۰ هزار تومان' },
     { value: 20000, label: '۲۰ هزار تومان' },
-    { value: 50000, label: '۵۰ هزار تومان' },
+    { value: 50000, label: '۵۰هزار تومان' },
     { value: 100000, label: '۱۰۰ هزار تومان' },
   ];
 
