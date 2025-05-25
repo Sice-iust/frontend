@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from "../../theme"
+import { useTheme } from "../../../components/theme"
 import { IoLocationOutline } from "react-icons/io5";
 import { FaRegEdit } from "react-icons/fa";
 import AddressModal from "../AddressModal/AddressModal"
@@ -7,8 +7,8 @@ import { useADDRESS } from '../../../context/GetAddress';
 
 export default function AddressPart() {
   const { isDarkMode } = useTheme();
-  const { data } = useADDRESS();  
-  const selected = data.find((add) => add.isChosen === true);
+  const { data = [] } = useADDRESS();  
+  const selected = data?.find((add) => add.isChosen === true);
   const [isModalOpen, setModalOpen] = useState(false);
   
   const handleEditClick = () => {

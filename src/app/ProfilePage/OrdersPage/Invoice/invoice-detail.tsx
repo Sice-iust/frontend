@@ -16,14 +16,14 @@ interface InvoiceProps {
 
 const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,Product,total_price,profit}) => {
     
-    console.log("price:",total_price);
+    console.log("shippingfee:",shippingfee);
     return ( 
         <>
         {Product.length > 0 && (
             <div className=" flex flex-col pt-2 lg:p-3">
                 {Product.map(({ id, name, price, quantity }) => (
                     <div key={id} className="flex flex-wrap flex-row-reverse py-2">
-                       <span className="text-sm font-vazir font-medium text-right ml-auto -ml-auto 
+                       <span className="text-sm font-vazir font-medium text-right ml-auto -ml-auto text-gray-600
                                         break-words whitespace-wrap max-w-[100%] 
                                         sm:w-auto sm:text-base">{name}</span>
                         <div className="flex items-center whitespace-nowrap flex-row-reverse flex-shrink-0 ">
@@ -49,7 +49,7 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                 }
 
                 {[
-                    { label: "جمع کل", value: convertPrice(payment) , color: 'black'},
+                    { label: "جمع کل", value: convertPrice(payment),  color: 'black'},
                     shippingfee ? (
                         Number(shippingfee) === -1 ? { 
                           label:null, 
@@ -69,13 +69,13 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                     <div key={index} className={`flex flex-row-reverse py-2  ${index === 0 || index === 3 ? 
                         "border-t pt-4 mt-2" : ""}`}>
                         {label !== null && (
-                        <span className={`text-sm font-vazir font-medium text-right ml-auto -ml-auto sm:text-[17px] 
+                        <span className={`text-sm font-vazir font-medium text-right ml-auto -ml-auto sm:text-[15px] 
                             ${bold ? "font-semibold" : ""}`}>
                             {label}
                         </span>)}
                         {showCurrency && value !== "رایگان" && (
                             <>
-                            <span className={`ml-1 ${color} ${bold ? "font-bold text-lg" : ""}`}>{value}</span>
+                            <span className={`ml-1 text-gray-600 ${bold ? "font-bold text-lg" : ""}`}>{value}</span>
                             <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600 mt-0.5">
                                 تومان
                             </span>
@@ -91,6 +91,7 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                             </div>
                       
                         )}
+                       
                         
 
                     </div>

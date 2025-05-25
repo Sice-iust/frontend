@@ -33,7 +33,10 @@ export const convertDateInPersian = (dateString: string): string => {
 };  
 
 //Number
-export const convertPhoneNumberToPersian = (phoneNumber: string): string => {
+export const convertPhoneNumberToPersian = (phoneNumber: string | null): string => {
+    if (!phoneNumber) {
+        return ""; // Or return a default value like "Invalid number"
+    }
     const localNumber = phoneNumber.startsWith("+98") ? "0" + phoneNumber.slice(3) : phoneNumber;
     return convertToPersianNumbers(localNumber);
 };

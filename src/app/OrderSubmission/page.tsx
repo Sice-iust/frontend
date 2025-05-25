@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useTheme } from "../theme"
+import { useTheme } from "../../components/theme"
 import AddressPart from './AddressPart/AddressPart';
 import Cart from './Cart/Cart'
 import SummaryPart from './SummaryPart/SummaryPart';

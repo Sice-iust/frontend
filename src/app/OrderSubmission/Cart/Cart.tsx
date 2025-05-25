@@ -6,6 +6,8 @@ import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import LoadingBox from "../../../components/Loading/LoadingBox";
 import Discount from "./Discount"
 import { convertPrice } from "../../../utils/Coversionutils";
+import handlePayment from './handlePyament';
+
 
 const Cart: React.FC = () => {
     const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee } = useCart();
@@ -96,9 +98,21 @@ const Cart: React.FC = () => {
                                 focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]"
                     /> 
 
-                    <button
-                        className="bg-[#F18825] mr-2 mb-4 rounded-2xl text-white px-4 h-10 flex items-center 
-                                   justify-center w-[70%]  cursor-pointer">
+                   <button
+                        onClick={() => handlePayment({
+                            location_id: 1,
+                            deliver_time: 10,
+                            description: "good", // User input from Cart page
+                            total_price: totalActualPrice,
+                            profit: totalDiscount || 0,
+                            total_payment: totalActualPrice - (totalDiscount || 0),
+                            discount_text: "Applied discount",
+                            payment_status: "unpaid",
+                            reciver: "مهسا",
+                            reciver_phone: "989332328129"
+                        })}
+                        className="bg-[#F18825] mr-2 mb-4 rounded-2xl text-white px-4 h-10 flex items-center justify-center w-[70%] cursor-pointer"
+                    >
                         ثبت و پرداخت
                     </button>
                 </div>
