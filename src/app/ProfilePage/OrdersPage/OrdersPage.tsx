@@ -25,6 +25,10 @@ interface Order {
   id: number;  
   total_price: string;  
   status:number,
+      reciver:string,
+          reciver_phone:string,
+
+
   delivery : {
     delivery_date: string;  
     end_time: string; 
@@ -33,9 +37,7 @@ interface Order {
   } 
   location: {  
     name: string; 
-    reciver:string;
     address:string;
-    phonenumber:string;
   };  
   
 }  
@@ -168,10 +170,10 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
         delivery_clock={orderItem.delivery.end_time ? convertTimeToPersian(orderItem.delivery.end_time) : "Time not valid"}
         distination={orderItem.location.name}
         address={orderItem.location.address}
-        reciver={orderItem.location.reciver}
+        reciver={orderItem.reciver}
         product_count={convertToPersianNumbers(orderItem.products.length )}
         status={orderItem.status}
-        phone_number={convertPhoneNumberToPersian(orderItem.location.phonenumber)}
+        phone_number={convertPhoneNumberToPersian(orderItem.reciver_phone)}
       />
         ))
       ) : (

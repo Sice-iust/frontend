@@ -112,13 +112,13 @@ const OrderCard: React.FC<OrderCardProps> = ({
         
 
             <div className="-mt-7 flex flex-wrap items-center  ml-auto lg:ml-85">
-               {product_count != "0" ? (<div className="flex space-x-1 sm:flex ">
+               {/* {product_count != "0" ? (<div className="flex space-x-1 sm:flex ">
                     <span className="text-gray-500 text-sm sm:text-base md:text-md lg:text-lg">نان دیگر</span>
                     <span className="text-gray-500 text-sm  sm:text-base md:text-md lg:text-lg">{product_count}+</span>
-                </div>) : null }
+                </div>) : null } */}
 
                 <div className=" space-x-2 ml-auto hidden sm:flex ">
-                    {product_photos?.map((prod, index) => (
+                    {/* {product_photos?.map((prod, index) => (
                     <div key={index} className="relative ">
                         <Image
                         src={prod.photo}
@@ -134,7 +134,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                         {prod.quantity}
                         </span>
                     </div>
-                    ))}
+                    ))} */}
                 </div>
                 </div>
         </div>
