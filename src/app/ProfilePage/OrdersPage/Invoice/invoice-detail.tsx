@@ -16,7 +16,7 @@ interface InvoiceProps {
 
 const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,Product,total_price,profit}) => {
     
-    console.log("price:",total_price);
+    console.log("shippingfee:",shippingfee);
     return ( 
         <>
         {Product.length > 0 && (
@@ -91,6 +91,7 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                             </div>
                       
                         )}
+                       
                         
 
                     </div>
