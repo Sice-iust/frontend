@@ -19,6 +19,7 @@ import Image from "next/image";
 import AddIcon from '@mui/icons-material/Add';
 import axios from 'axios';
 import { useTheme } from '../../components/theme';
+import CreditPopup from './increaseCredit';
 
 interface UserData {
   username: string;
@@ -33,6 +34,8 @@ export default function Sidebar() {
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [credit,SetCredit]=useState(0);
+  const [showCreditPopup, setShowCreditPopup] = useState(false);
+
   const [userData, setUserData] = useState<UserData>({
 
     username: 'در حال بارگذاری...',
@@ -108,57 +111,66 @@ export default function Sidebar() {
 
 
 
+const handlePayment = async (amount: number) => {
+    console.log("Initiating payment for amount:", amount);
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("No authorization token found.");
+        return;
+      }
 
-const payment = async () => {
-  console.log("Initiating payment...");
+      const response = await axios.post(
+        "https://nanziback.liara.run/user/wallet/",
+        { 
+          type: 1, 
+          value: amount.toString(), 
+          description: "Wallet charge" 
+        },
+        { 
+          headers: { 
+            Authorization: `Bearer ${token}`, 
+            "Content-Type": "application/json" 
+          } 
+        }
+      );
+
+      console.log("Payment data:", response.data);
+      const redirectUrl = response.data.payment_url;
+
+      if (!redirectUrl) {
+        alert("Payment processed, but no redirect URL was provided.");
+        return;
+      }
+
+      window.open(redirectUrl, "_blank", "width=600,height=600");
+      setShowCreditPopup(false);
+      await fetchCredit();
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      alert("Payment failed. Please try again.");
+    }
+  };
+
+  // Update your existing payment function to just open the popup
+  const handlePaymentClick = () => {
+    setShowCreditPopup(true);
+  };
+
+const fetchCredit = async () => {
   try {
     const token = localStorage.getItem("token");
-    if (!token) {
-      alert("No authorization token found.");
-      return;
-    }
+    if (!token) throw new Error("No token found");
 
-    // Step 1: Initiate payment
-    const response = await axios.post(
-      "https://nanziback.liara.run/user/wallet/",
-      {
-        type: 1,
-        value: "10121",
-        description: "test",
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await axios.get("https://nanziback.liara.run/user/wallet/", {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
 
-    console.log("Payment data:", response.data);
-    const redirectUrl = response.data.payment_url;
-    const orderId = response.data.order_id;
-
-    if (!redirectUrl) {
-      alert("Payment processed, but no redirect URL was provided.");
-      return;
-    }
-
-
-    const paymentWindow = window.open(redirectUrl, "_blank", "width=600,height=600");
-
-    if (!paymentWindow) {
-      console.error("Failed to open payment window.");
-      return;
-    }
-
-    
-
+    SetCredit(response.data.balance); // Update the wallet balance
   } catch (error) {
-    console.error("Error processing payment:", error);
-    alert("Payment failed. Please try again.");
+    console.error("Error fetching wallet balance:", error);
   }
 };
-
 
   const toggleUsernameSection = () => {
     setIsUsernameExpanded(!isUsernameExpanded);
@@ -281,7 +293,7 @@ const payment = async () => {
         
         <div className="flex justify-between items-center">
           
-          <button onClick={payment}
+          <button onClick={handlePaymentClick}
             
             className="text-[#B8681D] text-sm   px-3 py-1 rounded-md  mr-5 transition-colors"
           >
@@ -318,6 +330,13 @@ const payment = async () => {
     isActive={pathname.includes('/logout')} 
   />
 </ul>
+ {showCreditPopup && (
+    <CreditPopup 
+      currentBalance={credit}
+      onClose={() => setShowCreditPopup(false)}
+      onPayment={handlePayment}
+    />
+  )}
 
      
     </div>
