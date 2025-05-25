@@ -3,15 +3,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { useADDRESS } from '../../../context/GetAddress';
+import { NULL } from "sass";
 
 
 interface PopupProps {
-  isOpen: boolean;
+
   onClose: () => void;
-  onLocationSelect?: (lat: number, lng: number) => void;
+  itemid :number;
+
 }
 
-const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
+const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
   const mapRef = useRef<any>(null);
   const miniMapRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -21,6 +23,15 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
   const [showAddressForm, setShowAddressForm] = useState(true);
   const [sdkLoaded, setSdkLoaded] = useState(false);
   const { data,fetchData } = useADDRESS();
+  const [dataAddress, setData] = useState({
+    id:"",
+    username: "",
+    address:"",
+    title:"",
+    home_floor: "", 
+    home_unit:"",
+    home_plaque:""
+  });
   const [addressData, setAddressData] = useState({
     mainAddress: "",
     detailedAddress: "",
@@ -31,72 +42,13 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
   });
 
   useEffect(() => {
-    if (showAddressForm && sdkLoaded && window.L) {
-      initMiniMap();
-    }
-  }, [showAddressForm, sdkLoaded, lat, lng]);
+    getAddressData(itemid)
+  }, [itemid]);
 
-  const initMiniMap = () => {
-    if (miniMapRef.current) return;
-
-    miniMapRef.current = new window.L.Map("mini-map", {
-      key: "web.449b3e29ce6b4a19952518f63277f678",
-      maptype: "neshan",
-      poi: false,
-      traffic: false,
-      center: [lat, lng],
-      zoom: 16,
-      scrollWheelZoom: false,
-      dragging: false,
-      zoomControl: false,
-      touchZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false,
-    });
-
-
-    const orangeIcon = new window.L.Icon({
-      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
-      shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-
-    miniMarkerRef.current = new window.L.Marker([lat, lng], {
-      icon: orangeIcon,
-    }).addTo(miniMapRef.current);
-  };
-    const backtomap = () => {
-      setShowAddressForm(false);
-    };
-
-  const handleShowAddress = async () => {
-    try {
-      const response = await axios.get(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
-        headers: {
-          "Api-Key": "service.aa597c7703fa42c79faa9ba8f6eb62b7",
-        },
-      });
-
-      setAddressData(prev => ({
-        ...prev,
-        mainAddress: response.data.formatted_address || "",
-        detailedAddress: response.data.route?.name || ""
-      }));
-      
-      setShowAddressForm(true);
-    } catch (error) {
-      console.error("Error fetching address:", error);
-      setShowAddressForm(true);
-    }
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setAddressData(prev => ({ ...prev, [name]: value }));
+    setData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -120,8 +72,32 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
     console.log("Address submitted:", addressData);
     onClose();
   };
-  const getAddressData = async()=>{
-    
+  const getAddressData = async(id)=>{
+        try {
+            const response = await axios.get(`https://nanziback.liara.run/users/locations/modify/${id}/`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
+
+            console.log("Raw Response:", response.data);
+
+            if (response.data) {
+                const sortedData = {
+                    id: response.data.id,
+                    username: response.data.user?.username || "Unknown",
+                    address: response.data.address,
+                    title: response.data.name,
+                    home_floor: response.data.home_floor, 
+                    home_unit: response.data.home_unit,
+                    home_plaque: response.data.home_plaque
+                };
+
+                setData(sortedData);
+            } else {
+                console.log("errorrrrr")
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
   }
 
 
@@ -154,10 +130,10 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
               <input
                 type="text"
                 name="mainAddress"
-                value={addressData.mainAddress}
+                value={dataAddress.address}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded"
-                placeholder="مثال: انقلاب اسلامی، جمالزاده"
+                // placeholder={dataAddress.address}
               />
             </div>
 
@@ -167,9 +143,10 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
                 <input
                   type="text"
                   name="plaque"
-                  value={addressData.plaque}
+                  value={dataAddress.home_plaque}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
+                  // placeholder={dataAddress.home_plaque}
                 />
               </div>
               <div>
@@ -177,9 +154,10 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
                 <input
                   type="text"
                   name="floor"
-                  value={addressData.floor}
+                  value={dataAddress.home_floor}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
+                  // placeholder={dataAddress.home_floor}
                 />
               </div>
               <div>
@@ -187,9 +165,10 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
                 <input
                   type="text"
                   name="unit"
-                  value={addressData.unit}
+                  value={dataAddress.home_unit}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
+                  // placeholder={dataAddress.home_unit}
                 />
               </div>
             </div>
@@ -199,10 +178,10 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
               <input
                 type="text"
                 name="addressTitle"
-                value={addressData.addressTitle}
+                value={dataAddress.title}
                 onChange={handleInputChange}
                 className="w-full p-2 border border-gray-300 rounded"
-                placeholder="مثال: خانه، محل کار"
+                // placeholder={dataAddress.title}
               />
             </div>
 
@@ -210,7 +189,7 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
               onClick={handleSubmit}
               className="w-full bg-[#f18825] text-white py-3 rounded-lg text-lg font-semibold"
             >
-              ذخیره آدرس
+              به روز رسانی آدرس
             </button>
           </div>
       </div>

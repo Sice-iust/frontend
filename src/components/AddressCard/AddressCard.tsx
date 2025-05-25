@@ -55,7 +55,7 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         </div>
                     </div>
                 }
-                {isMapOpen && <Map onClose={CloseMap} isOpen={isMapOpen} />}
+                {isMapOpen && <Map onClose={CloseMap} itemid={id}  />}
             </div>
         </>
     );
