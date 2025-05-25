@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
-
+import { FaRegEdit } from "react-icons/fa";
 declare global {
   interface Window {
     L?: any;
@@ -247,19 +247,20 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
           <div className="mt-4 p-4" dir="rtl">
             <h1 className="text-xl font-bold mb-6 text-center">آدرس جدید</h1>
             
-            {/* Mini Map Section */}
             <div className="mb-6 relative" style={{ height: "200px", width: "100%" }}>
-              <div id="mini-map" style={{ height: "100%", width: "100%", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
+              <div id="mini-map" className="flex flex-row" style={{ height: "100%", width: "100%", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
               <button
                 onClick={() => setShowAddressForm(false)}
                 className="absolute bottom-2 right-2 bg-white text-gray-800 py-1 px-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-100 transition"
                 style={{ zIndex: 1000 }}
               >
-                تغییر آدرس روی نقشه
+                <div className="flex flex-row-reverse gap-1">
+                  <span className="text-green-600">تغییر آدرس روی نقشه</span>
+                  <FaRegEdit className="text-green-600 h-4 w-4"/>
+                </div>
               </button>
             </div>
 
-            {/* Address Form */}
             <div className="mb-6">
               <h2 className="font-semibold mb-2">نشانی</h2>
               <input
