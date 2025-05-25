@@ -8,7 +8,7 @@ import { FaCheck } from "react-icons/fa";
 import { useADDRESS } from '../../context/GetAddress';
 import { IoPerson } from "react-icons/io5";
 import { convertToPersianNumbers } from "../../utils/Coversionutils";
-import Map from "../../app/locationWindow/MapPopUp";
+import Map from "../../app/OrderSubmission/AddressModal/EditLocation";
 
 export default function AddressCard({ id,title, address, isSelected,isprofile,name,phone }) {
     const { removeAddress,selectAddress } = useADDRESS();

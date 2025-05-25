@@ -4,7 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaPlus } from "react-icons/fa6";
 import axios from 'axios';
 import { useADDRESS } from '../../../context/GetAddress';
-import LocationPopup from './AddLocation';
+import LocationPopup from './EditLocation';
 import Map from "../../locationWindow/MapPopUp";
 
 export default function AddressModal({ onClose, id_user }) {
