@@ -3,6 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { useADDRESS } from '../../context/GetAddress';
+
 declare global {
   interface Window {
     L?: any;
@@ -24,7 +25,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
   const [lng, setLng] = useState<number>(51.338076);
   const [showAddressForm, setShowAddressForm] = useState(false);
   const [sdkLoaded, setSdkLoaded] = useState(false);
-  const { data,fetchData } = useADDRESS();
+  const { data, fetchData } = useADDRESS();
   const [addressData, setAddressData] = useState({
     mainAddress: "",
     detailedAddress: "",
@@ -34,20 +35,25 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
     addressTitle: ""
   });
 
+  // Load the map SDK and initialize maps
   useEffect(() => {
     if (!isOpen) return;
 
     const scriptId = "neshan-map-sdk";
     const styleId = "leaflet-style";
 
-    const loadMap = () => {
+    const loadSDK = () => {
       setSdkLoaded(true);
-      
+      initializeMaps();
+    };
+
+    const initializeMaps = () => {
       if (!window.L) {
         console.error("Neshan Leaflet SDK not available");
         return;
       }
 
+      // Add CSS if not already added
       if (!document.getElementById(styleId)) {
         const link = document.createElement("link");
         link.rel = "stylesheet";
@@ -56,43 +62,93 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
         document.head.appendChild(link);
       }
 
-      // Main map
-      if (!mapRef.current) {
-        mapRef.current = new window.L.Map("map", {
-          key: "web.449b3e29ce6b4a19952518f63277f678",
-          maptype: "neshan",
-          poi: true,
-          traffic: true,
-          center: [lat, lng],
-          zoom: 14,
-        });
-
-        const orangeIcon = new window.L.Icon({
-          iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
-          shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-          iconSize: [25, 41],
-          iconAnchor: [12, 41],
-          popupAnchor: [1, -34],
-          shadowSize: [41, 41],
-        });
-
-        markerRef.current = new window.L.Marker([lat, lng], {
-          icon: orangeIcon,
-          draggable: false,
-        }).addTo(mapRef.current);
-
-        mapRef.current.on("click", (e: any) => {
-          const { lat, lng } = e.latlng;
-          markerRef.current.setLatLng([lat, lng]);
-          setLat(lat);
-          setLng(lng);
-          if (onLocationSelect) {
-            onLocationSelect(lat, lng);
-          }
-        });
+      // Initialize main map when not in address form view
+      if (!showAddressForm) {
+        initializeMainMap();
+      } else {
+        initializeMiniMap();
       }
     };
 
+    const initializeMainMap = () => {
+      // Remove existing map if it exists
+      if (mapRef.current) {
+        mapRef.current.remove();
+      }
+
+      // Create new map instance
+      mapRef.current = new window.L.Map("map", {
+        key: "web.449b3e29ce6b4a19952518f63277f678",
+        maptype: "neshan",
+        poi: true,
+        traffic: true,
+        center: [lat, lng],
+        zoom: 14,
+      });
+
+      const orangeIcon = new window.L.Icon({
+        iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
+        shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      });
+
+      markerRef.current = new window.L.Marker([lat, lng], {
+        icon: orangeIcon,
+        draggable: false,
+      }).addTo(mapRef.current);
+
+      mapRef.current.on("click", (e: any) => {
+        const { lat, lng } = e.latlng;
+        markerRef.current.setLatLng([lat, lng]);
+        setLat(lat);
+        setLng(lng);
+        if (onLocationSelect) {
+          onLocationSelect(lat, lng);
+        }
+      });
+    };
+
+    const initializeMiniMap = () => {
+      if (miniMapRef.current) {
+        miniMapRef.current.setView([lat, lng], 16);
+        miniMarkerRef.current.setLatLng([lat, lng]);
+        return;
+      }
+
+      miniMapRef.current = new window.L.Map("mini-map", {
+        key: "web.449b3e29ce6b4a19952518f63277f678",
+        maptype: "neshan",
+        poi: false,
+        traffic: false,
+        center: [lat, lng],
+        zoom: 16,
+        scrollWheelZoom: false,
+        dragging: false,
+        zoomControl: false,
+        touchZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+      });
+
+      const orangeIcon = new window.L.Icon({
+        iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
+        shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+      });
+
+      miniMarkerRef.current = new window.L.Marker([lat, lng], {
+        icon: orangeIcon,
+      }).addTo(miniMapRef.current);
+    };
+
+    // Load SDK if not already loaded
     if (!document.getElementById(scriptId)) {
       const script = document.createElement("script");
       script.src = "https://static.neshan.org/sdk/leaflet/v1.9.4/neshan-sdk/v1.0.8/index.js";
@@ -100,15 +156,16 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
       script.id = scriptId;
       document.body.appendChild(script);
 
-      script.onload = loadMap;
+      script.onload = loadSDK;
       script.onerror = () => {
         console.error("Error loading Neshan SDK");
       };
     } else if (window.L) {
-      loadMap();
+      loadSDK();
     }
 
     return () => {
+      // Cleanup when component unmounts
       if (mapRef.current) {
         mapRef.current.off("click");
         mapRef.current.remove();
@@ -121,50 +178,11 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
         miniMarkerRef.current = null;
       }
     };
-  }, [isOpen, onLocationSelect]);
+  }, [isOpen, showAddressForm, lat, lng, onLocationSelect]);
 
-  useEffect(() => {
-    if (showAddressForm && sdkLoaded && window.L) {
-      initMiniMap();
-    }
-  }, [showAddressForm, sdkLoaded, lat, lng]);
-
-  const initMiniMap = () => {
-    if (miniMapRef.current) return;
-
-    miniMapRef.current = new window.L.Map("mini-map", {
-      key: "web.449b3e29ce6b4a19952518f63277f678",
-      maptype: "neshan",
-      poi: false,
-      traffic: false,
-      center: [lat, lng],
-      zoom: 16,
-      scrollWheelZoom: false,
-      dragging: false,
-      zoomControl: false,
-      touchZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false,
-    });
-
-
-    const orangeIcon = new window.L.Icon({
-      iconUrl: "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png",
-      shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-
-    miniMarkerRef.current = new window.L.Marker([lat, lng], {
-      icon: orangeIcon,
-    }).addTo(miniMapRef.current);
+  const backToMap = () => {
+    setShowAddressForm(false);
   };
-    const backtomap = () => {
-      setShowAddressForm(false);
-    };
 
   const handleShowAddress = async () => {
     try {
@@ -196,24 +214,24 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     try {
-
-        await axios.post(`https://nanziback.liara.run/users/locations/mylocation/`, {
-            address: addressData.mainAddress,
-            home_plaque: addressData.plaque,
-            home_unit: addressData.unit,
-            home_floor : addressData.floor,
-            name:addressData.addressTitle,
-        }, {
-            headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", }
-        });
-        fetchData();
+      await axios.post(`https://nanziback.liara.run/users/locations/mylocation/`, {
+        address: addressData.mainAddress,
+        home_plaque: addressData.plaque,
+        home_unit: addressData.unit,
+        home_floor: addressData.floor,
+        name: addressData.addressTitle,
+      }, {
+        headers: { 
+          Authorization: `Bearer ${token}`, 
+          "Content-Type": "application/json", 
+        }
+      });
+      fetchData();
+      onClose();
     } catch (error) {
-            console.error(error.response?.data);
+      console.error(error.response?.data);
     }
-    console.log("Address submitted:", addressData);
-    onClose();
   };
-
 
   if (!isOpen) return null;
 
@@ -226,19 +244,17 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
         />
         
         {!showAddressForm ? (
-          <>
-            <div className="mt-2">
-              <div style={{ height: "500px", width: "100%" }}>
-                <div id="map" style={{ height: "100%", width: "100%" }} />
-              </div>
-              <button
-                onClick={handleShowAddress}
-                className="w-full h-15 bg-[#f18825] mt-5 rounded-xl items-center text-2xl justify-center text-center text-white py-3"
-              >
-                تایید موقعیت روی نقشه
-              </button>
+          <div className="mt-2">
+            <div style={{ height: "500px", width: "100%" }}>
+              <div id="map" style={{ height: "100%", width: "100%" }} />
             </div>
-          </>
+            <button
+              onClick={handleShowAddress}
+              className="w-full h-15 bg-[#f18825] mt-5 rounded-xl items-center text-2xl justify-center text-center text-white py-3"
+            >
+              تایید موقعیت روی نقشه
+            </button>
+          </div>
         ) : (
           <div className="mt-4 p-4" dir="rtl">
             <h1 className="text-xl font-bold mb-6 text-center">آدرس جدید</h1>
@@ -246,11 +262,11 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
             <div className="mb-6 relative" style={{ height: "200px", width: "100%" }}>
               <div id="mini-map" className="flex flex-row" style={{ height: "100%", width: "100%", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
               <button
-                onClick={() => setShowAddressForm(false)}
+                onClick={backToMap}
                 className="absolute bottom-2 right-2 bg-white text-gray-800 py-1 px-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-100 transition"
                 style={{ zIndex: 1000 }}
               >
-                <div className="flex flex-row-reverse gap-1 cursor-pointer" onClick={backtomap}>
+                <div className="flex flex-row-reverse gap-1 cursor-pointer">
                   <span className="text-green-600">تغییر آدرس روی نقشه</span>
                   <FaRegEdit className="text-green-600 h-4 w-4"/>
                 </div>
