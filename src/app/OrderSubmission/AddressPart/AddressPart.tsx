@@ -7,8 +7,8 @@ import { useADDRESS } from '../../../context/GetAddress';
 
 export default function AddressPart() {
   const { isDarkMode } = useTheme();
-  const { data } = useADDRESS();  
-  const selected = data.find((add) => add.isChosen === true);
+  const { data = [] } = useADDRESS();  
+  const selected = data?.find((add) => add.isChosen === true);
   const [isModalOpen, setModalOpen] = useState(false);
   
   const handleEditClick = () => {
