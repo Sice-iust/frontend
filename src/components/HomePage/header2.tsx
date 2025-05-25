@@ -198,7 +198,7 @@ export default function Header2() {
                 </Link>
             </div>
             {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
-            {isModalOpenAddress && <AddressModal onClose={handleCloseModalAddress} id_user={localStorage.getItem("token")} />}
+            {isModalOpenAddress && <AddressModal onClose={handleCloseModalAddress} id_user={localStorage.getItem("token")}/>}
         </>
     );
 }
