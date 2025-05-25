@@ -51,6 +51,7 @@ const ProfileOrders: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0); // 0 for past, 1 for current
   const { isDarkMode } = useTheme();
 
+  useEffect(() => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get("https://nanziback.liara.run/user/order/myorder/", {
@@ -65,9 +66,10 @@ const ProfileOrders: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  fetchOrders(); // Call function when component mounts or when selectedTab changes
+}, [selectedTab]); 
+
+ 
 
   // Group orders by ID
   const groupOrders = (orderItems: OrderItem[]) => {
