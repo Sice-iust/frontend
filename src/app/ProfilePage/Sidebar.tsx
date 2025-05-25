@@ -143,10 +143,7 @@ const payment = async () => {
       return;
     }
 
-    // Step 2: Store order ID for verification
-    localStorage.setItem("current_order_id", orderId);
 
-    // Step 3: Open payment gateway in new tab
     const paymentWindow = window.open(redirectUrl, "_blank", "width=600,height=600");
 
     if (!paymentWindow) {
@@ -154,20 +151,7 @@ const payment = async () => {
       return;
     }
 
-    // Step 4: Start checking for payment completion
-    const checkPayment = setInterval(async () => {
-      if (paymentWindow.closed) {
-        clearInterval(checkPayment);
-        
-        // Step 5: Verify payment immediately after window closes
-        try {
-          await verifyPayment();
-        } catch (error) {
-          console.error("Payment verification failed:", error);
-          alert("Payment verification failed. Please check your balance.");
-        }
-      }
-    }, 2000);
+    
 
   } catch (error) {
     console.error("Error processing payment:", error);
@@ -175,51 +159,7 @@ const payment = async () => {
   }
 };
 
-// Verification function that checks every payment
-const verifyPayment = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    console.error("No authorization token found.");
-    return;
-  }
 
-  
-
-  try {
-    // Make verification request to the correct endpoint
-    const response = await axios.get(
-      `https://nanziback.liara.run/user/wallet-verify/`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      }
-    );
-
-    console.log("Verification response:", response.data);
-
-    if (response.data.status === "OK") {
-      alert("Payment verified successfully!");
-      // Optional: Clear the stored order ID after successful verification
-      localStorage.removeItem("current_order_id");
-    } else {
-      alert("Payment verification failed. Please contact support.");
-    }
-  } catch (error) {
-    console.error("Error verifying payment:", error);
-    throw error; // Re-throw to handle in the payment function
-  }
-};
-
-// Also verify when page loads in case user refreshes
-window.addEventListener('load', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.has("Authority")) {
-    verifyPayment();
-  }
-});
-
- 
   const toggleUsernameSection = () => {
     setIsUsernameExpanded(!isUsernameExpanded);
   };
