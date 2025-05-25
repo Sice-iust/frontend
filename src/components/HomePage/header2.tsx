@@ -80,11 +80,16 @@ export default function Header2() {
     };
     const handleOpenModal = () => {
         setIsModalOpen(true);
-handleCloseModalAddress();    };
+        handleCloseModalAddress();    };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+    const truncateWords = (text, wordLimit = 4) => {
+        const words = text.split(" ");
+        return words.length > wordLimit ? words.slice(0, wordLimit).join(" ") + "..." : text;
+    };
+
 
     useEffect(() => {
         getUsername();
@@ -106,14 +111,12 @@ handleCloseModalAddress();    };
                                 className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
                         </Link>
                     </div>
-  {/* <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={OpenMap}
-                            > tempmap  </button> */}
                     <div className="flex flex-col mt-4 ml-20 leading-relaxed cursor-pointer" onClick={OpenMap}>
                         <span className="text-md text-black font-bold mr-5">{selected?.name}</span>
                         <div className="flex flex-row-reverse gap-1">
                             <FaChevronDown className="text-[#f18825] h-3 w-3 mt-1"/>
-                            <span className='font-medium text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis'>
-                                {selected?.address}
+                            <span className="font-medium text-sm text-gray-500 truncate">
+                                {truncateWords(selected?.address)}
                             </span>  
                             <IoLocationOutline/>
                         </div>             
