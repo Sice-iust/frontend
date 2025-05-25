@@ -63,7 +63,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
             <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div>  
                 <div className="flex items-center justify-center min-h-full  text-center lg:p-4">  
                     <div className="relative transform overflow-hidden rounded-lg bg-white text-left 
-                                    shadow-xl transition-all min-h-screen w-full
+                                    shadow-xl transition-all min-h-screen lg:min-h-auto w-full
                                     sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">  
                         <div className="bg-white px-2 pt-5 pb-4 text-right md:px-6"> 
                             <RxCross1 className="cursor-pointer ml-auto" onClick={onClose}  />
