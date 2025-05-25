@@ -61,34 +61,38 @@ export const AddressProvider = ({ children }) => {
               console.error("Error adding to cart:", error);
           }
       };
-        const fetchData = async () => {
-          console.log("Fetching data...");
-          try {
+    const fetchData = async () => {
+        console.log("Fetching data...");
+        try {
             const response = await axios.get("https://nanziback.liara.run/users/locations/mylocation/", {
-              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-    
+
             console.log("Raw Response:", response.data);
-    
+
             if (Array.isArray(response.data)) {
-              setData(response.data.map((item) => ({
-                id: item.id,
-                username: item.user?.username || "Unknown",
-                address: item.address,
-                name: item.name,
-                receiver: item.reciver,
-                phone: item.phonenumber,
-                isChosen: item.is_choose
-              })));
+                const sortedData = response.data
+                    .map((item) => ({
+                        id: item.id,
+                        username: item.user?.username || "Unknown",
+                        address: item.address,
+                        name: item.name,
+                        receiver: item.reciver,
+                        phone: item.phonenumber,
+                        isChosen: item.is_choose
+                    }))
+                    .sort((a, b) => b.isChosen - a.isChosen); 
+
+                setData(sortedData);
             } else {
-              setData([]);
+                setData([]);
             }
-          } catch (error) {
+        } catch (error) {
             console.error("Error fetching data:", error);
             setData([]);
-          } 
-        };
-    
+        }
+    };
+        
 
 
     const value = { data,removeAddress,selectAddress };     

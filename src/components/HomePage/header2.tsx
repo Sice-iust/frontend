@@ -86,10 +86,10 @@ export default function Header2() {
         setIsModalOpen(false);
     };
     const truncateWords = (text, wordLimit = 4) => {
+        if (!text) return "...";
         const words = text.split(" ");
-        return words.length > wordLimit ? words.slice(0, wordLimit).join(" ") + "..." : text;
+        return words.length > wordLimit ? words.slice(0, wordLimit).join(" ") + "...": text;
     };
-
 
     useEffect(() => {
         getUsername();
