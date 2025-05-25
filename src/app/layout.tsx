@@ -16,7 +16,9 @@ export default function Layout({ children }) {
               <div className='relative'>
                 <Header2 />
                 {children}
-                <Footer2 />
+                <div className="hidden md:block">
+                  <Footer2 />
+                </div>
               </div>
             </ThemeProvider>
           </AddressProvider>

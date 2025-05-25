@@ -4,7 +4,7 @@ import { IoLocationSharp } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
 import { LuCalendar } from "react-icons/lu";
 import Image, { StaticImageData } from 'next/image'; 
-import { Product } from "./page"
+import { Product } from "./OrdersPage"
 import InvoicePopup from './Invoice/Orders-invoice-popup';
 import CommentsPopup from "./Comments/comments-popup";
 import ReorderPopup from "./Reorder/Reorder-Popup"
@@ -88,12 +88,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </div>    
 
         
-        <p className={`dark:text-white text-[#191919] font-vazir  text-semibold mb-4 text-center ml-auto mt-1 lg:ml-7 sm:text-left sm:mr-auto
+        <p className={`dark:text-white text-[#191919] font-vazir  text-semibold mb-4 text-center ml-auto 
+                       mt-1 lg:ml-7 sm:text-left sm:mr-auto
                     text-xs 
                     sm:text-base 
                     md:text-base`}>  
             {"به سفارش خود چه امتیازی میدهید؟"}{' '}  
-            <span className="font-vazir text-green-500 font-semibold mt-1 underline cursor-pointer" onClick={handleCommentsOpen}>ثبت نظر</span>  
+            <span className="font-vazir text-green-500 font-semibold mt-1 underline cursor-pointer" 
+                            onClick={handleCommentsOpen}>ثبت نظر</span>  
         </p>
         <div className="flex space-x-4">  
             <button className="font-vazir bg-gray-200 text-gray-700 rounded-md px-4 py-2  cursor-pointer
@@ -111,32 +113,32 @@ const OrderCard: React.FC<OrderCardProps> = ({
             </button>  
         
 
-            <div className="-mt-7 flex flex-wrap items-center  ml-auto lg:ml-85">
-               {product_count != "0" ? (<div className="flex space-x-1 sm:flex ">
-                    <span className="text-gray-500 text-sm sm:text-base md:text-md lg:text-lg">نان دیگر</span>
-                    <span className="text-gray-500 text-sm  sm:text-base md:text-md lg:text-lg">{product_count}+</span>
-                </div>) : null }
+            <div className="flex items-center ml-auto">
+                {product_count != "0" && (
+                    <div className="flex items-center mr-2">
+                    <span className="text-gray-500 text-sm  hidden lg:flex lg:text-lg">نان دیگر</span>
+                    <span className="text-gray-500 text-sm hidden lg:flex lg:text-lg mr-1">+{product_count}</span>
+                    </div>
+                )}
 
-                <div className=" space-x-2 ml-auto hidden sm:flex ">
+                <div className="flex space-x-2 hidden lg:flex">
                     {product_photos?.map((prod, index) => (
-                    <div key={index} className="relative ">
+                    <div key={index} className="relative w-8 h-12">
                         <Image
                         src={prod.photo}
                         alt="product"
-                        className="w-10 h-10 rounded-md -mt-1"
-                        layout="intrinsic"
-                        width={500}
-                        height={300} 
+                        className="w-full h-full rounded-md object-cover"
+                        layout="fill"
                         />
-                        <span className="absolute bottom-1 left-0 bg-[#F18825] text-white text-xs rounded-full 
-                                        w-5 h-5 flex 
-                                        items-center justify-center -mb-1 -ml-1">
+                        <span className="absolute bottom-0 left-0 bg-[#F18825] text-white text-xs rounded-full 
+                                    w-5 h-5 flex items-center justify-center transform translate-x-[-25%] 
+                                    translate-y-[25%]">
                         {prod.quantity}
                         </span>
                     </div>
                     ))}
                 </div>
-                </div>
+            </div>
         </div>
         <InvoicePopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey} total_price_after={total_price} />  
         <CommentsPopup isOpen={isCommentsOpen} onClose={handleCommentsClose} orderId={orderkey} total_price_after={total_price} />

@@ -15,7 +15,7 @@ interface DataType {
     id: number;
     price: string;
     discount: number;
-    stock_1: number;
+    stock: number;
 
 }
 
@@ -43,6 +43,7 @@ export default function CategoryList({ category }) {
                 });
                 setData(response.data);
                 setDataLength(response.data.length);
+                console.log("response here",response.data)
             } catch (error) {
                 console.error("Error fetching data:", error.response ? error.response.data : error.message);
             }
@@ -111,29 +112,29 @@ export default function CategoryList({ category }) {
 
                                     {userquantity[item.id] === undefined || userquantity[item.id] === 0 ? (
                                         <button
-                                            className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-15 min-h-8 text-white text-[12px] font-vazir font-md mr-0 mt-7`}
+                                            className={`${item.stock === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-15 min-h-8 text-white text-[12px] font-vazir font-md mr-0 mt-7`}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleAdd(item.id);
                                             }}
-                                            disabled={item.stock_1 === 0}
+                                            disabled={item.stock === 0}
                                         >
                                             افزودن
                                         </button>
                                     ) : (
                                         <div className="flex mr-0 mt-6 space-x-2">
                                             <button
-                                                className={`bg-white dark:bg-black ml-5 border-3 ${userquantity[item.id] >= item.stock_1 ?
+                                                className={`bg-white dark:bg-black ml-5 border-3 ${userquantity[item.id] >= item.stock ?
                                                     "border-gray-300 text-gray-300 cursor-not-allowed"
                                                     : "border-green-500 text-green-500 cursor-pointer"} 
                                                 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
-                                                transition-transform duration-200 ${userquantity[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white"
+                                                transition-transform duration-200 ${userquantity[item.id] >= item.stock ? "cursor-not-allowed hover:bg-white"
                                                         : "hover:bg-green-500 hover:text-white hover:scale-110"}`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     incrementQuantity(item.id);
                                                 }}
-                                                disabled={userquantity[item.id] >= item.stock_1}
+                                                disabled={userquantity[item.id] >= item.stock}
                                             >
                                                 +
 
@@ -275,12 +276,12 @@ export default function CategoryList({ category }) {
                                 {userquantity[item.id] === undefined || userquantity[item.id] === 0 ? (
 
                                     <button
-                                        className={`${item.stock_1 === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}
+                                        className={`${item.stock === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleAdd(item.id);
                                         }}
-                                        disabled={item.stock_1 === 0}
+                                        disabled={item.stock === 0}
                                     >
                                         افزودن
                                     </button>
@@ -293,17 +294,17 @@ export default function CategoryList({ category }) {
                                                     bg-white
                                                     dark:bg-black 
                                                     ml-5
-                                                    border-3 ${userquantity[item.id] >= item.stock_1 ?
+                                                    border-3 ${userquantity[item.id] >= item.stock ?
                                                         "border-gray-300 text-gray-300 cursor-not-allowed"
                                                         : "border-green-500 text-green-500 cursor-pointer"} 
                                                 font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
-                                                transition-transform duration-200 ${userquantity[item.id] >= item.stock_1 ? "cursor-not-allowed hover:bg-white"
+                                                transition-transform duration-200 ${userquantity[item.id] >= item.stock ? "cursor-not-allowed hover:bg-white"
                                                         : "hover:bg-green-500 hover:text-white hover:scale-110"}`}
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     incrementQuantity(item.id);
                                                 }}
-                                                disabled={userquantity[item.id] >= item.stock_1}
+                                                disabled={userquantity[item.id] >= item.stock}
                                             >
                                                 +
                                             </button>
