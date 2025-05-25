@@ -225,7 +225,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
               <div id="mini-map" style={{ height: "100%", width: "100%", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
               <button
                 onClick={() => setShowAddressForm(false)}
-                className="absolute bottom-2 left-2 bg-white text-gray-800 py-1 px-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-100 transition"
+                className="absolute bottom-2 right-2 bg-white text-gray-800 py-1 px-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-100 transition"
                 style={{ zIndex: 1000 }}
               >
                 تغییر آدرس روی نقشه
