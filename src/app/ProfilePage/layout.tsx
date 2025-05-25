@@ -49,7 +49,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
         
         {/* Sidebar */}
         <div className={`
-            w-full lg:w-[30%] xl:w-[25%] 2xl:w-[20%]
+            w-full lg:w-[50%] xl:w-[25%] 2xl:w-[20%]
             fixed lg:sticky top-0 left-0
             transform transition-transform duration-300 ease-in-out
             ${isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
