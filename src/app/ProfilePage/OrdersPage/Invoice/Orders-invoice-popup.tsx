@@ -34,7 +34,9 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
                         throw new Error('Failed to fetch invoice data');  
                     }  
                     const data = await response.json();  
-                    setInvoiceData(data);  
+                    console.log("invoice",data)
+                    setInvoiceData(data); 
+                    console.log(data) 
                 } catch (err) {  
                     setError(err.message);  
                 } finally {  
@@ -61,7 +63,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
             <div className="fixed inset-0 bg-black opacity-50 transition-opacity  " aria-hidden="true"></div>  
                 <div className="flex items-center justify-center min-h-full  text-center lg:p-4">  
                     <div className="relative transform overflow-hidden rounded-lg bg-white text-left 
-                                    shadow-xl transition-all min-h-screen w-full
+                                    shadow-xl transition-all min-h-screen lg:min-h-auto w-full
                                     sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">  
                         <div className="bg-white px-2 pt-5 pb-4 text-right md:px-6"> 
                             <RxCross1 className="cursor-pointer ml-auto" onClick={onClose}  />
@@ -71,7 +73,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
                                 {invoiceData ? (
                                 <Invoice orderId={orderId} 
                                 payment={invoiceData.payment} 
-                                shippingfee={invoiceData.shipping_fee} 
+                                shippingfee={String(invoiceData.shipping_fee)} 
                                 discount={invoiceData.discount} 
                                 total_price={total_price_after}
                                 Product={invoiceData.items.map(item => ({

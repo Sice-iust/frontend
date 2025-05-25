@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { FaMapMarkerAlt, FaCalendarAlt, FaPhone, FaInfoCircle, FaTruck } from 'react-icons/fa';
 import { IoMdPerson } from "react-icons/io";
 import Invoice from './Invoice/invoice-detail';
-// import { Product } from './page';
 
 export interface Item { 
     id : number;
@@ -70,7 +69,7 @@ export default function OrderStatusPage({ orderkey, id, total_price, delivery_da
             <div className="flex items-center relative">
                 {[1, 2, 3, 4].map((step, index) => (
                 <React.Fragment key={step}>
-                    <div className="relative z-10">
+                    <div className="relative ">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300
                         ${step <= status ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500"}`}>
                         {step}
@@ -81,7 +80,7 @@ export default function OrderStatusPage({ orderkey, id, total_price, delivery_da
                     {index < 3 && (
                     <div className={`h-1 w-16 mx-1 relative
                         ${step < status ? "bg-green-500" : "bg-gray-200"}`}>
-                        <div className={`absolute inset-0 bg-green-500 origin-left scale-x-0 transition-all duration-500
+                        <div className={`absolute inset-0  bg-green-500 origin-left scale-x-0 transition-all duration-500
                         ${step < status ? "scale-x-100" : ""}`}></div>
                     </div>
                     )}
