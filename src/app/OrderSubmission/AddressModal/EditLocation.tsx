@@ -120,7 +120,9 @@ const EditLocation: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect 
     console.log("Address submitted:", addressData);
     onClose();
   };
-
+  const getAddressData = async()=>{
+    
+  }
 
 
   return (
