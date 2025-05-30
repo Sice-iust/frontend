@@ -37,10 +37,10 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
                 </p>
                 
                 <div className="flex space-x-2 space-x-reverse">
-                    <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-full">
+                    <button className="p-2 text-blue-500 cursor-pointer hover:bg-blue-50 hover:scale-110 rounded-full">
                         <FaRegEdit size={20} className="text-green-600" />
                     </button>
-                    <button className="p-2 text-red-500 hover:bg-red-50 rounded-full">
+                    <button className="p-2 text-red-500 cursor-pointer hover:bg-red-50 hover:scale-110 rounded-full">
                         <HiOutlineTrash size={20} />
                     </button>
                 </div>
