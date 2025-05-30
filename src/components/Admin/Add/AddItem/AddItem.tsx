@@ -27,11 +27,11 @@ export default function AddItem() {
             <div className="box-content bg-[#F18825] rounded-2xl w-40 p-2 mb-5
                             flex items-center text-white font-medium cursor-pointer 
                             hover:bg-orange-400 transition duration-300 hover:scale-105">
-                <button className="flex flex-row-reverse gap-2">
+                <button className="flex flex-row-reverse gap-2 cursor-pointer">
                     افزودن محصول جدید <FaPlus className="h-4 w-4 mt-1" />
                 </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 " dir="rtl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 cursor-pointer" dir="rtl">
                 {breads.map((bread) => (
                     <div key={bread.id} className="w-full">
                         <AdminItemCard 
