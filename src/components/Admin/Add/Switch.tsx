@@ -1,5 +1,5 @@
 import React, { useState } from "react";  
-import AddItem from "./AddItem";
+import AddItem from "./AddItem/AddItem";
 import AddCategory from "./AddCategory";
 
 
@@ -52,7 +52,7 @@ const Tab: React.FC= () => {
         </div>  
       </div> 
     </div>  
-    <div className="box-contetnt bg-white w-full min-h-40 rounded-2xl mt-10">
+    <div className="box-contetnt bg-white w-full min-h-160 rounded-2xl mt-10 mb-10">
       {selectedTab === 0 && <AddCategory />}
       {selectedTab === 1 && <AddItem />}
     </div> 
