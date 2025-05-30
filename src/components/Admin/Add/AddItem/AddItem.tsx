@@ -1,6 +1,7 @@
 import React from "react";
 import AdminItemCard from "./ItemCard";
 import img from "../../../../../public/assets/breads/barbari.png";
+import { FaPlus } from "react-icons/fa";
 
 interface BreadProps {
   id: string;
@@ -21,18 +22,29 @@ export default function AddItem() {
     ];
     
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-5" dir="rtl">
-            {breads.map((bread) => (
-                <div key={bread.id} className="w-full">
-                    <AdminItemCard 
-                        id={bread.id} 
-                        title={bread.title} 
-                        stock={bread.stock} 
-                        price={bread.price}
-                        image={img}
-                    />
-                </div>
-            ))}
+        <>
+        <div className="flex flex-col p-5" dir="rtl">
+            <div className="box-content bg-[#F18825] rounded-2xl w-40 p-2 mb-5
+                            flex items-center text-white font-medium cursor-pointer 
+                            hover:bg-orange-400 transition duration-300 hover:scale-105">
+                <button className="flex flex-row-reverse gap-2">
+                    افزودن محصول جدید <FaPlus className="h-4 w-4 mt-1" />
+                </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 " dir="rtl">
+                {breads.map((bread) => (
+                    <div key={bread.id} className="w-full">
+                        <AdminItemCard 
+                            id={bread.id} 
+                            title={bread.title} 
+                            stock={bread.stock} 
+                            price={bread.price}
+                            image={img}
+                        />
+                    </div>
+                ))}
+            </div>
         </div>
+        </>
     );
 }

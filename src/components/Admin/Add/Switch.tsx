@@ -1,6 +1,6 @@
 import React, { useState } from "react";  
 import AddItem from "./AddItem/AddItem";
-import AddCategory from "./AddCategory";
+import AddCategory from "./AddCategory/AddCategory";
 
 
 const Tab: React.FC= () => {  
