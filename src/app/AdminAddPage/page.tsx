@@ -12,7 +12,7 @@ export default function AddAdmin() {
                          flex-col justify-center items-center flex-grow h-full sticky top-1`}>
            <AddFilter />
         </div>
-        <div className='w-full m-10 overflow-x-hidden'>
+        <div className='w-full mt-5 mr-5 ml-5 overflow-x-hidden'>
             <Tab/> 
         </div>
     </div>
