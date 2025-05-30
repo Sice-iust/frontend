@@ -8,7 +8,7 @@ const OrderList = () => {
       total_price: '120,000',
       recipientName: 'محمد احمدی',
       delivery_day: '1402/03/03',
-      distination: 'تهران، خیابان فلامک، پلاک 23، طبقه 2',
+      distination: 'ت23، طبقه 2',
       delivery_clock : '13-15',
       phone : '09123456789',
       Description : 'به فلانی تحویل داده بشه'
