@@ -1,42 +1,40 @@
-import React from "react";
-import { FaRegEdit } from "react-icons/fa";
+import { FaBoxOpen, FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 
 export default function AdminItemCard({ id, title, stock, price, image }) {
     return (
-        <div className="border border-gray-200 w-full p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex justify-between items-start mb-4">
-                <h3 className="text-lg font-semibold">{title}</h3>
-                {stock <= 10 && (
-                    <span className="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">
-                        کمبود موجودی
-                    </span>
-                )}
+        <div className="border border-gray-200 w-full p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
+            <div className="absolute left-4 top-4 flex items-center bg-gray-100 px-2 py-1 rounded-full">
+                <FaBoxOpen className="text-gray-600 ml-1" size={14} />
+                <span className="text-gray-700 text-sm font-medium">{stock}</span>
             </div>
-            
-            {/* تصویر محصول */}
-            <div className="mb-4">
+            {stock <= 10 && (
+                <div className="absolute right-4 top-4 bg-red-100 text-red-800 text-sm px-3 py-1 rounded-full">
+                    موجودی رو به اتمام است
+                </div>
+            )}
+
+            <div className="mb-3 mt-8 flex-grow">
                 <img 
                     src={image} 
                     alt={title} 
-                    className="w-full h-40 object-cover rounded-lg"
+                    className="w-full h-32 object-contain rounded-lg"
                 />
             </div>
-            
-            {/* اطلاعات قیمت و موجودی */}
-            <div className="flex justify-between items-center">
-                <div>
-                    <p className="text-gray-600">موجودی: {stock}</p>
-                    <p className="text-lg font-bold">{price.toLocaleString()} تومان</p>
-                </div>
+
+            <h3 className="text-lg font-bold mb-2 text-gray-800">{title}</h3>
+
+            <div className="flex justify-between items-center mt-auto">
+                <p className="text-gray-700">
+                    قیمت: <span className="font-bold">{price.toLocaleString()} تومان</span>
+                </p>
                 
-                {/* دکمه‌های اقدام */}
                 <div className="flex space-x-2 space-x-reverse">
                     <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-full">
-                        <FaRegEdit />
+                        <FaRegEdit size={16} />
                     </button>
                     <button className="p-2 text-red-500 hover:bg-red-50 rounded-full">
-                        <HiOutlineTrash />
+                        <HiOutlineTrash size={16} />
                     </button>
                 </div>
             </div>
