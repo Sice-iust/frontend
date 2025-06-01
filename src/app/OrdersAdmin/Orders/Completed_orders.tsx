@@ -89,7 +89,7 @@ const OrderList = () => {
           return (
             <OrderCard
               key={order.id}
-              orderkey={index}
+              orderkey={order.id}
               id={order.id.toString()}
               total_price={convertPrice(order.total_price)}
               delivery_day={deliveryDate}

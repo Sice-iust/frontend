@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react';  
 import { RxCross1 } from "react-icons/rx";
-import Invoice from "./invoice-detail";
+import Invoice from "../../ProfilePage/OrdersPage/Invoice/invoice-detail";
 
 interface InvoicePopupProps {  
     isOpen: boolean;  
@@ -27,11 +27,11 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
         if (isOpen) {  
             const fetchInvoiceData = async () => {  
                 try {  
-                    const response = await fetch(`https://nanziback.liara.run/user/order/invoice/${orderId}`, {
+                    const response = await fetch(`https://nanziback.liara.run/nanzi/admin/order/invoice/${orderId}/`, {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                       });
                     if (!response.ok) {  
-                        throw new Error('Failed to fetch invoice data');  
+                        throw new Error('Failed to fetch this data');  
                     }  
                     const data = await response.json();  
                     console.log("invoice",data)

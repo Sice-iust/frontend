@@ -38,7 +38,7 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                 {profit? Number(profit) >0 && (
                     <div className="flex flex-row-reverse py-2 justify-between ">  
                         <span className="text-[14px] font-vazir font-medium 
-                                         text-right text-green-600 font-semibold ">سود شما از این خرید</span>
+                                         text-right text-green-600  ">سود شما از این خرید</span>
                         <span className="flex flex-row-reverse">
                         <span className="text-green-600 font-semibold">{convertPrice(profit)}</span>    
                         <span className="text-[14px] font-vazir font-medium 
@@ -64,7 +64,7 @@ const Invoice: React.FC<InvoiceProps> = ({orderId,payment,shippingfee,discount,P
                       ) : null,
                       
                     discount ? { label: "تخفیف", value: convertPrice(discount), color: "text-[#F18825]" }: null,
-                    total_price ? { label: "مبلغ پرداخت شده", value: total_price, bold: true ,color: 'gray-400' } :null
+                    total_price ? { label: "مبلغ پرداخت شده", value: convertPrice(total_price), bold: true ,color: 'gray-400' } :null
                     ].filter(entry => entry !== null ) .map(({ label, value, color = "text-gray-500", bold = false , showCurrency=true }, index) => (
                     <div key={index} className={`flex flex-row-reverse py-2  ${index === 0 || index === 3 ? 
                         "border-t pt-4 mt-2" : ""}`}>

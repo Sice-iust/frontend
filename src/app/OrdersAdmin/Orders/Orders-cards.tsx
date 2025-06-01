@@ -1,4 +1,4 @@
-import React , {useState} from "react"; 
+import React , {useState , useEffect} from "react"; 
 import { RiCheckboxCircleFill } from "react-icons/ri";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
@@ -12,7 +12,9 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import vazirBase64 from "./VazirBase64";
 import { MdOutlineCancel } from "react-icons/md";
-import InvoicePopup from "../../ProfilePage/OrdersPage/Invoice/Orders-invoice-popup";
+import InvoicePopup from "./Invoice-popup";
+import fetchInvoiceData from "./Invoice-popup";
+import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 
 interface OrderCardProps {  
     orderkey: number;
@@ -45,68 +47,168 @@ const OrderCard: React.FC<OrderCardProps> = ({
     iscompleted=false,
     admin_reason,
 }) => {  
+
+
+    const [invoiceData, setInvoiceData] = useState<any>(null); 
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState<string | null>(null);
     
-
-
-        const handleDownloadPDF = () => {
-            const doc = new jsPDF();
-            doc.addFileToVFS("Vazir.ttf", vazirBase64);
-            doc.addFont("Vazir.ttf", "Vazir", "normal");
-            doc.setFont("Vazir", "normal");
-
-            doc.setFontSize(20);
-            doc.text("نانزی", 105, 15, { align: "center" });
-
-            doc.setFontSize(14);
-            doc.text(`فاکتور سفارش`, 105, 25, { align: "center" });
-
-            doc.setFontSize(12);
-            doc.text(`شماره سفارش: ${id}`, 105, 32, { align: "center" });
-
-            const currentDate = new Date().toLocaleDateString("fa-IR");
-            doc.text(`تاریخ: ${currentDate}`, 105, 38, { align: "center" });
-
-            autoTable(doc, {
-            startY: 50,
-            head: [[
-        String.fromCharCode(...'مقدار'.split('').map(c => c.charCodeAt(0))),
-        String.fromCharCode(...'جزئیات'.split('').map(c => c.charCodeAt(0)))
-        ]],
-
-            body: [
-                [id, "شماره سفارش"],
-                [Reciever, "گیرنده"],
-                [phone, "شماره تماس"],
-                [`${total_price} تومان`, "مبلغ کل"],
-                [delivery_day, "تاریخ تحویل"],
-                [delivery_clock, "ساعت تحویل"],
-                [distination, "آدرس"],
-                [Description, "توضیحات"],
-            ],
-            styles: {
-                font: "Vazir", 
-                halign: "right",
-                fontSize: 11,
-            },
-            headStyles: {
-                font: "Vazir",  
-                fontStyle: "bold",
-                fillColor: [41, 128, 185],
-                textColor: 255,
-            },
-            columnStyles: {
-                0: { cellWidth: 80 },
-                1: { cellWidth: 80 }
-            },
-            margin: { horizontal: 25 },
-        });
-
-
-            // Footer
-            doc.setFontSize(10);
-
-            doc.save(`order_${id}.pdf`);
+        useEffect(() => {  
+            
+                const fetchInvoiceData = async () => {  
+                    try {  
+                        const response = await fetch(`https://nanziback.liara.run/nanzi/admin/order/invoice/${id}/`, {
+                            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                          });
+                        if (!response.ok) {  
+                            throw new Error('Failed to fetch this data');  
+                        }  
+                        const data = await response.json();  
+                        console.log("invoice",data)
+                        setInvoiceData(data); 
+                        console.log(data) 
+                    } catch (err) {  
+                        setError(err.message);  
+                    } finally {  
+                        setLoading(false);  
+                    }  
+                    console.log(error);
+                };  
+    
+                fetchInvoiceData();  
+             
+        }, []); 
+    
+         const calculateTotalPrice = () => {
+            if (!invoiceData) return "0";
+            
+            const payment = parseFloat(invoiceData.payment) || 0;
+            const discount = parseFloat(invoiceData.discount) || 0;
+            const shippingFee = parseFloat(invoiceData.shipping_fee) || 0;
+            
+            return (payment - discount + shippingFee).toFixed(2);
         };
+
+    
+    const handleDownloadPDF = () => {
+    const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        compress: true
+    });
+
+    // Register and set Persian font
+    doc.addFileToVFS("Vazir.ttf", vazirBase64);
+    doc.addFont("Vazir.ttf", "Vazir", "normal");
+    doc.setFont("Vazir");
+
+    // Header
+    doc.setFontSize(20);
+    doc.text("نانزی", 105, 15, { align: "center" });
+
+    doc.setFontSize(14);
+    doc.text("فاکتور سفارش", 105, 25, { align: "center" });
+
+    doc.setFontSize(12);
+    doc.text(`شماره سفارش: ${id}`, 105, 32, { align: "center" });
+    
+    const currentDate = new Date().toLocaleDateString("fa-IR");
+    doc.text(`تاریخ: ${currentDate}`, 105, 38, { align: "center" });
+
+    // First table - Order details
+    autoTable(doc, {
+        startY: 50,
+        head: [["مقدار", "جزئیات سفارش"]],
+        body: [
+            [id, "شماره سفارش"],
+            [Reciever, "گیرنده"],
+            [phone, "شماره تماس"],
+            [`${total_price} تومان`, "مبلغ کل"],
+            [delivery_day, "تاریخ تحویل"],
+            [delivery_clock, "ساعت تحویل"],
+            [distination, "آدرس"],
+            [Description || "-", "توضیحات"],
+        ],
+        styles: {
+            font: "Vazir",
+            halign: "right",
+            fontSize: 11,
+        },
+        headStyles: {
+            fontStyle: "bold",
+            fillColor: [41, 128, 185],
+            textColor: 255,
+        },
+        columnStyles: {
+            0: { cellWidth: 80 },
+            1: { cellWidth: 80 }
+        },
+        margin: { horizontal: 25 },
+    });
+
+    // Second table - Products list
+    autoTable(doc, {
+        startY: (doc as any).lastAutoTable.finalY + 15,
+        head: [["تعداد", "قیمت", "نام محصول"]],
+        body: invoiceData.items.map(item => ([
+            item.quantity,
+            `${parseFloat(item.product.price).toLocaleString("fa-IR")} تومان`,
+            item.product.name
+        ])),
+        styles: {
+            font: "Vazir",
+            halign: "right",
+            fontSize: 11,
+        },
+        headStyles: {
+            fontStyle: "bold",
+            fillColor: [41, 128, 185],
+            textColor: 255,
+        },
+        columnStyles: {
+            0: { cellWidth: 30, halign: "center" },
+            1: { cellWidth: 50, halign: "left" },
+            2: { cellWidth: 80, halign: "right" }
+        },
+        margin: { horizontal: 25 },
+    });
+
+    // Third table - Invoice details
+    autoTable(doc, {
+        startY: (doc as any).lastAutoTable.finalY + 15,
+        head: [["مقدار", "جزئیات مالی"]],
+        body: [
+            [`${parseFloat(invoiceData.payment).toLocaleString("fa-IR")} تومان`, "مبلغ کل"],
+            [`${parseFloat(invoiceData.discount).toLocaleString("fa-IR")} تومان`, "تخفیف"],
+            [`${parseFloat(invoiceData.shipping_fee).toLocaleString("fa-IR")} تومان`, "هزینه ارسال"],
+            [`${parseFloat(calculateTotalPrice()).toLocaleString("fa-IR")} تومان`, "مبلغ قابل پرداخت"],
+        ],
+        styles: {
+            font: "Vazir",
+            halign: "right",
+            fontSize: 11,
+        },
+        headStyles: {
+            fontStyle: "bold",
+            fillColor: [41, 128, 185],
+            textColor: 255,
+        },
+        columnStyles: {
+            0: { cellWidth: 80 },
+            1: { cellWidth: 80 }
+        },
+        margin: { horizontal: 25 },
+    });
+
+    // Footer
+    doc.setFontSize(10);
+    doc.text("با تشکر از خرید شما", 105, (doc as any).lastAutoTable.finalY + 15, {
+        align: "center"
+    });
+
+    doc.save(`order_${id}.pdf`);
+};
+
 
         const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
 
