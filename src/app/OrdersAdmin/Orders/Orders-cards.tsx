@@ -211,14 +211,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
                         <IoLocationSharp className="text-[#877F7F] text-xs sm:text-base 
                                                     md:text-base ml-1 flex-shrink-0" />
                     </div>
-                    <div className="flex items-start w-full mt-2">
+                    {Description && (<div className="flex items-start w-full mt-2">
                         <span className="text-[#877F7F] font-normal font-vazir text-xs 
                                          sm:text-sm md:text-sm text-right w-full">
                             {Description}
                         </span>
                         <TbFileDescription className="text-[#877F7F] text-xs sm:text-base 
                                                       md:text-base ml-1 flex-shrink-0" />
-                    </div>
+                    </div>)}
                 </div>
             </div>
         </div>  

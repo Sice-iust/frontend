@@ -1,104 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import OrderCard from './Orders-cards';
+import {convertPrice} from '../../../utils/Coversionutils'
+
+interface Order {
+  id: number;
+  location: {
+    user: {
+      username: string;
+      phonenumber: string;
+    };
+    address: string;
+    name: string;
+    home_floor: string | null;
+    home_unit: string | null;
+    home_plaque: string | null;
+  };
+  delivery: {
+    id: number;
+    start_time: string;
+    end_time: string;
+    delivery_date: string;
+    max_orders: number;
+    current_fill: number;
+    shipping_fee: string;
+  };
+  total_price: string;
+  status: number;
+  profit: string;
+  discription: string;
+  delivered_at: string | null;
+  reciver: string;
+  reciver_phone: string;
+  
+}
 
 const OrderList = () => {
-  const orders = [
-    {
-      id: '12345',
-      total_price: '120,000',
-      recipientName: 'محمد احمدی',
-      delivery_day: '1402/03/03',
-      distination: 'ت23، طبقه 2',
-      delivery_clock: '13-15',
-      phone: '09123456789',
-      Description: 'به فلانی تحویل داده بشه',
-      isarchived : false,
-      iscancled: false ,
-    },
-    {
-      id: '12346',
-      total_price: '130,000',
-      recipientName: 'مینا راد',
-      delivery_day: '1402/03/03',
-      distination: 'تهران، خیابان شریعتی، پلاک 45',
-      delivery_clock: '13-15',
-      phone: '09123456789',
-      Description: 'به فلانی تحویل داده بشه',
-      isarchived : false,
-      iscancled: true ,
-    },
-    {
-      id: '12347',
-      total_price: '140,000',
-      recipientName: 'سارا نیکخواه',
-      delivery_day: '1402/03/03',
-      distination: 'اصفهان، خیابان چهارباغ، پلاک 89',
-      delivery_clock: '13-15',
-      phone: '09123456789',
-      Description: 'به فلانی تحویل داده بشه',
-      isarchived : true,
-      iscancled: false ,
-    },
-    // Add more orders to test scrolling
-    {
-      id: '12348',
-      total_price: '150,000',
-      recipientName: 'علی محمدی',
-      delivery_day: '1402/03/04',
-      distination: 'مشهد، بلوار وکیل آباد، پلاک 12',
-      delivery_clock: '14-16',
-      phone: '09123456790',
-      Description: 'تحویل به درب منزل',
-      isarchived : false,
-      iscancled: false ,
-    },
-    {
-      id: '12349',
-      total_price: '160,000',
-      recipientName: 'فاطمه زهرا',
-      delivery_day: '1402/03/04',
-      distination: 'شیراز، خیابان زند، پلاک 34',
-      delivery_clock: '15-17',
-      phone: '09123456791',
-      Description: 'تحویل به نگهبان',
-      isarchived : false,
-      iscancled: false ,
-    },
-    {
-      id: '12350',
-      total_price: '170,000',
-      recipientName: 'رضا کریمی',
-      delivery_day: '1402/03/05',
-      distination: 'تبریز، خیابان امام، پلاک 56',
-      delivery_clock: '16-18',
-      phone: '09123456792',
-      Description: 'تحویل به صاحبخانه',
-      isarchived : false,
-      iscancled: false ,
-    }
-  ];
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await fetch('https://nanziback.liara.run/nanzi/admin/process/' ,{
+                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                      });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data: Order[] = await response.json();
+        setOrders(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
+  if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
 
   return (
     <div className='mb-5'>
-    <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
-      {orders.map((order, index) => (
-        <OrderCard
-          key={index}
-          orderkey={index}
-          id={order.id}
-          total_price={order.total_price}
-          delivery_day={order.delivery_day}
-          distination={order.distination}
-          delivery_clock={order.delivery_clock}
-          phone={order.phone}
-          Description={order.Description}
-          Reciever={order.recipientName}
-          isarchived={false}
-          iscancled={false}
-          iscompleted={false}
-        />
-      ))}
-    </div>
+      <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
+        {orders.map((order, index) => {
+          
+          const startHour = order.delivery.start_time.split(':')[0];
+          const endHour = order.delivery.end_time.split(':')[0];
+          const deliveryTime = `${startHour}-${endHour}`;
+          
+          
+          const deliveryDate = new Date(order.delivery.delivery_date)
+            .toLocaleDateString('fa-IR');
+          
+          
+          
+
+          return (
+            <OrderCard
+              key={order.id}
+              orderkey={index}
+              id={order.id.toString()}
+              total_price={convertPrice(order.total_price)}
+              delivery_day={deliveryDate}
+              distination={order.location.address}
+              delivery_clock={deliveryTime}
+              phone={order.reciver_phone}
+              Description={order.discription}
+              Reciever={order.reciver}
+              isarchived={false}
+              iscancled={false}
+              iscompleted={false}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
