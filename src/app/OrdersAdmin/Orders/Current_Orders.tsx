@@ -79,6 +79,7 @@ const OrderList = () => {
   ];
 
   return (
+    <div className='mb-5'>
     <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
       {orders.map((order, index) => (
         <OrderCard
@@ -97,6 +98,7 @@ const OrderList = () => {
           iscompleted={false}
         />
       ))}
+    </div>
     </div>
   );
 };

@@ -66,31 +66,31 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </span>
             </div>
             
-            <div className="flex flex-wrap items-center mb-2">  
-                <div className="flex items-center mt-4">  
+            <div className="flex flex-wrap items-center mb-1">  
+                <div className="flex items-center mt-3">  
                     <span className={`dark:text-white text-[#191919] font-vazir text-xs lg:ml-8
-                                     sm:text-lg md:text-lg`}>تومان</span>  
-                    <span className={`dark:text-white text-[#191919] font-vazir ml-1 font-bold text-sm
-                                     sm:text-lg md:text-lg`}>{total_price}</span>  
+                                     sm:text-lg md:text-base`}>تومان</span>  
+                    <span className={`dark:text-white text-[#191919] font-vazir ml-1 font-bold text-sm 
+                                     sm:text-lg md:text-base`}>{total_price}</span>  
                 </div>  
                 
-                <div className="flex flex-wrap items-center mt-6 space-x-1 sm:space-x-2 md:space-x-4 ml-auto mr-2"> 
-                    <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
+                <div className="flex flex-wrap items-center mt-3 space-x-1 sm:space-x-2 md:space-x-4 ml-auto mr-2"> 
+                    <span className='flex text-[#877F7F] font-normal font-vazir text-xs 
                             sm:text-sm md:text-sm'>
                         {phone}
                         <FaPhone className='ml-1 text-xs sm:text-base md:text-sm rotate-90'/>
                     </span>  
-                    <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
+                    <span className='flex text-[#877F7F] font-normal font-vazir text-xs 
                             sm:text-sm md:text-sm'>
                         {Reciever}
                         <IoMdPerson className='ml-1 text-xs sm:text-base md:text-base'/>
                     </span>   
-                    <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
+                    <span className='flex text-[#877F7F] font-normal font-vazir text-xs 
                             sm:text-sm md:text-sm'>
                         {delivery_clock}
                         <FaRegClock className='ml-1 text-xs sm:text-base md:text-base'/>
                     </span>  
-                    <span className='flex text-[#877F7F] font-semibold font-vazir text-xs 
+                    <span className='flex text-[#877F7F] font-normal font-vazir text-xs 
                             sm:text-sm md:text-sm'>
                         {delivery_day}
                         <LuCalendar className='ml-1 text-xs sm:text-base md:text-base'/>
@@ -98,28 +98,28 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </div>
             </div>  
 
-            <div className="flex mt-3">
-                <div className="flex space-x-4 mr-auto">
-                    <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-2 cursor-pointer 
-                                    transition duration-300 lg:ml-7 text-xs sm:text-sm md:text-md lg:text-base">
+            <div className="flex mt-1">
+                <div className="flex space-x-4 mr-auto items-center h-[60px]"> 
+                    <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-1 cursor-pointer
+                                    transition duration-300 lg:ml-7 text-xs sm:text-sm md:text-md lg:text-base h-[36px]">
                         {"فاکتور سفارش"}
                     </button>
-                    <button className={`font-vazir  rounded-md px-4 py-2 cursor-pointer 
-                                    transition duration-300 text-xs sm:text-sm md:text-md lg:text-base
-                                    ${iscancled || isarchived ? 'hidden' : iscompleted ? 'bg-gray-200 text-gray-700'  : 'bg-[#34A853] text-white'}`}>
+                    <button className={`font-vazir rounded-md px-4 py-1 cursor-pointer 
+                                    transition duration-300 text-xs sm:text-sm md:text-md lg:text-base h-[36px]
+                                    ${iscancled || isarchived ? 'hidden' : iscompleted ? 'bg-gray-200 text-gray-700' : 'bg-[#34A853] text-white'}`}>
                         {iscompleted ? "آرشیو سفارش" : "تحویل به پیک"}
                     </button>
                 </div>
 
-                <div className="flex flex-col text-right mr-2 min-w-[200px]">
+                <div className="flex flex-col text-right mr-2 min-w-[200px] justify-center"> 
                     <div className="flex items-start w-full">
-                        <span className="text-[#877F7F] font-semibold font-vazir text-xs sm:text-sm md:text-sm text-right w-full">
+                        <span className="text-[#877F7F] font-normal font-vazir text-xs sm:text-sm md:text-sm text-right w-full">
                             {distination}
                         </span>
                         <IoLocationSharp className="text-[#877F7F] text-xs sm:text-base md:text-base ml-1 flex-shrink-0" />
                     </div>
                     <div className="flex items-start w-full mt-2">
-                        <span className="text-[#877F7F] font-semibold font-vazir text-xs sm:text-sm md:text-sm text-right w-full">
+                        <span className="text-[#877F7F] font-normal font-vazir text-xs sm:text-sm md:text-sm text-right w-full">
                             {Description}
                         </span>
                         <TbFileDescription className="text-[#877F7F] text-xs sm:text-base md:text-base ml-1 flex-shrink-0" />
