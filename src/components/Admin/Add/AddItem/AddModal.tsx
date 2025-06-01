@@ -123,7 +123,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                     <AiOutlineUpload className="h-6 w-6 text-white"/>
                 </button>
                 </div>
-                <div className="grid grid-cols-2 gap-15 mb-6 mt-5" dir="rtl">
+                <div className="grid grid-cols-2 gap-16 mb-6 mt-5" dir="rtl">
                     <div>
                         <h2 className="font-semibold mb-2">نام محصول</h2>
                         <input
@@ -179,7 +179,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                     <div>
                         <h2 className="font-semibold mb-2">تعداد در بسته</h2>
                         <input
-                        type="text"
+                        type="number"
                         name="plaque"
                         value={addressData.plaque}
                         onChange={handleInputChange}
@@ -189,13 +189,23 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                     <div>
                         <h2 className="font-semibold mb-2">موجودی</h2>
                         <input
-                        type="text"
+                        type="number"
                         name="plaque"
                         value={addressData.plaque}
                         onChange={handleInputChange}
                         className="w-full  p-2 border border-gray-300 rounded"
                         />
                     </div>   
+                </div>
+                <div>
+                    <h2 className="font-semibold mb-2" dir="rtl">توضیحات محصول</h2>
+                    <input dir="rtl"
+                    type="text"
+                    name="plaque"
+                    value={addressData.plaque}
+                    onChange={handleInputChange}
+                    className="w-full min-w-155 min-h-30 mb-5 p-1 border border-gray-300 rounded"
+                    />
                 </div>
         </div>
 
