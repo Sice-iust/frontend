@@ -164,6 +164,39 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                     )}
                     </div>       
                 </div>
+                <div className="grid grid-cols-3 gap-3 mb-6 mt-5" dir="rtl">
+                    <div>
+                        <h2 className="font-semibold mb-2">قیمت</h2>
+                        <input
+                        type="text"
+                        name="plaque"
+                        value={addressData.plaque}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border border-gray-300 rounded" 
+                        />
+                        <span className="absolute left-115  text-gray-500 mt-2" >تومان</span>
+                    </div>
+                    <div>
+                        <h2 className="font-semibold mb-2">تعداد در بسته</h2>
+                        <input
+                        type="text"
+                        name="plaque"
+                        value={addressData.plaque}
+                        onChange={handleInputChange}
+                        className="w-full  p-2 border border-gray-300 rounded"
+                        />
+                    </div>
+                    <div>
+                        <h2 className="font-semibold mb-2">موجودی</h2>
+                        <input
+                        type="text"
+                        name="plaque"
+                        value={addressData.plaque}
+                        onChange={handleInputChange}
+                        className="w-full  p-2 border border-gray-300 rounded"
+                        />
+                    </div>   
+                </div>
         </div>
 
       </div>
