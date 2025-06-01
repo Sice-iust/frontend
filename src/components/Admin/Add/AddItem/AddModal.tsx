@@ -23,6 +23,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
     unit: "",
     addressTitle: "",
   });
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,24 +77,46 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                 />  
                 </div>
                 <button 
-                className="absolute -bottom-2 -left-2 h-10 w-10 rounded-full bg-[#f18825] 
-                            border-2 border-white flex items-center justify-center cursor-pointer
-                            shadow-md hover:bg-orange-300 transition-colors"
-                onClick={(e) => {
-                    e.stopPropagation();
-                    fileInputRef.current?.click();
-                }}
-                >
-                <input 
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageUpload}
-                />
-                <AiOutlineUpload className="h-6 w-6 text-white"/>
+                    className="absolute -bottom-2 -left-2 h-10 w-10 rounded-full bg-[#f18825] 
+                                border-2 border-white flex items-center justify-center cursor-pointer
+                                shadow-md hover:bg-orange-300 transition-colors"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        fileInputRef.current?.click();
+                    }}
+                    >
+                    <input 
+                        type="file"
+                        ref={fileInputRef}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                    />
+                    <AiOutlineUpload className="h-6 w-6 text-white"/>
                 </button>
-            </div>
+                </div>
+                <div className="grid grid-cols-2 gap-15 mb-6 mt-5" dir="rtl">
+                    <div>
+                        <h2 className="font-semibold mb-2">نام محصول</h2>
+                        <input
+                        type="text"
+                        name="plaque"
+                        value={addressData.plaque}
+                        onChange={handleInputChange}
+                        className="w-full min-w-70 p-2 border border-gray-300 rounded"
+                        />
+                    </div>
+                    <div>
+                        <h2 className="font-semibold mb-2">دسته بندی</h2>
+                        <input
+                        type="text"
+                        name="floor"
+                        value={addressData.floor}
+                        onChange={handleInputChange}
+                        className="w-full min-w-70 p-2 border border-gray-300 rounded"
+                        />
+                    </div>           
+                </div>
         </div>
 
       </div>
