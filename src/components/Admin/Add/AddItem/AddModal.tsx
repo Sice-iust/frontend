@@ -1,153 +1,143 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from "react";
+import { FaChevronRight } from "react-icons/fa6";
 
-interface ProductFormProps {
+
+interface PopupProps {
   onClose: () => void;
-  onSubmit: (product: ProductData) => void;
 }
 
-interface ProductData {
-  category: string;
-  name: string;
-  price: string;
-  description: string;
-  packageCount: string;
-  inventory: string;
+interface AddressData {
+  mainAddress: string;
+  plaque: string;
+  floor: string;
+  unit: string;
+  addressTitle: string;
 }
 
-const ProductFormPopup: React.FC<ProductFormProps> = ({ onClose, onSubmit }) => {
-  const [formData, setFormData] = useState<ProductData>({
-    category: '',
-    name: '',
-    price: '',
-    description: '',
-    packageCount: '',
-    inventory: ''
+const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
+  const [addressData, setAddressData] = useState<AddressData>({
+    mainAddress: "",
+    plaque: "",
+    floor: "",
+    unit: "",
+    addressTitle: "",
   });
 
-  const categories = ['بربری', 'سنگک', 'تافتون', 'فانتزی', 'محلی'];
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setAddressData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    // Handle form submission here
+    console.log("Address data submitted:", addressData);
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-        <div className="p-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-6">فرم ثبت محصول جدید</h2>
-          
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="category" className="block text-gray-700 mb-2">دسته بندی</label>
-              <select
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              >
-                <option value="">انتخاب کنید</option>
-                {categories.map((category) => (
-                  <option key={category} value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700 mb-2">نام محصول</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="price" className="block text-gray-700 mb-2">قیمت</label>
-              <input
-                type="text"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="description" className="block text-gray-700 mb-2">توضیحات</label>
-              <textarea
-                id="description"
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows={3}
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="packageCount" className="block text-gray-700 mb-2">تعداد در بسته</label>
-              <input
-                type="text"
-                id="packageCount"
-                name="packageCount"
-                value={formData.packageCount}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="mb-6">
-              <label htmlFor="inventory" className="block text-gray-700 mb-2">موجودی</label>
-              <input
-                type="text"
-                id="inventory"
-                name="inventory"
-                value={formData.inventory}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div className="flex justify-end gap-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
-              >
-                انصراف
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-              >
-                ثبت محصول
-              </button>
-            </div>
-          </form>
+    <div className="fixed inset-0 flex items-center justify-center z-10">
+      <div 
+        className="fixed inset-0 bg-black opacity-50 transition-opacity" 
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      
+      <div className="bg-white rounded-md shadow-lg w-full max-w-2xl mx-4 relative z-10 border border-gray-200">
+        <div className="flex flex-row-reverse p-4 border-b gap-1" >
+          <FaChevronRight 
+            className="cursor-pointer mt-1 h-5 w-5 hover:bg-gray-100" 
+            onClick={onClose} 
+          />
+          <h1 className="text-xl font-bold">بازگشت</h1>
         </div>
+
+        <form onSubmit={handleSubmit} className="p-6" dir="rtl">
+          <div className="mb-4">
+            <label htmlFor="mainAddress" className="block font-medium text-gray-700 mb-2">
+              نشانی
+            </label>
+            <input
+              type="text"
+              id="mainAddress"
+              name="mainAddress"
+              value={addressData.mainAddress}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div>
+              <label htmlFor="plaque" className="block font-medium text-gray-700 mb-2">
+                پلاک
+              </label>
+              <input
+                type="text"
+                id="plaque"
+                name="plaque"
+                value={addressData.plaque}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="floor" className="block font-medium text-gray-700 mb-2">
+                طبقه
+              </label>
+              <input
+                type="text"
+                id="floor"
+                name="floor"
+                value={addressData.floor}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="unit" className="block font-medium text-gray-700 mb-2">
+                واحد
+              </label>
+              <input
+                type="text"
+                id="unit"
+                name="unit"
+                value={addressData.unit}
+                onChange={handleInputChange}
+                className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="addressTitle" className="block font-medium text-gray-700 mb-2">
+              عنوان آدرس
+            </label>
+            <input
+              type="text"
+              id="addressTitle"
+              name="addressTitle"
+              value={addressData.addressTitle}
+              onChange={handleInputChange}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-[#f18825] hover:bg-[#e07d1f] text-white py-3 rounded-lg text-lg font-semibold transition-colors"
+          >
+            به روز رسانی آدرس
+          </button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default ProductFormPopup;
+export default AddItemModal;
