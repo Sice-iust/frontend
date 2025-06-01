@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import OrderCard from './Orders-cards';
-import {convertPrice} from '../../../utils/Coversionutils'
+import {convertPrice} from '../../../utils/Coversionutils';
+import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
 
 interface Order {
   id: number;
@@ -88,12 +89,13 @@ const OrderList = () => {
               delivery_day={deliveryDate}
               distination={order.location.address}
               delivery_clock={deliveryTime}
-              phone={order.reciver_phone}
+              phone={convertPhoneNumberToPersian(order.reciver_phone)}
               Description={order.discription}
               Reciever={order.reciver}
               isarchived={false}
               iscancled={false}
               iscompleted={false}
+              admin_reason={null}
             />
           );
         })}

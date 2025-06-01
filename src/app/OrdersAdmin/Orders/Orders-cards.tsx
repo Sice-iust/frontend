@@ -11,6 +11,7 @@ import { TbDownload } from "react-icons/tb";
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import vazirBase64 from "./VazirBase64";
+import { MdOutlineCancel } from "react-icons/md";
 
 interface OrderCardProps {  
     orderkey: number;
@@ -25,6 +26,7 @@ interface OrderCardProps {
     iscancled?: boolean;
     isarchived?: boolean;
     iscompleted : boolean;
+    admin_reason : string | null;
 }  
 
 const OrderCard: React.FC<OrderCardProps> = ({  
@@ -40,6 +42,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
     iscancled = false,
     isarchived = false,
     iscompleted=false,
+    admin_reason,
 }) => {  
     
 
@@ -217,6 +220,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
                             {Description}
                         </span>
                         <TbFileDescription className="text-[#877F7F] text-xs sm:text-base 
+                                                      md:text-base ml-1 flex-shrink-0" />
+                    </div>)}
+                    {iscancled && admin_reason &&(<div className="flex items-start w-full mt-2 ">
+                        <span className="text-red-700 font-normal font-vazir text-xs 
+                                         sm:text-sm md:text-sm text-right w-full">
+                            {admin_reason}
+                        </span>
+                        <MdOutlineCancel  className="text-red-700 text-xs sm:text-base 
                                                       md:text-base ml-1 flex-shrink-0" />
                     </div>)}
                 </div>
