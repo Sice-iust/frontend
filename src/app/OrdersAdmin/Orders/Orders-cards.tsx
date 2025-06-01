@@ -1,4 +1,4 @@
-import React from "react"; 
+import React , {useState} from "react"; 
 import { RiCheckboxCircleFill } from "react-icons/ri";
 import { IoLocationSharp } from "react-icons/io5";
 import { FaRegClock } from "react-icons/fa6";
@@ -12,6 +12,7 @@ import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import vazirBase64 from "./VazirBase64";
 import { MdOutlineCancel } from "react-icons/md";
+import InvoicePopup from "../../ProfilePage/OrdersPage/Invoice/Orders-invoice-popup";
 
 interface OrderCardProps {  
     orderkey: number;
@@ -107,10 +108,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
             doc.save(`order_${id}.pdf`);
         };
 
-        // handleDownloadPDF()
+        const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
+
+        const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
+        const handleInvoiceClose = () => setIsInvoiceOpen(false); 
     
 
     return (  
+        <>
         <div className={`mx-auto dark:bg-[#191919] bg-white rounded-2xl shadow-md 
                         p-4 mt-4 mb-2 border dark:border-white border-gray-300 w-full xl:w-[98%] 
                         text-right `}>
@@ -194,7 +199,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 <div className="flex space-x-4 mr-auto items-center h-[60px]"> 
                     <button className="font-vazir bg-[#F18825] text-white rounded-md px-4 py-1 cursor-pointer
                                     transition duration-300 lg:ml-7 text-xs 
-                                    sm:text-sm md:text-md lg:text-base h-[36px]">
+                                    sm:text-sm md:text-md lg:text-base h-[36px]" onClick={handleInvoiceOpen}>
                         {"فاکتور سفارش"}
                     </button>
                     <button className={`font-vazir rounded-md px-4 py-1 cursor-pointer 
@@ -233,6 +238,9 @@ const OrderCard: React.FC<OrderCardProps> = ({
                 </div>
             </div>
         </div>  
+
+         <InvoicePopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey} total_price_after={total_price} />  
+        </>
     );  
 };  
 
