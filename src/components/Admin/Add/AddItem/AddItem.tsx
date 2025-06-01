@@ -31,7 +31,7 @@ export default function AddItem() {
                     افزودن محصول جدید <FaPlus className="h-4 w-4 mt-1" />
                 </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 cursor-pointer" dir="rtl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 " dir="rtl">
                 {breads.map((bread) => (
                     <div key={bread.id} className="w-full">
                         <AdminItemCard 
