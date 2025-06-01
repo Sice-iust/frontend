@@ -7,6 +7,11 @@ interface PopupProps {
   onClose: () => void;
 }
 
+interface ProductData {
+  name: string;
+  category: string;
+}
+
 interface AddressData {
   mainAddress: string;
   plaque: string;
@@ -14,6 +19,8 @@ interface AddressData {
   unit: string;
   addressTitle: string;
 }
+
+
 
 const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
   const [addressData, setAddressData] = useState<AddressData>({
@@ -23,16 +30,15 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
     unit: "",
     addressTitle: "",
   });
-  
+  const categories = ["بربری", "سنگک", "تافتون", "محلی", "فانتزی"];
+  const [filteredCategories, setFilteredCategories] = useState<string[]>(categories);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAddressData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const [productData, setProductData] = useState<ProductData>({
+  name: "",
+  category: "",
+  }); 
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -48,7 +54,29 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
     };
     reader.readAsDataURL(file);
   };
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setProductData((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
 
+    if (name === "category") {
+        const filtered = categories.filter(cat => 
+        cat.includes(value)
+        );
+        setFilteredCategories(filtered);
+        setShowCategoryDropdown(true);
+    }
+    };
+
+    const handleCategorySelect = (category: string) => {
+    setProductData(prev => ({
+        ...prev,
+        category: category
+    }));
+    setShowCategoryDropdown(false);
+    };
   return (
     <div className="fixed inset-0 flex items-center justify-center z-10">
       <div 
@@ -106,16 +134,35 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                         className="w-full min-w-70 p-2 border border-gray-300 rounded"
                         />
                     </div>
-                    <div>
-                        <h2 className="font-semibold mb-2">دسته بندی</h2>
-                        <input
+                    <div className="relative">
+                    <label className="block font-semibold mb-2">دسته بندی</label>
+                    <input
                         type="text"
-                        name="floor"
-                        value={addressData.floor}
+                        name="category"
+                        value={productData.category}
+                        placeholder="انتخاب کنید"
                         onChange={handleInputChange}
-                        className="w-full min-w-70 p-2 border border-gray-300 rounded"
-                        />
-                    </div>           
+                        onFocus={() => setShowCategoryDropdown(true)}
+                        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    />
+                    {showCategoryDropdown && (
+                        <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+                        {filteredCategories.length > 0 ? (
+                            filteredCategories.map((category) => (
+                            <div
+                                key={category}
+                                className="p-2 hover:bg-gray-100 cursor-pointer"
+                                onClick={() => handleCategorySelect(category)}
+                            >
+                                {category}
+                            </div>
+                            ))
+                        ) : (
+                            <div className="p-2 text-gray-500">نتیجه‌ای یافت نشد</div>
+                        )}
+                        </div>
+                    )}
+                    </div>       
                 </div>
         </div>
 
