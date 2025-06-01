@@ -34,6 +34,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
     Description, 
     iscancled = false,
     isarchived = false,
+    iscompleted=false,
 }) => {   
 
     return (  
@@ -103,10 +104,10 @@ const OrderCard: React.FC<OrderCardProps> = ({
                                     transition duration-300 lg:ml-7 text-xs sm:text-sm md:text-md lg:text-base">
                         {"فاکتور سفارش"}
                     </button>
-                    <button className={`font-vazir bg-[#34A853] text-white rounded-md px-4 py-2 cursor-pointer 
+                    <button className={`font-vazir  rounded-md px-4 py-2 cursor-pointer 
                                     transition duration-300 text-xs sm:text-sm md:text-md lg:text-base
-                                    ${iscancled || isarchived ? 'hidden' : ''}`}>
-                        {"تحویل به پیک"}
+                                    ${iscancled || isarchived ? 'hidden' : iscompleted ? 'bg-gray-200 text-gray-700'  : 'bg-[#34A853] text-white'}`}>
+                        {iscompleted ? "آرشیو سفارش" : "تحویل به پیک"}
                     </button>
                 </div>
 
