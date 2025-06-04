@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import Image from "next/image";
 import { AiOutlineUpload } from "react-icons/ai";
+
 interface PopupProps {
   onClose: () => void;
   categories:Array<string>;
@@ -213,7 +214,11 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
                     />
                 </div>
         </div>
-
+                <button
+                  className="px-4 py-2 text-white rounded-md bg-[#f18825] ml-7 mb-5 hover:bg-orange-400 hover:scale-106"
+                >
+                  افزودن محصول
+                </button>
       </div>
     </div>
   );
