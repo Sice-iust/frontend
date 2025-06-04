@@ -2,7 +2,9 @@ import React, { useRef, useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import Image from "next/image";
 import { AiOutlineUpload } from "react-icons/ai";
-
+import { convertToPersianNumbers } from "../../../../utils/Coversionutils";
+import { useAdminItem } from "../../../../context/AdminAddItem";
+import { Add } from "@mui/icons-material";
 interface PopupProps {
   onClose: () => void;
   categories:Array<string>;
@@ -16,7 +18,7 @@ interface ProductData {
 interface ItemData {
   name: string;
   category: string;
-  price: number;
+  price: string;
   stock: number;
   number: number;
   description : string;
@@ -25,10 +27,12 @@ interface ItemData {
 
 
 const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+  const {AddItem} =useAdminItem();
   const [ItemData, setItemData] = useState<ItemData>({
     name: "",
     category: "",
-    price: 0,
+    price: "0",
     stock: 0,
     number:0 ,
     description : "",
@@ -36,7 +40,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
   const [filteredCategories, setFilteredCategories] = useState<string[]>(categories);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [profileImage, setProfileImage] = useState<string>("");
   const [productData, setProductData] = useState<ProductData>({
   name: "",
   category: "",
@@ -69,18 +73,17 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
         setShowCategoryDropdown(true);
       }
     };
-
-    const handleCategorySelect = (category: string) => {
-      setProductData(prev => ({
-        ...prev,
-        category: category
-      }));
+    const handleSubmit=()=>{
+      AddItem(profileImage,ItemData.name,ItemData.price,ItemData.stock,ItemData.number,selectedCategoryIndex+1,ItemData.description);
+      onClose();
+    };
+    const handleCategorySelect = (category: string,index:number) => {
 
       setItemData(prev => ({
         ...prev,
         category: category
       }));
-
+      setSelectedCategoryIndex(index);
       setShowCategoryDropdown(false);
     };
   return (
@@ -154,11 +157,11 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
                     {showCategoryDropdown && (
                         <div className="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
                         {filteredCategories.length > 0 ? (
-                            filteredCategories.map((category) => (
+                            filteredCategories.map((category,index) => (
                             <div
                                 key={category}
                                 className="p-2 hover:bg-gray-100 cursor-pointer"
-                                onClick={() => handleCategorySelect(category)}
+                                onClick={() => handleCategorySelect(category,index)}
                             >
                                 {category}
                             </div>
@@ -176,7 +179,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
                         <input
                         type="text"
                         name="price"
-                        value={ItemData.price}
+                        value={convertToPersianNumbers(ItemData.price)}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded" 
                         />
@@ -216,7 +219,9 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
         </div>
                 <button
                   className="px-4 py-2 text-white rounded-md bg-[#f18825] ml-7 mb-5 hover:bg-orange-400 hover:scale-106"
+                  onClick={handleSubmit}
                 >
+              
                   افزودن محصول
                 </button>
       </div>

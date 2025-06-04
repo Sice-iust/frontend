@@ -21,7 +21,7 @@ interface AdminItemCard {
     categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
     fetchCategories: ()=>Promise<void>;
-    // selectAddress:(id: number) => Promise<void>;
+    AddItem:(img : string,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
     fetchData:() => Promise<void>;
 }
 
@@ -30,7 +30,7 @@ const ItemContext = createContext<AdminItemCard>({
     categories:[],
     removeAdminItem: async () => Promise.resolve() ,
     fetchCategories:async ()=> Promise.resolve(),
-    // selectAddress:async () => Promise.resolve(),
+    AddItem:async () => Promise.resolve(),
     fetchData:async () => Promise.resolve(),   
 });
 
@@ -67,16 +67,6 @@ export const ItemProvider = ({ children }) => {
               fetchData();
           }
       };
-    //   const selectAddress = async (id) => {   
-    //       try {
-    //           await axios.put(`https://nanziback.liara.run/users/locations/choose/location/${id}`, {}, {
-    //               headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    //           });
-    //           fetchData(); 
-    //       } catch (error) {
-    //           console.error("Error adding to cart:", error);
-    //       }
-    //   };
     const fetchData = async () => {
         console.log("admin add");
         try {
@@ -119,15 +109,41 @@ export const ItemProvider = ({ children }) => {
             });
             const categoriesArray = response.data.map(item => item.category);
             setCategories(categoriesArray);
-            console.log(categoriesArray);
+            console.log(response.data);
         } catch (error) {
             console.error("Error fetching data:", error);
             setCategories([]); 
         }
     };    
+    const AddItem = async (img, name, price, stock, box, cat,des) => {
+        const token = localStorage.getItem('token');
+        console.log("cat",cat);
+        try {
+            const formData = new FormData();
+            formData.append('new_photo', img);
+            formData.append('name', name);
+            formData.append('price', price);
+            formData.append('stock', stock);
+            formData.append('box_type', box);
+            formData.append('category_id', cat);
+            formData.append('description', des);
 
+            await axios.post(`https://nanziback.liara.run/nanzi/admin/product/create/`, 
+                formData, 
+                {
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+            fetchData();
+        } catch (error) {
+            console.error(error.response?.data);
+        }
+    };
 
-    const value = { data,categories,fetchData ,removeAdminItem ,fetchCategories};     
+    const value = { data,categories,fetchData ,removeAdminItem ,fetchCategories,AddItem};     
     return (
         <ItemContext.Provider value={value}>
             {children}
