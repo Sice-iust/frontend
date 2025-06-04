@@ -18,14 +18,14 @@ interface AdminItemCard {
         average_rate: number,
         discount:number,
       }>;
-    // removeAddress: (id: number) => Promise<void>;
+    removeAdminItem: (id: number) => Promise<void>;
     // selectAddress:(id: number) => Promise<void>;
     fetchData:() => Promise<void>;
 }
 
 const ItemContext = createContext<AdminItemCard>({
     data:[],
-    // removeAddress: async () => Promise.resolve() ,
+    removeAdminItem: async () => Promise.resolve() ,
     // selectAddress:async () => Promise.resolve(),
     fetchData:async () => Promise.resolve(),   
 });
@@ -49,18 +49,18 @@ export const ItemProvider = ({ children }) => {
           fetchData();
       }, []);   
 
-    //   const removeAddress = async (id: number) => {
-    //       setData(prev => prev.filter(item => item.id !== id));
+      const removeAdminItem = async (id: number) => {
+          setData(prev => prev.filter(item => item.id !== id));
 
-    //       try {
-    //           await axios.delete(`https://nanziback.liara.run/users/locations/modify/${id}/`, {
-    //               headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-    //           });
-    //       } catch (error) {
-    //           console.error("Error deleting item:", error);
-    //           fetchData();
-    //       }
-    //   };
+          try {
+              await axios.delete(`https://nanziback.liara.run/nanzi/admin/product/delete/${id}`, {
+                  headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+              });
+          } catch (error) {
+              console.error("Error deleting item:", error);
+              fetchData();
+          }
+      };
     //   const selectAddress = async (id) => {   
     //       try {
     //           await axios.put(`https://nanziback.liara.run/users/locations/choose/location/${id}`, {}, {
@@ -109,7 +109,7 @@ export const ItemProvider = ({ children }) => {
         
 
 
-    const value = { data,fetchData };     
+    const value = { data,fetchData ,removeAdminItem};     
     return (
         <ItemContext.Provider value={value}>
             {children}

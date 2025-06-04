@@ -3,9 +3,10 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { RiErrorWarningLine } from "react-icons/ri";
 import { convertToPersianNumbers } from "../../../../utils/Coversionutils";
 import Image from "next/image";
-
+import { useAdminItem } from "../../../../context/AdminAddItem";
 
 export default function AdminItemCard({ id, title, stock, price, image }) {
+    const { data,removeAdminItem} = useAdminItem();   
     return (
         <div className="border border-gray-200 w-full p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
             <div className="absolute left-4 top-4 flex items-center bg-gray-100 px-2 py-1 rounded-full">
@@ -43,7 +44,7 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
                         <FaRegEdit size={20} className="text-green-600" />
                     </button>
                     <button className="p-2 text-red-500 cursor-pointer hover:bg-red-50 hover:scale-110 rounded-full">
-                        <HiOutlineTrash size={20} />
+                        <HiOutlineTrash size={20} onClick={() => removeAdminItem(id)} />
                     </button>
                 </div>
             </div>
