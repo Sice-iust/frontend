@@ -3,6 +3,7 @@ import OrderCard from './Orders-cards';
 import {convertPrice} from '../../../utils/Coversionutils';
 import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
 
+
 interface Order {
   id: number;
   location: {
@@ -78,6 +79,18 @@ const OrderList = () => {
     ].filter(Boolean).join("-");
   };
 
+  const removeOrder = (orderId: number) => {
+    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
+  };
+
+  const statusupdate = (orderId: number) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, status: 4 } : order // Corrected: Set status to 4
+      )
+    );
+  };
+
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
@@ -114,6 +127,8 @@ const OrderList = () => {
               admin_reason={admin_reason}
               iscompleted={true}
               status={order.status}
+              removeOrder={removeOrder}
+              statusupdate={statusupdate}
             />
           );
         })}

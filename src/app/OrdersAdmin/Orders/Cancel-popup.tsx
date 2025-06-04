@@ -7,12 +7,13 @@ interface CancelOrderPopupProps {
   isOpen: boolean;
   onClose: () => void;
   orderId: number;
+  removeorder: () => void;
 }
 
-const CancelOrderPopup: React.FC<CancelOrderPopupProps> = ({ isOpen, onClose, orderId }) => {
+const CancelOrderPopup: React.FC<CancelOrderPopupProps> = ({ isOpen, onClose, orderId ,removeorder }) => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [hidePopup, setHidePopup] = useState(false);
-  const [cancelReason, setCancelReason] = useState(""); // Capture reason for cancellation
+  const [cancelReason, setCancelReason] = useState(""); 
 
   const handleConfirm = async () => {
     try {
@@ -32,6 +33,7 @@ const CancelOrderPopup: React.FC<CancelOrderPopupProps> = ({ isOpen, onClose, or
       });
 
       setSuccessMessage("سفارش با موفقیت لغو شد!");
+      removeorder();
       setHidePopup(true);
 
       setTimeout(() => {
@@ -79,7 +81,12 @@ const CancelOrderPopup: React.FC<CancelOrderPopupProps> = ({ isOpen, onClose, or
                 <div className="flex justify-center gap-4 mt-4">
                   <button
                     onClick={handleConfirm}
-                    className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition cursor-pointer"
+                    disabled={cancelReason.trim() === ""}
+                    className={`px-4 py-2 rounded-md transition 
+                             ${cancelReason.trim() === "" ? "bg-gray-300 text-white cursor-not-allowed" : 
+                                "bg-red-600 text-white hover:bg-red-700"}`}
+ 
+
                   >
                     تأیید لغو
                   </button>

@@ -61,6 +61,18 @@ const OrderList = () => {
     fetchOrders();
   }, []);
 
+  const removeOrder = (orderId: number) => {
+    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
+  };
+
+  const statusupdate = (orderId: number) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, status: 4 } : order // Corrected: Set status to 4
+      )
+    );
+  };
+
   if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
 
@@ -100,6 +112,8 @@ const OrderList = () => {
               iscompleted={false}
               admin_reason={null}
               status={1}
+              removeOrder={removeOrder}
+              statusupdate={statusupdate}
             />
           );
         })}

@@ -7,9 +7,11 @@ interface DeliveryPopupProps {
   onClose: () => void;
   orderId: number;
   status:number;
+  removeorder: () => void;
+  statusupdate: () => void;
 }
 
-const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId, status }) => {
+const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId, status,removeorder,statusupdate }) => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [hidePopup, setHidePopup] = useState(false); 
 
@@ -26,8 +28,28 @@ const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId,
         throw new Error(`Network response was not ok: ${response.status}`);
       }
 
+       
+
       setSuccessMessage(status === 4 ? "سفارش با موفقیت به مشتری تحویل داده شد" : "سفارش با موفقیت به پیک تحویل داده شد");
       setHidePopup(true); 
+
+      if(status==4)
+      {
+        if(response.status==200)
+        {
+          statusupdate();
+        }
+      }
+      else
+      {
+        if(response.status==200)
+        {
+          setTimeout(() => {
+            removeorder(); 
+          }, 3000);
+        }
+      }
+     
 
       setTimeout(() => {
         setSuccessMessage(null);
