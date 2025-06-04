@@ -15,6 +15,8 @@ import { MdOutlineCancel } from "react-icons/md";
 import InvoicePopup from "./Invoice-popup";
 import fetchInvoiceData from "./Invoice-popup";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
+import DeliveryPopup from './Delivery-popup';
+
 
 interface OrderCardProps {  
     orderkey: number;
@@ -30,6 +32,7 @@ interface OrderCardProps {
     isarchived?: boolean;
     iscompleted : boolean;
     admin_reason : string | null;
+    status : number;
 }  
 
 const OrderCard: React.FC<OrderCardProps> = ({  
@@ -50,170 +53,275 @@ const OrderCard: React.FC<OrderCardProps> = ({
 
 
     const [invoiceData, setInvoiceData] = useState<any>(null); 
-        const [loading, setLoading] = useState(true);
-        const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     
-        useEffect(() => {  
+    useEffect(() => {  
+        
+        const fetchInvoiceData = async () => {  
+            try {  
+                const response = await fetch(`https://nanziback.liara.run/nanzi/admin/order/invoice/${id}/`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                    });
+                if (!response.ok) {  
+                    throw new Error('Failed to fetch this data');  
+                }  
+                const data = await response.json();  
+                console.log("invoice",data)
+                setInvoiceData(data); 
+                console.log(data) 
+            } catch (err) {  
+                setError(err.message);  
+            } finally {  
+                setLoading(false);  
+            }  
+            console.log(error);
+        };  
+
+        fetchInvoiceData();  
             
-                const fetchInvoiceData = async () => {  
-                    try {  
-                        const response = await fetch(`https://nanziback.liara.run/nanzi/admin/order/invoice/${id}/`, {
-                            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                          });
-                        if (!response.ok) {  
-                            throw new Error('Failed to fetch this data');  
-                        }  
-                        const data = await response.json();  
-                        console.log("invoice",data)
-                        setInvoiceData(data); 
-                        console.log(data) 
-                    } catch (err) {  
-                        setError(err.message);  
-                    } finally {  
-                        setLoading(false);  
-                    }  
-                    console.log(error);
-                };  
+    }, []); 
+
+
+
+        
     
-                fetchInvoiceData();  
-             
-        }, []); 
-    
-         const calculateTotalPrice = () => {
-            if (!invoiceData) return "0";
-            
-            const payment = parseFloat(invoiceData.payment) || 0;
-            const discount = parseFloat(invoiceData.discount) || 0;
-            const shippingFee = parseFloat(invoiceData.shipping_fee) || 0;
-            
-            return (payment - discount + shippingFee).toFixed(2);
-        };
+    const calculateTotalPrice = () => {
+        if (!invoiceData) return "0";
+        
+        const payment = parseFloat(invoiceData.payment) || 0;
+        const discount = parseFloat(invoiceData.discount) || 0;
+        const shippingFee = parseFloat(invoiceData.shipping_fee) || 0;
+        
+        return (payment - discount + shippingFee).toFixed(2);
+    };
+
+    const formatCurrency = (amount: string | number) => {
+        return `${amount} `;
+    };
+
+        
 
     
     const handleDownloadPDF = () => {
-    const doc = new jsPDF({
-        orientation: "portrait",
-        unit: "mm",
-        compress: true
-    });
+        const doc = new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            compress: true
+        });
 
-    // Register and set Persian font
-    doc.addFileToVFS("Vazir.ttf", vazirBase64);
-    doc.addFont("Vazir.ttf", "Vazir", "normal");
-    doc.setFont("Vazir");
+        
+        doc.addFileToVFS("Vazir.ttf", vazirBase64);
+        doc.addFont("Vazir.ttf", "Vazir", "normal");
+        doc.setFont("Vazir");
 
-    // Header
-    doc.setFontSize(20);
-    doc.text("نانزی", 105, 15, { align: "center" });
+       
+        const primaryColor: [number, number, number] = [41, 128, 185]; 
+        const borderColor: [number, number, number] = [0, 0, 0];
+        const headerTextColor: [number, number, number] = [255, 255, 255];
+        const cellTextColor: [number, number, number] = [0, 0, 0];
 
-    doc.setFontSize(14);
-    doc.text("فاکتور سفارش", 105, 25, { align: "center" });
+        
+        doc.setFillColor(255, 255, 255); 
+        doc.rect(0, 0, 210, 30, 'F'); 
+        
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(20);
+        doc.text("نانزی", 105, 15, { align: "center" });
+        
+        doc.setFontSize(10);
+        doc.text("فاکتور سفارش", 105, 22, { align: "center" });
+        doc.text(`شماره فاکتور: ${convertToPersianNumbers(id)}`, 105, 27, { align: "center" });
 
-    doc.setFontSize(12);
-    doc.text(`شماره سفارش: ${id}`, 105, 32, { align: "center" });
-    
-    const currentDate = new Date().toLocaleDateString("fa-IR");
-    doc.text(`تاریخ: ${currentDate}`, 105, 38, { align: "center" });
-
-    // First table - Order details
-    autoTable(doc, {
-        startY: 50,
-        head: [["مقدار", "جزئیات سفارش"]],
+        autoTable(doc, {
+        startY: 35,
         body: [
-            [id, "شماره سفارش"],
-            [Reciever, "گیرنده"],
-            [phone, "شماره تماس"],
-            [`${total_price} تومان`, "مبلغ کل"],
-            [delivery_day, "تاریخ تحویل"],
-            [delivery_clock, "ساعت تحویل"],
-            [distination, "آدرس"],
-            [Description || "-", "توضیحات"],
-        ],
-        styles: {
-            font: "Vazir",
-            halign: "right",
-            fontSize: 11,
-        },
-        headStyles: {
-            fontStyle: "bold",
-            fillColor: [41, 128, 185],
-            textColor: 255,
-        },
-        columnStyles: {
-            0: { cellWidth: 80 },
-            1: { cellWidth: 80 }
-        },
-        margin: { horizontal: 25 },
-    });
+            [
+                { 
+                    content: `شماره سفارش: ${convertToPersianNumbers(id)}`, 
+                    styles: { halign: 'right' as const } 
+                }
+            ],
+            [
+                { 
+                    content: `گیرنده: ${Reciever}`, 
+                    styles: { halign: 'right' as const } 
+                }
+            ],
+            [
+                { 
+                    content: `شماره تماس: ${convertToPersianNumbers(phone)}`, 
+                    styles: { halign: 'right' as const } 
+                }
+            ],
+            [
+                { 
+                    content: `تاریخ تحویل: ${convertToPersianNumbers(delivery_day)} ساعت ${convertToPersianNumbers(delivery_clock)}`, 
+                    styles: { halign: 'right' as const } 
+                }
+            ],
+            [
+                { 
+                    content: `آدرس: ${distination}`, 
+                    styles: { halign: 'right' as const } 
+                }
+            ],
+            ...(Description ? [
+                [
+                    { 
+                        content: `توضیحات: ${Description}`, 
+                        styles: { halign: 'right' as const } 
+                    }
+                ]
+            ] : [])
+            ].filter(Boolean), 
+            styles: {
+                font: "Vazir",
+                fontSize: 10,
+                textColor: cellTextColor,
+                cellPadding: 5,
+                lineColor: borderColor,
+                lineWidth: 0.2,
+                halign: 'right'
+            },
+            headStyles: {
+                fillColor: primaryColor,
+                textColor: headerTextColor,
+                fontStyle: 'bold',
+                halign: 'right'
+            },
+            margin: { left: 15, right: 15 },
+            theme: 'grid',
+        });
 
-    // Second table - Products list
-    autoTable(doc, {
-        startY: (doc as any).lastAutoTable.finalY + 15,
-        head: [["تعداد", "قیمت", "نام محصول"]],
-        body: invoiceData.items.map(item => ([
-            item.quantity,
-            `${parseFloat(item.product.price).toLocaleString("fa-IR")} تومان`,
-            item.product.name
-        ])),
-        styles: {
-            font: "Vazir",
-            halign: "right",
-            fontSize: 11,
-        },
-        headStyles: {
-            fontStyle: "bold",
-            fillColor: [41, 128, 185],
-            textColor: 255,
-        },
-        columnStyles: {
-            0: { cellWidth: 30, halign: "center" },
-            1: { cellWidth: 50, halign: "left" },
-            2: { cellWidth: 80, halign: "right" }
-        },
-        margin: { horizontal: 25 },
-    });
+        autoTable(doc, {
+            startY: (doc as any).lastAutoTable.finalY + 10,
+            body: invoiceData.items.map(item => [
+                { 
+                    content: `${formatCurrency(convertToPersianNumbers(parseFloat(item.product.price).toLocaleString("fa-IR")))}`, 
+                    styles: { halign: 'center' as const }
+                },
+                { 
+                    content: convertToPersianNumbers(item.quantity.toString()), 
+                    styles: { halign: 'center' as const }
+                },
+                { 
+                    content: item.product.name, 
+                    styles: { halign: 'right' as const }
+                }
+            ]),
+            columnStyles: {
+                0: { 
+                    cellWidth: 80,  
+                    minCellHeight: 10
+                },
+                1: { 
+                    cellWidth: 20,  
+                    minCellHeight: 10
+                },
+                2: { 
+                    cellWidth: 80,  
+                    minCellHeight: 10,
+                    //cellPadding: { right: 10 }  
+                }
+            },
+            styles: {
+                font: "Vazir",
+                fontSize: 10,
+                textColor: cellTextColor,
+                cellPadding: 5,
+                lineColor: borderColor,
+                lineWidth: 0.3,
+                overflow: 'linebreak'  
+            },
+            margin: { left: 15, right: 15 },
+            tableWidth: 'wrap',  
+            theme: 'grid',
+            didDrawCell: (data) => {
+                if (data.section === 'body') {
+                    doc.setDrawColor(200, 200, 200);
+                    doc.setLineWidth(0.1);
+                    doc.line(
+                        data.cell.x,
+                        data.cell.y + data.cell.height,
+                        data.cell.x + data.cell.width,
+                        data.cell.y + data.cell.height
+                    );
+                }
+            }
+        });
 
-    // Third table - Invoice details
-    autoTable(doc, {
-        startY: (doc as any).lastAutoTable.finalY + 15,
-        head: [["مقدار", "جزئیات مالی"]],
-        body: [
-            [`${parseFloat(invoiceData.payment).toLocaleString("fa-IR")} تومان`, "مبلغ کل"],
-            [`${parseFloat(invoiceData.discount).toLocaleString("fa-IR")} تومان`, "تخفیف"],
-            [`${parseFloat(invoiceData.shipping_fee).toLocaleString("fa-IR")} تومان`, "هزینه ارسال"],
-            [`${parseFloat(calculateTotalPrice()).toLocaleString("fa-IR")} تومان`, "مبلغ قابل پرداخت"],
-        ],
-        styles: {
-            font: "Vazir",
-            halign: "right",
-            fontSize: 11,
-        },
-        headStyles: {
-            fontStyle: "bold",
-            fillColor: [41, 128, 185],
-            textColor: 255,
-        },
-        columnStyles: {
-            0: { cellWidth: 80 },
-            1: { cellWidth: 80 }
-        },
-        margin: { horizontal: 25 },
-    });
+        autoTable(doc, {
+            startY: (doc as any).lastAutoTable.finalY + 10,
+            body: [
+                [
+                { content: formatCurrency(convertToPersianNumbers(parseFloat(invoiceData.payment).toLocaleString("fa-IR"))), styles: { halign: 'center' } },
+                    { content: "مبلغ کل", styles: { halign: 'center' } }
+                ],
+                [
+                    { content:formatCurrency(convertToPersianNumbers(parseFloat(invoiceData.shipping_fee).toLocaleString("fa-IR"))) , styles: { halign: 'center' } },
+                    { content: "هزینه ارسال", styles: { halign: 'center' } }
+                ],
+                [
+                    { content: formatCurrency(convertToPersianNumbers(parseFloat(invoiceData.discount).toLocaleString("fa-IR"))) , styles: { halign: 'center' } },
+                    { content: "تخفیف", styles: { halign: 'center' } }
+                ],
+                [
+                    { 
+                        content:formatCurrency(convertToPersianNumbers(parseFloat(calculateTotalPrice()).toLocaleString("fa-IR"))) , 
+                    },
+                    { content: "مبلغ قابل پرداخت", styles: { halign: 'center' } }
+                ],
+            ],
+            columnStyles: {
+                0: { cellWidth: 60, halign: 'center' },
+                1: { cellWidth: 60, halign: 'center' }
+            },
+            styles: {
+                font: "Vazir",
+                fontSize: 10,
+                textColor: cellTextColor,
+                cellPadding: 5,
+                lineColor: borderColor,
+                lineWidth: 0.2,
+                halign: 'center'
+            },
+            headStyles: {
+                fillColor: primaryColor,
+                textColor: headerTextColor,
+                fontStyle: 'bold',
+                halign: 'center'
+            },
+            margin: { 
+                left: (210 - 120) / 2, 
+                right: (210 - 120) / 2
+            }, 
+            tableWidth: 'wrap', 
+            theme: 'grid',
+        });
 
-    // Footer
-    doc.setFontSize(10);
-    doc.text("با تشکر از خرید شما", 105, (doc as any).lastAutoTable.finalY + 15, {
-        align: "center"
-    });
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.text("با تشکر از اعتماد شما", 105, (doc as any).lastAutoTable.finalY + 15, {
+            align: "center"
+        });
 
-    doc.save(`order_${id}.pdf`);
-};
+        doc.setDrawColor(...borderColor);
+        doc.setLineWidth(0.5);
+        doc.rect(5, 5, 200, 287);
 
+        doc.save(`Order_${id}.pdf`);
+    };
 
-        const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
+    const [isInvoiceOpen, setIsInvoiceOpen] = useState(false);
 
-        const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
-        const handleInvoiceClose = () => setIsInvoiceOpen(false); 
+    const handleInvoiceOpen = () => setIsInvoiceOpen(true); 
+    const handleInvoiceClose = () => setIsInvoiceOpen(false); 
+
+    const [isdeliveryOpen, setIsdeliveryopen] = useState(false);
+
+    const handledeliveryopen = () => setIsdeliveryopen(true); 
+    const handledeliveryclose = () => setIsdeliveryopen(false); 
     
 
     return (  
@@ -304,11 +412,14 @@ const OrderCard: React.FC<OrderCardProps> = ({
                                     sm:text-sm md:text-md lg:text-base h-[36px]" onClick={handleInvoiceOpen}>
                         {"فاکتور سفارش"}
                     </button>
-                    <button className={`font-vazir rounded-md px-4 py-1 cursor-pointer 
-                                    transition duration-300 text-xs sm:text-sm md:text-md lg:text-base h-[36px]
+                  <button 
+                        //onClick={() => !iscompleted && handledeliveryopen()}
+                        className={`font-vazir rounded-md px-4 py-1 cursor-pointer  
+                                    transition duration-300 text-xs sm:text-sm md:text-md lg:text-base h-[36px]  
                                     ${iscancled || isarchived ? 'hidden' : iscompleted ? 
-                                    'bg-gray-200 text-gray-700' : 'bg-[#34A853] text-white'}`}>
-                        {iscompleted ? "آرشیو سفارش" : "تحویل به پیک"}
+                                    status === "3" ? 'bg-[#34A853] text-white' : 'bg-gray-200 text-gray-700' 
+                                    : 'bg-[#34A853] text-white'}`}>
+                        {iscompleted ? (status === "2" ? "تحویل به مشتری" : "آرشیو سفارش") : "تحویل به پیک"}
                     </button>
                 </div>
 
@@ -342,6 +453,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </div>  
 
          <InvoicePopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey} total_price_after={total_price} />  
+         {/* <DeliveryPopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey}/> */}
         </>
     );  
 };  

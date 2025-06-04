@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import OrderCard from './Orders-cards';
-import {convertPrice} from '../../../utils/Coversionutils';
+import { convertPrice } from '../../../utils/Coversionutils';
 import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
 
 interface Order {
@@ -32,7 +32,6 @@ interface Order {
   delivered_at: string | null;
   reciver: string;
   reciver_phone: string;
-  
 }
 
 const OrderList = () => {
@@ -43,16 +42,16 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch('https://nanziback.liara.run/nanzi/admin/process/' ,{
-                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                      });
+        const response = await fetch('https://nanziback.liara.run/nanzi/admin/process/', {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data: Order[] = await response.json();
         setOrders(data);
-        console.log(data)
-      } catch (err) {
+        console.log(data);
+      } catch (err: any) {
         setError(err.message);
       } finally {
         setLoading(false);
@@ -65,21 +64,24 @@ const OrderList = () => {
   if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
 
+  const formatDestination = (location: Order["location"]) => {
+    return [
+      location.name,
+      location.address,
+      location.home_plaque ? `پلاک ${location.home_plaque}` : null,
+      location.home_unit ? `واحد ${location.home_unit}` : null,
+      location.home_floor ? `طبقه ${location.home_floor}` : null,
+    ].filter(Boolean).join("-");
+  };
+
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
-        {orders.map((order, index) => {
-          
+        {orders.map((order) => {
           const startHour = order.delivery.start_time.split(':')[0];
           const endHour = order.delivery.end_time.split(':')[0];
           const deliveryTime = `${startHour}-${endHour}`;
-          
-          
-          const deliveryDate = new Date(order.delivery.delivery_date)
-            .toLocaleDateString('fa-IR');
-          
-          
-          
+          const deliveryDate = new Date(order.delivery.delivery_date).toLocaleDateString('fa-IR');
 
           return (
             <OrderCard
@@ -88,7 +90,7 @@ const OrderList = () => {
               id={order.id.toString()}
               total_price={convertPrice(order.total_price)}
               delivery_day={deliveryDate}
-              distination={order.location.address}
+              distination={formatDestination(order.location)}
               delivery_clock={deliveryTime}
               phone={convertPhoneNumberToPersian(order.reciver_phone)}
               Description={order.discription}
@@ -97,6 +99,7 @@ const OrderList = () => {
               iscancled={false}
               iscompleted={false}
               admin_reason={null}
+              status={1}
             />
           );
         })}

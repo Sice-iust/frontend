@@ -67,6 +67,16 @@ const OrderList = () => {
   if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
 
+  const formatDestination = (location: Order["location"]) => {
+    return [
+      location.name,
+      location.address,
+      location.home_plaque ? `پلاک ${location.home_plaque}` : null,
+      location.home_unit ? `واحد ${location.home_unit}` : null,
+      location.home_floor ? `طبقه ${location.home_floor}` : null,
+    ].filter(Boolean).join("-");
+  };
+
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
@@ -93,7 +103,7 @@ const OrderList = () => {
               id={order.id.toString()}
               total_price={convertPrice(order.total_price)}
               delivery_day={deliveryDate}
-              distination={order.location.address}
+              distination={formatDestination(order.location)}
               delivery_clock={deliveryTime}
               phone={convertPhoneNumberToPersian(order.reciver_phone)}
               Description={order.discription}
@@ -102,6 +112,7 @@ const OrderList = () => {
               iscancled={isCancelled}
               admin_reason={admin_reason}
               iscompleted={true}
+              status={order.status}
             />
           );
         })}
