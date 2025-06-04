@@ -54,6 +54,7 @@ const OrderList = () => {
         }
         const data: Order[] = await response.json();
         setOrders(data);
+        console.log(data);
       } catch (err) {
         setError(err.message);
       } finally {
