@@ -413,12 +413,11 @@ const OrderCard: React.FC<OrderCardProps> = ({
                         {"فاکتور سفارش"}
                     </button>
                   <button 
-                        //onClick={() => !iscompleted && handledeliveryopen()}
                         className={`font-vazir rounded-md px-4 py-1 cursor-pointer  
                                     transition duration-300 text-xs sm:text-sm md:text-md lg:text-base h-[36px]  
                                     ${iscancled || isarchived ? 'hidden' : iscompleted ? 
                                     status === "3" ? 'bg-[#34A853] text-white' : 'bg-gray-200 text-gray-700' 
-                                    : 'bg-[#34A853] text-white'}`}>
+                                    : 'bg-[#34A853] text-white'}`}  onClick={handledeliveryopen}>
                         {iscompleted ? (status === "2" ? "تحویل به مشتری" : "آرشیو سفارش") : "تحویل به پیک"}
                     </button>
                 </div>
@@ -453,7 +452,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
         </div>  
 
          <InvoicePopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey} total_price_after={total_price} />  
-         {/* <DeliveryPopup isOpen={isInvoiceOpen} onClose={handleInvoiceClose} orderId={orderkey}/> */}
+         <DeliveryPopup isOpen={isdeliveryOpen} onClose={handledeliveryclose} orderId={orderkey}/>
         </>
     );  
 };  
