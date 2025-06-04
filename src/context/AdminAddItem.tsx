@@ -32,7 +32,6 @@ const ItemContext = createContext<AdminItemCard>({
 
 export const ItemProvider = ({ children }) => {
 
-    //get address
     const [data, setData] = useState<Array<{
         id: number,
         category: string,
@@ -73,7 +72,7 @@ export const ItemProvider = ({ children }) => {
     //       }
     //   };
     const fetchData = async () => {
-        console.log("Fetching data...");
+        console.log("admin add");
         try {
             const response = await axios.get("https://nanziback.liara.run/nanzi/admin/product/show/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -119,4 +118,4 @@ export const ItemProvider = ({ children }) => {
     );
 };
 
-export const AdminAddItem = () => useContext(ItemContext);
+export const useAdminItem = () => useContext(ItemContext);

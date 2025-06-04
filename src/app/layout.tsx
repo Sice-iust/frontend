@@ -5,12 +5,14 @@ import Header2 from '../components/HomePage/header2';
 import { ThemeProvider, useTheme } from "../components/theme";
 import { CartProvider } from "../context/Receiptcontext";
 import { AddressProvider } from "../context/GetAddress";
+import { ItemProvider } from '../context/AdminAddItem';
 
 export default function Layout({ children }) {
   return (
     <html lang="en">
       <body>
         <CartProvider>
+          <ItemProvider>
           <AddressProvider>
             <ThemeProvider>
               <div className='relative'>
@@ -22,6 +24,7 @@ export default function Layout({ children }) {
               </div>
             </ThemeProvider>
           </AddressProvider>
+          </ItemProvider>
         </CartProvider>
       </body>
     </html>

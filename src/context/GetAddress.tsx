@@ -64,13 +64,13 @@ export const AddressProvider = ({ children }) => {
           }
       };
     const fetchData = async () => {
-        console.log("Fetching data...");
+        // console.log("Fetching data...");
         try {
             const response = await axios.get("https://nanziback.liara.run/users/locations/mylocation/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
 
-            console.log("Raw Response:", response.data);
+            // console.log("Raw Response:", response.data);
 
             if (Array.isArray(response.data)) {
                 const sortedData = response.data

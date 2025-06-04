@@ -10,7 +10,7 @@ export default function HomePage() {
   return (
     <>
       <Image height={100} width={10000} 
-      src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/homePagePhoto.png`} alt={``} 
+      src={isDarkMode ? `/assets/darkHomePagePhoto.png`:`/assets/idk.jpg`} alt={``} 
       className="hidden md:flex"
       />
 

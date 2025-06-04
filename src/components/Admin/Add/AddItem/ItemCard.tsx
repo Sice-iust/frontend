@@ -23,6 +23,8 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
 
             <div className="mb-3 mt-8 flex-grow">
                 <Image 
+                    width={100}
+                    height={100}
                     src={image} 
                     alt={title} 
                     className="w-full h-32 object-contain rounded-2xl"
