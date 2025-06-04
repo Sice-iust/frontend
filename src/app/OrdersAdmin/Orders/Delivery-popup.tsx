@@ -26,7 +26,7 @@ const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId,
         throw new Error(`Network response was not ok: ${response.status}`);
       }
 
-      setSuccessMessage(status === 4 ? "سفارش با موفقیت به مشتری تحویل داده شد!" : "سفارش با موفقیت به پیک تحویل داده شد!");
+      setSuccessMessage(status === 4 ? "سفارش با موفقیت به مشتری تحویل داده شد" : "سفارش با موفقیت به پیک تحویل داده شد");
       setHidePopup(true); 
 
       setTimeout(() => {
@@ -57,7 +57,7 @@ const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId,
             <div className="relative transform overflow-hidden rounded-lg text-left transition-all min-h-screen lg:min-h-auto w-full sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">
               <div className="bg-white p-6 rounded-md shadow-lg w-80 text-center">
                 <RxCross1 className="cursor-pointer ml-auto" onClick={onClose} />
-                <h2 className="text-lg font-semibold mb-4">{status === 4 ? "تأیید تحویل به مشتری" : "تأیید تحویل به پیک"}</h2>
+                <h2 className="text-lg font-semibold mb-4">{status === 4 ? "تایید تحویل به مشتری" : "تایید تحویل به پیک"}</h2>
                 <p className="text-gray-700 mb-6">
                   آیا سفارش <strong>{convertToPersianNumbers(orderId)}</strong> را {status === 4 ? "به مشتری" : "به پیک"} تحویل می‌دهید؟
                 </p>
@@ -66,13 +66,13 @@ const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId,
                     onClick={handleConfirm}
                     className="bg-[#34A853] text-white px-4 py-2 rounded-md hover:bg-green-600 transition cursor-pointer"
                   >
-                    تأیید
+                    تایید
                   </button>
                   <button
                     onClick={onClose}
                     className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer"
                   >
-                    لغو
+                    انصراف
                   </button>
                 </div>
               </div>

@@ -16,6 +16,8 @@ import InvoicePopup from "./Invoice-popup";
 import fetchInvoiceData from "./Invoice-popup";
 import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 import DeliveryPopup from './Delivery-popup';
+import Archivepopup from './Archive-popup';
+import Cancelepopup from './Cancel-popup'
 
 
 interface OrderCardProps {  
@@ -323,6 +325,16 @@ const OrderCard: React.FC<OrderCardProps> = ({
 
     const handledeliveryopen = () => setIsdeliveryopen(true); 
     const handledeliveryclose = () => setIsdeliveryopen(false); 
+
+    const[isarchiveopen,setIsarchiveopen] =useState(false);
+
+    const handlearchiveopen = () => setIsarchiveopen(true); 
+    const handlearchiveclose = () => setIsarchiveopen(false); 
+
+    const[iscancelopen,setIscancelopen] =useState(false);
+
+    const handlecancelopen = () => setIscancelopen(true); 
+    const handlecancelclose = () => setIscancelopen(false); 
     
 
     return (  
@@ -332,7 +344,8 @@ const OrderCard: React.FC<OrderCardProps> = ({
                         text-right `}>
             <div className="flex justify-between items-center">
                 <div className="relative group">
-                    <TbShoppingCartX className={`text-red-700 ml-8 cursor-pointer ${iscompleted ? 'hidden' : ''} `} />
+                    <TbShoppingCartX className={`text-red-700 ml-8 cursor-pointer ${iscompleted ? 'hidden' : ''} `} 
+                                        onClick={handlecancelopen}/>
                     <span className={`absolute left-0 top-full mt-1 w-auto p-1 text-xs 
                                     text-white bg-red-400 rounded opacity-0 transition-opacity duration-300 
                                     group-hover:opacity-100 whitespace-nowrap ${iscompleted ? 'hidden' : ''} `}>
@@ -419,7 +432,8 @@ const OrderCard: React.FC<OrderCardProps> = ({
                                 ${iscancled || isarchived ? 'hidden' : iscompleted ? 
                                 status === 2 ? 'bg-[#34A853] text-white' : 'bg-gray-200 text-gray-700' 
                                 : 'bg-[#34A853] text-white'}`}  
-                    onClick={handledeliveryopen}
+                    onClick={iscompleted ? (status === 2 ? handledeliveryopen : handlearchiveopen) : handledeliveryopen}
+
                     >
                     {iscompleted ? (status === 2 ? "تحویل به مشتری" : "آرشیو سفارش") : "تحویل به پیک"}
                 </button>
@@ -461,6 +475,9 @@ const OrderCard: React.FC<OrderCardProps> = ({
             orderId={orderkey} 
             status={status === 1 ? 2 : status === 2 ? 4 : status} 
             />
+        <Archivepopup isOpen={isarchiveopen} onClose={handlearchiveclose} orderId={orderkey}/>
+        <Cancelepopup isOpen={iscancelopen} onClose={handlecancelclose} orderId={orderkey}/>
+
         </>
     );  
 };  
