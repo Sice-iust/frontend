@@ -18,14 +18,18 @@ interface AdminItemCard {
         average_rate: number,
         discount:number,
       }>;
+    categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
+    fetchCategories: ()=>Promise<void>;
     // selectAddress:(id: number) => Promise<void>;
     fetchData:() => Promise<void>;
 }
 
 const ItemContext = createContext<AdminItemCard>({
     data:[],
+    categories:[],
     removeAdminItem: async () => Promise.resolve() ,
+    fetchCategories:async ()=> Promise.resolve(),
     // selectAddress:async () => Promise.resolve(),
     fetchData:async () => Promise.resolve(),   
 });
@@ -45,8 +49,10 @@ export const ItemProvider = ({ children }) => {
         average_rate: number,
         discount:number
       }>>([]);
+    const [categories, setCategories] = useState<Array<string>>([]);
       useEffect(() => {
           fetchData();
+          fetchCategories();
       }, []);   
 
       const removeAdminItem = async (id: number) => {
@@ -106,10 +112,22 @@ export const ItemProvider = ({ children }) => {
             setData([]);
         }
     };
-        
+    const fetchCategories = async () => {
+        try {
+            const response = await axios.get("https://nanziback.liara.run/nanzi/admin/categories/name/", {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+            });
+            const categoriesArray = response.data.map(item => item.category);
+            setCategories(categoriesArray);
+            console.log(categoriesArray);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setCategories([]); 
+        }
+    };    
 
 
-    const value = { data,fetchData ,removeAdminItem};     
+    const value = { data,categories,fetchData ,removeAdminItem ,fetchCategories};     
     return (
         <ItemContext.Provider value={value}>
             {children}

@@ -2,9 +2,9 @@ import React, { useRef, useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import Image from "next/image";
 import { AiOutlineUpload } from "react-icons/ai";
-
 interface PopupProps {
   onClose: () => void;
+  categories:Array<string>;
 }
 
 interface ProductData {
@@ -12,25 +12,26 @@ interface ProductData {
   category: string;
 }
 
-interface AddressData {
-  mainAddress: string;
-  plaque: string;
-  floor: string;
-  unit: string;
-  addressTitle: string;
+interface ItemData {
+  name: string;
+  category: string;
+  price: number;
+  stock: number;
+  number: number;
+  description : string;
 }
 
 
 
-const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
-  const [addressData, setAddressData] = useState<AddressData>({
-    mainAddress: "",
-    plaque: "",
-    floor: "",
-    unit: "",
-    addressTitle: "",
+const AddItemModal: React.FC<PopupProps> = ({ onClose,categories }) => {
+  const [ItemData, setItemData] = useState<ItemData>({
+    name: "",
+    category: "",
+    price: 0,
+    stock: 0,
+    number:0 ,
+    description : "",
   });
-  const categories = ["بربری", "سنگک", "تافتون", "محلی", "فانتزی"];
   const [filteredCategories, setFilteredCategories] = useState<string[]>(categories);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -55,27 +56,31 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
     reader.readAsDataURL(file);
   };
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setProductData((prev) => ({
+      const { name, value } = e.target;
+      setItemData((prev) => ({
         ...prev,
         [name]: value,
-    }));
+      }));
 
-    if (name === "category") {
-        const filtered = categories.filter(cat => 
-        cat.includes(value)
-        );
+      if (name === "category") {
+        const filtered = categories.filter((cat) => cat.includes(value));
         setFilteredCategories(filtered);
         setShowCategoryDropdown(true);
-    }
+      }
     };
 
     const handleCategorySelect = (category: string) => {
-    setProductData(prev => ({
+      setProductData(prev => ({
         ...prev,
         category: category
-    }));
-    setShowCategoryDropdown(false);
+      }));
+
+      setItemData(prev => ({
+        ...prev,
+        category: category
+      }));
+
+      setShowCategoryDropdown(false);
     };
   return (
     <div className="fixed inset-0 flex items-center justify-center z-10">
@@ -128,8 +133,8 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                         <h2 className="font-semibold mb-2">نام محصول</h2>
                         <input
                         type="text"
-                        name="plaque"
-                        value={addressData.plaque}
+                        name="name"
+                        value={ItemData.name}
                         onChange={handleInputChange}
                         className="w-full min-w-70 p-2 border border-gray-300 rounded"
                         />
@@ -139,7 +144,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                     <input
                         type="text"
                         name="category"
-                        value={productData.category}
+                        value={ItemData.category}
                         placeholder="انتخاب کنید"
                         onChange={handleInputChange}
                         onFocus={() => setShowCategoryDropdown(true)}
@@ -169,8 +174,8 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                         <h2 className="font-semibold mb-2">قیمت</h2>
                         <input
                         type="text"
-                        name="plaque"
-                        value={addressData.plaque}
+                        name="price"
+                        value={ItemData.price}
                         onChange={handleInputChange}
                         className="w-full p-2 border border-gray-300 rounded" 
                         />
@@ -180,8 +185,8 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                         <h2 className="font-semibold mb-2">تعداد در بسته</h2>
                         <input
                         type="number"
-                        name="plaque"
-                        value={addressData.plaque}
+                        name="number"
+                        value={ItemData.number}
                         onChange={handleInputChange}
                         className="w-full  p-2 border border-gray-300 rounded"
                         />
@@ -190,8 +195,8 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                         <h2 className="font-semibold mb-2">موجودی</h2>
                         <input
                         type="number"
-                        name="plaque"
-                        value={addressData.plaque}
+                        name="stock"
+                        value={ItemData.stock}
                         onChange={handleInputChange}
                         className="w-full  p-2 border border-gray-300 rounded"
                         />
@@ -201,8 +206,8 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose }) => {
                     <h2 className="font-semibold mb-2" dir="rtl">توضیحات محصول</h2>
                     <input dir="rtl"
                     type="text"
-                    name="plaque"
-                    value={addressData.plaque}
+                    name="description"
+                    value={ItemData.description}
                     onChange={handleInputChange}
                     className="w-full min-w-155 min-h-30 mb-5 p-1 border border-gray-300 rounded"
                     />

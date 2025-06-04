@@ -12,7 +12,7 @@ interface BreadProps {
 }
 
 export default function AddItem() {
-    const { data} = useAdminItem();
+    const { data , categories} = useAdminItem();
     const [showForm, setShowForm] = useState(false);
 
     return (
@@ -40,8 +40,7 @@ export default function AddItem() {
             </div>
         </div>
         {showForm && (
-        <AddItemModal
-                    onClose={() => setShowForm(false)}      />)}
+        <AddItemModal onClose={() => setShowForm(false)} categories={categories} />)}
         </>
     );
 }
