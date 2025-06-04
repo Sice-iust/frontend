@@ -35,7 +35,7 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
 
             <div className="flex justify-between items-center mt-auto">
                 <p className="text-gray-700">
-                    قیمت: <span className="font-bold">{convertToPersianNumbers(price.toLocaleString())} تومان</span>
+                    قیمت: <span className="font-bold">{convertToPersianNumbers(Math.round(parseFloat(price)).toLocaleString())} تومان</span>
                 </p>
                 
                 <div className="flex space-x-2 space-x-reverse">
