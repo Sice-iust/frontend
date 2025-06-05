@@ -128,7 +128,7 @@ export default function LoginModal({ open, onClose, setIsLoggedIn }: LoginModalP
             <Image width={100} height={100} src={isDarkMode ? '/assets/logo-dark.png' : '/assets/logo.png'} alt="Nanzi Logo" />
           </div>
           <div className={styles.fullScreenContainer}>
-            <h1 className={styles.nanziText}>Nanzi</h1>
+            <h1 className={styles.nanziText}>nanzi</h1>
           </div>
 
         </div>
