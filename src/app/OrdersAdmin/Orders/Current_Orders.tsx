@@ -38,7 +38,7 @@ interface Order {
 const OrderList = () => {
   
 
-  const { currentOrders, removeOrder ,  archiveOrder, updatestatus  ,error , loadingCurrent}=useOrderContext()
+  const {currentfilter, filteredCurrentOrders, currentOrders, removeOrder ,  archiveOrder, updatestatus  ,error , loadingCurrent}=useOrderContext()
 
   
 
@@ -55,14 +55,20 @@ const OrderList = () => {
     ].filter(Boolean).join("-");
   };
 
+  console.log("isfilter",currentfilter);
+
+  const ordersToDisplay = currentfilter ? filteredCurrentOrders : currentOrders;
+
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
-        {currentOrders.map((order) => {
+        {ordersToDisplay.map((order) => {
           const startHour = order.delivery.start_time.split(':')[0];
           const endHour = order.delivery.end_time.split(':')[0];
           const deliveryTime = `${startHour}-${endHour}`;
           const deliveryDate = new Date(order.delivery.delivery_date).toLocaleDateString('fa-IR');
+
+          
 
           return (
             <OrderCard

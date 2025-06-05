@@ -1,8 +1,10 @@
 "use client";
+import { set } from "date-fns-jalali";
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 interface Order {
   id: number;
+  selected?: boolean; 
   location: {
     user: { username: string; phonenumber: string };
     address: string;
@@ -39,12 +41,23 @@ interface OrderContextType {
   loadingPast: boolean;
   error: string | null;
   selectedTab: number;
+  filteredCurrentOrders: Order[];
+  filteredPastorders : Order[];
+  currentfilter :boolean;
+  pastfilter:boolean;
+  selectedOrderscurrent:string[];
+  selectedOrderspast:string[];
+  setCurrentOrders: React.Dispatch<React.SetStateAction<Order[]>>;
+  setPastOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   setSelectedTab: (tab: number) => void;
   fetchCurrentOrders: () => Promise<void>;
   fetchPastOrders: () => Promise<void>;
   removeOrder: (orderId: number, isCurrent: boolean) => void;
   archiveOrder: (orderId: number) => void;
   updatestatus: (orderId: number, isCurrent: boolean) => void;
+  getFilteredCurrentOrders: (orderIds: number[]) => void;
+  setSelectedOrderscurrent: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedOrderspast: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -56,6 +69,13 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [loadingPast, setLoadingPast] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<number>(1);
+  const [filteredCurrentOrders, setFilteredCurrentOrders] = useState<Order[]>([]);
+  const [pastfilter, setpastfilter] = useState<boolean>(false);
+  const [filteredPastorders, setfilteredpastorders] = useState<Order[]>([]);
+  const [currentfilter, setcurrentfilter] = useState<boolean>(false);
+  const [selectedOrderscurrent, setSelectedOrderscurrent] = useState<string[]>([]);
+  const [selectedOrderspast, setSelectedOrderspast] = useState<string[]>([]);
+
 
   const fetchCurrentOrders = async () => {
     setLoadingCurrent(true);
@@ -141,6 +161,36 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   };
 
+  const getFilteredCurrentOrders = () => {
+    if(selectedTab==1)
+    {
+        const filteredOrders = currentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
+        setFilteredCurrentOrders(filteredOrders); 
+        if(selectedOrderscurrent.length>0)
+        {
+            setcurrentfilter(true);
+        }
+        else
+        {
+            setcurrentfilter(false);
+        }
+    }
+    if(selectedTab==0)
+    {
+        const filteredOrders = pastOrders.filter(order => selectedOrderspast.includes(String(order.id)));
+        setfilteredpastorders(filteredOrders); 
+        if(selectedOrderspast.length>0)
+        {
+            setpastfilter(true);
+        }
+        else
+        {
+            setpastfilter(false);
+        }
+    }
+};
+  
+
   return (
     <OrderContext.Provider
       value={{
@@ -150,12 +200,23 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         loadingPast,
         error,
         selectedTab,
+        filteredCurrentOrders,
+        currentfilter,
+        filteredPastorders,
+        pastfilter,
+        selectedOrderscurrent,
+        setSelectedOrderspast,
+        setCurrentOrders, 
+        setPastOrders,
         setSelectedTab, 
         fetchCurrentOrders,
         fetchPastOrders,
         removeOrder,
         archiveOrder,
         updatestatus,
+        getFilteredCurrentOrders,
+        setSelectedOrderscurrent,
+        selectedOrderspast,
       }}
     >
       {children}

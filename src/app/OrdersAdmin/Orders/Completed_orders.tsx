@@ -41,7 +41,7 @@ interface Order {
 }
 
 const OrderList = () => {
-  const {pastOrders, removeOrder , archiveOrder, updatestatus  ,error , loadingPast}=useOrderContext()
+  const {pastfilter,filteredPastorders,pastOrders, removeOrder , archiveOrder, updatestatus  ,error , loadingPast}=useOrderContext()
   
 
   
@@ -59,6 +59,9 @@ const OrderList = () => {
     ].filter(Boolean).join("-");
   };
 
+
+  const ordersToDisplay = pastfilter ? filteredPastorders : pastOrders;
+
    
 
   
@@ -66,7 +69,7 @@ const OrderList = () => {
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
-        {pastOrders.map((order, index) => {
+        {ordersToDisplay.map((order, index) => {
           
           const startHour = order.delivery.start_time.split(':')[0];
           const endHour = order.delivery.end_time.split(':')[0];

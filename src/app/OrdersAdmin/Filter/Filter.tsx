@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { MdOutlineFilterAltOff } from "react-icons/md";
 import Filterbyid from './Filterbyid';
+import { useOrderContext } from '../../../context/Adminordercontext';
+
 
 interface FilterOptions {
   orderNumber: string;
@@ -17,6 +19,14 @@ interface FilterProps {
 }
 
 const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
+
+  const {selectedTab , currentOrders , pastOrders}=useOrderContext()
+
+  const orderNumbers = selectedTab === 0 
+  ? pastOrders.map(order => order.id.toString()) 
+  : currentOrders.map(order => order.id.toString());
+
+
   const [filters, setFilters] = useState<FilterOptions>({
     orderNumber: "",
     selectedOrders: [],
@@ -58,14 +68,6 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
     // onFilterChange(resetFilters); 
   };
 
-  const orderNumbers = [
-    '1234',
-    '123456',
-    '1234567',
-    '12345678',
-    '123456789',
-    '1234567810',
-  ];
 
   const handleOrderSelect = (orderNumber: string) => {
     console.log('Selected order:', orderNumber);

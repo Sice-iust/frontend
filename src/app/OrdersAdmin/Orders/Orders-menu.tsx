@@ -2,11 +2,13 @@
 import React, { useState } from "react";  
 import Current_orders from "./Current_Orders";
 import Completed_orders from "./Completed_orders";
+import { useOrderContext } from '../../../context/Adminordercontext'
 
 
 const Tab: React.FC= () => {  
 
-  const [selectedTab, setSelectedTab] = useState(1); 
+  const {selectedTab,setSelectedTab}=useOrderContext()
+
   
   
 
