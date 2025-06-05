@@ -18,12 +18,12 @@ const Ordersslotbox = () => {
     setselectedtimeslotspast,
     selectedTimeSlotscurrent,
     selectedTimeSlotspast,
-    getFilteredOrdersByTimeSlots,
+    filterOrders,
     selectedTab,
   } = useOrderContext();
 
   useEffect(() => {
-    getFilteredOrdersByTimeSlots();
+    filterOrders();
   }, [selectedTimeSlotscurrent, selectedTimeSlotspast, selectedTab]);
 
   const handleSlotToggle = (slot: string) => {

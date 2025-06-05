@@ -49,6 +49,8 @@ interface OrderContextType {
   selectedOrderspast:string[];
   selectedTimeSlotscurrent:string[];
   selectedTimeSlotspast:string[];
+  IsEnabledarchieve : boolean;
+  IsEnabledcancel : boolean;
   setCurrentOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   setPastOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   setSelectedTab: (tab: number) => void;
@@ -57,12 +59,13 @@ interface OrderContextType {
   removeOrder: (orderId: number, isCurrent: boolean) => void;
   archiveOrder: (orderId: number) => void;
   updatestatus: (orderId: number, isCurrent: boolean) => void;
-  getFilteredCurrentOrders: () => void;
-  getFilteredOrdersByTimeSlots: () => void;
+  filterOrders : () =>void;
   setSelectedOrderscurrent: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedOrderspast: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedTimeSlotscurrent: React.Dispatch<React.SetStateAction<string[]>>;
   setselectedtimeslotspast: React.Dispatch<React.SetStateAction<string[]>>;
+  setIsEnabledcancel : React.Dispatch<React.SetStateAction<boolean>>;
+  setIsEnabledarchieve : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -82,6 +85,8 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [selectedOrderspast, setSelectedOrderspast] = useState<string[]>([]);
   const [selectedTimeSlotscurrent, setSelectedTimeSlotscurrent] = useState<string[]>([]);
   const [selectedTimeSlotspast, setselectedtimeslotspast] = useState<string[]>([]);
+  const [IsEnabledcancel, setIsEnabledcancel] = useState<boolean>(false);
+  const [IsEnabledarchieve, setIsEnabledarchieve] = useState<boolean>(false);
 
 
 
@@ -122,6 +127,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       }
 
       const data: Order[] = await response.json();
+
       setPastOrders(data);
     } catch (err) {
       setError("خطا در دریافت سفارش‌های گذشته");
@@ -165,106 +171,59 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setPastOrders(prev =>
           prev.map(order => (order.id === orderId ? { ...order, status: 4 } : order))
         );
+        
+
       }
     }
   };
 
-  const getFilteredCurrentOrders = () => {
-    if(selectedTab==1)
-    {
-        if(selectedTimeSlotscurrent.length>0)
-        {
-            const filteredOrders = filteredCurrentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
-            setFilteredCurrentOrders(filteredOrders); 
-        }
-        if(selectedTimeSlotscurrent.length==0)
-        {
-            const filteredOrders = currentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
-            setFilteredCurrentOrders(filteredOrders); 
-        }
-        if(selectedOrderscurrent.length>0)
-        {
-            setcurrentfilter(true);
-        }
-        else
-        {
-            setcurrentfilter(false);
-        }
-    }
-    if(selectedTab==0)
-    {
-        if(selectedOrderspast.length>0)
-        {
-            const filteredOrders = filteredPastorders.filter(order => selectedOrderspast.includes(String(order.id)));
-            setfilteredpastorders(filteredOrders); 
-        }
-        if(selectedOrderspast.length==0)
-        {
-            const filteredOrders = pastOrders.filter(order => selectedOrderspast.includes(String(order.id)));
-            setfilteredpastorders(filteredOrders); 
-        }
-        if(selectedOrderspast.length>0)
-        {
-            setpastfilter(true);
-        }
-        else
-        {
-            setpastfilter(false);
-        }
-    }
-};
 
+const filterOrders = () => {
+  let filteredCurrentOrders: Order[] = currentOrders;
+  let filteredPastOrders: Order[] = pastOrders;
+  console.log("past",filteredPastOrders);
 
-const getFilteredOrdersByTimeSlots = () => {
+  // ✅ Filtering Current Orders
   if (selectedTab === 1) {
-    if(selectedOrderscurrent.length>0)
-    {
-        const filteredOrders = filteredCurrentOrders.filter(order =>
+    if (selectedOrderscurrent.length > 0) {
+      filteredCurrentOrders = filteredCurrentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
+    }
+    if (selectedTimeSlotscurrent.length > 0) {
+      filteredCurrentOrders = filteredCurrentOrders.filter(order =>
         selectedTimeSlotscurrent.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
-        );
-        setFilteredCurrentOrders(filteredOrders);
+      );
     }
-    if(selectedOrderscurrent.length==0)
-    {
-        const filteredOrders = currentOrders.filter(order =>
-        selectedTimeSlotscurrent.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
-        );
-        setFilteredCurrentOrders(filteredOrders);
+    setFilteredCurrentOrders(filteredCurrentOrders);
+    setcurrentfilter(filteredCurrentOrders.length > 0);
+  }
+
+  // ✅ Filtering Past Orders without separate arrays
+  if (selectedTab === 0) {
+    if (selectedOrderspast.length > 0) {
+      filteredPastOrders = filteredPastOrders.filter(order => selectedOrderspast.includes(String(order.id)));
     }
-    if(selectedTimeSlotscurrent.length>0)
-    {
-        setcurrentfilter(true);
-    }
-    else
-    {
-        setcurrentfilter(false);
-    }
-  } else if (selectedTab === 0) {
-    if(selectedOrderspast.length>0)
-    {
-        const filteredOrders = filteredPastorders.filter(order =>
+    if (selectedTimeSlotspast.length > 0) {
+      filteredPastOrders = filteredPastOrders.filter(order =>
         selectedTimeSlotspast.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
-        );
-        setfilteredpastorders(filteredOrders);
+      );
     }
-    if(selectedOrderspast.length==0)
-    {
-        const filteredOrders = pastOrders.filter(order =>
-        selectedTimeSlotspast.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
-        );
-        setfilteredpastorders(filteredOrders);
+
+    // ✅ Handle archived & canceled orders dynamically
+    if (!IsEnabledarchieve) {
+      filteredPastOrders = filteredPastOrders.filter(order => !order.is_archive); // ✅ Remove archived when toggle is OFF
+      console.log("past",filteredPastOrders);
+      console.log(IsEnabledarchieve)
     }
-    if(selectedTimeSlotspast.length>0)
-    {
-        setpastfilter(true);
+    if (!IsEnabledcancel) {
+      filteredPastOrders = filteredPastOrders.filter(order => !order.is_admin_canceled); // ✅ Remove canceled when toggle is OFF
+      console.log("past",filteredPastOrders);
     }
-    else
-    {
-        setpastfilter(false);
-    }
+    
+
+    setfilteredpastorders(filteredPastOrders);
+    setpastfilter(filteredPastOrders.length > 0);
   }
 };
-
   
 
   return (
@@ -284,6 +243,10 @@ const getFilteredOrdersByTimeSlots = () => {
         selectedOrderspast,
         selectedTimeSlotscurrent,
         selectedTimeSlotspast,
+        IsEnabledcancel,
+        IsEnabledarchieve,
+        setIsEnabledarchieve,
+        setIsEnabledcancel,
         setSelectedOrderspast,
         setCurrentOrders, 
         setPastOrders,
@@ -293,8 +256,7 @@ const getFilteredOrdersByTimeSlots = () => {
         removeOrder,
         archiveOrder,
         updatestatus,
-        getFilteredCurrentOrders,
-        getFilteredOrdersByTimeSlots,
+        filterOrders,
         setSelectedOrderscurrent,
         setselectedtimeslotspast,
         setSelectedTimeSlotscurrent

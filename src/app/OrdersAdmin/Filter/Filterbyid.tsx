@@ -17,7 +17,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
     setSelectedOrderspast,
     selectedOrderscurrent,
     selectedOrderspast,
-    getFilteredCurrentOrders,
+    filterOrders,
     selectedTab,
   } = useOrderContext();
 
@@ -28,9 +28,9 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
   
   useEffect(() => {
     if (selectedTab === 1) {
-      getFilteredCurrentOrders();
+      filterOrders();
     } else if (selectedTab === 0) {
-      getFilteredCurrentOrders();
+      filterOrders();
     }
   }, [selectedOrderscurrent, selectedOrderspast, selectedTab]);
 
