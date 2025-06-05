@@ -140,7 +140,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
           />
           <h1 className="text-xl font-bold">بازگشت</h1>
         </div>
-        <div className="flex flex-col items-center mb-2 mt-5">
+        <div className="flex flex-col items-center  mt-5">
           <div className="relative mb-4" onClick={handleImageClick}>
             <div className="w-30 h-30 border rounded-full overflow-hidden flex items-center justify-center">
               <Image
@@ -172,7 +172,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
           </div>
           {errors.image && <p className="text-red-500 text-sm mb-2">{errors.image}</p>}
 
-          <div className="grid grid-cols-2 gap-16 mb-6 mt-5" dir="rtl">
+          <div className="grid grid-cols-2 gap-16 mb-2 mt-3" dir="rtl">
             <div>
               <h2 className="font-semibold mb-2">نام محصول</h2>
               <input
@@ -215,7 +215,7 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3 mb-6 mt-5" dir="rtl">
+          <div className="grid grid-cols-3 gap-3 mb-3 " dir="rtl">
             <div>
               <h2 className="font-semibold mb-2">قیمت</h2>
               <input
@@ -259,9 +259,9 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
               name="description"
               value={ItemData.description}
               onChange={handleInputChange}
-              className="w-full min-w-155 min-h-30 mb-5 p-1 border border-gray-300 rounded"
+              className="w-full min-w-155 min-h-30 mb-2 p-1 border border-gray-300 rounded"
             />
-            {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+            {errors.description && <p className="text-red-500 text-sm" dir="rtl">{errors.description}</p>}
           </div>
         </div>
         <button
