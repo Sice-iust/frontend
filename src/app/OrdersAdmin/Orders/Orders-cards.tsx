@@ -37,6 +37,7 @@ interface OrderCardProps {
     status : number;
     removeOrder: (orderId: number) => void;
     statusupdate: (orderId: number) => void;
+    archiveupdate: (orderId: number) => void;
 }  
 
 const OrderCard: React.FC<OrderCardProps> = ({  
@@ -56,6 +57,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
     admin_reason,
     removeOrder,
     statusupdate,
+    archiveupdate,
 }) => {  
 
 
@@ -481,7 +483,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
             removeorder={() => removeOrder(orderkey)} 
             statusupdate={() => statusupdate(orderkey)} 
             />
-        <Archivepopup isOpen={isarchiveopen} onClose={handlearchiveclose} orderId={orderkey}/>
+        <Archivepopup isOpen={isarchiveopen} onClose={handlearchiveclose} orderId={orderkey} archiveupdate={()=>archiveupdate(orderkey)}/>
         <Cancelepopup 
             isOpen={iscancelopen} 
             onClose={handlecancelclose} 

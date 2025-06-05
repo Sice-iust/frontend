@@ -25,7 +25,7 @@ const Filter = () => {
     const { name, value, type, checked } = e.target;
     setFilters((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? (checked ? [...prev[name as keyof FilterOptions], value] : (prev[name as keyof FilterOptions] as string[]).filter((v) => v !== value)) : value,
+      // [name]: type === "checkbox" ? (checked ? [...prev[name as keyof FilterOptions], value] : (prev[name as keyof FilterOptions] as string[]).filter((v) => v !== value)) : value,
     }));
   };
 

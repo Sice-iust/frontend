@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { convertToPersianNumbers } from '../../../utils/Coversionutils';
 import { RxCross1 } from "react-icons/rx";
 import axios from 'axios';
+import { arch } from 'os';
 
 interface DeliveryPopupProps {
   isOpen: boolean;
   onClose: () => void;
   orderId: number;
+  archiveupdate: ()=>void;
 }
 
-const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId }) => {
+const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId, archiveupdate }) => {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [hidePopup, setHidePopup] = useState(false);
 
@@ -28,6 +30,7 @@ const handleConfirm = async () => {
 
         setSuccessMessage("سفارش با موفقیت آرشیو شد!");
         setHidePopup(true);
+        archiveupdate();
 
         setTimeout(() => {
             setSuccessMessage(null);

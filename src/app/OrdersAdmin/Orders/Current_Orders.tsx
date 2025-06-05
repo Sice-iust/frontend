@@ -73,6 +73,14 @@ const OrderList = () => {
     );
   };
 
+  const archiveupdate = (orderId: number) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, is_archive: true } : order 
+      )
+    );
+  };
+
   if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
 
@@ -114,6 +122,7 @@ const OrderList = () => {
               status={1}
               removeOrder={removeOrder}
               statusupdate={statusupdate}
+              archiveupdate={archiveupdate}
             />
           );
         })}

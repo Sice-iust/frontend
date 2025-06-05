@@ -54,6 +54,13 @@ const OrderList = () => {
           throw new Error('Network response was not ok');
         }
         const data: Order[] = await response.json();
+      //   const sortedOrders = [...data].sort((a, b) => {
+      //   if (!a.is_archive && !a.is_admin_canceled) return -1; 
+      //   if (a.is_archive && !a.is_admin_canceled) return 1; 
+      //   if (a.is_admin_canceled) return 2; 
+      //   return 0;
+      // });
+
         setOrders(data);
         console.log(data);
       } catch (err) {
@@ -86,7 +93,15 @@ const OrderList = () => {
   const statusupdate = (orderId: number) => {
     setOrders((prevOrders) =>
       prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: 4 } : order // Corrected: Set status to 4
+        order.id === orderId ? { ...order, status: 4 } : order 
+      )
+    );
+  };
+
+  const archiveupdate = (orderId: number) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, is_archive: true } : order 
       )
     );
   };
@@ -129,6 +144,7 @@ const OrderList = () => {
               status={order.status}
               removeOrder={removeOrder}
               statusupdate={statusupdate}
+              archiveupdate={archiveupdate}
             />
           );
         })}
