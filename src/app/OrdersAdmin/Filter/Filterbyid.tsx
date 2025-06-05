@@ -51,7 +51,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
   };
 
   return (
-    <div className="relative w-full max-w-md p-4 bg-white rounded-lg shadow-md" dir="rtl">
+    <div className="relative w-full max-w-md p-4 " dir="rtl">
       <label className=" mr-3 block text-black font-light mb-3">شماره سفارش</label>
 
       <input
@@ -64,7 +64,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
         dir="rtl"
       />
 
-      <div className="mt-3 max-h-40 overflow-auto rounded-lg">
+      <div className="mt-3 max-h-30 overflow-auto rounded-lg">
         {(searchTerm ? filteredOrders : orders).map((order) => (
           <div key={order} className="flex items-center p-2 text-right">
             <label className="flex items-center cursor-pointer relative mr-2">

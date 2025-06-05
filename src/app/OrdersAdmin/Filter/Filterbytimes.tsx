@@ -39,10 +39,10 @@ const Ordersslotbox = () => {
   };
 
   return (
-    <div className="relative w-full max-w-md p-4 bg-white rounded-lg shadow-md" dir="rtl">
-      <label className="mr-3 block text-black font-light mb-3">بازه زمانی را انتخاب کنید</label>
+    <div className="relative w-full max-w-md p-4 " dir="rtl">
+      <label className="mr-3 block text-black font-light mb-2">بازه زمانی را انتخاب کنید</label>
 
-      <div className="mt-3 max-h-40 overflow-auto rounded-lg">
+      <div className="mt-3 max-h-30 overflow-auto rounded-lg">
         {timeSlots.map((slot) => (
           <div key={slot} className="flex items-center p-2 text-right">
             <label className="flex items-center cursor-pointer relative mr-2">
