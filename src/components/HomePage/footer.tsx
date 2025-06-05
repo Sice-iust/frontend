@@ -1,4 +1,5 @@
 'use client'
+
 import { faFacebook, faInstagram, faTelegram, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -45,7 +46,7 @@ export default function Footer2() {
                     <div className="flex m-2 gap-5 text-3xl">
                         <a
                             className="
-                            w-10
+                            w-11
                             h-11
                             text-yellow-700
                             border-yellow-700
@@ -58,7 +59,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
@@ -70,8 +71,10 @@ export default function Footer2() {
                         </a>
                         <a
                             className="
-                            w-10
-                            h-10
+                            w-11
+                            h-11
+
+
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -83,7 +86,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
@@ -95,8 +98,8 @@ export default function Footer2() {
                         </a>
                         <a
                             className="
-                            w-10
-                            h-10
+                            w-11
+                            h-11
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -108,7 +111,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
@@ -120,8 +123,8 @@ export default function Footer2() {
                         </a>
                         <a
                             className="
-                            w-10
-                            h-10
+                            w-11
+                            h-11
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -133,7 +136,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "

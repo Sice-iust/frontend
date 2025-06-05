@@ -1,5 +1,5 @@
 import './globals.css';
-import Footer2 from "../components/HomePage/footer2";
+import Footer2 from "../components/HomePage/footer";
 import Header2 from '../components/HomePage/header2';
 
 import { ThemeProvider, useTheme } from "../components/theme";

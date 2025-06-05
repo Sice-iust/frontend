@@ -18,7 +18,7 @@ interface SearchProps {
   isDarkMode: boolean;
 }
 
-const Search: React.FC<SearchProps> = ({ isDarkMode }) => {
+const Search: React.FC<SearchProps> = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
@@ -151,7 +151,7 @@ const handleOpenModal = (itemId: number) => {
                       </div>
                       {item.stock > 0 ? (
                       <div className={`flex items-center dark:text-gray-300 `}>
-                          <span className={`mr-2 font-bold dark:text-gray-300  font-vazir`}>موجودی: <span className={`font-medium ${isDarkMode ? "text-white " : "text-gray-700"}`}>{convertToPersianNumbers(item.stock)}</span></span>
+                          <span className={`mr-2 font-bold dark:text-gray-300  font-vazir`}>موجودی: <span className={`font-medium  text-gray-700 dark:text-white`}>{convertToPersianNumbers(item.stock)}</span></span>
                         </div>
                       ) : (
                         <div className="flex items-center">

@@ -1,203 +1,233 @@
 'use client'
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { IoLocationOutline } from "react-icons/io5";
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import Image from "next/image";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import axios from "axios";
 
+import { IoLocationOutline } from "react-icons/io5";
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Brightness2OutlinedIcon from '@mui/icons-material/Brightness2Outlined';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import axios from "axios";
+import { FaChevronDown } from "react-icons/fa";
+
 import { useTheme } from "../theme";
-import LoginModal from "./login/login";
-import dynamic from "next/dynamic";
-import Link from "next/link";
 import { useADDRESS } from "../../context/GetAddress";
-import {  
-  FaChevronDown,
-  FaChevronLeft,
-} from "react-icons/fa";
+import LoginModal from "./login/login";
 import AddressModal from "../../app/OrderSubmission/AddressModal/AddressModal";
+
 const LazySearch = dynamic(() => import('./search'), {
-    loading: () => (
-        <div className="flex items-center rounded-3xl p-2 dark:bg-[#383535] bg-[#D9D9D9] mx-auto " dir='rtl'>
-            <span className="text-[#B8681D]"><SearchOutlinedIcon /></span>
-            <input
-                type="text"
-                className=" px-2 py-1 dark:text-white focus:outline-none rounded-full w-full text-right text-black text-[16px] placeholder:[#696363]"
-                placeholder="نام کالای مورد نظر را جستجو کنید ..."
-                dir="rtl"
-            />
-        </div>
-    ),
-    ssr: false,
+  loading: () => (
+    <div className="flex items-center rounded-3xl p-2 dark:bg-[#383535] bg-[#D9D9D9] mx-auto" dir='rtl'>
+      <span className="text-[#B8681D]"><SearchOutlinedIcon /></span>
+      <input
+        type="text"
+        className="px-2 py-1 dark:text-white focus:outline-none rounded-full w-full text-right text-black text-[16px] placeholder:[#696363]"
+        placeholder="نام کالای مورد نظر را جستجو کنید ..."
+        dir="rtl"
+      />
+    </div>
+  ),
+  ssr: false,
 });
 
-export default function Header2() {
-    const [isMapOpen,SetIsMapOpen]=useState(false);
-    const { isDarkMode, toggleDarkMode } = useTheme();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [shoppingNum, setShoppingNum] = useState(2);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isModalOpenAddress, setModalOpenAddress] = useState(false);
-    const { data = [] } = useADDRESS();  
-    const selected = data?.find((add) => add.isChosen === true);
-    const OpenMap=()=>setModalOpenAddress(true);
-    const handleCloseModalAddress = () => {
-        setModalOpenAddress(false);
-    };
-    const getUsername = async () => {
-        //localStorage.removeItem('token');  
-        const token = localStorage.getItem("token");
-        console.log('Retrieved Token:', token);
+export default function Header() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [shoppingNum, setShoppingNum] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  
+  const { isDarkMode, toggleDarkMode } = useTheme();
+  const { data = [] } = useADDRESS();  
+  const selectedAddress = data?.find((add) => add.isChosen === true);
 
-        if (token == "undefined" || !token) {
-            console.log('No token found');
-            return;
+  const handleOpenLoginModal = () => {
+    setIsModalOpen(true);
+    setIsAddressModalOpen(false);
+  };
+
+  const handleCloseLoginModal = () => setIsModalOpen(false);
+  const handleOpenAddressModal = () => setIsAddressModalOpen(true);
+  const handleCloseAddressModal = () => setIsAddressModalOpen(false);
+
+  const truncateText = (text: string, wordLimit = 4) => {
+    if (!text) return "...";
+    const words = text.split(" ");
+    return words.length > wordLimit 
+      ? words.slice(0, wordLimit).join(" ") + "..."
+      : text;
+  };
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      const token = localStorage.getItem("token");
+      if (!token || token === "undefined") return;
+
+      try {
+        const response = await axios.get('https://nanziback.liara.run/header/', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (response.data.is_login) {
+          setIsLoggedIn(true);
+          setShoppingNum(response.data.nums || 0);
         }
-        else {
-            try {
-                const response = await axios.get('https://nanziback.liara.run/header/', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`, // Note: Make sure it starts with "Bearer "  
-                    }
-                });
-
-                if (response.data.is_login) {
-                    setIsLoggedIn(response.data.is_login);
-                    setShoppingNum(response.data.nums);
-                }
-                console.log('Username:', response.data.username); // Correctly log the username  
-            } catch (error) {
-                console.error('Error fetching username:', error);
-            }
-        }
-    };
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-        handleCloseModalAddress();    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-    const truncateWords = (text, wordLimit = 4) => {
-        if (!text) return "...";
-        const words = text.split(" ");
-        return words.length > wordLimit ? words.slice(0, wordLimit).join(" ") + "...": text;
+      } catch (error) {
+        console.error('Authentication check failed:', error);
+        localStorage.removeItem("token");
+      }
     };
 
-    useEffect(() => {
-        getUsername();
-    }, []);
-    useEffect(() => {
-        console.log('ShoppingNum value:', shoppingNum);
-    }, [shoppingNum]);
-    return (
-        <>
-            <div className={` dark:bg-[#191919] bg-white  w-full`}>
-                <div dir="rtl" className="flex flex-col justify-center px-5 py-2 md:flex-row">
+    checkAuthStatus();
+  }, []);
 
-                    <div className="hidden md:flex basis-1/10 my-auto">
-                        <Link href="/">
-                            <Image src={isDarkMode ? `/assets/logo-dark.png` : `/assets/logo.png`}
-                                alt="Logo"
-                                width={200}
-                                height={200}
-                                className="mx-auto md:mr-0 md:ml-auto md:w-30 md:h-20" />
-                        </Link>
-                    </div>
-                    <div className="flex flex-col mt-4 ml-20 leading-relaxed cursor-pointer" onClick={OpenMap}>
-                        <span className="text-md text-black font-bold mr-5">{selected?.name}</span>
-                        <div className="flex flex-row-reverse gap-1">
-                            <FaChevronDown className="text-[#f18825] h-3 w-3 mt-1"/>
-                            <span className="font-medium text-sm text-gray-500 truncate">
-                                {truncateWords(selected?.address)}
-                            </span>  
-                            <IoLocationOutline/>
-                        </div>             
-                    </div>
-                    <div className="basis-5/10 w-full my-10 md:my-auto mx-auto ">
-                        <LazySearch isDarkMode={isDarkMode} />
-                    </div>
-
-                    <div dir="ltr" className={`hidden basis-3/10 md:flex my-auto gap-10 dark:text-white text-black`}>
-                        {isLoggedIn ? (
-                            <Link
-                                href="/ProfilePage"
-                                className="text-[15px] cursor-pointer"
-
-                            >
-                                صفحه کاربر
-                                <AccountCircleOutlinedIcon className="!text-3xl w-2.5 ml-0.5 " />
-                            </Link>
-                        ) : (
-                            <button className={`bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer`} onClick={handleOpenModal}
-                            > ورود / عضویت   </button>
-                        )}
-
-                        <div className={`flex my-auto cursor-pointer gap-2 dark:text-white text-black`}>
-                            <Link href={"/OrderSubmission"}><h1>سبد خرید</h1></Link>
-
-                            <ShoppingCartOutlinedIcon className="text-3xl" />
-                            {shoppingNum > 0 && <span className={`absolute -top-0.5 -left-[20px] z-1000 bg-[#F18825]  dark:text-black text-white rounded-[10px] px-[6px] py-[3px] text-[12px] `}>{shoppingNum}</span>}
-                        </div>
-                        <span className={`
-                            cursor-pointer my-auto gap-2
-                             dark:text-white text-black
-                             `} onClick={toggleDarkMode}   >
-                            {isDarkMode ? 'حالت روز' : 'حالت شب'}
-                            {isDarkMode ? <WbSunnyOutlinedIcon className="text-2xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-2xl ml-0.5" />}
-                        </span>
-                    </div>
+  return (
+    <>
+      <div className={`dark:bg-[#191919] bg-white w-full`}>
+        <div dir="rtl" className="flex flex-col md:flex-row justify-between w-full px-5 py-2">
+              {/* Logo */}
+          <div className="hidden md:flex basis-1/10 my-auto">
+            <Link href="/">
+                <div className="relative w-[200px] h-[80px]">
+                    <Image
+                    src="/assets/logo.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain dark:hidden"
+                    />
+                    <Image
+                    src="/assets/logo-dark.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain hidden dark:block"
+                    />
                 </div>
+            </Link>
+          </div>
+
+          {/* Address shown when logged in*/}
+          {isLoggedIn && (
+            <div 
+              className="flex flex-col mt-4 ml-20 leading-relaxed cursor-pointer" 
+              onClick={handleOpenAddressModal}
+            >
+              <span className="text-md text-black dark:text-white font-bold mr-5">{selectedAddress?.name}</span>
+              <div className="flex flex-row-reverse gap-1">
+                <FaChevronDown className="text-[#f18825] h-3 w-3 mt-1 "/>
+                <span className="font-medium text-sm text-gray-500 truncate">
+                  {truncateText(selectedAddress?.address)}
+                </span>  
+                <IoLocationOutline/>
+              </div>             
             </div>
-            <div dir="ltr" className='fixed bottom-0
-                w-full h-20  content-center p-3 md:hidden flex justify-center
-                gap-12 border-t-3 basis-3/10
-                bg-white dark:bg-black
-                border-gray-600  dark:border-white z-10
-                text-black dark:text-white px-10
-               '>
-                {isLoggedIn ? (
-                    <Link
-                        href="/ProfilePage"
-                        className='
-                         text-black dark:text-white bg-orange-400
-                         rounded-2xl p-3 cursor-pointer
-                         my-auto
-                         '
-                    >
-                        صفحه کاربر
-                    </Link>
-                ) : (
-                    <button 
-                    className={`
-                         text-black dark:text-white bg-orange-400 text-4xl
-                         rounded-2xl p-3 cursor-pointer`} onClick={handleOpenModal}
-                    > 
-                    <AccountCircleOutlinedIcon className="!text-3xl w-2.5 ml-0.5 " />  
-                    </button>
+          )}
+
+          {/* Search */}
+          <div className="basis-5/10 w-full my-10 md:my-auto mx-auto">
+            <LazySearch  />
+          </div>
+
+          {/* Desktop Navigation */}
+          <div dir="ltr" className="hidden basis-3/10 md:flex my-auto gap-10 dark:text-white min-h-0.5 text-black">
+            {isLoggedIn ? (
+              <Link href="/ProfilePage" className="text-[15px] cursor-pointer min-w-0.5 min-h-0.5 ">
+                صفحه کاربر
+                <AccountCircleOutlinedIcon className="!text-3xl w-2.5 ml-0.5" />
+              </Link>
+            ) : (
+              <button 
+                className="bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer"
+                onClick={handleOpenLoginModal}
+              >
+                ورود / عضویت
+              </button>
+            )}
+
+            <div className="flex my-auto cursor-pointer gap-2 dark:text-white text-black">
+              <Link href="/OrderSubmission">
+                <h1>سبد خرید</h1>
+              </Link>
+              <div className="relative">
+                <ShoppingCartOutlinedIcon className="text-3xl" />
+                {shoppingNum > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#F18825] dark:text-black text-white rounded-[10px] px-1.5 py-0.5 text-xs">
+                    {shoppingNum}
+                  </span>
                 )}
-
-                <span className={`
-                            cursor-pointer my-auto gap-2
-                             dark:text-white text-black
-                             `} onClick={toggleDarkMode}   >
-                    {isDarkMode ? <WbSunnyOutlinedIcon className="text-2xl cursor-pointer" /> : <Brightness2OutlinedIcon className="text-2xl ml-0.5" />}
-                </span>
-                <div className={` my-auto cursor-pointer dark:text-white text-black`}>
-                    <ShoppingCartOutlinedIcon className="text-3xl" />
-                </div>
-                <Link href="/" className=" my-auto cursor-pointer">
-                    <HomeOutlinedIcon className="text-3xl" />
-                </Link>
+              </div>
             </div>
-            {isModalOpen && <LoginModal onClose={handleCloseModal} open={isModalOpen} setIsLoggedIn={setIsLoggedIn} />}
-            {isModalOpenAddress && <AddressModal onClose={handleCloseModalAddress} id_user={localStorage.getItem("token")}/>}
-        </>
-    );
+
+            <button 
+              className="flex my-auto gap-2 dark:text-white text-black cursor-pointer"
+              onClick={toggleDarkMode}
+            >
+              <span className="before:content-['حالت_شب'] dark:before:content-['حالت_روز']" />
+              <div className="relative w-6 h-6">
+                <WbSunnyOutlinedIcon className="text-2xl absolute inset-0 dark:opacity-100 opacity-0 transition-opacity duration-300" />
+                <Brightness2OutlinedIcon className="text-2xl absolute inset-0 dark:opacity-0 opacity-100 transition-opacity duration-300" />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div dir="ltr" className="fixed bottom-0 w-full h-20 content-center p-3 md:hidden flex justify-center gap-12 border-t-3 bg-white dark:bg-black border-gray-600 dark:border-white z-10 text-black dark:text-white px-10">
+        {isLoggedIn ? (
+          <Link href="/ProfilePage" className="text-black dark:text-white bg-orange-400 rounded-2xl p-3 cursor-pointer my-auto">
+            صفحه کاربر
+          </Link>
+        ) : (
+          <button 
+            className="text-black dark:text-white bg-orange-400 text-4xl rounded-2xl p-3 cursor-pointer"
+            onClick={handleOpenLoginModal}
+          >
+            <AccountCircleOutlinedIcon className="!text-3xl w-2.5 ml-0.5" />  
+          </button>
+        )}
+
+        <button 
+          className="cursor-pointer my-auto dark:text-white text-black"
+          onClick={toggleDarkMode}
+        >
+          <div className="relative w-6 h-6">
+            <WbSunnyOutlinedIcon className="text-2xl absolute inset-0 dark:opacity-100 opacity-0 transition-opacity duration-300" />
+            <Brightness2OutlinedIcon className="text-2xl absolute inset-0 dark:opacity-0 opacity-100 transition-opacity duration-300" />
+          </div>
+        </button>
+
+        <Link href="/OrderSubmission" className="my-auto cursor-pointer relative">
+          <ShoppingCartOutlinedIcon className="text-3xl" />
+          {shoppingNum > 0 && (
+            <span className="absolute -top-1 -right-1 bg-[#F18825] dark:text-black text-white rounded-full w-4 h-4 flex items-center justify-center text-xs">
+              {shoppingNum}
+            </span>
+          )}
+        </Link>
+
+        <Link href="/" className="my-auto cursor-pointer">
+          <HomeOutlinedIcon className="text-3xl" />
+        </Link>
+      </div>
+
+      {isModalOpen && (
+        <LoginModal 
+          onClose={handleCloseLoginModal} 
+          open={isModalOpen} 
+          setIsLoggedIn={setIsLoggedIn} 
+        />
+      )}
+      
+      {isAddressModalOpen && (
+        <AddressModal 
+          onClose={handleCloseAddressModal} 
+          id_user={localStorage.getItem("token")}
+        />
+      )}
+    </>
+  );
 }
