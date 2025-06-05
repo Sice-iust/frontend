@@ -5,6 +5,7 @@ import Header2 from '../components/HomePage/header2';
 import { ThemeProvider, useTheme } from "../components/theme";
 import { CartProvider } from "../context/Receiptcontext";
 import { AddressProvider } from "../context/GetAddress";
+import { OrderProvider } from '../context/Adminordercontext';
 
 export default function Layout({ children }) {
   return (
@@ -12,6 +13,7 @@ export default function Layout({ children }) {
       <body>
         <CartProvider>
           <AddressProvider>
+            <OrderProvider>
             <ThemeProvider>
               <div className='relative'>
                 <Header2 />
@@ -21,6 +23,7 @@ export default function Layout({ children }) {
                 </div>
               </div>
             </ThemeProvider>
+            </OrderProvider>
           </AddressProvider>
         </CartProvider>
       </body>

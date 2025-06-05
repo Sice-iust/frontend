@@ -64,7 +64,8 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
     // console.log("price:",total_price_after);
      
 
-    if (!isOpen) return null;  
+    if (!isOpen) return null; 
+    if(loading) return null; 
     
 
 

@@ -65,8 +65,6 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
     '12345678',
     '123456789',
     '1234567810',
-    '12345678',
-    '12345678'
   ];
 
   const handleOrderSelect = (orderNumber: string) => {

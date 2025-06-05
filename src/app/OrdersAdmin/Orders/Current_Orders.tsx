@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import OrderCard from './Orders-cards';
 import { convertPrice } from '../../../utils/Coversionutils';
 import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
+import { useOrderContext } from '../../../context/Adminordercontext'
 
 interface Order {
   id: number;
@@ -35,51 +36,11 @@ interface Order {
 }
 
 const OrderList = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch('https://nanziback.liara.run/nanzi/admin/process/', {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data: Order[] = await response.json();
-        setOrders(data);
-        console.log(data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { currentOrders, removeOrder ,  archiveOrder, updatestatus  ,error , loading}=useOrderContext()
 
-    fetchOrders();
-  }, []);
-
-  const removeOrder = (orderId: number) => {
-    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
-  };
-
-  const statusupdate = (orderId: number) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: 4 } : order // Corrected: Set status to 4
-      )
-    );
-  };
-
-  const archiveupdate = (orderId: number) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, is_archive: true } : order 
-      )
-    );
-  };
+  
 
   if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
@@ -97,7 +58,7 @@ const OrderList = () => {
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
-        {orders.map((order) => {
+        {currentOrders.map((order) => {
           const startHour = order.delivery.start_time.split(':')[0];
           const endHour = order.delivery.end_time.split(':')[0];
           const deliveryTime = `${startHour}-${endHour}`;
@@ -121,8 +82,9 @@ const OrderList = () => {
               admin_reason={null}
               status={1}
               removeOrder={removeOrder}
-              statusupdate={statusupdate}
-              archiveupdate={archiveupdate}
+              statusupdate={updatestatus}
+              archiveupdate={archiveOrder}
+              isCurrent={true}
             />
           );
         })}

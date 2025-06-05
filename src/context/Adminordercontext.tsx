@@ -1,9 +1,13 @@
+"use client";
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 interface Order {
   id: number;
   location: {
-    user: { username: string; phonenumber: string };
+    user: {
+      username: string;
+      phonenumber: string;
+    };
     address: string;
     name: string;
     home_floor: string | null;
@@ -29,66 +33,127 @@ interface Order {
   is_admin_canceled: boolean;
   admin_reason: string | null;
   is_archive: boolean;
+  
 }
+
 
 interface OrderContextType {
   currentOrders: Order[];
   pastOrders: Order[];
-  removeOrder: (orderId: number) => void;
-  updateStatus: (orderId: number, status: number) => void;
+  loading: boolean;
+  error: string | null;
+  fetchCurrentOrders: () => Promise<void>;
+  fetchPastOrders: () => Promise<void>;
+  removeOrder: (orderId: number, isCurrent: boolean) => void;
   archiveOrder: (orderId: number) => void;
+  updatestatus: (orderId: number, isCurrent: boolean) => void;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [currentOrders, setCurrentOrders] = useState<Order[]>([]);
+  const [pastOrders, setPastOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchCurrentOrders = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("https://nanziback.liara.run/nanzi/admin/process/", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data: Order[] = await response.json();
+      setCurrentOrders(data);
+    } catch (err) {
+      setError("خطا در دریافت سفارش‌های جاری");
+      console.error("Error fetching current orders:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchPastOrders = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("https://nanziback.liara.run/nanzi/admin/delivered/", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data: Order[] = await response.json();
+      setPastOrders(data);
+    } catch (err) {
+      setError("خطا در دریافت سفارش‌های گذشته");
+      console.error("Error fetching past orders:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch("https://nanziback.liara.run/nanzi/admin/delivered/", {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data: Order[] = await response.json();
-        setOrders(data);
-      } catch (err) {
-        console.error("Error fetching orders:", err);
-      }
-    };
-
-    fetchOrders();
+    fetchCurrentOrders();
+    fetchPastOrders();
   }, []);
 
-  const removeOrder = (orderId: number) => {
-    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
+  const removeOrder = (orderId: number, isCurrent: boolean) => {
+    if (isCurrent) {
+      setCurrentOrders(prev => prev.filter(order => order.id !== orderId));
+    } else {
+      setPastOrders(prev => prev.filter(order => order.id !== orderId));
+    }
   };
 
-  const updateStatus = (orderId: number, status: number) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) => (order.id === orderId ? { ...order, status } : order))
-    );
-  };
+  const archiveOrder = (orderId: number) =>{ 
+    setPastOrders((prevOrders) => prevOrders.map((order) => (order.id === orderId ? 
+        { ...order, is_archive: true } : order)) ); 
+    };
 
-  const archiveOrder = (orderId: number) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) => (order.id === orderId ? { ...order, is_archive: true } : order))
-    );
-  };
+
+    const updatestatus = (orderId: number, isCurrent: boolean) => {
+    if (isCurrent) {
+        const orderToUpdate = currentOrders.find(order => order.id === orderId);
+        if (orderToUpdate) {
+        setCurrentOrders(prev => prev.filter(order => order.id !== orderId));
+        setPastOrders(prev => [...prev, { ...orderToUpdate, status: 2 }]);
+        return;
+        }
+    } else {
+        const orderToUpdate = pastOrders.find(order => order.id === orderId);
+        if (orderToUpdate) {
+        setPastOrders(prev => prev.map(order => 
+            order.id === orderId ? { ...order, status: 4 } : order
+        ));
+        }
+    }
+    };
+    
+    
 
   return (
     <OrderContext.Provider
       value={{
-        currentOrders: orders.filter((order) => !order.is_archive),
-        pastOrders: orders.filter((order) => order.is_archive),
+        currentOrders,
+        pastOrders,
+        loading,
+        error,
+        fetchCurrentOrders,
+        fetchPastOrders,
         removeOrder,
-        updateStatus,
         archiveOrder,
+        updatestatus,
       }}
     >
       {children}

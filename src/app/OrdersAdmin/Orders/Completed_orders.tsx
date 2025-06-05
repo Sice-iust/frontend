@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import OrderCard from './Orders-cards';
 import {convertPrice} from '../../../utils/Coversionutils';
 import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
+import { useOrderContext } from '../../../context/Adminordercontext'
 
 
 interface Order {
@@ -40,38 +41,10 @@ interface Order {
 }
 
 const OrderList = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {pastOrders, removeOrder , archiveOrder, updatestatus  ,error , loading}=useOrderContext()
+  
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch('https://nanziback.liara.run/nanzi/admin/delivered/' ,{
-                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-                      });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data: Order[] = await response.json();
-      //   const sortedOrders = [...data].sort((a, b) => {
-      //   if (!a.is_archive && !a.is_admin_canceled) return -1; 
-      //   if (a.is_archive && !a.is_admin_canceled) return 1; 
-      //   if (a.is_admin_canceled) return 2; 
-      //   return 0;
-      // });
-
-        setOrders(data);
-        console.log(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchOrders();
-  }, []);
+  
 
   if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
@@ -86,30 +59,14 @@ const OrderList = () => {
     ].filter(Boolean).join("-");
   };
 
-  const removeOrder = (orderId: number) => {
-    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== orderId));
-  };
+   
 
-  const statusupdate = (orderId: number) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, status: 4 } : order 
-      )
-    );
-  };
-
-  const archiveupdate = (orderId: number) => {
-    setOrders((prevOrders) =>
-      prevOrders.map((order) =>
-        order.id === orderId ? { ...order, is_archive: true } : order 
-      )
-    );
-  };
+  
 
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(100vh-120px)] overflow-y-auto">
-        {orders.map((order, index) => {
+        {pastOrders.map((order, index) => {
           
           const startHour = order.delivery.start_time.split(':')[0];
           const endHour = order.delivery.end_time.split(':')[0];
@@ -143,8 +100,9 @@ const OrderList = () => {
               iscompleted={true}
               status={order.status}
               removeOrder={removeOrder}
-              statusupdate={statusupdate}
-              archiveupdate={archiveupdate}
+              statusupdate={updatestatus}
+              archiveupdate={archiveOrder}
+              isCurrent={false}
             />
           );
         })}
