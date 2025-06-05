@@ -7,13 +7,16 @@ import LoadingBox from "../../../components/Loading/LoadingBox";
 import Discount from "./Discount"
 import { convertPrice } from "../../../utils/Coversionutils";
 import handlePayment from './handlePyament';
+import { useADDRESS } from '../../../context/GetAddress';
 
 
 const Cart: React.FC = () => {
-    const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee ,totalActualPricewithshipp } = useCart();
+    const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee ,totalActualPricewithshipp,selectedSlotId } = useCart();
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
 
     const [detail, setDetail] = useState("");
+    const { data = [] } = useADDRESS();  
+    const selected = data?.find((add) => add.isChosen === true);
     
 
     if (loading) {
@@ -100,9 +103,9 @@ const Cart: React.FC = () => {
 
                    <button
                         onClick={() => handlePayment({
-                            location_id: 5,
-                            deliver_time: 10,
-                            description: detail, 
+                            location_id: Number(selected?.id),
+                            deliver_time: Number(selectedSlotId),
+                            discription: detail, 
                             total_price: totalActualPricewithshipp,
                             profit: totalDiscount || 0,
                             total_payment: totalActualPricewithshipp,
@@ -112,10 +115,10 @@ const Cart: React.FC = () => {
                             reciver_phone: "989332328129"
                         })}
                         className={`mr-2 mb-4 rounded-2xl px-4 h-10 flex items-center justify-center w-[70%] 
-                                  ${cartItems.length === 0 ? "bg-gray-300 text-white cursor-not-allowed" : 
+                                  ${cartItems.length === 0 || shipping_fee === -1 || !selected ? "bg-gray-300 text-white cursor-not-allowed" : 
                                     'bg-[#F18825] text-white transition cursor-pointer'}`}
 
-                        disabled={!cartItems || cartItems.length === 0 || shipping_fee === -1}
+                        disabled={!cartItems || cartItems.length === 0 || shipping_fee === -1 || !selected}
                     >
                         ثبت و پرداخت
                     </button>

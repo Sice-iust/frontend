@@ -33,7 +33,9 @@ const CancelOrderPopup: React.FC<CancelOrderPopupProps> = ({ isOpen, onClose, or
       });
 
       setSuccessMessage("سفارش با موفقیت لغو شد!");
-      removeorder();
+      setTimeout(() => {
+            removeorder(); 
+          }, 3000);
       setHidePopup(true);
 
       setTimeout(() => {

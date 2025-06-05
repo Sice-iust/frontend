@@ -41,12 +41,12 @@ interface Order {
 }
 
 const OrderList = () => {
-  const {pastOrders, removeOrder , archiveOrder, updatestatus  ,error , loading}=useOrderContext()
+  const {pastOrders, removeOrder , archiveOrder, updatestatus  ,error , loadingPast}=useOrderContext()
   
 
   
 
-  if (loading) return <div className="text-center py-4">در حال بارگذاری...</div>;
+  if (loadingPast) return <div className="text-center py-4">در حال بارگذاری...</div>;
   if (error) return <div className="text-center py-4 text-red-500">خطا: {error}</div>;
 
   const formatDestination = (location: Order["location"]) => {

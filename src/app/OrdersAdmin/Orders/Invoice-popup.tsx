@@ -65,7 +65,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
      
 
     if (!isOpen) return null; 
-    if(loading) return null; 
+    // if(loading) return null; 
     
 
 
@@ -81,7 +81,7 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
 
                             <div className="bg-white  font-vazir  pb-4  overflow-y-auto lg:p-4 lg:mt-0">  
                                 <h2 className="text-2xl font-bold font-vazir mb-1.5 mt-4 lg:mt-0">فاکتور سفارش</h2>  
-                                {invoiceData ? (
+                                {invoiceData && invoiceData.items ? (
                                 <Invoice orderId={orderId} 
                                 payment={invoiceData.payment} 
                                 shippingfee={String(invoiceData.shipping_fee)} 
