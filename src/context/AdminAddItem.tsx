@@ -21,7 +21,7 @@ interface AdminItemCard {
     categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
     fetchCategories: ()=>Promise<void>;
-    AddItem:(img : string,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
+    AddItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
     fetchData:() => Promise<void>;
 }
 
