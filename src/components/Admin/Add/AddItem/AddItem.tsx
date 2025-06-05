@@ -39,8 +39,7 @@ export default function AddItem() {
                 ))}
             </div>
         </div>
-        {showForm && (
-        <AddItemModal onClose={() => setShowForm(false)} categories={categories} />)}
+        {showForm && (<AddItemModal onClose={() => setShowForm(false)} categories={categories} />)}
         </>
     );
 }
