@@ -113,6 +113,11 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
     );
     onClose();
   };
+  const convertPersianToNumber = (persianNum: string) => {
+    return persianNum.replace(/[۰-۹]/g, (digit) =>
+      String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit))
+    );
+  };
 
   const handleCategorySelect = (category: string, index: number) => {
     setItemData(prev => ({
@@ -231,10 +236,13 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
             <div>
               <h2 className="font-semibold mb-2">تعداد در بسته</h2>
               <input
-                type="number"
+                type="text"
                 name="number"
-                value={ItemData.number}
-                onChange={handleInputChange}
+                value={convertToPersianNumbers(String(ItemData.number))}
+                onChange={(e) => setItemData((prev) => ({
+                  ...prev,
+                  number: Number(convertPersianToNumber(e.target.value)),
+                }))}
                 className="w-full p-2 border border-gray-300 rounded"
               />
               {errors.number && <p className="text-red-500 text-sm mt-1">{errors.number}</p>}
@@ -242,12 +250,16 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
             <div>
               <h2 className="font-semibold mb-2">موجودی</h2>
               <input
-                type="number"
+                type="text"
                 name="stock"
-                value={ItemData.stock}
-                onChange={handleInputChange}
+                value={convertToPersianNumbers(String(ItemData.stock))}
+                onChange={(e) => setItemData((prev) => ({
+                  ...prev,
+                  stock: Number(convertPersianToNumber(e.target.value)),
+                }))}
                 className="w-full p-2 border border-gray-300 rounded"
               />
+
               {errors.stock && <p className="text-red-500 text-sm mt-1">{errors.stock}</p>}
             </div>
           </div>
