@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { MdOutlineFilterAltOff } from "react-icons/md";
+import Filterbyid from './Filterbyid';
 
 interface FilterOptions {
   orderNumber: string;
@@ -10,7 +12,11 @@ interface FilterOptions {
   canceledOrders: boolean;
 }
 
-const Filter = () => {
+interface FilterProps {
+  onFilterChange: (filters: FilterOptions) => void;
+}
+
+const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
   const [filters, setFilters] = useState<FilterOptions>({
     orderNumber: "",
     selectedOrders: [],
@@ -23,22 +29,23 @@ const Filter = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
-    setFilters((prev) => ({
-      ...prev,
-      // [name]: type === "checkbox" ? (checked ? [...prev[name as keyof FilterOptions], value] : (prev[name as keyof FilterOptions] as string[]).filter((v) => v !== value)) : value,
-    }));
-  };
+    setFilters((prev) => {
+      const updatedFilters = {
+        ...prev,
+        [name]: type === "checkbox"
+          ? checked
+            ? [...(prev[name as keyof FilterOptions] as string[]), value]
+            : (prev[name as keyof FilterOptions] as string[]).filter((v) => v !== value)
+          : value,
+      };
 
-  const handleToggleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
-    setFilters((prev) => ({
-      ...prev,
-      [name]: checked,
-    }));
+      // onFilterChange(updatedFilters); 
+      return updatedFilters;
+    });
   };
 
   const handleClearFilters = () => {
-    setFilters({
+    const resetFilters = {
       orderNumber: "",
       selectedOrders: [],
       startDate: "1403-03-03",
@@ -46,126 +53,45 @@ const Filter = () => {
       timeRanges: [],
       archivedOrders: false,
       canceledOrders: false,
-    });
+    };
+    setFilters(resetFilters);
+    // onFilterChange(resetFilters); 
+  };
+
+  const orderNumbers = [
+    '1234',
+    '123456',
+    '1234567',
+    '12345678',
+    '123456789',
+    '1234567810',
+    '12345678',
+    '12345678'
+  ];
+
+  const handleOrderSelect = (orderNumber: string) => {
+    console.log('Selected order:', orderNumber);
+    // You can add your logic here for what happens when an order is selected
   };
 
   return (
     <div className="bg-[#f5f5f5]"> 
       <div className="box-content ml-10 mt-10 mb-10 min-h-40 w-100 rounded-2xl bg-white">
-        <div className="p-6">
-          <h1 className="text-xl font-bold mb-6 text-right">فیلترها</h1>
-          
-          <div className="filter-section mb-6">
-            <h2 className="text-lg font-medium mb-3 text-right">شماره سفارش</h2>
-            <input 
-              type="text" 
-              id="orderNumber" 
-              name="orderNumber" 
-              value={filters.orderNumber} 
-              onChange={handleInputChange} 
-              className="border rounded-lg px-4 py-2 w-full text-right" 
-              placeholder="۱۲۳۴" 
-            />
-            <div className="order-options mt-3 space-y-2">
-              {["۱۲۳۴۵۶", "۱۲۳۴۵۶۷", "۱۲۳۴۵۶۷۸"].map((order) => (
-                <div key={order} className="flex items-center justify-end">
-                  <label htmlFor={order} className="ml-3 text-right cursor-pointer">{order}</label>
-                  <input 
-                    type="checkbox" 
-                    id={order} 
-                    name="selectedOrders" 
-                    value={order} 
-                    checked={filters.selectedOrders.includes(order)} 
-                    onChange={handleInputChange} 
-                    className="w-5 h-5 cursor-pointer"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="filter-section mb-6">
-            <h2 className="text-lg font-medium mb-3 text-right">زمان تحویل</h2>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-right">
-                <input 
-                  type="text" 
-                  id="startDate" 
-                  name="startDate" 
-                  value={filters.startDate} 
-                  onChange={handleInputChange} 
-                  className="border rounded-lg px-4 py-2 w-full text-right" 
-                  placeholder="۱۴۰۳/۰۳/۰۳"
-                />
-              </div>
-              <div className="text-right">
-                <input 
-                  type="text" 
-                  id="endDate" 
-                  name="endDate" 
-                  value={filters.endDate} 
-                  onChange={handleInputChange} 
-                  className="border rounded-lg px-4 py-2 w-full text-right" 
-                  placeholder="۱۴۰۳/۰۳/۰۳"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="filter-section mb-6">
-            <h2 className="text-lg font-medium mb-3 text-right">بازه</h2>
-            <div className="time-options space-y-3">
-              {["۱۲ تا ۹", "۱۶ تا ۱۳"].map((range) => (
-                <div key={range} className="flex items-center justify-end">
-                  <label htmlFor={range} className="ml-3 text-right cursor-pointer">{range}</label>
-                  <input 
-                    type="checkbox" 
-                    id={range} 
-                    name="timeRanges" 
-                    value={range} 
-                    checked={filters.timeRanges.includes(range)} 
-                    onChange={handleInputChange} 
-                    className="w-5 h-5 cursor-pointer"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="filter-section">
-            <div className="toggle-options space-y-3">
-              <div className="flex items-center justify-end">
-                <label htmlFor="archivedOrders" className="ml-3 text-right cursor-pointer">سفارش های آرشیو شده</label>
-                <input 
-                  type="checkbox" 
-                  id="archivedOrders" 
-                  name="archivedOrders" 
-                  checked={filters.archivedOrders} 
-                  onChange={handleToggleChange} 
-                  className="w-5 h-5 cursor-pointer"
-                />
-              </div>
-              <div className="flex items-center justify-end">
-                <label htmlFor="canceledOrders" className="ml-3 text-right cursor-pointer">سفارش های لغو شده</label>
-                <input 
-                  type="checkbox" 
-                  id="canceledOrders" 
-                  name="canceledOrders" 
-                  checked={filters.canceledOrders} 
-                  onChange={handleToggleChange} 
-                  className="w-5 h-5 cursor-pointer"
-                />
-              </div>
-            </div>
-          </div>
-
-          <button 
-            onClick={handleClearFilters} 
-            className="mt-8 bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg float-left transition-colors"
+        <div className="flex justify-between">
+          <button
+            className="flex items-center ml-5 mt-5 rounded-2xl bg-[#d9d9d9] text-black px-2 py-1 boarder-2xl"
+            onClick={handleClearFilters}
           >
-            حذف فیلترها
+            <span className="mr-0 cursor-pointer">حذف فیلترها</span>
+            <MdOutlineFilterAltOff className="h-5 w-5 text-[#F18825]" />
           </button>
+          <button className="text-black font-bold text-lg mt-3 px-4 py-2">فیلترها</button>
         </div>
+              <Filterbyid 
+                orders={orderNumbers} 
+                onSelect={handleOrderSelect}
+                placeholder="شماره سفارش را وارد کنید..."
+              />
       </div>
     </div>
   );
