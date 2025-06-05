@@ -172,8 +172,16 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const getFilteredCurrentOrders = () => {
     if(selectedTab==1)
     {
-        const filteredOrders = currentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
-        setFilteredCurrentOrders(filteredOrders); 
+        if(selectedTimeSlotscurrent.length>0)
+        {
+            const filteredOrders = filteredCurrentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
+            setFilteredCurrentOrders(filteredOrders); 
+        }
+        if(selectedTimeSlotscurrent.length==0)
+        {
+            const filteredOrders = currentOrders.filter(order => selectedOrderscurrent.includes(String(order.id)));
+            setFilteredCurrentOrders(filteredOrders); 
+        }
         if(selectedOrderscurrent.length>0)
         {
             setcurrentfilter(true);
@@ -185,8 +193,16 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
     if(selectedTab==0)
     {
-        const filteredOrders = pastOrders.filter(order => selectedOrderspast.includes(String(order.id)));
-        setfilteredpastorders(filteredOrders); 
+        if(selectedOrderspast.length>0)
+        {
+            const filteredOrders = filteredPastorders.filter(order => selectedOrderspast.includes(String(order.id)));
+            setfilteredpastorders(filteredOrders); 
+        }
+        if(selectedOrderspast.length==0)
+        {
+            const filteredOrders = pastOrders.filter(order => selectedOrderspast.includes(String(order.id)));
+            setfilteredpastorders(filteredOrders); 
+        }
         if(selectedOrderspast.length>0)
         {
             setpastfilter(true);
@@ -201,31 +217,51 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 const getFilteredOrdersByTimeSlots = () => {
   if (selectedTab === 1) {
-    const filteredOrders = currentOrders.filter(order =>
-      selectedTimeSlotscurrent.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
-    );
-    setFilteredCurrentOrders(filteredOrders);
-        if(selectedTimeSlotscurrent.length>0)
-        {
-            setcurrentfilter(true);
-        }
-        else
-        {
-            setcurrentfilter(false);
-        }
+    if(selectedOrderscurrent.length>0)
+    {
+        const filteredOrders = filteredCurrentOrders.filter(order =>
+        selectedTimeSlotscurrent.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
+        );
+        setFilteredCurrentOrders(filteredOrders);
+    }
+    if(selectedOrderscurrent.length==0)
+    {
+        const filteredOrders = currentOrders.filter(order =>
+        selectedTimeSlotscurrent.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
+        );
+        setFilteredCurrentOrders(filteredOrders);
+    }
+    if(selectedTimeSlotscurrent.length>0)
+    {
+        setcurrentfilter(true);
+    }
+    else
+    {
+        setcurrentfilter(false);
+    }
   } else if (selectedTab === 0) {
-    const filteredOrders = pastOrders.filter(order =>
-      selectedTimeSlotspast.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
-    );
-    setfilteredpastorders(filteredOrders);
-        if(selectedTimeSlotspast.length>0)
-        {
-            setpastfilter(true);
-        }
-        else
-        {
-            setpastfilter(false);
-        }
+    if(selectedOrderspast.length>0)
+    {
+        const filteredOrders = filteredPastorders.filter(order =>
+        selectedTimeSlotspast.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
+        );
+        setfilteredpastorders(filteredOrders);
+    }
+    if(selectedOrderspast.length==0)
+    {
+        const filteredOrders = pastOrders.filter(order =>
+        selectedTimeSlotspast.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
+        );
+        setfilteredpastorders(filteredOrders);
+    }
+    if(selectedTimeSlotspast.length>0)
+    {
+        setpastfilter(true);
+    }
+    else
+    {
+        setpastfilter(false);
+    }
   }
 };
 
