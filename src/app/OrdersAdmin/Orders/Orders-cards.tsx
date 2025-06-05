@@ -416,7 +416,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     </span>   
                     <span className='flex text-[#877F7F] font-normal font-vazir text-xs 
                             sm:text-sm md:text-sm'>
-                        {delivery_clock}
+                        {convertToPersianNumbers(delivery_clock)}
                         <FaRegClock className='ml-1 text-xs sm:text-base md:text-base'/>
                     </span>  
                     <span className='flex text-[#877F7F] font-normal font-vazir text-xs 

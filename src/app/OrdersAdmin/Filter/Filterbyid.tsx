@@ -11,7 +11,7 @@ interface OrderSearchBoxProps {
 const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelect }: OrderSearchBoxProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
-  // ✅ Correctly using context
+  
   const {
     setSelectedOrderscurrent,
     setSelectedOrderspast,
@@ -25,12 +25,12 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
     order.replace(/\s/g, "").includes(searchTerm.replace(/\s/g, ""))
   );
 
-  // ✅ Run filtering AFTER state updates based on selectedTab
+  
   useEffect(() => {
     if (selectedTab === 1) {
-      getFilteredCurrentOrders(selectedOrderscurrent.map(Number));
+      getFilteredCurrentOrders();
     } else if (selectedTab === 0) {
-      getFilteredCurrentOrders(selectedOrderspast.map(Number));
+      getFilteredCurrentOrders();
     }
   }, [selectedOrderscurrent, selectedOrderspast, selectedTab]);
 
@@ -52,7 +52,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
 
   return (
     <div className="relative w-full max-w-md p-4 bg-white rounded-lg shadow-md" dir="rtl">
-      <label className="block text-black font-light mb-3">شماره سفارش</label>
+      <label className=" mr-3 block text-black font-light mb-3">شماره سفارش</label>
 
       <input
         type="text"

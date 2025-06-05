@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MdOutlineFilterAltOff } from "react-icons/md";
 import Filterbyid from './Filterbyid';
 import { useOrderContext } from '../../../context/Adminordercontext';
+import Filterbyslot from './Filterbytimes';
 
 
 interface FilterOptions {
@@ -65,13 +66,11 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
       canceledOrders: false,
     };
     setFilters(resetFilters);
-    // onFilterChange(resetFilters); 
   };
 
 
   const handleOrderSelect = (orderNumber: string) => {
     console.log('Selected order:', orderNumber);
-    // You can add your logic here for what happens when an order is selected
   };
 
   return (
@@ -92,6 +91,7 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
                 onSelect={handleOrderSelect}
                 placeholder="شماره سفارش را وارد کنید..."
               />
+              <Filterbyslot />
       </div>
     </div>
   );

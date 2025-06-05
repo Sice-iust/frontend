@@ -47,6 +47,8 @@ interface OrderContextType {
   pastfilter:boolean;
   selectedOrderscurrent:string[];
   selectedOrderspast:string[];
+  selectedTimeSlotscurrent:string[];
+  selectedTimeSlotspast:string[];
   setCurrentOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   setPastOrders: React.Dispatch<React.SetStateAction<Order[]>>;
   setSelectedTab: (tab: number) => void;
@@ -55,9 +57,12 @@ interface OrderContextType {
   removeOrder: (orderId: number, isCurrent: boolean) => void;
   archiveOrder: (orderId: number) => void;
   updatestatus: (orderId: number, isCurrent: boolean) => void;
-  getFilteredCurrentOrders: (orderIds: number[]) => void;
+  getFilteredCurrentOrders: () => void;
+  getFilteredOrdersByTimeSlots: () => void;
   setSelectedOrderscurrent: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedOrderspast: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedTimeSlotscurrent: React.Dispatch<React.SetStateAction<string[]>>;
+  setselectedtimeslotspast: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
@@ -75,6 +80,9 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [currentfilter, setcurrentfilter] = useState<boolean>(false);
   const [selectedOrderscurrent, setSelectedOrderscurrent] = useState<string[]>([]);
   const [selectedOrderspast, setSelectedOrderspast] = useState<string[]>([]);
+  const [selectedTimeSlotscurrent, setSelectedTimeSlotscurrent] = useState<string[]>([]);
+  const [selectedTimeSlotspast, setselectedtimeslotspast] = useState<string[]>([]);
+
 
 
   const fetchCurrentOrders = async () => {
@@ -189,6 +197,38 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         }
     }
 };
+
+
+const getFilteredOrdersByTimeSlots = () => {
+  if (selectedTab === 1) {
+    const filteredOrders = currentOrders.filter(order =>
+      selectedTimeSlotscurrent.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
+    );
+    setFilteredCurrentOrders(filteredOrders);
+        if(selectedTimeSlotscurrent.length>0)
+        {
+            setcurrentfilter(true);
+        }
+        else
+        {
+            setcurrentfilter(false);
+        }
+  } else if (selectedTab === 0) {
+    const filteredOrders = pastOrders.filter(order =>
+      selectedTimeSlotspast.includes(`${order.delivery.start_time.split(':')[0]}-${order.delivery.end_time.split(':')[0]}`)
+    );
+    setfilteredpastorders(filteredOrders);
+        if(selectedTimeSlotspast.length>0)
+        {
+            setpastfilter(true);
+        }
+        else
+        {
+            setpastfilter(false);
+        }
+  }
+};
+
   
 
   return (
@@ -205,6 +245,9 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         filteredPastorders,
         pastfilter,
         selectedOrderscurrent,
+        selectedOrderspast,
+        selectedTimeSlotscurrent,
+        selectedTimeSlotspast,
         setSelectedOrderspast,
         setCurrentOrders, 
         setPastOrders,
@@ -215,8 +258,11 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         archiveOrder,
         updatestatus,
         getFilteredCurrentOrders,
+        getFilteredOrdersByTimeSlots,
         setSelectedOrderscurrent,
-        selectedOrderspast,
+        setselectedtimeslotspast,
+        setSelectedTimeSlotscurrent
+        
       }}
     >
       {children}
