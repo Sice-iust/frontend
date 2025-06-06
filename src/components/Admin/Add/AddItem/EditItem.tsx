@@ -230,7 +230,7 @@ const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,i
                 <input
                   type="text"
                   name="price"
-                  value={convertToPersianNumbers(ItemData.price)}
+                  value={convertToPersianNumbers(parseFloat(ItemData.price))}
                   onChange={(e) =>
                     setItemData((prev) => ({
                       ...prev,
