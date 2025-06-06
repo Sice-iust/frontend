@@ -6,22 +6,23 @@ import { ThemeProvider, useTheme } from "../components/theme";
 import { CartProvider } from "../context/Receiptcontext";
 import { AddressProvider } from "../context/GetAddress";
 import { ItemProvider } from '../context/AdminAddItem';
-import {AdminPanel} from "../../src/app/AdminAddPage/page";
+import AdminPanel from "../../src/app/AdminAddPage/page";
+import AdminHeader   from "../components/Admin/Add/header"
 export default function Layout({ children }) {
-  const userRole = typeof window !== "undefined" ? localStorage.getItem("userRole") : null;
-
-
+  const userRole ="admin" ;
+// console.log("user rollll: ",userRole);
   return (
     <html lang="en">
       <body>
         <CartProvider>
           <ItemProvider>
           <AddressProvider>
+
             <ThemeProvider>
               <div className='relative'>
-                <Header2 />
-                {userRole === "admin" && <AdminPanel />}
-                {children}
+                 {userRole === "admin" ? <AdminHeader /> : <Header2 />}
+
+                {userRole === "admin" ?<AdminPanel /> :children}
 
                 <div className="hidden md:block">
                   <Footer2 />
