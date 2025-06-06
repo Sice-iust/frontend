@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import OrderCard from './Orders-cards';
 import { convertPrice } from '../../../utils/Coversionutils';
 import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
-import { useOrderContext } from '../../../context/Adminordercontext'
+import { useOrderContext } from '../../../context/Adminordercontext';
+import Image from 'next/image';
+import pic from '../../../../public/assets/Noorderpic.png';
 
 interface Order {
   id: number;
@@ -62,7 +64,13 @@ const OrderList = () => {
   return (
     <div className='mb-5'>
       <div className="flex flex-col pr-6 pl-6 pt-2 pb-2 h-[calc(120vh-120px)] overflow-y-auto bg-white dark:bg-[#191919]">
-        {ordersToDisplay.map((order) => {
+         {ordersToDisplay.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-full">
+            <Image src={pic} alt="No Orders Available" width={250} height={250} />
+            <p className="mt-4 text-gray-500 dark:text-gray-400 text-lg">سفارشی یافت نشد</p>
+          </div>
+        ) : (
+        ordersToDisplay.map((order) => {
           const startHour = order.delivery.start_time.split(':')[0];
           const endHour = order.delivery.end_time.split(':')[0];
           const deliveryTime = `${startHour}-${endHour}`;
@@ -93,7 +101,8 @@ const OrderList = () => {
               isCurrent={true}
             />
           );
-        })}
+        })
+      )}
       </div>
     </div>
   );
