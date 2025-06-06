@@ -22,6 +22,7 @@ interface AdminItemCard {
     removeAdminItem: (id: number) => Promise<void>;
     fetchCategories: ()=>Promise<void>;
     AddItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
+    UpdateItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string,id:number) => Promise<void>;
     fetchData:() => Promise<void>;
 }
 
@@ -31,6 +32,7 @@ const ItemContext = createContext<AdminItemCard>({
     removeAdminItem: async () => Promise.resolve() ,
     fetchCategories:async ()=> Promise.resolve(),
     AddItem:async () => Promise.resolve(),
+    UpdateItem:async () => Promise.resolve(),
     fetchData:async () => Promise.resolve(),   
 });
 
@@ -142,8 +144,34 @@ export const ItemProvider = ({ children }) => {
             console.error(error.response?.data);
         }
     };
+    const UpdateItem = async (img, name, price, stock, box, cat,des,id) => {
+        const token = localStorage.getItem('token');
+        console.log("cat",cat);
+        try {
+            const formData = new FormData();
+            formData.append('new_photo', img);
+            formData.append('name', name);
+            formData.append('price', price);
+            formData.append('stock', stock);
+            formData.append('box_type', box);
+            formData.append('category_id', cat);
+            formData.append('description', des);
 
-    const value = { data,categories,fetchData ,removeAdminItem ,fetchCategories,AddItem};     
+            await axios.put(`https://nanziback.liara.run/nanzi/admin/product/delete/${id}`, 
+                formData, 
+                {
+                    headers: { 
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            );
+            fetchData();
+        } catch (error) {
+            console.error(error.response?.data);
+        }
+    };
+    const value = { data,categories,fetchData ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
     return (
         <ItemContext.Provider value={value}>
             {children}
