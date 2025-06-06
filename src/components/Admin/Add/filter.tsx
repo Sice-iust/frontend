@@ -13,6 +13,7 @@ export default function AddFilter() {
     const [selectedQuantities, setSelectedQuantities] = useState<number[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [showProductSearch, setShowProductSearch] = useState(false);
+    const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
     const filteredProducts = origindata.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -23,7 +24,13 @@ export default function AddFilter() {
         { id: 6, label: "بسته ۶ تایی" },
         { id: 8, label: "بسته ۸ تایی" }
     ];
-
+const toggleProduct = (productName: string) => {
+    setSelectedProducts(prev =>
+        prev.includes(productName)
+            ? prev.filter(p => p !== productName)
+            : [...prev, productName]
+    );
+};
     const toggleQuantity = (qtyId: number) => {
         setSelectedQuantities(prev =>
             prev.includes(qtyId)
@@ -47,6 +54,13 @@ export default function AddFilter() {
         setOnlyDiscounts(prev => !prev);
         applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
     };
+    const clearAllFilters = () => {
+        setSelectedCategories([]);
+        setSelectedProducts([]);
+        setSelectedQuantities([]);
+        setOnlyDiscounts(false);
+        setSearchTerm("");
+    };
     return (
         <>
             <div className="box-content mr-5 mt-15 mb-10 min-h-90 w-70 rounded-2xl bg-white ">
@@ -54,7 +68,8 @@ export default function AddFilter() {
                     <div className="flex flex-row-reverse justify-between">
                         <span className="font-bold text-lg">فیلترها</span>
                         <button className="flex flex-row gap-1 box-content bg-gray-300 w-26  h-7 rounded-2xl cursor-pointer
-                                            hover:bg-gray-200 hover:scale-105 hover:transition-normal">
+                                            hover:bg-gray-200 hover:scale-105 hover:transition-normal"
+                                            onClick={clearAllFilters}>
                             <span className=" text-sm ml-2 mt-1">حذف فیلترها</span>
                             <LuFilterX className="text-[#f18825] mt-1 mr-1"/>
                         </button>
@@ -143,16 +158,16 @@ export default function AddFilter() {
                                 <input
                                     type="checkbox"
                                     id={`prod-${product.id}`}
-                                    checked={selectedCategories.includes(product.name)}
-                                    onChange={() => toggleCategory(product.name)}
+                                    checked={selectedProducts.includes(product.name)}
+                                    onChange={() => toggleProduct(product.name)}
                                     className="hidden"
                                 />
                                 <div className={`w-4  mt-1 h-4 border-2 rounded flex items-center justify-center ${
-                                    selectedCategories.includes(product.name)
+                                    selectedProducts.includes(product.name)
                                     ? "bg-[#f18825] border-[#f18825]"
                                     : "bg-white border-gray-400"
                                 }`}>
-                                    {selectedCategories.includes(product.name) && (
+                                    {selectedProducts.includes(product.name) && (
                                     <span className="text-white text-sm font-bold">✓</span>
                                     )}
                                 </div>
