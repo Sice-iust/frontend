@@ -142,7 +142,7 @@ export const ItemProvider = ({ children }) => {
 
     const applyFilters = async(selectedCategories,onlyDiscounts,SelectedQuantities,selectedProducts) => {
         let filteredData = origindata;
-
+        console.log("selected",selectedProducts);
         if (selectedCategories.length > 0) {
             filteredData = filteredData.filter(item => 
             selectedCategories.includes(item.category)
@@ -158,7 +158,7 @@ export const ItemProvider = ({ children }) => {
         }
         if (selectedProducts.length > 0) {
             filteredData = filteredData.filter(item => 
-            SelectedQuantities.includes(item.name)
+            selectedProducts.includes(item.name)
             );
         }
         setData(filteredData);
