@@ -59,6 +59,7 @@ interface OrderContextType {
   archiveOrder: (orderId: number) => void;
   updatestatus: (orderId: number, isCurrent: boolean) => void;
   filterOrders : () =>void;
+  handleClearFilters : ()=>void;
   setSelectedOrderscurrent: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedOrderspast: React.Dispatch<React.SetStateAction<string[]>>;
   setSelectedTimeSlotscurrent: React.Dispatch<React.SetStateAction<string[]>>;
@@ -241,6 +242,21 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       
     }
   };
+
+  const handleClearFilters = () => {
+    setcurrentfilter(false);
+    setFilteredCurrentOrders([])
+    setSelectedOrderscurrent([])
+    setSelectedTimeSlotscurrent([])
+    setpastfilter(false);
+    setfilteredpastorders([])
+    setselectedtimeslotspast([])
+    setSelectedOrderspast([])
+    setIsEnabledarchieve(false);
+    setIsEnabledcancel(false);
+  };
+
+
   
 
   return (
@@ -270,6 +286,7 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         setSelectedTab, 
         fetchCurrentOrders,
         fetchPastOrders,
+        handleClearFilters,
         removeOrder,
         archiveOrder,
         updatestatus,

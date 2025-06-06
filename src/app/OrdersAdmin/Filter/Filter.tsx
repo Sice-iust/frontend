@@ -22,52 +22,13 @@ interface FilterProps {
 
 const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
 
-  const {selectedTab , currentOrders , pastOrders}=useOrderContext()
+  const {selectedTab , currentOrders , pastOrders , handleClearFilters}=useOrderContext()
 
   const orderNumbers = selectedTab === 0 
   ? pastOrders.map(order => order.id.toString()) 
   : currentOrders.map(order => order.id.toString());
 
-
-  const [filters, setFilters] = useState<FilterOptions>({
-    orderNumber: "",
-    selectedOrders: [],
-    startDate: "1403-03-03",
-    endDate: "1403-03-03",
-    timeRanges: [],
-    archivedOrders: false,
-    canceledOrders: false,
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setFilters((prev) => {
-      const updatedFilters = {
-        ...prev,
-        [name]: type === "checkbox"
-          ? checked
-            ? [...(prev[name as keyof FilterOptions] as string[]), value]
-            : (prev[name as keyof FilterOptions] as string[]).filter((v) => v !== value)
-          : value,
-      };
-
-      // onFilterChange(updatedFilters); 
-      return updatedFilters;
-    });
-  };
-
-  const handleClearFilters = () => {
-    const resetFilters = {
-      orderNumber: "",
-      selectedOrders: [],
-      startDate: "1403-03-03",
-      endDate: "1403-03-03",
-      timeRanges: [],
-      archivedOrders: false,
-      canceledOrders: false,
-    };
-    setFilters(resetFilters);
-  };
+  
 
 
   const handleOrderSelect = (orderNumber: string) => {
