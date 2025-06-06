@@ -131,10 +131,14 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                     }
                 );
 
-                console.log('Response from the server:', response.data);
+                console.log('Response from the server login:', response.data);
                 if (response.data.message == "Login successful") {
                     const accessToken = response?.data?.access_token;
                     const refershToken=response?.data?.refresh_token;
+                    const isAdmin=response?.data?.is_admin;
+                    localStorage.setItem("userRole", isAdmin); // Store role in localStorage
+                    window.location.reload(); // Refresh to apply the new role
+
                     localStorage.setItem("token", accessToken);
                     localStorage.setItem("rtoken", refershToken);
                     if (setIsLoggedIn) {
