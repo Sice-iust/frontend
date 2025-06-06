@@ -22,6 +22,7 @@ interface AdminItemCard {
     categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
     fetchCategories: ()=>Promise<void>;
+    fetchFilter: (cat:string)=>Promise<void>;
     AddItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
     UpdateItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string,id:number) => Promise<void>;
     fetchData:() => Promise<void>;
@@ -34,6 +35,7 @@ const ItemContext = createContext<AdminItemCard>({
     fetchCategories:async ()=> Promise.resolve(),
     AddItem:async () => Promise.resolve(),
     UpdateItem:async () => Promise.resolve(),
+    fetchFilter:async () => Promise.resolve(),
     fetchData:async () => Promise.resolve(),   
 });
 
@@ -97,6 +99,45 @@ export const ItemProvider = ({ children }) => {
                         description:item.description
                     }))
                     .sort((a, b) => a.stock - b.stock); 
+
+                setData(sortedData);
+            } else {
+                setData([]);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            setData([]);
+        }
+    };
+    const fetchFilter = async (cat) => {
+        try {
+            console.log("cat",cat);
+            const response = await axios.get(
+                `https://nanziback.liara.run/nanzi/admin/product/filter/?category=${cat}`, 
+                {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+                }
+            );
+
+            console.log("Raw Response filter:", response.data);
+
+            if (Array.isArray(response.data)) {
+                const sortedData = response.data
+                    .map((item) => ({
+                        id: item.id,
+                        category: item.category,
+                        name: item.name,
+                        price: item.price,
+                        stock: item.stock,
+                        box_type: item.box_type,
+                        box_color: item.box_color,
+                        color: item.color,
+                        image: item.image,
+                        average_rate: item.average_rate,
+                        discount: item.discount,
+                        description: item.description,
+                    }))
+                    .sort((a, b) => a.stock - b.stock);
 
                 setData(sortedData);
             } else {
@@ -174,7 +215,7 @@ export const ItemProvider = ({ children }) => {
             console.error(error.response?.data);
         }
     };
-    const value = { data,categories,fetchData ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
+    const value = { data,categories,fetchData,fetchFilter ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
     return (
         <ItemContext.Provider value={value}>
             {children}
