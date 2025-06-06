@@ -264,16 +264,28 @@ const AddItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
             </div>
           </div>
           <div>
-            <h2 className="font-semibold mb-2" dir="rtl">توضیحات محصول</h2>
-            <input
+            <h2 className="font-semibold mb-2" dir="rtl">
+              توضیحات محصول
+            </h2>
+            <textarea
               dir="rtl"
-              type="text"
               name="description"
               value={ItemData.description}
-              onChange={handleInputChange}
-              className="w-full min-w-155 min-h-30 mb-2 p-1 border border-gray-300 rounded"
+              onChange={(e) => {
+                setItemData(prev => ({
+                  ...prev,
+                  description: e.target.value
+                }));
+                setErrors(prev => ({ ...prev, description: undefined }));
+              }}
+              className="w-full min-w-155 h-32 p-2 border border-gray-300 rounded resize-none"
+              style={{ minHeight: '120px', maxHeight: '200px', overflowY: 'auto' }}
             />
-            {errors.description && <p className="text-red-500 text-sm" dir="rtl">{errors.description}</p>}
+            {errors.description && (
+              <p className="text-red-500 text-sm" dir="rtl">
+                {errors.description}
+              </p>
+            )}
           </div>
         </div>
         <button
