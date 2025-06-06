@@ -39,7 +39,7 @@ interface Errors {
 }
 
 const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,img,description,cat,n}) => {
-  const { AddItem } = useAdminItem();
+  const { AddItem,UpdateItem } = useAdminItem();
   const [ItemData, setItemData] = useState<ItemData>({
     name: name,
     category: cat,
@@ -122,14 +122,15 @@ const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,i
 
   const handleSubmit = () => {
     if (!validate()) return;
-    AddItem(
+    UpdateItem(
       imageFile!,
       ItemData.name,
       ItemData.price,
       ItemData.stock,
       ItemData.number,
       selectedCategoryIndex + 1,
-      ItemData.description
+      ItemData.description,
+      id
     );
     onClose();
   };
