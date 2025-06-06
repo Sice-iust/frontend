@@ -90,9 +90,9 @@ export default function Header() {
       <div className={`dark:bg-[#191919] bg-white w-full`}>
         <div dir="rtl" className="flex flex-col md:flex-row justify-between w-full px-5 py-2">
               {/* Logo */}
-          <div className="hidden md:flex basis-1/10 my-auto">
+          <div className="hidden md:flex flex-shrink-0 ">
             <Link href="/">
-                <div className="relative w-[200px] h-[80px]">
+                <div className="relative w-[150px] h-[60px] md:w-[200px] md:h-[80px]">
                     <Image
                     src="/assets/logo.png"
                     alt="Logo"
@@ -127,25 +127,30 @@ export default function Header() {
           )}
 
           {/* Search */}
-          <div className="basis-5/10 w-full my-10 md:my-auto mx-auto">
-            <LazySearch  />
+            <div className="w-full md:flex-1 md:max-w-2xl mx-0 md:mx-4 mt-2">
+            <LazySearch   />
           </div>
 
           {/* Desktop Navigation */}
-          <div dir="ltr" className="hidden basis-3/10 md:flex my-auto gap-10 dark:text-white min-h-0.5 text-black">
+          <div dir="ltr" className="hidden md:flex items-center gap-3 md:gap-4 lg:gap-6">
             {isLoggedIn ? (
-              <Link href="/ProfilePage" className="text-[15px] cursor-pointer min-w-0.5 min-h-0.5 ">
-                صفحه کاربر
-                <AccountCircleOutlinedIcon className="!text-3xl w-2.5 ml-0.5" />
-              </Link>
-            ) : (
-              <button 
-                className="bg-[#F18825] dark:text-black text-white rounded-2xl px-2 py-3 cursor-pointer"
-                onClick={handleOpenLoginModal}
-              >
-                ورود / عضویت
-              </button>
-            )}
+                <Link 
+                  href="/ProfilePage" 
+                  className="flex items-center gap-1 text-black dark:text-white hover:text-[#F18825] transition-colors"
+                  aria-label="User profile"
+                >
+                  <span className="text-sm md:text-base">صفحه کاربر</span>
+                  <AccountCircleOutlinedIcon className="!text-2xl" />
+                </Link>
+              ) : (
+                <button 
+                  className="bg-[#F18825] text-white rounded-xl px-3 py-2 hover:bg-[#e07d1f] transition-colors text-sm md:text-base"
+                  onClick={handleOpenLoginModal}
+                  aria-label="Login or register"
+                >
+                  ورود / عضویت
+                </button>
+              )}
 
             <div className="flex my-auto cursor-pointer gap-2 dark:text-white text-black">
               <Link href="/OrderSubmission">
