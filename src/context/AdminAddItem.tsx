@@ -39,7 +39,7 @@ interface AdminItemCard {
     AddItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
     UpdateItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string,id:number) => Promise<void>;
     fetchData:() => Promise<void>;
-    applyFilters:(selectedCategories:Array<string>,onlyDiscounts:boolean,SelectedQuantities:Array<number>)=> Promise<void>;
+    applyFilters:(selectedCategories:Array<string>,onlyDiscounts:boolean,SelectedQuantities:Array<number>,selectedProducts:Array<string>)=> Promise<void>;
 }
 
 const ItemContext = createContext<AdminItemCard>({
@@ -140,7 +140,7 @@ export const ItemProvider = ({ children }) => {
         }
     };
 
-    const applyFilters = async(selectedCategories,onlyDiscounts,SelectedQuantities) => {
+    const applyFilters = async(selectedCategories,onlyDiscounts,SelectedQuantities,selectedProducts) => {
         let filteredData = origindata;
 
         if (selectedCategories.length > 0) {
@@ -155,6 +155,11 @@ export const ItemProvider = ({ children }) => {
         }
         if (onlyDiscounts) {
             filteredData = filteredData.filter(item => item.discount > 0);
+        }
+        if (selectedProducts.length > 0) {
+            filteredData = filteredData.filter(item => 
+            SelectedQuantities.includes(item.name)
+            );
         }
         setData(filteredData);
     };

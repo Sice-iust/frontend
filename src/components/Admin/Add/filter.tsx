@@ -39,20 +39,18 @@ const toggleProduct = (productName: string) => {
         );
     };
     useEffect(() => {
-        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
-    }, [selectedCategories, onlyDiscounts,selectedQuantities]);
+        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities,selectedProducts);
+    }, [selectedCategories, onlyDiscounts,selectedQuantities,selectedProducts]);
     const toggleCategory = (category: string) => {
         setSelectedCategories(prev =>
             prev.includes(category)
                 ? prev.filter(c => c !== category)
                 : [...prev, category]
         );
-        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
     };
 
     const handleDiscountToggle = () => {
         setOnlyDiscounts(prev => !prev);
-        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
     };
     const clearAllFilters = () => {
         setSelectedCategories([]);
@@ -64,7 +62,7 @@ const toggleProduct = (productName: string) => {
     return (
         <>
             <div className="box-content mr-5 mt-15 mb-10 min-h-90 w-70 rounded-2xl bg-white ">
-                <div className="flex flex-col m-2 px-2">
+                <div className="flex flex-col mt-5 mb-5 px-4">
                     <div className="flex flex-row-reverse justify-between">
                         <span className="font-bold text-lg">فیلترها</span>
                         <button className="flex flex-row gap-1 box-content bg-gray-300 w-26  h-7 rounded-2xl cursor-pointer
