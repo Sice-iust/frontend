@@ -1,22 +1,21 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import Image from "next/image";
 import { AiOutlineUpload } from "react-icons/ai";
 import { convertToPersianNumbers } from "../../../../utils/Coversionutils";
 import { useAdminItem } from "../../../../context/AdminAddItem";
-import { Add } from "@mui/icons-material";
 
 interface PopupProps {
   onClose: () => void;
   categories: Array<string>;
-}
-
-interface ProductData {
-  name: string;
-  category: string;
+  initialData?: ItemData;
+  onUpdate?: (updatedData: ItemData, imageFile?: File) => void;
+  initialImage?: string;
+  isEditMode?: boolean;
 }
 
 interface ItemData {
+  id?: string;
   name: string;
   category: string;
   price: string;
@@ -35,8 +34,14 @@ interface Errors {
   image?: string;
 }
 
-const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+const EditItemModal: React.FC<PopupProps> = ({ 
+  onClose, 
+  categories, 
+  initialData, 
+  onUpdate,
+  initialImage,
+  isEditMode = false
+}) => {
   const { AddItem } = useAdminItem();
   const [ItemData, setItemData] = useState<ItemData>({
     name: "",
@@ -46,16 +51,27 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
     number: 0,
     description: "",
   });
-  const [imageFile, setImageFile] = useState<File>(Object);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [filteredCategories, setFilteredCategories] = useState<string[]>(categories);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState<string>("");
-  const [productData, setProductData] = useState<ProductData>({
-    name: "",
-    category: "",
-  });
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+
+  useEffect(() => {
+    if (initialData) {
+      setItemData(initialData);
+      // پیدا کردن ایندکس دسته بندی
+      const index = categories.findIndex(cat => cat === initialData.category);
+      if (index >= 0) {
+        setSelectedCategoryIndex(index);
+      }
+    }
+    if (initialImage) {
+      setProfileImage(initialImage);
+    }
+  }, [initialData, initialImage, categories]);
 
   const validate = (): boolean => {
     const newErrors: Errors = {};
@@ -66,7 +82,7 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
     if (ItemData.stock <= 0) newErrors.stock = "تعداد باید بیشتر از صفر باشد";
     if (ItemData.number <= 0) newErrors.number = "تعداد باید بیشتر از صفر باشد";
     if (!ItemData.description.trim()) newErrors.description = "پر کردن این بخش الزامی است";
-    if (!profileImage) newErrors.image = "افزودن تصویر الزامی است";
+    if (!isEditMode && !profileImage) newErrors.image = "افزودن تصویر الزامی است";
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -99,20 +115,6 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!validate()) return;
-    
-    AddItem(
-      imageFile,
-      ItemData.name,
-      ItemData.price,
-      ItemData.stock,
-      ItemData.number,
-      selectedCategoryIndex + 1,
-      ItemData.description
-    );
-    onClose();
-  };
   const convertPersianToNumber = (persianNum: string) => {
     return persianNum.replace(/[۰-۹]/g, (digit) =>
       String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit))
@@ -127,6 +129,27 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
     setSelectedCategoryIndex(index);
     setShowCategoryDropdown(false);
     setErrors(prev => ({ ...prev, category: undefined }));
+  };
+
+  const handleSubmit = () => {
+    if (!validate()) return;
+    
+    if (isEditMode && onUpdate) {
+      // حالت ویرایش
+      onUpdate(ItemData, imageFile || undefined);
+    } else {
+      // حالت افزودن
+      AddItem(
+        imageFile!,
+        ItemData.name,
+        ItemData.price,
+        ItemData.stock,
+        ItemData.number,
+        selectedCategoryIndex + 1,
+        ItemData.description
+      );
+    }
+    onClose();
   };
 
   return (
@@ -145,7 +168,7 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
           />
           <h1 className="text-xl font-bold">بازگشت</h1>
         </div>
-        <div className="flex flex-col items-center  mt-5">
+        <div className="flex flex-col items-center mt-5">
           <div className="relative mb-4" onClick={handleImageClick}>
             <div className="w-30 h-30 border rounded-full overflow-hidden flex items-center justify-center">
               <Image
@@ -220,14 +243,17 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-3 mb-3 " dir="rtl">
+          <div className="grid grid-cols-3 gap-3 mb-3" dir="rtl">
             <div>
               <h2 className="font-semibold mb-2">قیمت</h2>
               <input
                 type="text"
                 name="price"
                 value={convertToPersianNumbers(ItemData.price)}
-                onChange={handleInputChange}
+                onChange={(e) => setItemData(prev => ({
+                  ...prev,
+                  price: convertPersianToNumber(e.target.value)
+                }))}
                 className="w-full p-2 border border-gray-300 rounded"
               />
               <span className="absolute left-115 text-gray-500 mt-2">تومان</span>
@@ -259,7 +285,6 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
                 }))}
                 className="w-full p-2 border border-gray-300 rounded"
               />
-
               {errors.stock && <p className="text-red-500 text-sm mt-1">{errors.stock}</p>}
             </div>
           </div>
@@ -280,7 +305,7 @@ const EditItemModal: React.FC<PopupProps> = ({ onClose, categories }) => {
           className="px-4 py-2 text-white rounded-md bg-[#f18825] ml-7 mb-5 hover:bg-orange-400 hover:scale-106"
           onClick={handleSubmit}
         >
-          افزودن محصول
+          {isEditMode ? "ویرایش محصول" : "افزودن محصول"}
         </button>
       </div>
     </div>

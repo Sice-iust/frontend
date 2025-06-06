@@ -43,7 +43,7 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
                 </p>
                 
                 <div className="flex space-x-2 space-x-reverse">
-                    <button className="p-2 text-blue-500 cursor-pointer hover:bg-blue-50 hover:scale-110 rounded-full">
+                    <button className="p-2 text-blue-500 cursor-pointer hover:bg-blue-50 hover:scale-110 rounded-full" >
                         <FaRegEdit size={20} className="text-green-600" onClick={() => setEditShowForm(true)} />
                     </button>
                     <button className="p-2 text-red-500 cursor-pointer hover:bg-red-50 hover:scale-110 rounded-full">
@@ -51,8 +51,16 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
                     </button>
                 </div>
             </div>
-            {showEditForm && (<EditItemModal onClose={() => setEditShowForm(false)} categories={categories}/>)}
-
+            {showEditForm && (<EditItemModal
+                                onClose={() => setEditShowForm(false)}
+                                categories={categories}
+                                initialData={productData}
+                                initialImage={productImage}
+                                onUpdate={(updatedData, imageFile) => {
+                                    updateProduct(productData.id, updatedData, imageFile);
+                                }}
+                                isEditMode={true}
+                                />)}
 
         </div>
     );
