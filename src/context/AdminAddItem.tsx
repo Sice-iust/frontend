@@ -19,6 +19,20 @@ interface AdminItemCard {
         discount:number,
         description:string,
       }>;
+    origindata:Array<{
+        id: number,
+        category: string,
+        name: string,
+        price: number,
+        stock: number,
+        box_type: number,
+        box_color: string,
+        color: string,
+        image: string,
+        average_rate: number,
+        discount:number,
+        description:string,
+      }>;
     categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
     fetchCategories: ()=>Promise<void>;
@@ -30,6 +44,7 @@ interface AdminItemCard {
 
 const ItemContext = createContext<AdminItemCard>({
     data:[],
+    origindata:[],
     categories:[],
     removeAdminItem: async () => Promise.resolve() ,
     fetchCategories:async ()=> Promise.resolve(),
@@ -210,7 +225,7 @@ export const ItemProvider = ({ children }) => {
             console.error(error.response?.data);
         }
     };
-    const value = { data,categories,applyFilters,fetchData ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
+    const value = {origindata, data,categories,applyFilters,fetchData ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
     return (
         <ItemContext.Provider value={value}>
             {children}
