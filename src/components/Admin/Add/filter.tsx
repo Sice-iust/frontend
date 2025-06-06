@@ -12,6 +12,7 @@ export default function AddFilter() {
     const [showQuantity, setShowQuantity] = useState(false);
     const [selectedQuantities, setSelectedQuantities] = useState<number[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
+    const [showProductSearch, setShowProductSearch] = useState(false);
     const filteredProducts = origindata.filter(item =>
         item.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -101,59 +102,68 @@ export default function AddFilter() {
                     </div>
 
 
-<div className="border-b border-gray-200 pb-3 mb-3 mt-5">
-  <div className="flex flex-col space-y-2 pr-5">
+                    <div className="border-b border-gray-200 pb-3 mb-3 mt-1">
+                    <div 
+                        className="flex flex-row-reverse gap-1 items-center cursor-pointer"
+                        onClick={() => setShowProductSearch(!showProductSearch)}
+                    >
+                        <span className="font-semibold text-gray-700">نام محصول</span>
+                        {showProductSearch ? (
+                        <FiChevronUp className="text-gray-500" />
+                        ) : (
+                        <FiChevronDown className="text-gray-500" />
+                        )}
+                    </div>
 
-    <span className="font-semibold text-gray-700 mb-2">محصول</span>
+                    {showProductSearch && (
+                        <div className="mt-3 space-y-2">
+                        <div className="flex items-center bg-gray-300 rounded-2xl px-2 py-1 gap-2 text-md">
+                            <input
+                            type="text"
+                            placeholder="نام محصول را وارد کنید"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                            className="w-full bg-transparent text-right outline-none"
+                            />
+                            <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 text-[#f18825]"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z" />
+                            </svg>
+                        </div>
 
-    <div className="flex items-center bg-gray-100 rounded-md px-2 py-1">
-        <input
-            type="text"
-            placeholder="نان برری"
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="w-full bg-transparent text-right outline-none"
-        />
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-gray-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-        >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1116.65 6.65a7.5 7.5 0 010 10.6z" />
-        </svg>
-    </div>
-
-    <div className="mt-3 space-y-2">
-      {filteredProducts.map(product => (
-        <div key={product.id} className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={selectedCategories.includes(product.name)}
-            onChange={() => toggleCategory(product.name)}
-            id={`prod-${product.id}`}
-            className="hidden"
-          />
-          <label htmlFor={`prod-${product.id}`} className="flex items-center cursor-pointer gap-2">
-            <div className={`w-4 h-4 border-2 rounded flex items-center justify-center ${
-              selectedCategories.includes(product.name)
-                ? "bg-[#f18825] border-[#f18825]"
-                : "bg-white border-gray-400"
-            }`}>
-              {selectedCategories.includes(product.name) && (
-                <span className="text-white text-sm font-bold">✓</span>
-              )}
-            </div>
-            <span className="text-gray-600">{product.name}</span>
-          </label>
-        </div>
-      ))}
-    </div>
-
-  </div>
-</div>
-
+                        <div className="space-y-2 overflow-y-auto max-h-60" >
+                            {filteredProducts.map(product => (
+                            <div key={product.id} className="flex flex-row items-center" dir="rtl">
+                                <label htmlFor={`prod-${product.id}`} className="relative cursor-pointer flex flex-row gap-1 items-right">
+                                <input
+                                    type="checkbox"
+                                    id={`prod-${product.id}`}
+                                    checked={selectedCategories.includes(product.name)}
+                                    onChange={() => toggleCategory(product.name)}
+                                    className="hidden"
+                                />
+                                <div className={`w-4  mt-1 h-4 border-2 rounded flex items-center justify-center ${
+                                    selectedCategories.includes(product.name)
+                                    ? "bg-[#f18825] border-[#f18825]"
+                                    : "bg-white border-gray-400"
+                                }`}>
+                                    {selectedCategories.includes(product.name) && (
+                                    <span className="text-white text-sm font-bold">✓</span>
+                                    )}
+                                </div>
+                                <span className="text-gray-600 ml-2">{product.name}</span>
+                                </label>
+                            </div>
+                            ))}
+                        </div>
+                        </div>
+                    )}
+                    </div>
 
 
                     <div className="border-b border-gray-200 pb-3 mb-3 mt-1">
