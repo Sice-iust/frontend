@@ -7,24 +7,40 @@ import { useAdminItem } from "../../../context/AdminAddItem";
 export default function AddFilter() {
     const [showCategories, setShowCategories] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const {categories,applyFilters}=useAdminItem();
+    const {categories,applyFilters,origindata}=useAdminItem();
     const [onlyDiscounts, setOnlyDiscounts] = useState(false);
+    const [showQuantity, setShowQuantity] = useState(false);
+    const [selectedQuantities, setSelectedQuantities] = useState<number[]>([]);
+    const quantities = [
+        { id: 1, label: "بسته تکی" },
+        { id: 2, label: "بسته ۲ تایی" },
+        { id: 4, label: "بسته ۴ تایی" },
+        { id: 6, label: "بسته ۶ تایی" },
+        { id: 8, label: "بسته ۸ تایی" }
+    ];
 
+    const toggleQuantity = (qtyId: number) => {
+        setSelectedQuantities(prev =>
+            prev.includes(qtyId)
+                ? prev.filter(q => q !== qtyId)
+                : [...prev, qtyId]
+        );
+    };
     useEffect(() => {
-        applyFilters(selectedCategories, onlyDiscounts);
-    }, [selectedCategories, onlyDiscounts]);
+        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
+    }, [selectedCategories, onlyDiscounts,selectedQuantities]);
     const toggleCategory = (category: string) => {
         setSelectedCategories(prev =>
             prev.includes(category)
                 ? prev.filter(c => c !== category)
                 : [...prev, category]
         );
-        applyFilters(selectedCategories, onlyDiscounts);
+        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
     };
 
     const handleDiscountToggle = () => {
         setOnlyDiscounts(prev => !prev);
-        applyFilters(selectedCategories, onlyDiscounts);
+        applyFilters(selectedCategories, onlyDiscounts,selectedQuantities);
     };
     return (
         <>
@@ -79,6 +95,47 @@ export default function AddFilter() {
                         </div>
                     )}
                     </div>
+
+
+                    <div className="border-b border-gray-200 pb-3 mb-3 mt-1">
+                    <div 
+                        className="flex flex-row-reverse gap-1 items-center cursor-pointer"
+                        onClick={() => setShowQuantity(!showQuantity)}
+                    >
+                        <span className="font-semibold text-gray-700">تعداد</span>
+                        {showQuantity ? (
+                        <FiChevronUp className="text-gray-500" />
+                        ) : (
+                        <FiChevronDown className="text-gray-500" />
+                        )}
+                    </div>
+                    {showQuantity && (
+                        <div className="mt-3 space-y-2 pr-5">
+                        {quantities.map(q => (
+                            <div key={q.id} className="flex flex-row-reverse items-center">
+                            <label htmlFor={`qty-${q.id}`} className="relative cursor-pointer flex flex-row-reverse gap-1 items-center">
+                                <input
+                                type="checkbox"
+                                id={`qty-${q.id}`}
+                                checked={selectedQuantities.includes(q.id)}
+                                onChange={() => toggleQuantity(q.id)}
+                                className="hidden"
+                                />
+                                <div className={`w-4 h-4 border-2 rounded flex items-center justify-center ${
+                                selectedQuantities.includes(q.id) ? "bg-[#f18825] border-[#f18825]" : "bg-white border-gray-400"
+                                }`}>
+                                {selectedQuantities.includes(q.id) && (
+                                    <span className="text-white text-sm font-bold">✓</span>
+                                )}
+                                </div>
+                                <span className="text-gray-600 ml-2">{q.label}</span>
+                            </label>
+                            </div>
+                        ))}
+                        </div>
+                    )}
+                    </div>
+
 
                     <div className="mt-1 flex items-center " dir="rtl">
                     <label className="inline-flex items-center cursor-pointer ">
