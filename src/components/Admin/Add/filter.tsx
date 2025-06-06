@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import { LuFilterX } from "react-icons/lu";
 import {  FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useAdminItem } from "../../../context/AdminAddItem";
@@ -6,25 +7,24 @@ import { useAdminItem } from "../../../context/AdminAddItem";
 export default function AddFilter() {
     const [showCategories, setShowCategories] = useState(false);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const {categories,fetchFilter,fetchFilterDiscount,fetchData}=useAdminItem();
-    const toggleCategory = (category: string) => {
-    setSelectedCategories(prev =>
-        prev.includes(category)
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
-    );
-    fetchFilter(category);
-    };
+    const {categories,applyFilters}=useAdminItem();
     const [onlyDiscounts, setOnlyDiscounts] = useState(false);
 
+    useEffect(() => {
+        applyFilters(selectedCategories, onlyDiscounts);
+    }, [selectedCategories, onlyDiscounts]);
+    const toggleCategory = (category: string) => {
+        setSelectedCategories(prev =>
+            prev.includes(category)
+                ? prev.filter(c => c !== category)
+                : [...prev, category]
+        );
+        applyFilters(selectedCategories, onlyDiscounts);
+    };
+
     const handleDiscountToggle = () => {
-        setOnlyDiscounts(!onlyDiscounts);
-        if(!onlyDiscounts){
-            fetchFilterDiscount(onlyDiscounts);
-        }
-        else{
-            fetchData();
-        }
+        setOnlyDiscounts(prev => !prev);
+        applyFilters(selectedCategories, onlyDiscounts);
     };
     return (
         <>
