@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import Image from "next/image";
 import { AiOutlineUpload } from "react-icons/ai";
@@ -7,11 +7,15 @@ import { useAdminItem } from "../../../../context/AdminAddItem";
 
 interface PopupProps {
   onClose: () => void;
+  id: number;
   categories: Array<string>;
-  initialData?: ItemData;
-  onUpdate?: (updatedData: ItemData, imageFile?: File) => void;
-  initialImage?: string;
-  isEditMode?: boolean;
+  name: string;
+  st: number;
+  pr: number;
+  img: string;
+  description: string;
+  cat: string;
+  n: number;
 }
 
 interface ItemData {
@@ -34,56 +38,37 @@ interface Errors {
   image?: string;
 }
 
-const EditItemModal: React.FC<PopupProps> = ({ 
-  onClose, 
-  categories, 
-  initialData, 
-  onUpdate,
-  initialImage,
-  isEditMode = false
-}) => {
+const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,img,description,cat,n}) => {
   const { AddItem } = useAdminItem();
   const [ItemData, setItemData] = useState<ItemData>({
-    name: "",
-    category: "",
-    price: "0",
-    stock: 0,
-    number: 0,
-    description: "",
+    name: name,
+    category: cat,
+    price: pr.toString(),
+    stock: st,
+    number: n,
+    description: description,
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [filteredCategories, setFilteredCategories] = useState<string[]>(categories);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [profileImage, setProfileImage] = useState<string>("");
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(0);
+  const [profileImage, setProfileImage] = useState<string>(img);
+  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState<number>(
+    categories.indexOf(cat) >= 0 ? categories.indexOf(cat) : 0
+  );
 
-  useEffect(() => {
-    if (initialData) {
-      setItemData(initialData);
-      // پیدا کردن ایندکس دسته بندی
-      const index = categories.findIndex(cat => cat === initialData.category);
-      if (index >= 0) {
-        setSelectedCategoryIndex(index);
-      }
-    }
-    if (initialImage) {
-      setProfileImage(initialImage);
-    }
-  }, [initialData, initialImage, categories]);
 
   const validate = (): boolean => {
     const newErrors: Errors = {};
-    
     if (!ItemData.name.trim()) newErrors.name = "پر کردن این بخش الزامی است";
     if (!ItemData.category) newErrors.category = "پر کردن این بخش الزامی است";
     if (!ItemData.price || ItemData.price === "0") newErrors.price = "پر کردن این بخش الزامی است";
     if (ItemData.stock <= 0) newErrors.stock = "تعداد باید بیشتر از صفر باشد";
     if (ItemData.number <= 0) newErrors.number = "تعداد باید بیشتر از صفر باشد";
     if (!ItemData.description.trim()) newErrors.description = "پر کردن این بخش الزامی است";
-    if (!isEditMode && !profileImage) newErrors.image = "افزودن تصویر الزامی است";
-    
+    if (!profileImage) newErrors.image = "افزودن تصویر الزامی است";
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -93,23 +78,27 @@ const EditItemModal: React.FC<PopupProps> = ({
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];  
-    if (file) {  
+    const file = e.target.files?.[0];
+    if (file) {
       setProfileImage(URL.createObjectURL(file));
       setImageFile(file);
-    }  
+    }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
     setItemData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    setErrors(prev => ({ ...prev, [name]: undefined }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
 
     if (name === "category") {
-      const filtered = categories.filter((cat) => cat.includes(value));
+      const filtered = categories.filter((cat) =>
+        cat.includes(value)
+      );
       setFilteredCategories(filtered);
       setShowCategoryDropdown(true);
     }
@@ -122,33 +111,26 @@ const EditItemModal: React.FC<PopupProps> = ({
   };
 
   const handleCategorySelect = (category: string, index: number) => {
-    setItemData(prev => ({
+    setItemData((prev) => ({
       ...prev,
-      category: category
+      category: category,
     }));
     setSelectedCategoryIndex(index);
     setShowCategoryDropdown(false);
-    setErrors(prev => ({ ...prev, category: undefined }));
+    setErrors((prev) => ({ ...prev, category: undefined }));
   };
 
   const handleSubmit = () => {
     if (!validate()) return;
-    
-    if (isEditMode && onUpdate) {
-      // حالت ویرایش
-      onUpdate(ItemData, imageFile || undefined);
-    } else {
-      // حالت افزودن
-      AddItem(
-        imageFile!,
-        ItemData.name,
-        ItemData.price,
-        ItemData.stock,
-        ItemData.number,
-        selectedCategoryIndex + 1,
-        ItemData.description
-      );
-    }
+    AddItem(
+      imageFile!,
+      ItemData.name,
+      ItemData.price,
+      ItemData.stock,
+      ItemData.number,
+      selectedCategoryIndex + 1,
+      ItemData.description
+    );
     onClose();
   };
 
@@ -159,9 +141,8 @@ const EditItemModal: React.FC<PopupProps> = ({
         onClick={onClose}
         aria-hidden="true"
       />
-      
       <div className="bg-white rounded-md shadow-lg w-full max-w-2xl mx-4 relative z-10 border border-gray-200">
-        <div className="flex flex-row-reverse p-4 border-b gap-1">
+        <div className="flex flex-row p-4 border-b gap-1">
           <FaChevronRight
             className="cursor-pointer mt-1 h-5 w-5 hover:bg-gray-100"
             onClick={onClose}
@@ -172,7 +153,7 @@ const EditItemModal: React.FC<PopupProps> = ({
           <div className="relative mb-4" onClick={handleImageClick}>
             <div className="w-30 h-30 border rounded-full overflow-hidden flex items-center justify-center">
               <Image
-                src={profileImage || '/assets/default_profile.jpg'}
+                src={profileImage || "/assets/default_profile.jpg"}
                 alt="Profile"
                 width={80}
                 height={80}
@@ -180,12 +161,10 @@ const EditItemModal: React.FC<PopupProps> = ({
               />
             </div>
             <button
-              className="absolute -bottom-2 -left-2 h-10 w-10 rounded-full bg-[#f18825] 
-                        border-2 border-white flex items-center justify-center cursor-pointer
-                        shadow-md hover:bg-orange-300 transition-colors"
+              className="absolute -bottom-2 -left-2 h-10 w-10 rounded-full bg-[#f18825] border-2 border-white flex items-center justify-center cursor-pointer shadow-md hover:bg-orange-300 transition-colors"
               onClick={(e) => {
                 e.stopPropagation();
-                fileInputRef.current?.click();
+                handleImageClick();
               }}
             >
               <input
@@ -195,7 +174,7 @@ const EditItemModal: React.FC<PopupProps> = ({
                 className="hidden"
                 onChange={handleImageUpload}
               />
-              <AiOutlineUpload className="h-6 w-6 text-white"/>
+              <AiOutlineUpload className="h-6 w-6 text-white" />
             </button>
           </div>
           {errors.image && <p className="text-red-500 text-sm mb-2">{errors.image}</p>}
@@ -246,17 +225,21 @@ const EditItemModal: React.FC<PopupProps> = ({
           <div className="grid grid-cols-3 gap-3 mb-3" dir="rtl">
             <div>
               <h2 className="font-semibold mb-2">قیمت</h2>
-              <input
-                type="text"
-                name="price"
-                value={convertToPersianNumbers(ItemData.price)}
-                onChange={(e) => setItemData(prev => ({
-                  ...prev,
-                  price: convertPersianToNumber(e.target.value)
-                }))}
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-              <span className="absolute left-115 text-gray-500 mt-2">تومان</span>
+              <div className="relative">
+                <input
+                  type="text"
+                  name="price"
+                  value={convertToPersianNumbers(ItemData.price)}
+                  onChange={(e) =>
+                    setItemData((prev) => ({
+                      ...prev,
+                      price: convertPersianToNumber(e.target.value),
+                    }))
+                  }
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+                <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">تومان</span>
+              </div>
               {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
             </div>
             <div>
@@ -265,10 +248,12 @@ const EditItemModal: React.FC<PopupProps> = ({
                 type="text"
                 name="number"
                 value={convertToPersianNumbers(String(ItemData.number))}
-                onChange={(e) => setItemData((prev) => ({
-                  ...prev,
-                  number: Number(convertPersianToNumber(e.target.value)),
-                }))}
+                onChange={(e) =>
+                  setItemData((prev) => ({
+                    ...prev,
+                    number: Number(convertPersianToNumber(e.target.value)),
+                  }))
+                }
                 className="w-full p-2 border border-gray-300 rounded"
               />
               {errors.number && <p className="text-red-500 text-sm mt-1">{errors.number}</p>}
@@ -279,34 +264,54 @@ const EditItemModal: React.FC<PopupProps> = ({
                 type="text"
                 name="stock"
                 value={convertToPersianNumbers(String(ItemData.stock))}
-                onChange={(e) => setItemData((prev) => ({
-                  ...prev,
-                  stock: Number(convertPersianToNumber(e.target.value)),
-                }))}
+                onChange={(e) =>
+                  setItemData((prev) => ({
+                    ...prev,
+                    stock: Number(convertPersianToNumber(e.target.value)),
+                  }))
+                }
                 className="w-full p-2 border border-gray-300 rounded"
               />
               {errors.stock && <p className="text-red-500 text-sm mt-1">{errors.stock}</p>}
             </div>
           </div>
           <div>
-            <h2 className="font-semibold mb-2" dir="rtl">توضیحات محصول</h2>
-            <input
+            <h2 className="font-semibold mb-2" dir="rtl">
+              توضیحات محصول
+            </h2>
+            <textarea
               dir="rtl"
-              type="text"
               name="description"
               value={ItemData.description}
-              onChange={handleInputChange}
-              className="w-full min-w-155 min-h-30 mb-2 p-1 border border-gray-300 rounded"
+              onChange={(e) => {
+                setItemData(prev => ({
+                  ...prev,
+                  description: e.target.value
+                }));
+                setErrors(prev => ({ ...prev, description: undefined }));
+              }}
+              className="w-full min-w-155 h-32 p-2 border border-gray-300 rounded resize-none"
+              style={{ minHeight: '120px', maxHeight: '200px', overflowY: 'auto' }}
             />
-            {errors.description && <p className="text-red-500 text-sm" dir="rtl">{errors.description}</p>}
+            {errors.description && (
+              <p className="text-red-500 text-sm" dir="rtl">
+                {errors.description}
+              </p>
+            )}
           </div>
         </div>
-        <button
-          className="px-4 py-2 text-white rounded-md bg-[#f18825] ml-7 mb-5 hover:bg-orange-400 hover:scale-106"
-          onClick={handleSubmit}
-        >
-          {isEditMode ? "ویرایش محصول" : "افزودن محصول"}
-        </button>
+        <div className="flex justify-end">
+          <button
+            className="px-4 py-2 ml-7 mb-5 text-white rounded-md bg-[#f18825] 
+                      hover:bg-orange-400 hover:scale-106 transition-transform"
+            onClick={() => {
+              handleSubmit();
+              onClose();
+            }}
+          >
+           ویرایش محصول
+          </button>
+        </div>
       </div>
     </div>
   );

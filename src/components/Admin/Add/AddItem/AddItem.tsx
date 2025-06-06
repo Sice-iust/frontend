@@ -34,6 +34,9 @@ export default function AddItem() {
                             stock={bread.stock} 
                             price={bread.price}
                             image={bread.image}
+                            des={bread.description}
+                            category={bread.category}
+                            number={bread.box_type}
                         />
                     </div>
                 ))}

@@ -7,8 +7,8 @@ import { useAdminItem } from "../../../../context/AdminAddItem";
 import { useState } from "react";
 import EditItemModal from "./EditItem";
 
-export default function AdminItemCard({ id, title, stock, price, image }) {
-    const { data,categories,removeAdminItem} = useAdminItem();  
+export default function AdminItemCard({ id, title, stock, price, image,des,category,number }) {
+    const { data,categories,removeAdminItem,UpdateItem} = useAdminItem();  
     const [showEditForm, setEditShowForm] = useState(false); 
     return (
         <div className="border border-gray-200 w-full p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
@@ -54,12 +54,14 @@ export default function AdminItemCard({ id, title, stock, price, image }) {
             {showEditForm && (<EditItemModal
                                 onClose={() => setEditShowForm(false)}
                                 categories={categories}
-                                initialData={productData}
-                                initialImage={productImage}
-                                onUpdate={(updatedData, imageFile) => {
-                                    updateProduct(productData.id, updatedData, imageFile);
-                                }}
-                                isEditMode={true}
+                                id={id}
+                                name={title}
+                                st={stock}
+                                pr={price}
+                                img={image}
+                                description={des}
+                                cat={category}
+                                n={number}
                                 />)}
 
         </div>

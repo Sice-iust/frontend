@@ -17,6 +17,7 @@ interface AdminItemCard {
         image: string,
         average_rate: number,
         discount:number,
+        description:string,
       }>;
     categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
@@ -49,7 +50,8 @@ export const ItemProvider = ({ children }) => {
         color: string,
         image: string,
         average_rate: number,
-        discount:number
+        discount:number,
+        description:string,
       }>>([]);
     const [categories, setCategories] = useState<Array<string>>([]);
       useEffect(() => {
@@ -91,7 +93,8 @@ export const ItemProvider = ({ children }) => {
                         color: item.color,
                         image: item.image,
                         average_rate: item.average_rate,
-                        discount:item.discount
+                        discount:item.discount,
+                        description:item.description
                     }))
                     .sort((a, b) => a.stock - b.stock); 
 
