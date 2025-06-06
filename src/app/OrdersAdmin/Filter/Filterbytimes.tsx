@@ -40,9 +40,9 @@ const Ordersslotbox = () => {
 
   return (
     <div className="relative w-full max-w-md pr-4 pl-4 pb-1 " dir="rtl">
-      <label className="mr-3 block text-black font-light mb-2">بازه زمانی  </label>
+      <label className="mr-3 block text-black dark:text-white font-light mb-2">بازه زمانی  </label>
 
-      <div className="mt-3 max-h-30 overflow-auto rounded-lg">
+      <div className="mt-3 max-h-30 overflow-auto rounded-lg ">
         {timeSlots.map((slot) => (
           <div key={slot} className="flex items-center p-2 text-right">
             <label className="flex items-center cursor-pointer relative mr-2">
@@ -51,7 +51,7 @@ const Ordersslotbox = () => {
                 checked={selectedTab === 1 ? selectedTimeSlotscurrent.includes(slot) : selectedTimeSlotspast.includes(slot)}
                 onChange={() => handleSlotToggle(slot)}
                 className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded border  
-                         border-[#d9d9d9] checked:bg-[#F18825] checked:border-[#F18825]"
+                         border-[#d9d9d9] dark:border-[#B2A9A9] checked:bg-[#F18825] checked:border-[#F18825]"
               />
               <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2  
                                 transform -translate-x-1/2 -translate-y-1/2">
@@ -72,7 +72,7 @@ const Ordersslotbox = () => {
                 </svg>
               </span>
             </label>
-            <span className="flex-1 cursor-pointer text-[#434242] mr-3">
+            <span className="flex-1 cursor-pointer text-[#434242] dark:text-[#B2A9A9] mr-3">
               {convertToPersianNumbers(slot)}
             </span>
           </div>

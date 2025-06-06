@@ -77,10 +77,10 @@ const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId,
           <div className="fixed inset-0 bg-black opacity-50 transition-opacity" aria-hidden="true"></div>
           <div className="flex items-center justify-center min-h-full text-center lg:p-4">
             <div className="relative transform overflow-hidden rounded-lg text-left transition-all min-h-screen lg:min-h-auto w-full sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">
-              <div className="bg-white p-6 rounded-md shadow-lg w-80 text-center">
-                <RxCross1 className="cursor-pointer ml-auto" onClick={onClose} />
-                <h2 className="text-lg font-semibold mb-4">{status === 4 ? "تایید تحویل به مشتری" : "تایید تحویل به پیک"}</h2>
-                <p className="text-gray-700 mb-6">
+              <div className="bg-white dark:bg-[#191919] p-6 rounded-md shadow-lg w-80 text-center">
+                <RxCross1 className="cursor-pointer ml-auto dark:text-[#B2A9A9]" onClick={onClose} />
+                <h2 className="text-lg font-semibold mb-4 dark:text-white">{status === 4 ? "تایید تحویل به مشتری" : "تایید تحویل به پیک"}</h2>
+                <p className="text-gray-700 mb-6 dark:text-white">
                   آیا سفارش <strong>{convertToPersianNumbers(orderId)}</strong> را {status === 4 ? "به مشتری" : "به پیک"} تحویل می‌دهید؟
                 </p>
                 <div className="flex justify-center gap-4">
@@ -92,7 +92,7 @@ const DeliveryPopup: React.FC<DeliveryPopupProps> = ({ isOpen, onClose, orderId,
                   </button>
                   <button
                     onClick={onClose}
-                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer"
+                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 transition cursor-pointer dark:text-white dark:bg-[#383535]"
                   >
                     انصراف
                   </button>

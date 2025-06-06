@@ -52,15 +52,16 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
 
   return (
     <div className="relative w-full max-w-md pr-4 pl-4  pt-1 " dir="rtl">
-      <label className=" mr-3 block text-black font-light mb-3">شماره سفارش</label>
+      <label className=" mr-3 block text-black dark:text-white font-light mb-3">شماره سفارش</label>
 
       <input
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder={placeholder}
-        className="w-[90%] mr-3 p-3 bg-[#d9d9d9] rounded-3xl text-xs border border-gray-300  
-                  focus:outline-none focus:ring-2 focus:ring-[#d9d9d9] text-right"
+        className="w-[90%] mr-3 p-3 bg-[#d9d9d9] dark:bg-[#383535]  rounded-3xl text-xs border 
+                border-gray-300  dark:border-[#383535] dark:text-[#B2A9A9]
+                  focus:outline-none focus:ring-2 focus:ring-[#d9d9d9] dark:focus:ring-[#383535] text-right"
         dir="rtl"
       />
 
@@ -73,9 +74,9 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
                 checked={selectedTab === 1 ? selectedOrderscurrent.includes(order) : selectedOrderspast.includes(order)}
                 onChange={() => handleOrderToggle(order)}
                 className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded border  
-                         border-[#d9d9d9] checked:bg-[#F18825] checked:border-[#F18825]"
+                         border-[#d9d9d9] dark:border-[#B2A9A9]  checked:bg-[#F18825] checked:border-[#F18825]"
               />
-              <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2  
+              <span className="absolute text-white  opacity-0 peer-checked:opacity-100 top-1/2 left-1/2  
                                 transform -translate-x-1/2 -translate-y-1/2">
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -94,7 +95,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
                 </svg>
               </span>
             </label>
-            <span className="flex-1 cursor-pointer text-[#434242] mr-3">
+            <span className="flex-1 cursor-pointer text-[#434242] dark:text-[#B2A9A9] mr-3">
               {convertToPersianNumbers(order)}
             </span>
           </div>

@@ -438,7 +438,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
                     className={`font-vazir rounded-md px-4 py-1 cursor-pointer  
                                 transition duration-300 text-xs sm:text-sm md:text-md lg:text-base h-[36px]  
                                 ${iscancled || isarchived ? 'hidden' : iscompleted ? 
-                                status === 2 ? 'bg-[#34A853] text-white' : 'bg-gray-200 text-gray-700' 
+                                status === 2 ? 'bg-[#34A853] text-white' : 'bg-gray-200 text-gray-700 dark:bg-gray-600 dark:text-white' 
                                 : 'bg-[#34A853] text-white'}`}  
                     onClick={iscompleted ? (status === 2 ? handledeliveryopen : handlearchiveopen) : handledeliveryopen}
 

@@ -28,7 +28,7 @@ const OrderSwitch = () => {
   return (
     <>
       <div className="relative w-full max-w-md p-4 flex flex-row-reverse items-center justify-between">
-        <label className="mr-3 text-black font-light">سفارش‌های آرشیو شده</label>
+        <label className="mr-3 text-black dark:text-white font-light">سفارش‌های آرشیو شده</label>
         <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox"
@@ -36,7 +36,7 @@ const OrderSwitch = () => {
             checked={IsEnabledarchieve}
             onChange={handleToggleArchieve}
           />
-          <div className="ml-4 relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 
+          <div className="ml-4 relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-[#383535]
                           peer-focus:ring-4 peer-focus:ring-orange-300 dark:peer-focus:ring-orange-800 
                           peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full 
                           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 
@@ -47,7 +47,7 @@ const OrderSwitch = () => {
       </div>
 
       <div className="relative w-full max-w-md pb-4 pr-4 pl-4 flex flex-row-reverse items-center justify-between">
-        <label className="mr-3 text-black font-light">سفارش‌های لغو شده</label>
+        <label className="mr-3 text-black dark:text-white font-light">سفارش‌های لغو شده</label>
         <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox"
@@ -55,7 +55,7 @@ const OrderSwitch = () => {
             checked={IsEnabledcancel}
             onChange={handleToggleCancel}
           />
-          <div className="ml-4 relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 
+          <div className="ml-4 relative w-11 h-6 bg-gray-200 rounded-full peer dark:bg-[#383535] 
                           peer-focus:ring-4 peer-focus:ring-orange-300 dark:peer-focus:ring-orange-800 
                           peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full 
                           peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 
