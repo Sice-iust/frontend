@@ -39,8 +39,8 @@ const Ordersslotbox = () => {
   };
 
   return (
-    <div className="relative w-full max-w-md p-4 " dir="rtl">
-      <label className="mr-3 block text-black font-light mb-2">بازه زمانی را انتخاب کنید</label>
+    <div className="relative w-full max-w-md pr-4 pl-4 pb-1 " dir="rtl">
+      <label className="mr-3 block text-black font-light mb-2">بازه زمانی  </label>
 
       <div className="mt-3 max-h-30 overflow-auto rounded-lg">
         {timeSlots.map((slot) => (
@@ -78,6 +78,7 @@ const Ordersslotbox = () => {
           </div>
         ))}
       </div>
+      <div className="border-b border-[#c7c5c5] w-[95%] mr-2 ml-2  mt-2"></div>
     </div>
   );
 };

@@ -85,12 +85,13 @@ const Filter: React.FC<FilterProps> = ({ onFilterChange }) => {
             <span className="mr-0 cursor-pointer">حذف فیلترها</span>
             <MdOutlineFilterAltOff className="h-5 w-5 text-[#F18825]" />
           </button>
-          <button className="text-black font-bold text-lg mt-3 px-4 py-1">فیلترها</button>
+          <button className="text-black font-bold text-lg mt-3 px-4 py-0">فیلترها</button>
         </div>
               <Filterbyid 
                 orders={orderNumbers} 
                 onSelect={handleOrderSelect}
                 placeholder="شماره سفارش را وارد کنید..."
+                
               />
               <Filterbyslot />
               <Filterswitch/>

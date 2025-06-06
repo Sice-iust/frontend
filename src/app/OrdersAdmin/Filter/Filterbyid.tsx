@@ -51,7 +51,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
   };
 
   return (
-    <div className="relative w-full max-w-md p-4 " dir="rtl">
+    <div className="relative w-full max-w-md pr-4 pl-4  pt-1 " dir="rtl">
       <label className=" mr-3 block text-black font-light mb-3">شماره سفارش</label>
 
       <input
@@ -100,6 +100,7 @@ const OrderSearchBox = ({ orders, placeholder = "شماره سفارش", onSelec
           </div>
         ))}
       </div>
+      <div className="border-b border-[#c7c5c5] w-[95%] mr-2 ml-2 mb-2 mt-2"></div>
     </div>
   );
 };

@@ -1,23 +1,22 @@
-import { useState  , useEffect} from "react";
+import { useEffect} from "react";
 import { useOrderContext } from '../../../context/Adminordercontext';
 
 const OrderSwitch = () => {
   const { setIsEnabledarchieve, setIsEnabledcancel, filterOrders, IsEnabledarchieve, IsEnabledcancel,selectedTab,selectedOrderspast,selectedTimeSlotspast } = useOrderContext();
 
   const handleToggleArchieve = () => {
-  setIsEnabledarchieve(prev => {
-    const newState = !prev; // ✅ Correctly toggles archived state
-    console.log("here", newState); // ✅ Logs updated state
-    //filterOrders();  // ✅ Ensures filtering updates with the correct state
-    return newState;
-  });
-};
+    setIsEnabledarchieve(prev => {
+      const newState = !prev; 
+      console.log("here", newState); 
+
+      return newState;
+    });
+  };
 
   const handleToggleCancel = () => {
     setIsEnabledcancel(prev => {
-    const newState = !prev; // ✅ Correctly toggles archived state
-    console.log("here", newState); // ✅ Logs updated state
-    //filterOrders();  // ✅ Ensures filtering updates with the correct state
+    const newState = !prev; 
+    console.log("here", newState); 
     return newState;
   });
   };
@@ -47,7 +46,7 @@ const OrderSwitch = () => {
         </label>
       </div>
 
-      <div className="relative w-full max-w-md p-4 flex flex-row-reverse items-center justify-between">
+      <div className="relative w-full max-w-md pb-4 pr-4 pl-4 flex flex-row-reverse items-center justify-between">
         <label className="mr-3 text-black font-light">سفارش‌های لغو شده</label>
         <label className="inline-flex items-center cursor-pointer">
           <input
