@@ -208,7 +208,7 @@ export const ItemProvider = ({ children }) => {
         console.log("cat",cat);
         try {
             const formData = new FormData();
-            formData.append('new_photo', img);
+            formData.append('new_photo', img instanceof File ? img : "");            
             formData.append('name', name);
             formData.append('price', price);
             formData.append('stock', stock);

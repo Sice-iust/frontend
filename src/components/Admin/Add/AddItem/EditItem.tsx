@@ -48,7 +48,7 @@ const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,i
     number: n,
     description: description,
   });
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<File >(Object);
   const [errors, setErrors] = useState<Errors>({});
   const [filteredCategories, setFilteredCategories] = useState<string[]>(categories);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
@@ -78,11 +78,11 @@ const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,i
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+    const file = e.target.files?.[0];  
+    if (file) {  
       setProfileImage(URL.createObjectURL(file));
       setImageFile(file);
-    }
+    }  
   };
 
   const handleInputChange = (
@@ -123,7 +123,7 @@ const EditItemModal: React.FC<PopupProps> = ({onClose,categories,id,name,st,pr,i
   const handleSubmit = () => {
     if (!validate()) return;
     UpdateItem(
-      imageFile!,
+      imageFile,
       ItemData.name,
       ItemData.price,
       ItemData.stock,
