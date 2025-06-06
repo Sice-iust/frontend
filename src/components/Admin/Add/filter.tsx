@@ -4,18 +4,28 @@ import {  FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { useAdminItem } from "../../../context/AdminAddItem";
 
 export default function AddFilter() {
-  const [showCategories, setShowCategories] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const {categories,fetchFilter}=useAdminItem();
-
-  const toggleCategory = (category: string) => {
+    const [showCategories, setShowCategories] = useState(false);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+    const {categories,fetchFilter,fetchFilterDiscount,fetchData}=useAdminItem();
+    const toggleCategory = (category: string) => {
     setSelectedCategories(prev =>
-      prev.includes(category)
+        prev.includes(category)
         ? prev.filter(c => c !== category)
         : [...prev, category]
     );
     fetchFilter(category);
-  };
+    };
+    const [onlyDiscounts, setOnlyDiscounts] = useState(false);
+
+    const handleDiscountToggle = () => {
+        setOnlyDiscounts(!onlyDiscounts);
+        if(!onlyDiscounts){
+            fetchFilterDiscount(onlyDiscounts);
+        }
+        else{
+            fetchData();
+        }
+    };
     return (
         <>
             <div className="box-content mr-5 mt-15 mb-10 min-h-90 w-70 rounded-2xl bg-white ">
@@ -68,6 +78,26 @@ export default function AddFilter() {
                         ))}
                         </div>
                     )}
+                    </div>
+
+                    <div className="mt-1 flex items-center " dir="rtl">
+                    <label className="inline-flex items-center cursor-pointer ">
+                        <input
+                        type="checkbox"
+                        className="sr-only peer"
+                        checked={onlyDiscounts}
+                        onChange={handleDiscountToggle}
+                        />
+                        <span className="ml-3 text-gray-700 font-semibold dark:text-gray-300">فقط تخفیف‌دارها</span>
+
+                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none 
+                            peer-focus:ring-blue-300 dark:peer-focus:ring-orange-800 rounded-full peer
+                             dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full
+                             peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px]
+                              after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 
+                              after:transition-all dark:border-gray-600 peer-checked:bg-[#f18825]
+                              dark:peer-checked:bg-[#f18825]"></div>
+                    </label>
                     </div>
 
 
