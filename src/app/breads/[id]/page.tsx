@@ -22,7 +22,7 @@ export default function Bread() {
 
   return (
     <div className={`flex-shrink-0 bg-[#f5f5f5] dark:bg-[#383535] flex flex-row`}>
-      <div className={`flex-shrink-0 hidden sm:block`}>
+      <div className={`flex-shrink-0 hidden md:block`}>
         <Receipt />
       </div>
       <CategoryList category={id} />

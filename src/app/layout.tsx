@@ -1,28 +1,32 @@
-import './globals.css';
-import Footer2 from "../components/HomePage/footer2";
-import Header2 from '../components/HomePage/header2';
-
-import { ThemeProvider, useTheme } from "../components/theme";
+import "./globals.css";
+import { UserRoleProvider } from "./userRole";
+import RoleBasedLayout from "./RoleBasedLayout"; 
+import { ThemeProvider } from "../components/theme";
 import { CartProvider } from "../context/Receiptcontext";
 import { AddressProvider } from "../context/GetAddress";
+import { ItemProvider } from "../context/AdminAddItem";
+import { OrderProvider } from '../context/Adminordercontext';
+import { CategoryProvider } from "../context/AdminAddCategory";
 
 export default function Layout({ children }) {
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <AddressProvider>
-            <ThemeProvider>
-              <div className='relative'>
-                <Header2 />
-                {children}
-                <div className="hidden md:block">
-                  <Footer2 />
-                </div>
-              </div>
-            </ThemeProvider>
-          </AddressProvider>
-        </CartProvider>
+        <UserRoleProvider>
+          <CartProvider>
+            <CategoryProvider>
+              <ItemProvider>
+                <OrderProvider>
+                  <AddressProvider>
+                    <ThemeProvider>
+                      <RoleBasedLayout>{children}</RoleBasedLayout>
+                    </ThemeProvider>
+                  </AddressProvider>
+                </OrderProvider>
+              </ItemProvider>
+            </CategoryProvider>
+          </CartProvider>
+        </UserRoleProvider>
       </body>
     </html>
   );

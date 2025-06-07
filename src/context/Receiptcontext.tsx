@@ -14,6 +14,7 @@ interface CartContextType {
     userdelivery: any[],
     selectedSlotId: string,
     selectedDateId: string,
+    totalActualPricewithshipp:number,
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
     removeItem: (id: number) => Promise<void>;
@@ -35,6 +36,7 @@ const CartContext = createContext<CartContextType>({
     userdelivery: [],
     selectedSlotId: "",
     selectedDateId: "",
+    totalActualPricewithshipp : 0,
     incrementQuantity: async () => Promise.resolve(),
     decrementQuantity: async () => Promise.resolve(),
     removeItem: async () => Promise.resolve(),
@@ -56,10 +58,11 @@ export const CartProvider = ({ children }) => {
     const [userdelivery, setUserdelivery] = useState([]);
     const [selectedSlotId, setSelectedSlotId] = useState<string>("");
     const [selectedDateId, setSelectedDateId] = useState<string>("");
+    const [totalActualPricewithshipp ,setsetTotalActualPricewithshipp] = useState(0);
 
     //Cart Data
     const fetchData = async () => {
-        console.log("entered")
+        // console.log("entered")
         setLoading(true);
         try {
             const response = await axios.get("https://nanziback.liara.run/user/cart/", {
@@ -70,7 +73,8 @@ export const CartProvider = ({ children }) => {
             setCartItems(response.data.cart_items || []);
             setCounts(response.data.counts || 0);
             setTotalDiscount(response.data.total_discount || 0);
-            setTotalActualPrice(response.data.total_actual_price || 0);
+            setTotalActualPrice(response.data.total_actual_price|| 0);
+            setsetTotalActualPricewithshipp(response.data.total_actual_price_with_shipp|| 0);
             setShipping_fee(response.data.shipping_fee || 0);
         } catch (error) {
             console.error("Error fetching cart:", error);
@@ -228,7 +232,7 @@ export const CartProvider = ({ children }) => {
     return (
         <CartContext.Provider value={{
             cartItems, counts, totalDiscount, totalActualPrice, loading, shipping_fee,
-            userquantity, userdelivery, selectedSlotId, selectedDateId,
+            userquantity, userdelivery, selectedSlotId, selectedDateId,totalActualPricewithshipp,
             incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser,
             fetchdeliverydata, handleSlotSelect
         }}>
