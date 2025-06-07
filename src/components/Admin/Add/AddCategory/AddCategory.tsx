@@ -7,13 +7,17 @@ import { HiOutlineTrash } from "react-icons/hi";
 import { FaCheck } from "react-icons/fa"; 
 import CategoryCard from "./CategoryCard";
 import CategoryModal from "./AddCategoryModal";
+import { color } from "html2canvas/dist/types/css/types/color";
+import { useCategory } from "../../../../context/AdminAddCategory";
 
 
 export default function AddCategory() {
-  const categories = [
-    { name: "بربری", imageSrc: "/images/barbari.jpg" },
-    { name: "سنگک", imageSrc: "/images/sangak.jpg" }
-  ];
+//   const categories = [
+//     { name: "بربری", imageSrc: "/images/barbari.jpg" ,color:"pink" ,id:2},
+//     { name: "سنگک", imageSrc: "/images/sangak.jpg" ,color:"green" ,id:2 }
+//   ];
+  const { categories } = useCategory(); // Get categories from context
+console.log("get categories",categories);
  const [isModalOpen, setIsModalOpen] = useState(false);
 
     return (
@@ -30,7 +34,14 @@ export default function AddCategory() {
       {/* Category List */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mt-2.5">
         {categories.map((category, index) => (
-          <CategoryCard key={index} name={category.name} imageSrc={category.imageSrc} />
+          <CategoryCard 
+            key={category.id} 
+            name={category.category} 
+            imageSrc={category.photo } 
+            color={category.box_color} 
+            id={category.id} 
+          />
+
         ))}
       </div>
         <CategoryModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
