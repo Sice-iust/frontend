@@ -25,8 +25,8 @@ interface Order {
   id: number;  
   total_price: string;  
   status:number,
-      reciver:string,
-          reciver_phone:string,
+  reciver:string,
+  reciver_phone:string,
 
 
   delivery : {
@@ -73,7 +73,8 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           });
           setCompleted({ past_orders: response.data.past_orders ?? [] });
-          setCurrent({ current_orders: response.data.current_orders ?? [] });    
+          setCurrent({ current_orders: response.data.current_orders ?? [] }); 
+          //console.log(response.data.current_orders);   
           console.log(`data from back: ${response.data}`);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -165,7 +166,7 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
         key={orderItem.id}
         orderkey={orderItem.id}
         id={convertToPersianNumbers(orderItem.id)}
-        total_price={convertPrice(orderItem.total_price)}
+        total_price={orderItem.total_price}
         delivery_day={orderItem.delivery.delivery_date ? convertDateInPersian(orderItem.delivery.delivery_date) : "Date not available"}
         delivery_clock={orderItem.delivery.end_time ? convertTimeToPersian(orderItem.delivery.end_time) : "Time not valid"}
         distination={orderItem.location.name}

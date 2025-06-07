@@ -9,6 +9,7 @@ export default function AddressPart() {
   const { isDarkMode } = useTheme();
   const { data = [] } = useADDRESS();  
   const selected = data?.find((add) => add.isChosen === true);
+  console.log("this",selected);
   const [isModalOpen, setModalOpen] = useState(false);
   
   const handleEditClick = () => {
