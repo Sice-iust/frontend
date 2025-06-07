@@ -2,6 +2,7 @@ import { DialogContent, DialogTitle } from "@mui/material";
 import axios from "axios";
 import React, { useRef, useState ,useEffect} from "react";
 import styles from "./login.module.scss";
+import { setCookie } from "nookies"; // Next.js cookie management
 
 enum Step {
     PHONE = 'PHONE',
@@ -103,61 +104,47 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
         }
     };
 
+
     const handleCodeSubmit = async () => {
-        console.log('Verification code entered:', verificationCode.join(''));
-        let verification = verificationCode.join('')
-        verification = p2e(verification)
+        let verification = p2e(verificationCode.join(""));
+        let phonenumber = p2e(phoneNumber);
 
-        console.log('Verification code entered:', verification);
+        if (phonenumber.startsWith("09")) {
+            phonenumber = "+98" + phonenumber.slice(1);
+        }
 
-        if (!isPhoneButtonDisabled && !error) {
-            console.log('Verification code sent to:', phoneNumber);
-            let phonenumber = p2e(phoneNumber);
-            if (phonenumber.startsWith('09')) {
-                phonenumber = '+98' + phonenumber.slice(1);
-            }
-            console.log('Verification code sent to:', phonenumber);
-
-            try {
-                const response = await axios.post('https://nanziback.liara.run/users/login/',
-                    {
-                        phonenumber: phonenumber,
-                        otp: verification,
-                    },
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    }
-                );
-
-                console.log('Response from the server login:', response.data);
-                if (response.data.message == "Login successful") {
-                    const accessToken = response?.data?.access_token;
-                    const refershToken=response?.data?.refresh_token;
-                    const isAdmin=response?.data?.is_admin;
-                    console.log(isAdmin);
-                    localStorage.setItem("userRole", isAdmin ? "admin" : "user"); // Store role as a string                    // window.location.reload(); // Refresh to apply the new role
-
-                    localStorage.setItem("token", accessToken);
-                    localStorage.setItem("rtoken", refershToken);
-                    if (setIsLoggedIn) {
-                        setIsLoggedIn(true);
-                      }
-                    onClose();
-
+        try {
+            const response = await axios.post(
+                "https://nanziback.liara.run/users/login/",
+                {
+                    phonenumber: phonenumber,
+                    otp: verification,
+                },
+                {
+                    headers: { "Content-Type": "application/json" },
                 }
-                
-                else {
-                    setCodeError('.کد تأیید نامعتبر است');
-                    isVerificationCodeEntered == true;
+            );
 
+            if (response.data.message === "Login successful") {
+                const accessToken = response?.data?.access_token;
+                const refershToken = response?.data?.refresh_token;
+                const isAdmin = response?.data?.is_admin;
+                localStorage.setItem("token", accessToken);
+                localStorage.setItem("rtoken", refershToken);
+                console.log(isAdmin);
+
+                localStorage.setItem("userRole", isAdmin ? "admin" : "user");
+                window.location.reload();
+
+                if (setIsLoggedIn) {
+                    setIsLoggedIn(true);
                 }
-
-
-            } catch (error) {
-                console.error('Error occurred during submission:', error);
+                onClose();
+            } else {
+                setCodeError(".کد تأیید نامعتبر است");
             }
+        } catch (error) {
+            console.error("Error occurred during submission:", error);
         }
     };
     useEffect(() => {  

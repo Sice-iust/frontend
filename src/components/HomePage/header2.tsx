@@ -65,6 +65,7 @@ export default function Header() {
   useEffect(() => {
     const checkAuthStatus = async () => {
       // localStorage.removeItem("token");
+      // localStorage.removeItem("userRole");
       const token = localStorage.getItem("token");
       if (!token || token === "undefined") return;
 
