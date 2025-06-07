@@ -121,7 +121,7 @@ export default function Header() {
               <div className="flex flex-row-reverse gap-1">
                 <FaChevronDown className="text-[#f18825] h-3 w-3 mt-1 "/>
                 <span className="font-medium text-sm text-gray-500 truncate">
-                  {truncateText(selectedAddress?.address)}
+                  {truncateText(selectedAddress?.address??"")}
                 </span>  
                 <IoLocationOutline/>
               </div>             

@@ -12,13 +12,13 @@ interface Category {
 interface CategoryContextType {
   categories: Category[];
   fetchCategories: () => Promise<void>;
-  addCategory: (categoryData: FormData) => Promise<void>;
+  addCategory: (categoryData: FormData) => Promise<true | undefined>;
 }
 
 const CategoryContext = createContext<CategoryContextType>({
   categories: [],
-  fetchCategories: async () => {},
-  addCategory: async () => {},
+  fetchCategories: async () => { return undefined; },
+  addCategory: async () => { return undefined; },
 });
 
 export const CategoryProvider = ({ children }) => {

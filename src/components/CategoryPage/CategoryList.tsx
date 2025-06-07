@@ -211,36 +211,20 @@ export default function CategoryList({ category }) {
                             </div>
                             {/* end of phone */}
 
-<<<<<<< HEAD
                             <div className={" hidden sm:flex sm:flex-row   "}>
                                 <div
                                     className={`bg-[#d9d9d9] dark:bg-[#383535] sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl  sm:w-auto sm:h-7 sm:ml-1 `}>
                                     <span className={`text-black dark:text-white sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl `}>
                                         {convertToPersianNumbers((+item.average_rate).toFixed(1))}
-                                        <FaStar className="sm:m-1 sm:mr-3  "
-=======
-
-                            <div className={" hidden md:flex md:flex-row   "}>
-                                <div
-                                    className={`bg-[#d9d9d9] dark:bg-[#383535] md:mt-1 md:box-content md:place-items-start md:rounded-2xl  md:w-auto md:h-7 md:ml-1 `}>
-                                    <span className={`text-black dark:text-white md:flex md:flex-row md:font-vazir md:items-center md:justify-between md:w-full md:px-2 md:ml-3 md:text-xl `}>
-
-                                        {convertToPersianNumbers(item.average_rate)}
                                         <FaStar className="md:m-1 md:mr-3  "
->>>>>>> 43c3d37bdb361dd45926db0e31c607b117a1ff05
                                             color="orange" />
                                     </span>
                                 </div>
                                 <div className="md:flex md:flex-row md:justify-center md:items-center">
                                     <div className={
-<<<<<<< HEAD
-                                        "sm:relative " +
-                                        "sm:w-30 sm:h-40 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
-=======
                                         "md:relative " +
                                         "md:w-30 md:h-40 md:mb-3 md:ml-5 md:mt-5 "  // desktop (adjust size as needed)
 
->>>>>>> 43c3d37bdb361dd45926db0e31c607b117a1ff05
                                     }>
                                         <Image
                                             className="md:rounded-2xl"
@@ -262,18 +246,11 @@ export default function CategoryList({ category }) {
                                 md:mr-5
                                 md:mt-4
                                 `}>
-<<<<<<< HEAD
                                 {item.name}
                             </div>
-                            <div className="sm:flex sm:flex-row-reverse  hidden">
-                                <div className='sm:flex sm:flex-col'>
-                                    <div className={` text-black dark:text-white sm:font-vazir sm:text-sm sm:text-right sm:mr-6 sm:mt-2`}>
-=======
-                                {item.name}</div>
                             <div className="md:flex md:flex-row-reverse  hidden">
                                 <div className='md:flex md:flex-col'>
                                     <div className={` text-black dark:text-white md:font-vazir md:text-md md:text-right md:mr-6 md:mt-2`}>
->>>>>>> 43c3d37bdb361dd45926db0e31c607b117a1ff05
                                         {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت
                                     </div>
 
