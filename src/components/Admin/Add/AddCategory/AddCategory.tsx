@@ -32,7 +32,7 @@ console.log("get categories",categories);
                  </div>
 
       {/* Category List */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mt-2.5">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-2.5">
         {categories.map((category, index) => (
           <CategoryCard 
             key={category.id} 
