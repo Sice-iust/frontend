@@ -8,7 +8,7 @@ export default function AddAdmin() {
   return (
     <>
     <div className={`flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} flex flex-row-reverse `}>
-        <div className={`flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} hidden sm:flex 
+        <div className={`flex-shrink-0 ${isDarkMode ? "bg-[#383535]" : "bg-[#f5f5f5]"} hidden md:flex 
                          flex-col justify-center items-center flex-grow h-full sticky top-1`}>
            <AddFilter />
         </div>

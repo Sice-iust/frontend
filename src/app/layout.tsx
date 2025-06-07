@@ -14,15 +14,13 @@ export default function Layout({ children }) {
         <UserRoleProvider>
           <CartProvider>
             <ItemProvider>
-                        <OrderProvider>
-
-              <AddressProvider>
-                <ThemeProvider>
-                  <RoleBasedLayout>{children}</RoleBasedLayout>
-                </ThemeProvider>
-              </AddressProvider>
-                          </OrderProvider>
-
+              <OrderProvider>
+                <AddressProvider>
+                  <ThemeProvider>
+                    <RoleBasedLayout>{children}</RoleBasedLayout>
+                  </ThemeProvider>
+                </AddressProvider>
+              </OrderProvider>
             </ItemProvider>
           </CartProvider>
         </UserRoleProvider>
