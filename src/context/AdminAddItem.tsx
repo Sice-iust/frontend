@@ -19,17 +19,32 @@ interface AdminItemCard {
         discount:number,
         description:string,
       }>;
+    origindata:Array<{
+        id: number,
+        category: string,
+        name: string,
+        price: number,
+        stock: number,
+        box_type: number,
+        box_color: string,
+        color: string,
+        image: string,
+        average_rate: number,
+        discount:number,
+        description:string,
+      }>;
     categories:Array<string>;
     removeAdminItem: (id: number) => Promise<void>;
     fetchCategories: ()=>Promise<void>;
     AddItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string) => Promise<void>;
     UpdateItem:(img : File,name:string,price:string,stock:number,box:number,cat:number,des:string,id:number) => Promise<void>;
     fetchData:() => Promise<void>;
-    applyFilters:(selectedCategories:Array<string>,onlyDiscounts:boolean)=> Promise<void>;
+    applyFilters:(selectedCategories:Array<string>,onlyDiscounts:boolean,SelectedQuantities:Array<number>,selectedProducts:Array<string>)=> Promise<void>;
 }
 
 const ItemContext = createContext<AdminItemCard>({
     data:[],
+    origindata:[],
     categories:[],
     removeAdminItem: async () => Promise.resolve() ,
     fetchCategories:async ()=> Promise.resolve(),
@@ -125,17 +140,26 @@ export const ItemProvider = ({ children }) => {
         }
     };
 
-    const applyFilters = async(selectedCategories,onlyDiscounts) => {
+    const applyFilters = async(selectedCategories,onlyDiscounts,SelectedQuantities,selectedProducts) => {
         let filteredData = origindata;
-
+        console.log("selected",selectedProducts);
         if (selectedCategories.length > 0) {
             filteredData = filteredData.filter(item => 
             selectedCategories.includes(item.category)
             );
         }
-
+        if (SelectedQuantities.length > 0) {
+            filteredData = filteredData.filter(item => 
+            SelectedQuantities.includes(item.box_type)
+            );
+        }
         if (onlyDiscounts) {
             filteredData = filteredData.filter(item => item.discount > 0);
+        }
+        if (selectedProducts.length > 0) {
+            filteredData = filteredData.filter(item => 
+            selectedProducts.includes(item.name)
+            );
         }
         setData(filteredData);
     };
@@ -184,7 +208,7 @@ export const ItemProvider = ({ children }) => {
         console.log("cat",cat);
         try {
             const formData = new FormData();
-            formData.append('new_photo', img);
+            formData.append('new_photo', img instanceof File ? img : "");            
             formData.append('name', name);
             formData.append('price', price);
             formData.append('stock', stock);
@@ -206,7 +230,7 @@ export const ItemProvider = ({ children }) => {
             console.error(error.response?.data);
         }
     };
-    const value = { data,categories,applyFilters,fetchData ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
+    const value = {origindata, data,categories,applyFilters,fetchData ,removeAdminItem ,fetchCategories,AddItem,UpdateItem};     
     return (
         <ItemContext.Provider value={value}>
             {children}
