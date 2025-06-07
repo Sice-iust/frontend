@@ -82,7 +82,7 @@ const Receipt: React.FC = () => {
                                 </button>
                                 <div className="box-content ml-5 w-82 h-25 border border-gray-400 rounded-lg flex flex-col">
                                     <span className={`text-[18px] text-right mr-3 mt-2 font-vazir
-                                         font-semibold dark:text-[#ffffff] text-black`}>
+                                         font-semibold dark:text-white text-black`}>
                                         {item.product.name}
                                     </span>
                                     <div className="flex justify-between items-center mr-6 mt-2 space-x-2">
@@ -133,7 +133,7 @@ const Receipt: React.FC = () => {
                                                 </button>
                                             )}
                                         </div>
-                                        <span className={`dark:text-black text-white text-[15px] text-right font-vazir font-medium`}>
+                                        <span className={`dark:text-white text-black text-[15px] text-right font-vazir font-medium`}>
                                             قیمت: {convertToPersianNumbers(Number(item.product.price * (1 - item.product.discount / 100)).toLocaleString())} تومان
                                         </span>
                                     </div>
@@ -154,12 +154,12 @@ const Receipt: React.FC = () => {
                     <>
                         <div className="flex flex-row-reverse space-x-reverse space-x-2 mt-7 mr-3">
                             <CgNotes color="#F18825" className="w-6 h-5" />
-                            <h2 className={`text-[17px] dark:text-black text-white font-vazir font-semibold text-right`}>خلاصه سفارش</h2>
+                            <h2 className={`text-[17px] dark:text-white text-black font-vazir font-semibold text-right`}>خلاصه سفارش</h2>
                         </div>
                         <div className="p-5 flex flex-col pt-2">
                             {sortedCartItems.map(item => (
                                 <div key={item.product.id} className="flex flex-row-reverse py-2 justify-between">
-                                    <span className={`text-s dark:text-black text-white font-vazir
+                                    <span className={`text-s dark:text-white text-dark font-vazir
                                          font-medium text-right  mr-6`}>
                                         {item.product.name}
                                     </span>

@@ -62,6 +62,7 @@ export const CartProvider = ({ children }) => {
 
     //Cart Data
     const fetchData = async () => {
+        setLoading(true);
         try {
             const response = await axios.get("https://nanziback.liara.run/user/cart/", {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

@@ -22,10 +22,10 @@ const Address: React.FC = () => {
     const CloseMap = () => SetIsMapOpen(false);
 
     return (
-        <div className="container bg-white rounded-xl mt-4 mx-4 ml-4 p-10 w-auto mb-4 ">
+        <div className="container bg-white dark:bg-neutral-800 rounded-xl mt-4 mx-4 ml-4 p-10 w-auto mb-4 ">
             <div className='flex flex-row-reverse mb-7 gap-1 '>
               <IoLocationOutline className='h-6 w-6 text-[#F18825]'/>
-              <span className='font-semibold text-2xl'>آدرس‌های من</span>
+              <span className='font-semibold text-2xl dark:text-white'>آدرس‌های من</span>
             </div>
 
 
