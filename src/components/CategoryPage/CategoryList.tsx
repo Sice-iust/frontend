@@ -60,16 +60,16 @@ export default function CategoryList({ category }) {
                 <meta name="viewport" content="width=device-width , initial-scale=1.0" />
             </Head>
             <div className={` 
-                            sm:flex
-                            sm:flex-row-reverse
-                            sm:flex-wrap
-                            sm:box-content
-                            sm:m-10
-                            sm:ml-8
-                            sm:w-full
-                            sm:h-auto
-                            sm:rounded-2xl
-                            sm:gap-6 `
+                            md:flex
+                            md:flex-row-reverse
+                            md:flex-wrap
+                            md:box-content
+                            md:m-10
+                            md:ml-8
+                            md:w-full
+                            md:h-auto
+                            md:rounded-2xl
+                            md:gap-6 `
                 +
                 "flex flex-col  flex-wrap box-content w-full h-auto  rounded-2xl"
             }>
@@ -77,27 +77,27 @@ export default function CategoryList({ category }) {
                     data.map(item => (
                         <div key={item.id}
                             onClick={() => handleOpenModal(item.id)}
-                            className={`sm:flex 
-                                sm:flex-col 
-                                sm:box-content
-                                sm:rounded-2xl
+                            className={`md:flex 
+                                md:flex-col 
+                                md:box-content
+                                md:rounded-2xl
                                 bg-white
                                 dark:bg-[#191919]
-                                sm:w-79
-                                sm:h-77
-                                sm:cursor-pointer
+                                md:w-79
+                                md:h-77
+                                md:cursor-pointer
                                 hover:scale-105
                                 transition
                                 duration-300 ` +
                                 " flex flex-row   box-content w-full  h-40 cursor-pointer gap-1 xs:bg-red "}>
                             {/* phone */}
                             <div className={`
-                                sm:hidden
+                                md:hidden
                                 flex
-                                justify-between
-                                w-full`}>
+                                justify-between  border-b-1 border-b-gray-500
+                                w-full `}>
                                 <div
-                                    className={"rounded-xl bg-[#d9d9d9] flex items-center mt-5 flex-col " +
+                                    className={"rounded-xl bg-[#d9d9d9] flex items-center mt-5 flex-col  " +
                                         "w-[60px] h-7 ml-4 mt-8.5 " // mobile
                                     }>
                                     <span className={" flex flex-row font-vazir items-center justify-between px-1.5 ml-1 " +
@@ -175,11 +175,11 @@ export default function CategoryList({ category }) {
                                     )}
                                 </div>
 
-                                <div className={`text-black dark:text-white sm:hidden font-vazir text-sm font-semibold text-right mr-2 mt-10 `}>
+                                <div className={`text-black dark:text-white  md:hidden font-vazir text-md font-semibold text-right mr-2 mt-10 `}>
                                     {item.name}
 
-                                    <div className="sm:hidden flex flex-col items-end mt-7 ">
-                                        <div className={`text-black dark:text-white font-vazir text-sm text-right`}>
+                                    <div className="md:hidden flex flex-col items-end mt-7 ">
+                                        <div className={`text-black dark:text-white font-vazir text-md text-right`}>
                                             {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت
                                         </div>
 
@@ -211,22 +211,39 @@ export default function CategoryList({ category }) {
                             </div>
                             {/* end of phone */}
 
+<<<<<<< HEAD
                             <div className={" hidden sm:flex sm:flex-row   "}>
                                 <div
                                     className={`bg-[#d9d9d9] dark:bg-[#383535] sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl  sm:w-auto sm:h-7 sm:ml-1 `}>
                                     <span className={`text-black dark:text-white sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl `}>
                                         {convertToPersianNumbers((+item.average_rate).toFixed(1))}
                                         <FaStar className="sm:m-1 sm:mr-3  "
+=======
+
+                            <div className={" hidden md:flex md:flex-row   "}>
+                                <div
+                                    className={`bg-[#d9d9d9] dark:bg-[#383535] md:mt-1 md:box-content md:place-items-start md:rounded-2xl  md:w-auto md:h-7 md:ml-1 `}>
+                                    <span className={`text-black dark:text-white md:flex md:flex-row md:font-vazir md:items-center md:justify-between md:w-full md:px-2 md:ml-3 md:text-xl `}>
+
+                                        {convertToPersianNumbers(item.average_rate)}
+                                        <FaStar className="md:m-1 md:mr-3  "
+>>>>>>> 43c3d37bdb361dd45926db0e31c607b117a1ff05
                                             color="orange" />
                                     </span>
                                 </div>
-                                <div className="sm:flex sm:flex-row sm:justify-center sm:items-center">
+                                <div className="md:flex md:flex-row md:justify-center md:items-center">
                                     <div className={
+<<<<<<< HEAD
                                         "sm:relative " +
                                         "sm:w-30 sm:h-40 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
+=======
+                                        "md:relative " +
+                                        "md:w-30 md:h-40 md:mb-3 md:ml-5 md:mt-5 "  // desktop (adjust size as needed)
+
+>>>>>>> 43c3d37bdb361dd45926db0e31c607b117a1ff05
                                     }>
                                         <Image
-                                            className="sm:rounded-2xl"
+                                            className="md:rounded-2xl"
                                             src={item.photo_url}
                                             alt="productImg"
                                             layout="fill"
@@ -237,28 +254,35 @@ export default function CategoryList({ category }) {
                             <div className={`
                                 text-black
                                 dark:text-white
-                                hidden sm:block
-                                sm:font-vazir
-                                sm:text-medium
-                                sm:font-semibold
-                                sm:text-right
-                                sm:mr-5
-                                sm:mt-4
+                                hidden md:block
+                                md:font-vazir
+                                md:text-medium
+                                md:font-semibold
+                                md:text-right
+                                md:mr-5
+                                md:mt-4
                                 `}>
+<<<<<<< HEAD
                                 {item.name}
                             </div>
                             <div className="sm:flex sm:flex-row-reverse  hidden">
                                 <div className='sm:flex sm:flex-col'>
                                     <div className={` text-black dark:text-white sm:font-vazir sm:text-sm sm:text-right sm:mr-6 sm:mt-2`}>
+=======
+                                {item.name}</div>
+                            <div className="md:flex md:flex-row-reverse  hidden">
+                                <div className='md:flex md:flex-col'>
+                                    <div className={` text-black dark:text-white md:font-vazir md:text-md md:text-right md:mr-6 md:mt-2`}>
+>>>>>>> 43c3d37bdb361dd45926db0e31c607b117a1ff05
                                         {convertToPersianNumbers(Math.round(parseFloat(item.discounted_price)).toLocaleString())} :قیمت
                                     </div>
 
                                     {item.discount > 0 && (
-                                        <div className="sm:flex sm:flex-row-reverse sm:mr-5">
-                                            <div className="sm:bg-[#F18825] sm:text-sm sm:w-9 sm:h-5 sm:text-white sm:text-[14px] sm:pl-1.5 sm:rounded-md">
+                                        <div className="md:flex md:flex-row-reverse md:mr-5">
+                                            <div className="md:bg-[#F18825] md:text-md md:w-9 md:h-5 md:text-white md:text-[14px] md:pl-1.5 md:rounded-md">
                                                 %{convertToPersianNumbers(item.discount)}
                                             </div>
-                                            <div className="sm:mr-2 sm:text-gray-500 sm:line-through">
+                                            <div className="md:mr-2 md:text-gray-500 md:line-through">
                                                 {convertToPersianNumbers(Math.round(parseFloat(item.price)).toLocaleString())}
                                             </div>
                                         </div>
@@ -282,7 +306,7 @@ export default function CategoryList({ category }) {
                                     </button>
 
                                 ) : (
-                                    <div className='sm:block hidden '>
+                                    <div className='md:block hidden '>
                                         <div className="flex mr-27 mt-2 space-x-2">
                                             <button
                                                 className={`

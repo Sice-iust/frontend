@@ -28,6 +28,7 @@
     "leaflet": "^1.9.4",
     "moment-jalaali": "^0.10.4",
     "next": "^15.2.4",
+    "nookies": "^2.5.2",
     "react": "^19.0.0",
     "react-countdown": "^2.3.6",
     "react-dom": "^19.0.0",

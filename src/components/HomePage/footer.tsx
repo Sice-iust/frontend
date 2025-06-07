@@ -1,4 +1,5 @@
 'use client'
+
 import { faFacebook, faInstagram, faTelegram, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -17,14 +18,13 @@ export default function Footer2() {
                         src={isDarkMode ? `/assets/darkFooterSymbol.png`:`/assets/footerSymbol.png`} />
                 </div>
                 <div dir="rtl" className={`basis-3/8 grid grid-cols-2 gap-x-8 gap-y-4 p-3 dark:text-white text-black`}>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">درباره نانزی</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">پرسش‌های متداول</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">تماس با نانزی</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">ثبت شکایات</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">قوانین سایت</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">ساعت کاری:همیشه</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">رسیدگی به انتقادات و پیشنهادات:</p>
-                    <p className="border-b border-b-yellow-600 p-2 content-center">۰۲۱-۱۱۱۱-۱۱۱۱</p>
+                    <p className="border-b border-b-yellow-600 p-2 content-center w-26">درباره نانزی</p>
+                    <p className="border-b border-b-yellow-600 p-2 content-center w-34">پرسش‌های متداول</p>
+                    <p className="border-b border-b-yellow-600 p-2 content-center w-26">تماس با نانزی</p>
+                    <p className="border-b border-b-yellow-600 p-2 content-center w-34">ثبت شکایات</p>
+                    <p className="border-b border-b-yellow-600 p-2 content-center w-26">قوانین سایت</p>
+                    <p className=" p-2 content-center">ساعت کاری:همه روزه از صبح تا شب</p>
+                    <p className="p-2 content-center whitespace-nowrap">رسیدگی به انتقادات و پیشنهادات: ۰۲۱ - ۱۱۱۱ - ۱۱۱۱</p>
                 </div>
                 <div dir="rtl" className="basis-3/8 flex flex-col flex-end p-5">
                     <div className="flex m-2 gap-3">
@@ -34,7 +34,7 @@ export default function Footer2() {
                             height={150} />
                         <div className="flex flex-col">
                             <h1 className={`text-5xl text-yellow-700 m-2"`}>نانزی</h1>
-                            <p className={`dark:text-gray-200 text-black`}>نانزی،طعمی فراموش نشدنی</p>
+                            <p className={`dark:text-stone-300 text-black`}>نانزی،طعمی فراموش نشدنی</p>
                         </div>
                     </div>
                     <div className={`flex m-2 dark:text-white text-black`}>
@@ -46,7 +46,8 @@ export default function Footer2() {
                     <div className="flex m-2 gap-5 text-3xl">
                         <a
                             className="
-                            w-10
+                            w-11
+                            h-11
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -58,7 +59,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
@@ -70,7 +71,10 @@ export default function Footer2() {
                         </a>
                         <a
                             className="
-                            w-10
+                            w-11
+                            h-11
+
+
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -82,7 +86,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
@@ -94,7 +98,8 @@ export default function Footer2() {
                         </a>
                         <a
                             className="
-                            w-10
+                            w-11
+                            h-11
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -106,7 +111,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
@@ -118,7 +123,8 @@ export default function Footer2() {
                         </a>
                         <a
                             className="
-                            w-10
+                            w-11
+                            h-11
                             text-yellow-700
                             border-yellow-700
                             duration-500
@@ -130,7 +136,7 @@ export default function Footer2() {
                             foncus:bg-yellow-700
                             rounded-full
                             border-2
-                            p-1
+                            p-1.5
                             justify-center
                             content-center
                             "
