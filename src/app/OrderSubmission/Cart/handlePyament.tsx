@@ -3,7 +3,7 @@ import axios from "axios";
 const handlePayment = async (orderDetails: {
     location_id: number;
     deliver_time: number;
-    description: string;
+    discription: string;
     total_price: number;
     profit: number;
     total_payment: number;

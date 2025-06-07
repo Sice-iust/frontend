@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react';  
 import { RxCross1 } from "react-icons/rx";
-import Invoice from "./invoice-detail";
+import Invoice from "../../ProfilePage/OrdersPage/Invoice/invoice-detail";
 
 interface InvoicePopupProps {  
     isOpen: boolean;  
@@ -27,11 +27,11 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
         if (isOpen) {  
             const fetchInvoiceData = async () => {  
                 try {  
-                    const response = await fetch(`https://nanziback.liara.run/user/order/invoice/${orderId}`, {
+                    const response = await fetch(`https://nanziback.liara.run/nanzi/admin/order/invoice/${orderId}/`, {
                         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                       });
                     if (!response.ok) {  
-                        throw new Error('Failed to fetch invoice data');  
+                        throw new Error('Failed to fetch this data');  
                     }  
                     const data = await response.json();  
                     console.log("invoice",data)
@@ -64,7 +64,8 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
     // console.log("price:",total_price_after);
      
 
-    if (!isOpen) return null;  
+    if (!isOpen) return null; 
+    // if(loading) return null; 
     
 
 
@@ -75,12 +76,12 @@ const InvoicePopup: React.FC<InvoicePopupProps> = ({ isOpen, onClose, orderId ,t
                     <div className="relative transform overflow-hidden rounded-lg bg-white text-left 
                                     shadow-xl transition-all min-h-screen lg:min-h-auto w-full
                                     sm:my-8 sm:w-full sm:max-w-lg sm:h-auto">  
-                        <div className="bg-white px-2 pt-5 pb-4 text-right md:px-6"> 
-                            <RxCross1 className="cursor-pointer ml-auto" onClick={onClose}  />
+                        <div className="bg-white dark:bg-[#191919] px-2 pt-5 pb-4 text-right md:px-6"> 
+                            <RxCross1 className="cursor-pointer ml-auto dark:text-[#B2A9A9]" onClick={onClose}  />
 
-                            <div className="bg-white  font-vazir  pb-4  overflow-y-auto lg:p-4 lg:mt-0">  
-                                <h2 className="text-2xl font-bold font-vazir mb-1.5 mt-4 lg:mt-0">فاکتور سفارش</h2>  
-                                {invoiceData ? (
+                            <div className="bg-white dark:bg-[#191919] font-vazir  pb-4  overflow-y-auto lg:p-4 lg:mt-0">  
+                                <h2 className="text-2xl font-bold font-vazir mb-1.5 mt-4 lg:mt-0 text-black dark:text-white">فاکتور سفارش</h2>  
+                                {invoiceData && invoiceData.items ? (
                                 <Invoice orderId={orderId} 
                                 payment={invoiceData.payment} 
                                 shippingfee={String(invoiceData.shipping_fee)} 

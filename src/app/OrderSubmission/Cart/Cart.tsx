@@ -7,13 +7,16 @@ import LoadingBox from "../../../components/Loading/LoadingBox";
 import Discount from "./Discount"
 import { convertPrice } from "../../../utils/Coversionutils";
 import handlePayment from './handlePyament';
+import { useADDRESS } from '../../../context/GetAddress';
 
 
 const Cart: React.FC = () => {
-    const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee } = useCart();
+    const { cartItems, loading ,totalDiscount, totalActualPrice , shipping_fee ,totalActualPricewithshipp,selectedSlotId } = useCart();
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id); 
 
     const [detail, setDetail] = useState("");
+    const { data = [] } = useADDRESS();  
+    const selected = data?.find((add) => add.isChosen === true);
     
 
     if (loading) {
@@ -64,7 +67,7 @@ const Cart: React.FC = () => {
                     <span className="text-lg font-vazir text-right text-black font-bold "> قابل پرداخت </span>
                     <span className="flex flex-row-reverse">
                     <span className="text-lg text-gray-600 font-semibold">{
-                        convertPrice(String(totalActualPrice))}</span>    
+                        convertPrice(String(totalActualPricewithshipp))}</span>    
                     <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>    
                     </span>
                 </div>       
@@ -72,7 +75,7 @@ const Cart: React.FC = () => {
                 {totalDiscount? totalDiscount >0 && (
                     <div className="flex flex-row-reverse py-2 justify-between mx-8">  
                         <span className="text-[14px] font-vazir font-medium text-right text-green-600 
-                                         font-semibold "
+                                          "
                             >سود شما از این خرید
                         </span>
                         <span className="flex flex-row-reverse">
@@ -100,18 +103,22 @@ const Cart: React.FC = () => {
 
                    <button
                         onClick={() => handlePayment({
-                            location_id: 1,
-                            deliver_time: 10,
-                            description: "good", // User input from Cart page
-                            total_price: totalActualPrice,
+                            location_id: Number(selected?.id),
+                            deliver_time: Number(selectedSlotId),
+                            discription: detail, 
+                            total_price: totalActualPricewithshipp,
                             profit: totalDiscount || 0,
-                            total_payment: totalActualPrice - (totalDiscount || 0),
+                            total_payment: totalActualPricewithshipp,
                             discount_text: "Applied discount",
                             payment_status: "unpaid",
                             reciver: "مهسا",
                             reciver_phone: "989332328129"
                         })}
-                        className="bg-[#F18825] mr-2 mb-4 rounded-2xl text-white px-4 h-10 flex items-center justify-center w-[70%] cursor-pointer"
+                        className={`mr-2 mb-4 rounded-2xl px-4 h-10 flex items-center justify-center w-[70%] 
+                                  ${cartItems.length === 0 || shipping_fee === -1 || !selected ? "bg-gray-300 text-white cursor-not-allowed" : 
+                                    'bg-[#F18825] text-white transition cursor-pointer'}`}
+
+                        disabled={!cartItems || cartItems.length === 0 || shipping_fee === -1 || !selected}
                     >
                         ثبت و پرداخت
                     </button>
