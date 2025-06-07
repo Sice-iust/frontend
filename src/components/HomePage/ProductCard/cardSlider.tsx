@@ -31,7 +31,7 @@ export default function CardSlider({ text, color, url, type }) {
     const settings = {
         dots: true,
         speed: 500,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
@@ -39,17 +39,23 @@ export default function CardSlider({ text, color, url, type }) {
             {
                 breakpoint: 1500,
                 settings: {
+                    slidesToShow: 4,
+                },
+            },
+            {
+                breakpoint: 1000,
+                settings: {
                     slidesToShow: 3,
                 },
             },
             {
-                breakpoint: 1200,
+                breakpoint: 900,
                 settings: {
                     slidesToShow: 2,
                 },
             },
             {
-                breakpoint: 850,
+                breakpoint: 500,
                 settings: {
                     slidesToShow: 1,
                 },

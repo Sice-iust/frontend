@@ -33,7 +33,7 @@ export default function ProductCard({ img_src, text, ref, percent, price, type, 
                             padding: '5px',
                             borderRadius: '60px', borderColor: 'white',
                             height: '30px'
-                        }}>⭐️{e2p(String(rate))}</p>
+                        }}>⭐️{e2p(String(rate.toFixed(1)))}</p>
                     }
                 </div>
                 <div style={{ height: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

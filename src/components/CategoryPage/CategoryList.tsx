@@ -55,7 +55,6 @@ export default function CategoryList({ category }) {
     }, [category]);
 
     return (
-
         <>
             <Head>
                 <meta name="viewport" content="width=device-width , initial-scale=1.0" />
@@ -210,16 +209,13 @@ export default function CategoryList({ category }) {
 
                                 </div>
                             </div>
-
                             {/* end of phone */}
-
 
                             <div className={" hidden sm:flex sm:flex-row   "}>
                                 <div
                                     className={`bg-[#d9d9d9] dark:bg-[#383535] sm:mt-1 sm:box-content sm:place-items-start sm:rounded-2xl  sm:w-auto sm:h-7 sm:ml-1 `}>
                                     <span className={`text-black dark:text-white sm:flex sm:flex-row sm:font-vazir sm:items-center sm:justify-between sm:w-full sm:px-2 sm:ml-3 sm:text-xl `}>
-
-                                        {convertToPersianNumbers(item.average_rate)}
+                                        {convertToPersianNumbers((+item.average_rate).toFixed(1))}
                                         <FaStar className="sm:m-1 sm:mr-3  "
                                             color="orange" />
                                     </span>
@@ -228,7 +224,6 @@ export default function CategoryList({ category }) {
                                     <div className={
                                         "sm:relative " +
                                         "sm:w-30 sm:h-40 sm:mb-3 sm:ml-5 sm:mt-5 "  // desktop (adjust size as needed)
-
                                     }>
                                         <Image
                                             className="sm:rounded-2xl"
@@ -236,12 +231,9 @@ export default function CategoryList({ category }) {
                                             alt="productImg"
                                             layout="fill"
                                         />
-
                                     </div>
                                 </div>
                             </div>
-
-
                             <div className={`
                                 text-black
                                 dark:text-white
@@ -253,7 +245,8 @@ export default function CategoryList({ category }) {
                                 sm:mr-5
                                 sm:mt-4
                                 `}>
-                                {item.name}</div>
+                                {item.name}
+                            </div>
                             <div className="sm:flex sm:flex-row-reverse  hidden">
                                 <div className='sm:flex sm:flex-col'>
                                     <div className={` text-black dark:text-white sm:font-vazir sm:text-sm sm:text-right sm:mr-6 sm:mt-2`}>
@@ -276,7 +269,9 @@ export default function CategoryList({ category }) {
                                 {userquantity[item.id] === undefined || userquantity[item.id] === 0 ? (
 
                                     <button
-                                        className={`${item.stock === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"} rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}
+                                        className={`${item.stock === 0 ?
+                                             "bg-gray-300 cursor-not-allowed" : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"}
+                                              rounded-xl w-23 h-9 text-white text-lg font-vazir font-md mr-24 mt-2`}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleAdd(item.id);
@@ -351,7 +346,6 @@ export default function CategoryList({ category }) {
                                 )}
 
                             </div>
-
                         </div>
                     ))
                 ) : (
@@ -371,6 +365,7 @@ export default function CategoryList({ category }) {
 
                 )}
                 {isOpen && <ProductPage onClose={handleCloseModal} open={isOpen} itemid={selectedItem} />}
-            </div>  </>
+            </div>
+        </>
     );
 }  

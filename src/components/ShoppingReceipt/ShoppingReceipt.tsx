@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { CgNotes } from "react-icons/cg";
-import axios from "axios";
 import emptyReceipt from "../../../public/assets/emptyReceipt.png";
 import Image from 'next/image';
 import { useCart } from "../../context/Receiptcontext";
@@ -9,14 +8,17 @@ import { convertToPersianNumbers } from '../../utils/Coversionutils';
 import Link from "next/link";
 
 const Receipt: React.FC = () => {
-    const { cartItems, counts, totalDiscount, totalActualPrice, loading,
-        incrementQuantity, decrementQuantity, removeItem } = useCart();
-
-
-
+    const {
+        cartItems,
+        counts,
+        totalDiscount,
+        totalActualPrice,
+        loading,
+        incrementQuantity,
+        decrementQuantity,
+        removeItem,
+    } = useCart();
     const sortedCartItems = cartItems.sort((a, b) => a.product.id - b.product.id);
-
-
 
     if (loading) {
         return (
@@ -44,7 +46,6 @@ const Receipt: React.FC = () => {
 
     return (
         <div className={`dark:bg-[#383535] bg-[#f5f5f5]`}>
-
             <div className={`box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl
                 dark:bg-[#191919] dark:border-white bg-white`}>
                 <h2 className={`text-[25px] text-center dark:text-[#ffffff] text-black pt-5 pb-2 font-vazir font-bold`}>
@@ -200,7 +201,6 @@ const Receipt: React.FC = () => {
                 )}
             </div>
         </div>
-
     );
 };
 
