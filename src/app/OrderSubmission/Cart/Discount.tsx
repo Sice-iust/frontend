@@ -18,11 +18,11 @@ const DiscountCodeForm: React.FC = () => {
     <div className="flex flex-col space-y-3">
         <span className="text-sm font-vazir font-medium text-right
                         break-words whitespace-wrap mx-8
-                        sm:w-auto sm:text-base">کد تخفیف دارید؟</span>
+                        sm:w-auto sm:text-base dark:text-white">کد تخفیف دارید؟</span>
         <div className="flex mx-7">
             <button
             onClick={handleSubmit}
-            className="bg-[#F18825] mr-2 rounded-2xl text-white px-4 h-10 flex items-center justify-center cursor-pointer"
+            className="bg-[#F18825] mr-2 rounded-2xl text-white dark:text-black px-4 h-10 flex items-center justify-center cursor-pointer"
             >
             ثبت کد
             </button>
@@ -31,9 +31,9 @@ const DiscountCodeForm: React.FC = () => {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="کد خود را وارد کنید"
-            className="bg-[#D9D9D9] text-[#383535]  text-base placeholder:text-xs border border-gray-300 
+            className="bg-[#D9D9D9] dark:bg-[#383535] text-[#383535] dark:text-[#B0ABAB] text-base placeholder:text-xs border border-gray-300 dark:border-[#383535]
                        rounded-2xl p-2 h-10 text-right w-64 
-                       focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]"
+                       focus:outline-none focus:text-md "
             /> 
         </div>
     </div>

@@ -19,23 +19,23 @@ export default function SummaryPart() {
 
   return (
     <>
-      <div className='box-content bg-white rounded-2xl h-auto mt-5  min-h-85 '>
+      <div className='box-content bg-white dark:bg-[#191919] rounded-2xl h-auto mt-5  min-h-85 '>
         <div className='flex flex-col'>
           <div className='flex flex-row-reverse justify-between mr-10 ml-10'>
             <div className='flex flex-row-reverse mt-3 gap-1 '>
               <CgNotes className='h-5 w-5 text-[#F18825]'/>
-              <span className='font-semibold text-xl'>خلاصه سفارش</span>
+              <span className='font-semibold text-xl dark:text-white'>خلاصه سفارش</span>
             </div>
           </div>
           <div className='flex flex-row-reverse mt-6 mr-10 ml-10 mb-6 gap-7 overflow-x-auto '>
                 {cartItems.map((item)=>(
-                    <div className='box-content border-1 min-w-50 min-h-55 w-auto h-auto rounded-2xl flex-shrink-0 '>
+                    <div className='box-content border-1 min-w-50 min-h-55 w-auto h-auto rounded-2xl flex-shrink-0 dark:border-white'>
                         <div className='flex flex-col mt-3 gap-1 justify-center items-center'>
                             <Image width={60} height={50} src={item.product.photo} alt='bread' className='w-22 h-25'/>
-                            <span className='p-3 text-right text-md font-semibold'>{item.product.name}</span>
+                            <span className='p-3 text-right text-md font-semibold dark:text-white'>{item.product.name}</span>
                             <div className="flex items-center space-x-2">  
                                 <button  
-                                    className={`${isDarkMode ? "bg-black" : "bg-white"}  border-3 ${item.quantity >= item.product.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.product.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
+                                    className={`dark:bg-[#191919] bg-white  border-3 ${item.quantity >= item.product.stock ? "border-gray-300 text-gray-300 cursor-not-allowed" : "border-green-500 text-green-500 cursor-pointer"} font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full transition-transform duration-200 ${item.quantity >= item.product.stock ? "cursor-not-allowed hover:bg-white" : "hover:bg-green-500 hover:text-white hover:scale-110"}`}  
                                     onClick={() => incrementQuantity(item.product.id)}  
                                     disabled={item.quantity >= item.product.stock}  
                                     aria-label={`Increase quantity of ${item.product.name}`}  

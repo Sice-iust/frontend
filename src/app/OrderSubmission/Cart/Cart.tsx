@@ -22,14 +22,14 @@ const Cart: React.FC = () => {
     if (loading) {
         return (
             <div className="relative">
-                <div className={`box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white `}>
+                <div className={`box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white dark:bg-[#383535] `}>
                     <h2 className="text-[25px] text-center pt-5 pb-2 font-vazir font-bold">
                         سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}
                     </h2>
                 </div>
 
                 <div className={`absolute top-10 mb-10 left-10 right-0 bottom-0 rounded-2xl flex items-center 
-                                 justify-center bg-white bg-opacity-70`}>
+                                 justify-center bg-white dark:bg-[#191919] bg-opacity-70`}>
                     <LoadingBox />
                 </div>
             </div>
@@ -37,9 +37,9 @@ const Cart: React.FC = () => {
     }
    
     return (
-        <div className="bg-[#f5f5f5]"> 
-            <div className="box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white">  
-                <h2 className="text-[25px] text-center text-black pt-5 pb-2 font-vazir font-bold">  
+        <div className="bg-[#f5f5f5] dark:bg-[#383535]"> 
+            <div className="box-content ml-10 mt-10 mb-10 min-h-140 w-100 rounded-2xl bg-white dark:bg-[#191919]">  
+                <h2 className="text-[25px] text-center text-black dark:text-white pt-5 pb-2 font-vazir font-bold">  
                     سبد خرید {cartItems.length > 0 ? `(${convertToPersianNumbers(cartItems.length)})` : ""}
                 </h2> 
                 <div className="mx-5">
@@ -57,18 +57,18 @@ const Cart: React.FC = () => {
                                 quantity: item.quantity,
                             }))} discount={""}                />
                     ) : null}  
-                    <div className="border-t pt-4 mx-3"></div>
+                    <div className="border-t pt-4 mx-3 dark:border-[#383535]"></div>
                 </div> 
 
                 <Discount/>
 
                 
                 <div className="flex flex-row-reverse py-2 justify-between mx-8 mt-2">  
-                    <span className="text-lg font-vazir text-right text-black font-bold "> قابل پرداخت </span>
+                    <span className="text-lg font-vazir text-right text-black dark:text-white font-bold "> قابل پرداخت </span>
                     <span className="flex flex-row-reverse">
-                    <span className="text-lg text-gray-600 font-semibold">{
+                    <span className="text-lg text-gray-600 dark:text-white font-semibold">{
                         convertPrice(String(totalActualPricewithshipp))}</span>    
-                    <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600">تومان</span>    
+                    <span className="text-[14px] font-vazir font-medium text-right mr-2 text-gray-600 dark:text-[#B2A7A7]">تومان</span>    
                     </span>
                 </div>       
 
@@ -91,15 +91,17 @@ const Cart: React.FC = () => {
                 }
 
                 <div className="flex flex-col space-y-3 mx-8 items-center">
-                    <input
-                        type="text"
-                        value={detail}
-                        onChange={(e) => setDetail(e.target.value)}
-                        placeholder="  ...توضیحات سفارش"
-                        className="bg-[#D9D9D9] text-[#383535]  text-base placeholder:text-xs border border-gray-300 
-                                rounded-xl p-2 h-30 text-right  mb-4 w-[100%] py-2
-                                focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]"
-                    /> 
+
+                    <textarea
+                    value={detail}
+                    onChange={(e) => setDetail(e.target.value)}
+                    placeholder="توضیحات سفارش ..."
+                    className="bg-[#D9D9D9] dark:bg-[#383535] text-[#383535] dark:text-[#B0ABAB] text-base placeholder:text-xs border border-gray-300 dark:border-[#383535]
+                                rounded-xl w-full py-2 px-4 h-30 mb-4
+                                focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED] dark:focus:ring-[#383535]
+                                text-right placeholder:text-right flex items-center"
+                    dir="rtl"
+                    />
 
                    <button
                         onClick={() => handlePayment({
@@ -116,7 +118,7 @@ const Cart: React.FC = () => {
                         })}
                         className={`mr-2 mb-4 rounded-2xl px-4 h-10 flex items-center justify-center w-[70%] 
                                   ${cartItems.length === 0 || shipping_fee === -1 || !selected ? "bg-gray-300 text-white cursor-not-allowed" : 
-                                    'bg-[#F18825] text-white transition cursor-pointer'}`}
+                                    'bg-[#F18825] text-white dark:text-black transition cursor-pointer'}`}
 
                         disabled={!cartItems || cartItems.length === 0 || shipping_fee === -1 || !selected}
                     >
