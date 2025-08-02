@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 import { FaStar } from "react-icons/fa";
+import {convertPrice} from "../../../utils/Coversionutils"
 
-export default function ProductCard({ img_src, text, ref, percent, price, type, rate }) {
+export default function ProductCard({ img_src, text, ref, percent, price, discountedprice , type, rate }) {
   const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 
   return (
@@ -64,7 +65,34 @@ export default function ProductCard({ img_src, text, ref, percent, price, type, 
       </div>
 
       <div style={{ height: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h3 dir='rtl'>{e2p(String(price))} تومان</h3>
+        <div dir='rtl' style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            {type === 'dis' ? (
+                <>
+                <span style={{
+                    color: 'black',
+                    fontSize: '1rem'
+                }}>
+                    {convertPrice(price)} تومان
+                </span>
+                <span style={{
+                    textDecoration: 'line-through',
+                    color: 'gray',
+                    fontSize: '0.9rem',
+                    marginBottom: '2px'
+                }}>
+                    {e2p(String(discountedprice))} 
+                </span>
+                
+                </>
+            ) : (
+                <span style={{
+                color: 'black',
+                fontSize: '1rem'
+                }}>
+                {convertPrice(price)} تومان
+                </span>
+            )}
+            </div>
         <button
           style={{
             background: "#F18825", color: 'white',

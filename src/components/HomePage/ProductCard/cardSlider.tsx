@@ -19,7 +19,8 @@ export default function CardSlider({ text, color, url, type }) {
                         name: item.name,
                         image: item.photo_url,
                         discount: item.discount,
-                        price: item.discounted_price,
+                        price:item.price,
+                        discountedprice: item.discounted_price,
                         rate: item.average_rate
                     }));
                     setProducts(data);
@@ -79,6 +80,7 @@ export default function CardSlider({ text, color, url, type }) {
                         text={product.name}
                         ref={product.id}
                         percent={product.discount}
+                        discountedprice={product.discounted_price||Math.round(product.price * (1 - product.discount / 100))}
                         price={product.price}
                         rate={product.rate}
                         type={type} />
