@@ -20,10 +20,10 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
     const CloseMap = () => SetIsMapOpen(false);
     return (
         <>
-            <div className={`box-content w-full border-1 rounded-2xl ${isSelected ? "border-green-600" : "border-black"} mb-5 ml-1 mr-1`}>
+            <div className={`box-content w-full border-1 rounded-2xl ${isSelected ? "border-green-600" : "border-black dark:border-white"} mb-5 ml-1 mr-1`}>
                 <div className="flex flex-col">
                     <div className="flex flex-row-reverse justify-between mr-10 mt-2 ml-5">
-                        <span className="font-semibold text-lg text-right">{title}</span>
+                        <span className="font-semibold text-lg text-right dark:text-white">{title}</span>
                         <div className="flex flex-row-reverse gap-4">
                             <FaRegEdit className=" h-5 w-5 text-green-600 cursor-pointer
                                                     hover:transition duration-300 hover:scale-108"
@@ -40,7 +40,7 @@ export default function AddressCard({ id,title, address, isSelected,isprofile,na
                         {isSelected && <FaCheck className="h-3 w-4 text-white " />}
                         </button>
                         <span className="text-right overflow-hidden break-words 
-                                         font-medium text-md text-gray-500 max-w-160 leading-[2rem]">{address}</span>
+                                         font-medium text-md text-gray-500 dark:text-[#ADA6A6] max-w-160 leading-[2rem]">{address}</span>
                     </div>                      
                 </div>
                 {isprofile && 

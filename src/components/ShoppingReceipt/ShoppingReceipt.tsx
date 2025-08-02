@@ -133,7 +133,7 @@ const Receipt: React.FC = () => {
                                                 </button>
                                             )}
                                         </div>
-                                        <span className={`dark:text-black text-white text-[15px] text-right font-vazir font-medium`}>
+                                        <span className={`dark:text-white text-black text-[15px] text-right font-vazir font-medium`}>
                                             قیمت: {convertToPersianNumbers(Number(item.product.price * (1 - item.product.discount / 100)).toLocaleString())} تومان
                                         </span>
                                     </div>
@@ -154,12 +154,12 @@ const Receipt: React.FC = () => {
                     <>
                         <div className="flex flex-row-reverse space-x-reverse space-x-2 mt-7 mr-3">
                             <CgNotes color="#F18825" className="w-6 h-5" />
-                            <h2 className={`text-[17px] dark:text-black text-white font-vazir font-semibold text-right`}>خلاصه سفارش</h2>
+                            <h2 className={`text-[17px] dark:text-white text-black font-vazir font-semibold text-right`}>خلاصه سفارش</h2>
                         </div>
                         <div className="p-5 flex flex-col pt-2">
                             {sortedCartItems.map(item => (
                                 <div key={item.product.id} className="flex flex-row-reverse py-2 justify-between">
-                                    <span className={`text-s dark:text-black text-white font-vazir
+                                    <span className={`text-s dark:text-white text-black font-vazir
                                          font-medium text-right  mr-6`}>
                                         {item.product.name}
                                     </span>
@@ -186,7 +186,7 @@ const Receipt: React.FC = () => {
                                 </>
                             )
                             }
-                            <div className="flex flex-row-reverse py-2 border-t mt-6 justify-between">
+                            <div className="flex flex-row-reverse py-2 border-t mt-6 justify-between dark:border-white">
                                 <span className={`font-vazir dark:text-white text-black font-semibold mr-6`}>جمع کل</span>
                                 <div className="flex flex-row-reverse ">
                                     <span className={`font-bold dark:text-white text-black font-2xl`}>{convertToPersianNumbers(totalActualPrice.toLocaleString())}</span>
@@ -194,7 +194,7 @@ const Receipt: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                        <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white font-medium font-vazir font-2xl py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300 hover:scale-110">
+                        <button className="ml-20 mb-7 w-55 bg-[#F18825] text-white dark:text-black font-medium font-vazir font-2xl py-2 rounded-xl shadow-md hover:bg-orange-400 transition duration-300 hover:scale-110">
                             <Link href={"/OrderSubmission"}><h1> ثبت و ادامه</h1></Link>
                         </button>
                     </>

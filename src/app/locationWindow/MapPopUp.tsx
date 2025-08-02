@@ -236,8 +236,8 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white rounded-md shadow-lg w-full max-w-2xl p-4 relative border border-gray-200">
+   <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-[#191919] rounded-md shadow-lg w-full max-w-2xl p-4 relative border dark:text-white border-gray-200 dark:border-black" >
         <CloseIcon 
           className="cursor-pointer rounded-full p-1 hover:bg-gray-100 text-2xl absolute top-2 right-2" 
           onClick={onClose} 
@@ -250,7 +250,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
             </div>
             <button
               onClick={handleShowAddress}
-              className="w-full h-15 bg-[#f18825] mt-5 rounded-xl items-center text-2xl justify-center text-center text-white py-3"
+              className="w-full h-15 bg-[#f18825] mt-5 rounded-xl items-center text-2xl justify-center text-center text-white dark:text-black py-3"
             >
               تایید موقعیت روی نقشه
             </button>
