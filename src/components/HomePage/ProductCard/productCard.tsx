@@ -51,7 +51,7 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
         )}
       </div>
 
-      <Image
+     <Image
         src={img_src}
         width={100}
         height={100}
@@ -62,7 +62,8 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
             height: '80px',
             objectFit: 'contain',
         }}
-        />
+        loading="lazy"
+    />
 
       <div dir='rtl' style={{ height: '60px', display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
         <h3>{text}</h3>
