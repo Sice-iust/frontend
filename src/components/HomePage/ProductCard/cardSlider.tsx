@@ -6,11 +6,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductCard from '../ProductCard/productCard';
 import axios from 'axios';
+import { useCart } from "../../../context/Receiptcontext";
 
 
 export default function CardSlider({ text, color, url, type }) {
+    const { fetchDatauser } = useCart();
+
     const [products, setProducts] = useState<any[]>([]);
     useEffect(() => {
+        fetchDatauser();
         axios.get(url)
             .then(
                 (response) => {
@@ -21,7 +25,8 @@ export default function CardSlider({ text, color, url, type }) {
                         discount: item.discount,
                         price:item.price,
                         discountedprice: item.discounted_price,
-                        rate: item.average_rate
+                        rate: item.average_rate,
+                        stock:item.stock
                     }));
                     setProducts(data);
                     console.log(response)
@@ -83,6 +88,7 @@ export default function CardSlider({ text, color, url, type }) {
                         discountedprice={product.discounted_price||Math.round(product.price * (1 - product.discount / 100))}
                         price={product.price}
                         rate={product.rate}
+                        stock={product.stock}
                         type={type} />
                 ))}
             </Slider>

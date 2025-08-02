@@ -2,9 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 import { FaStar } from "react-icons/fa";
 import {convertPrice} from "../../../utils/Coversionutils"
+import { useCart } from "../../../context/Receiptcontext";
 
-export default function ProductCard({ img_src, text, ref, percent, price, discountedprice , type, rate }) {
-  const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+
+
+export default function ProductCard({ img_src, text, ref, percent, price, discountedprice ,stock, type, rate }) {
+    const { userquantity, incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser } = useCart();
+    const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 
   return (
     <div className='flex flex-col content-center
@@ -69,10 +73,9 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
             {type === 'dis' ? (
                 <>
                 <span style={{
-                    color: 'black',
                     fontSize: '1rem'
                 }}>
-                    {convertPrice(price)} تومان
+                    {convertPrice(discountedprice)} تومان
                 </span>
                 <span style={{
                     textDecoration: 'line-through',
@@ -80,28 +83,99 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
                     fontSize: '0.9rem',
                     marginBottom: '2px'
                 }}>
-                    {e2p(String(discountedprice))} 
+                    {convertPrice(price)} 
                 </span>
                 
                 </>
             ) : (
                 <span style={{
-                color: 'black',
-                fontSize: '1rem'
+                    fontSize: '1rem'
                 }}>
                 {convertPrice(price)} تومان
                 </span>
             )}
             </div>
+        {userquantity[ref] > 0 ? (
+        <div className="md:block hidden">
+            <div className="flex space-x-2">
+            <button
+                className={`bg-white dark:bg-black ml-1 border-3 ${
+                userquantity[ref] >= stock
+                    ? "border-gray-300 text-gray-300 cursor-not-allowed"
+                    : "border-green-500 text-green-500 cursor-pointer"
+                } font-semibold text-3xl w-8 h-8 flex items-center justify-center rounded-full 
+                  transition-transform duration-200 ${
+                userquantity[ref] >= stock
+                    ? "hover:bg-white"
+                    : "hover:bg-green-500 hover:text-white hover:scale-110"
+                }`}
+                onClick={(e) => {
+                e.stopPropagation();
+                incrementQuantity(ref);
+                }}
+                disabled={userquantity[ref] >= stock}
+            >
+                +
+            </button>
+
+            <span className="text-black dark:text-white text-lg font-semibold">
+                {e2p(String(userquantity[ref] || 0))}
+            </span>
+
+            {userquantity[ref] === 1 ? (
+                <button
+                className={`bg-white dark:bg-black cursor-pointer border-3 border-gray-300 
+                          text-gray-400 font-semibold text-3xl w-8 h-8 flex items-center justify-center 
+                          rounded-full transition-transform duration-200 hover:bg-gray-300 
+                          hover:text-gray-500 hover:scale-110`}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    removeItem(ref);
+                }}
+                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                    strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 6h18" />
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    <path d="M10 11v6" />
+                    <path d="M14 11v6" />
+                    <path d="M5 6h14l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6z" />
+                </svg>
+                </button>
+            ) : (
+                <button
+                className={`bg-white dark:bg-black cursor-pointer border-3 
+                            border-red-500 text-red-500 font-semibold text-3xl w-8 h-8 flex 
+                            items-center justify-center rounded-full transition-transform duration-200 
+                            hover:bg-red-500 hover:text-white hover:scale-110`}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    decrementQuantity(ref);
+                }}
+                disabled={userquantity[ref] <= 1}
+                >
+                -
+                </button>
+            )}
+            </div>
+        </div>
+        ) : (
         <button
-          style={{
-            background: "#F18825", color: 'white',
-            height: '30px', width: '100px',
-            borderRadius: '60px', borderColor: 'white'
-          }}
+            className={`${
+            stock === 0
+                ? "bg-gray-300 cursor-not-allowed"
+                : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"
+            } rounded-xl w-23 h-9 text-white text-lg font-vazir font-md`}
+            onClick={(e) => {
+            e.stopPropagation();
+            handleAdd(ref);
+            }}
+            disabled={stock === 0}
         >
-          افزودن
+            افزودن
         </button>
+        )}
       </div>
     </div>
   );
