@@ -4,6 +4,7 @@ import Sidebar from "./Sidebar";
 import HamburgerButton from './hamburgerbutton';
 import OrdersPage from './OrdersPage/OrdersPage';
 import AddressesPage from './AddressPage/Address';
+import SupportPage from './SupportPage/SupportPage'
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   const [isMobileOpen, setIsMobileOpen] = useState(true);
@@ -26,6 +27,7 @@ export default function ProfileLayout({ children }: { children: React.ReactNode 
     switch (activeTab) {
       case 'orders': return <OrdersPage />;
       case 'addresses': return <AddressesPage />;
+      case 'support' : return <SupportPage/>;
       default: return <OrdersPage />;
     }
   };

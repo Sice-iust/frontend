@@ -7,6 +7,8 @@ import Image from "next/image";
 import axios from 'axios';
 import CreditPopup from './increaseCredit';
 import Link from 'next/link';
+import { BiSupport } from "react-icons/bi";
+
 
 interface UserData {
   username: string;
@@ -332,9 +334,9 @@ export default function Sidebar({ setIsMobileOpen, setActiveTab, activeTab }: Si
             tabName="addresses" 
           />
           <MenuItem 
-            icon={<FaTicketAlt />} 
-            text="کدهای تخفیف" 
-            tabName="discounts" 
+            icon={<BiSupport />} 
+            text="پشتیبانی" 
+            tabName="support" 
           />
           <li className={`dark:border-white border-black border-t last:border-b-0`}>
             <Link
