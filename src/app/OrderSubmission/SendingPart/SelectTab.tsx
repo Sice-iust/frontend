@@ -53,7 +53,7 @@ const Tab: React.FC= () => {
         </div>  
       </div> 
     </div>  
-    <div className="box-contetnt bg-white w-full min-h-40 rounded-2xl mt-10">
+    <div className="box-contetnt bg-white dark:bg-[#191919] w-full min-h-40 rounded-2xl mt-10">
       {selectedTab === 0 && <Reserve />}
       {selectedTab === 1 && <TimeChoosing />}
     </div> 

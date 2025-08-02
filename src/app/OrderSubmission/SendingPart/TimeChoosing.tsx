@@ -73,7 +73,7 @@ const TimeChoosing: React.FC = () => {
         <div className='flex flex-col mr-10 mt-3'>
             <div className='flex flex-row-reverse mt-3 gap-1 '>
               <IoMdTime className='h-5 w-5 text-[#F18825]'/>
-              <span className='font-semibold text-xl'>انتخاب زمان تحویل</span>
+              <span className='font-semibold text-xl dark:text-white'>انتخاب زمان تحویل</span>
             </div>
             <div className='flex flex-row-reverse mt-6 ml-10 gap-5 overflow-x-auto '>
                 {times.map((time)=>
@@ -87,7 +87,7 @@ const TimeChoosing: React.FC = () => {
                 )}               
             </div>           
             {selectedDay && (
-            <div className='box-content border-1 ml-10 h-auto rounded-2xl mb-5'>
+            <div className='box-content border-1 ml-10 h-auto rounded-2xl mb-5 dark:border-white'>
               {selectedDay.slots.map((slot, index) => (
                 <div
                   key={index}
@@ -104,9 +104,9 @@ const TimeChoosing: React.FC = () => {
                       disabled={slot.max_orders - slot.current_fill < 1}
                       onClick={() => handleSlotSelect(slot.id)}
                     >
-                      {selectedSlotId === slot.id && <div className='bg-white w-2 h-2 rounded-full'></div>}
+                      {selectedSlotId === slot.id && <div className='bg-white dark:bg-[#191919] w-2 h-2 rounded-full'></div>}
                     </button>
-                    <span className={`mt-4 font-bold text-lg ${slot.max_orders - slot.current_fill < 1 ? "text-gray-400" : "text-black"}`}>
+                    <span className={`mt-4 font-bold text-lg ${slot.max_orders - slot.current_fill < 1 ? "text-gray-400" : "text-black dark:text-white"}`}>
                       {convertToPersianNumbers(slot.start_time.split(':')[0])} - {convertToPersianNumbers(slot.end_time.split(':')[0])} 
                     </span>
                   </div>
