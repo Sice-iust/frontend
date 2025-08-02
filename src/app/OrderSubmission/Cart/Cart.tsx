@@ -91,15 +91,17 @@ const Cart: React.FC = () => {
                 }
 
                 <div className="flex flex-col space-y-3 mx-8 items-center">
-                    <input
-                        type="text"
-                        value={detail}
-                        onChange={(e) => setDetail(e.target.value)}
-                        placeholder="  ...توضیحات سفارش"
-                        className="bg-[#D9D9D9] text-[#383535]  text-base placeholder:text-xs border border-gray-300 
-                                rounded-xl p-2 h-30 text-right  mb-4 w-[100%] py-2
-                                focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]"
-                    /> 
+
+                    <textarea
+                    value={detail}
+                    onChange={(e) => setDetail(e.target.value)}
+                    placeholder="توضیحات سفارش ..."
+                    className="bg-[#D9D9D9] text-[#383535] text-base placeholder:text-xs border border-gray-300 
+                                rounded-xl w-full py-2 px-4 h-30 mb-4
+                                focus:outline-none focus:text-md focus:ring focus:ring-[#EDEDED]
+                                text-right placeholder:text-right flex items-center"
+                    dir="rtl"
+                    />
 
                    <button
                         onClick={() => handlePayment({
