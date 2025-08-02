@@ -113,7 +113,7 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      <div className="bg-white rounded-md shadow-lg w-full max-w-2xl p-4 relative border border-gray-200">
+      <div className="bg-white dark:bg-[#191919] rounded-md shadow-lg w-full max-w-2xl p-4 relative border dark:text-white border-gray-200 dark:border-black" >
         <CloseIcon 
           className="cursor-pointer rounded-full p-1 hover:bg-gray-100 text-2xl absolute top-2 right-2" 
           onClick={onClose} 
@@ -192,7 +192,7 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
 
             <button
               onClick={handleSubmit}
-              className="w-full bg-[#f18825] text-white py-3 rounded-lg text-lg font-semibold"
+              className="w-full bg-[#f18825] text-white dark:text-black py-3 rounded-lg text-lg font-semibold"
             >
               به روز رسانی آدرس
             </button>
