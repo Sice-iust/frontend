@@ -121,7 +121,7 @@ const Support: React.FC = () => {
       category: category === "technical" ? "فنی" : 
                category === "financial" ? "مالی" : 
                category === "general" ? "عمومی" : "پیشنهادات",
-      status: "pending", // اینجا مقدار ثابت "pending" را تنظیم می‌کنیم
+      status: "pending",
       date: new Date().toLocaleDateString('fa-IR'),
       lastMessage: message,
       messages: [
@@ -375,7 +375,7 @@ const Support: React.FC = () => {
                   className={`p-4 rounded-lg ${
                     msg.sender === "user"
                       ? "bg-blue-50 border border-blue-100 ml-10"
-                      : "bg-orange-50 border border-orange-100 mr-10"
+                      : "bg-gray-50 border border-gray-100 b-1 mr-10"
                   }`}
                 >
                   <div className="flex flex-row-reverse justify-between items-center mb-2">
