@@ -27,6 +27,8 @@ const Support: React.FC = () => {
   const [replyMessage, setReplyMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [tickets, setTickets] = useState<Ticket[]>([]);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const [shouldScroll, setShouldScroll] = useState(false);
 
   useEffect(() => {
     setTickets([
@@ -106,8 +108,10 @@ const Support: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [selectedTicket?.messages]);
+    if (shouldScroll && messagesContainerRef.current && messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [selectedTicket?.messages, shouldScroll]);
 
   const handleSubmitTicket = (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,6 +141,7 @@ const Support: React.FC = () => {
     setActiveTab("tickets");
     setSelectedTicket(newTicket);
     setActiveTab("conversation");
+    setShouldScroll(true);
   };
 
   const handleViewConversation = (ticket: Ticket) => {
@@ -170,6 +175,7 @@ const Support: React.FC = () => {
       setTickets(updatedTickets);
       setSelectedTicket(updatedTickets.find(t => t.id === selectedTicket.id) || null);
       setReplyMessage("");
+      setShouldScroll(true);
     }
   };
   const handleBackToTickets = () => {
@@ -359,10 +365,13 @@ const Support: React.FC = () => {
               </span>
             </div>
 
-            <div className="space-y-6 max-h-[500px] overflow-y-auto p-4">
+            <div ref={messagesContainerRef}
+                      className="space-y-6 max-h-[500px] overflow-y-auto p-4"
+                      onScroll={() => setShouldScroll(false)}>
               {selectedTicket?.messages.map((msg) => (
                 <div 
                   key={msg.id}
+                  ref={messagesEndRef}
                   className={`p-4 rounded-lg ${
                     msg.sender === "user"
                       ? "bg-blue-50 border border-blue-100 ml-10"
