@@ -10,7 +10,7 @@ import Map from "../../locationWindow/MapPopUp";
 import { IoLocationOutline } from "react-icons/io5";
 
 
-const Address: React.FC = () => {  
+const Support: React.FC = () => {  
 
     const { data } = useADDRESS();
     const [showPopup, setShowPopup] = useState(false);
@@ -57,4 +57,4 @@ const Address: React.FC = () => {
     );
 };  
 
-export default Address;  
+export default Support;  
