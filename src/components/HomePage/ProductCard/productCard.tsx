@@ -1,20 +1,24 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaStar } from "react-icons/fa";
 import {convertPrice} from "../../../utils/Coversionutils"
 import { useCart } from "../../../context/Receiptcontext";
 
 
 
-export default function ProductCard({ img_src, text, ref, percent, price, discountedprice ,stock, type, rate }) {
-    const { userquantity, incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser } = useCart();
-    const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
 
+
+export default function ProductCard({ img_src, text, ref, percent, price, discountedprice ,stock, type, rate,onOpenModal }) {
+    const { userquantity, incrementQuantity, decrementQuantity, removeItem, handleAdd } = useCart();
+    const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+    
   return (
     <div className='flex flex-col content-center
       bg-white dark:bg-neutral-900 dark:text-white
       mx-3 border-1 h-60 rounded-2xl p-4
-      hover:drop-shadow-xl/30'>
+      hover:drop-shadow-xl/30 cursor-pointer
+      'onClick={() => onOpenModal(ref)}
+     >
 
       <div dir='rtl' style={{ height: '30px', display: 'flex', justifyContent: 'flex-end', marginBottom: '10px' }}>
         {type == "dis" ? (
@@ -71,7 +75,7 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
 
       <div style={{ height: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div dir='rtl' style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            {type === 'dis' ? (
+            {percent != 0 ? (
                 <>
                 <span style={{
                     fontSize: '1rem'
@@ -166,7 +170,7 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
             className={`${
             stock === 0
                 ? "bg-gray-300 cursor-not-allowed"
-                : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110"
+                : "bg-[#F18825] hover:bg-orange-400 transition duration-300 hover:scale-110 cursor-pointer"
             } rounded-xl w-23 h-9 text-white text-lg font-vazir font-md`}
             onClick={(e) => {
             e.stopPropagation();

@@ -14,11 +14,13 @@ import WbSunnyOutlinedIcon from '@mui/icons-material/WbSunnyOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { FaChevronDown } from "react-icons/fa";
+import { convertToPersianNumbers } from "../../utils/Coversionutils";
 
 import { useTheme } from "../theme";
 import { useADDRESS } from "../../context/GetAddress";
 import LoginModal from "./login/login";
 import AddressModal from "../../app/OrderSubmission/AddressModal/AddressModal";
+import { useCart } from "../../context/Receiptcontext";
 
 const LazySearch = dynamic(() => import('./search'), {
   loading: () => (
@@ -37,9 +39,10 @@ const LazySearch = dynamic(() => import('./search'), {
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [shoppingNum, setShoppingNum] = useState(0);
+  //const [shoppingNum, setShoppingNum] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+  const {shoppingNum} = useCart();
   
   const { isDarkMode, toggleDarkMode } = useTheme();
   const { data = [] } = useADDRESS();  
@@ -76,7 +79,7 @@ export default function Header() {
 
         if (response.data.is_login) {
           setIsLoggedIn(true);
-          setShoppingNum(response.data.nums || 0);
+          //setShoppingNum(response.data.nums || 0);
         }
       } catch (error) {
         console.error('Authentication check failed:', error);
@@ -162,7 +165,7 @@ export default function Header() {
                 <ShoppingCartOutlinedIcon className="text-3xl" />
                 {shoppingNum > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[#F18825] dark:text-black text-white rounded-[10px] px-1.5 py-0.5 text-xs">
-                    {shoppingNum}
+                    {convertToPersianNumbers(shoppingNum)}
                   </span>
                 )}
               </div>
