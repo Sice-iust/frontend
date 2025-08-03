@@ -82,7 +82,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                 );
 
                 console.log('Response from the server:', response.data);
-               
+            
 
 
                 const isRegistered = response.data.is_registered;
@@ -205,7 +205,7 @@ export default function SecondPage({ isDarkMode, phoneNumber, setStep, timeLeft,
                                 <div className={styles.flexCenter}>
 
                                     <span className={styles.waitTitle}>&nbsp;شکیبا باشید&nbsp;</span>
-                                    <h2 >{e2p(formatTime(timeLeft))} </h2>
+                                    <h2 className="mt-8 mb-1">{e2p(formatTime(timeLeft))} </h2>
                                 </div>
                             ) : (
                                 <div className={styles.resendMessage}>

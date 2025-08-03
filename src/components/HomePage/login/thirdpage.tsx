@@ -185,7 +185,7 @@ export default function ThirdPage({
     return (
         <>
             <div dir='rtl' className="mx-5 md:mx-17 my-5 ">
-                <h2 className="mb-3 mx-5">
+                <h2 className="mb-3 text-center">
                     کد تایید به شماره<span className={styles.underlined}>{e2p(phoneNumber)}</span> ارسال شد.
                 </h2>
                 <h1 className="mx-2">

@@ -68,7 +68,7 @@
   margin: 0;
   display: inline-block;
   position: relative;
-  font-family: 'Calibri';
+  font-family: vazir;
   color: var(--text-color);
   font-weight: bold;
 }
@@ -91,7 +91,7 @@
     border: 1px solid var(--second-textcolor);
     height: 10px;
     font-size: 15px;
-    font-family: "calibri";
+    font-family: vazir;
     background-color: var(--background-color);
     color: var(--second-textcolor);
     width: 265px;
@@ -107,7 +107,7 @@
 
   label {
     position: absolute;
-    font-family: "calibri";
+    font-family: vazir;
     font-size: 18px;
 
     left: 220px;
@@ -169,7 +169,7 @@
   margin-top: 5px;
   text-align: right;
   margin-right: 5px;
-  font-family: "calibri";
+  font-family: vazir;
 }
 
 .dialogActions {
@@ -194,7 +194,7 @@
     height: 40px;
     border-radius: 15px;
     transition: background-color 0.3s ease;
-    font-family: "Calibri";
+    font-family: vazir;
     font-size: 21px;
     font-weight: bold;
 
@@ -244,7 +244,7 @@
   margin: 0 10px;
   font-weight: 400;
 
-  font-family: "Calibri";
+  font-family: vazir;
 }
 
 .underlined {
@@ -257,7 +257,7 @@
   align-items: center;
   direction: rtl;
   color: var(--main-green);
-  font-family: "Calibri";
+  font-family: vazir;
   font-size: 15px;
   cursor: pointer;
   margin-right: 14px;
@@ -303,7 +303,7 @@
   margin-top: 10px;
   text-align: right;
   margin-right: 12px;
-  font-family: "calibri";
+  font-family: vazir;
 
 
 
@@ -322,7 +322,7 @@
     height: 30px !important;
     text-align:  center;
     font-size: 1.25rem;
-    font-family: "Calibri";
+    font-family: vazir;
     border: 1px solid var(--text-color);
     border-radius: 10px;
     padding: 0.4rem;
@@ -374,7 +374,7 @@ direction: ltr;
     font-size: 15px;
     color: var(--second-textcolor);
     text-align: right;
-    font-family: "Calibri";
+    font-family: vazir;
     position: relative;
   }
 
@@ -384,7 +384,9 @@ direction: ltr;
     color: var(--second-textcolor);
     text-align: right;
     margin-right: 5px;
-    font-family: "Calibri";
+    margin-top: 35px;
+    margin-bottom: 5px;
+    font-family: vazir;
   }
 
   .resendMessage {
@@ -395,13 +397,13 @@ direction: ltr;
 
     h1 {
       font-size: 13px;
-      font-family: "Calibri";
+      font-family: vazir;
       color: var(--second-textcolor);
     }
 
     .resend {
       color: var(--main-green);
-      font-family: "Calibri";
+      font-family: vazir;
       font-size: 17px;
       cursor: pointer;
     }
@@ -417,7 +419,7 @@ direction: ltr;
   font-size: 21px;
   font-weight: bold;
   margin-bottom: 40px;
-  font-family: "calibri";
+  font-family: vazir;
 
   margin-top: 0px;
   color: white;
@@ -447,7 +449,7 @@ direction: ltr;
   align-items: center;
   direction: rtl;
   color: var(--main-green);
-  font-family: "Calibri";
+  font-family: vazir;
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
@@ -486,7 +488,7 @@ direction: ltr;
     border: 1px solid var(--second-textcolor);
     height: 10px;
     font-size: 15px;
-    font-family: "calibri";
+    font-family: vazir;
     background-color: var(--background-color);
     color: var(--second-textcolor);
     width: 265px;
@@ -502,7 +504,7 @@ direction: ltr;
 
   label {
     position: absolute;
-    font-family: "calibri";
+    font-family: vazir;
     font-size: 18px;
 
     left: 250px;
@@ -565,7 +567,7 @@ direction: ltr;
   margin-top: 10px;
   text-align: right;
   margin-right: 5px;
-  font-family: "calibri";
+  font-family: vazir;
 }
 
 .dialogActions {
@@ -590,7 +592,7 @@ direction: ltr;
   margin: 0 15px;
   
   font-weight: 200;
-  font-family: "Calibri";
+  font-family: vazir;
   h1{
     margin-bottom: 0;
   }
@@ -609,7 +611,7 @@ direction: ltr;
   font-size: 21px;
   font-weight: bold;
   margin-bottom: 0px;
-  font-family: "calibri";
+  font-family: vazir;
 
   margin-top: 0px;
   color: white;
@@ -638,7 +640,7 @@ direction: ltr;
   margin-bottom: 0;
   text-align: right;
   margin-right: 5px;
-  font-family: "calibri";
+  font-family: vazir;
 }
 .errorMessageTooManyReq {
   font-size: 12px;
@@ -647,5 +649,5 @@ direction: ltr;
   margin-bottom: 0;
   text-align: right;
   margin-right: 5px;
-  font-family: "calibri";
+  font-family: vazir;
 }
