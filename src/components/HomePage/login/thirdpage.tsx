@@ -32,6 +32,12 @@ export default function ThirdPage({
     const [cdError, setCdError] = useState<string | null>(null);
     const [coutnError2, setCountError2] = useState<string | null>(null);
 
+    const [isFocused, setIsFocused] = useState(false);
+    const shouldFloat = isFocused || name.length > 0;
+
+    const [isFocusedcode, setIsFocusedcode] = useState(false);
+    const shouldFloatcode = isFocusedcode || code.length > 0;
+
     const [userNameError, setuserNameError] = useState<string | null>(null);
     const isVerificationCodeEntered2 = code?.length !== 4 || error || userNameError || coutnError2;
 
@@ -178,11 +184,11 @@ export default function ThirdPage({
     };
     return (
         <>
-            <div dir='rtl' className="mx-4 md:mx-17 my-5">
-                <h2>
+            <div dir='rtl' className="mx-5 md:mx-17 my-5 ">
+                <h2 className="mb-3 mx-5">
                     کد تایید به شماره<span className={styles.underlined}>{e2p(phoneNumber)}</span> ارسال شد.
                 </h2>
-                <h1>
+                <h1 className="mx-2">
                     <span className={styles.editNumber2} onClick={() => setStep(Step.PHONE)}>
                         <BorderColorOutlinedIcon />
                         اصلاح شماره
@@ -191,32 +197,58 @@ export default function ThirdPage({
             </div>
             <div className="mx-5 md:mx-20">
                 <div>
-                    <div className="border rounded-lg p-2 mb-4">
+                    <div className=" relative border rounded-lg p-2 mb-4">
                         <CreateOutlinedIcon style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} className="absolute" />
                         <input
                             dir="rtl"
                             type="name"
                             id="name"
-                            placeholder="نام کاربری"
+                            onFocus={() => setIsFocused(true)}
+                            onBlur={() => setIsFocused(false)}
                             autoComplete="off"
                             required
                             onChange={handleNameChange}
                             className="w-full outline-none"
                         />
+                        <label
+                        htmlFor="name"
+                        className={`absolute right-3 transition-all duration-200 
+                            ${shouldFloat 
+                                ? 'text-xs -top-2 bg-white px-1' 
+                                : 'top-2.5 text-sm'} text-gray-500`}
+                    >
+                        {shouldFloat && <span className="text-red-500 ml-1">*</span>}
+
+                         نام کاربری
+                        
+                    </label>
                     </div>
                     {userNameError && <div className={styles.errorMessageSignup}>{userNameError}</div>}
-                    <div className="border rounded-lg p-2">
+                    <div className="relative border rounded-lg p-2">
                         <MarkEmailReadOutlinedIcon style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} className="absolute" />
                         <input
                             dir="rtl"
                             id="code"
-                            placeholder="کد تایید"
+                            onFocus={() => setIsFocusedcode(true)}
+                            onBlur={() => setIsFocusedcode(false)}
                             autoComplete="off"
                             required
                             value={e2p(code)}
                             onChange={handleCodeChange}
                             className="w-full outline-none"
                         />
+                         <label
+                        htmlFor="code"
+                        className={`absolute right-3 transition-all duration-200 
+                            ${shouldFloatcode
+                                ? 'text-xs -top-2 bg-white px-1' 
+                                : 'top-2.5 text-sm'} text-gray-500`}
+                    >
+                        {shouldFloatcode && <span className="text-red-500 ml-1">*</span>}
+
+                         کدتایید 
+                        
+                    </label>
                     </div>
                     {cdError && <div className={styles.errorMessageSignup}>{cdError}</div>}
                     {coutnError2 && <div className={styles.errorMessageSignup}>{coutnError2}</div>}
@@ -240,7 +272,7 @@ export default function ThirdPage({
                     <button
                         type="submit"
                         form="signup-form"
-                        className="w-full p-2 text-white hover:shadow-lg"
+                        className="cursor-pointer w-full p-2 text-white hover:shadow-lg"
                         disabled={!!isVerificationCodeEntered2}
                         onClick={(e) => {
                             e.preventDefault();

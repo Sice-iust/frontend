@@ -12,6 +12,9 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
     const e2p = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d])
     const p2e = s => s.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
 
+    const [isFocused, setIsFocused] = useState(false);
+    const shouldFloat = isFocused || phoneNumber.length > 0;
+
     const [error, setError] = useState<string | null>(null);
     const [coutnError0, setCountError0] = useState<string | null>(null);
 
@@ -43,7 +46,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
             console.log('Verification code sent to:', phonenumber);
 
             try {
-                setStep(Step.CODE);
+                //setStep(Step.CODE);
                 const response = await axios.post('https://nanziback.liara.run/users/sendotp/',
                     { phonenumber },
                     {
@@ -51,15 +54,16 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
                             'Content-Type': 'application/json',
                         },
                     }
+                    
                 );
 
                 console.log('Response from the server:', response.data);
-
-                const isRegistered = response.data.is_registered;
                 if (response.data.message == "You can only request 3 OTPs every 10 minutes.") {
 
                     setCountError0("امکان ارسال بیش از 3 پیامک در 10 دقیقه نیست.لطفا صبر و مجددا تلاش کنید. ")
+                    return; 
                 }
+                const isRegistered = response.data.is_registered;
                 if (isRegistered) {
                     setStep(Step.CODE);
                 } else {
@@ -77,27 +81,41 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
                 ورود <span className="font-light">یا</span> عضویت
             </h1>
             <div className="mx-5 md:mx-20">
-                <div className="border rounded-lg p-2">
+                <div className="relative border rounded-lg p-2">
                     <PhoneOutlined style={{ color: isDarkMode ? '#FFFFFF' : '#4C4343', }} className="absolute" />
                     <input
                         dir="rtl"
                         type="tel"
                         id="phoneNumber"
-                        placeholder="شماره تلفن همراه"
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setIsFocused(false)}
                         autoComplete="off"
                         required
                         value={e2p(phoneNumber)}
                         onChange={handleInputChange}
                         className="w-full outline-none"
                     />
+                    <label
+                        htmlFor="phoneNumber"
+                        className={`absolute right-3 transition-all duration-200 
+                            ${shouldFloat 
+                                ? 'text-xs -top-2 bg-white px-1' 
+                                : 'top-2.5 text-sm'} text-gray-500`}
+                    >
+                        {shouldFloat && <span className="text-red-500 ml-1">*</span>}
+
+                        شماره تلفن همراه
+                        
+                    </label>
+
                 </div>
                 {coutnError0 && <div className={styles.errorMessageLogin}>{coutnError0}</div>}
                 {error && <div className={styles.errorMessageLogin}>{error}</div>}
-                <div className={`rounded-xl my-10 mx-2 ${!isPhoneButtonDisabled ? 'bg-orange-400' : 'bg-stone-300'}`}>
+                <div className={` rounded-xl my-10 mx-2 ${!isPhoneButtonDisabled ? 'bg-orange-400' : 'bg-stone-300'}`}>
                     <button
                         type="submit"
                         form="login-form"
-                        className="w-full p-2 text-white hover:shadow-lg"
+                        className="cursor-pointer w-full p-2 text-white hover:shadow-lg"
                         disabled={!!isPhoneButtonDisabled}
                         onClick={handlePhoneSubmit}
                     >
