@@ -49,6 +49,7 @@ export default function CardSlider({ text, color, url, type }) {
                 }
             )
     }, []);
+    
 
     const settings = {
         dots: true,
@@ -95,6 +96,7 @@ export default function CardSlider({ text, color, url, type }) {
                 {text}
             </div>
             <Slider {...settings}>
+                
                 {products.slice(0, 5).map((product) => (
                     <ProductCard
                         key={product.id}

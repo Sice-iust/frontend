@@ -75,7 +75,7 @@ export default function ProductCard({ img_src, text, ref, percent, price, discou
 
       <div style={{ height: '40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div dir='rtl' style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            {type === 'dis' ? (
+            {percent != 0 ? (
                 <>
                 <span style={{
                     fontSize: '1rem'
