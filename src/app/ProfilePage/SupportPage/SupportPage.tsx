@@ -309,6 +309,7 @@ const Support: React.FC = () => {
               onChange={(e) => setMessage(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#f18825] focus:border-[#f18825]"
               required
+              dir="rtl"
             ></textarea>
           </div>
 
@@ -405,6 +406,7 @@ const Support: React.FC = () => {
                     onChange={(e) => setReplyMessage(e.target.value)}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-[#f18825] focus:border-[#f18825]"
                     required
+                    dir="rtl"
                   ></textarea>
                 </div>
                 <div className="flex justify-end">
