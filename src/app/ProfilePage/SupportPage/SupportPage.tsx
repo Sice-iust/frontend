@@ -29,7 +29,6 @@ const Support: React.FC = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
 
   useEffect(() => {
-    // Initialize with mock data
     setTickets([
       {
         id: 1,
@@ -107,7 +106,6 @@ const Support: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Scroll to bottom when messages change
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [selectedTicket?.messages]);
 
@@ -119,7 +117,7 @@ const Support: React.FC = () => {
       category: category === "technical" ? "فنی" : 
                category === "financial" ? "مالی" : 
                category === "general" ? "عمومی" : "پیشنهادات",
-      status: "pending",
+      status: "pending", // اینجا مقدار ثابت "pending" را تنظیم می‌کنیم
       date: new Date().toLocaleDateString('fa-IR'),
       lastMessage: message,
       messages: [
@@ -132,7 +130,7 @@ const Support: React.FC = () => {
         }
       ]
     };
-
+  
     setTickets([newTicket, ...tickets]);
     setSubject("");
     setMessage("");
@@ -161,20 +159,19 @@ const Support: React.FC = () => {
           
           return {
             ...ticket,
-            status: "pending",
+            status: "pending" as const, 
             lastMessage: replyMessage,
             messages: [...ticket.messages, newMessage]
           };
         }
         return ticket;
       });
-
+  
       setTickets(updatedTickets);
       setSelectedTicket(updatedTickets.find(t => t.id === selectedTicket.id) || null);
       setReplyMessage("");
     }
   };
-
   const handleBackToTickets = () => {
     setActiveTab("tickets");
     setSelectedTicket(null);
@@ -345,7 +342,7 @@ const Support: React.FC = () => {
           </button>
 
           <div className="border border-gray-200 rounded-lg p-6">
-            <div className="flex flex-row-reverse justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-gray-800">{selectedTicket?.title}</h2>
               <span className={`px-3 py-1 text-sm rounded-md ${
                 selectedTicket?.status === "pending"
@@ -372,8 +369,8 @@ const Support: React.FC = () => {
                       : "bg-orange-50 border border-orange-100 mr-10"
                   }`}
                 >
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium text-sm">
+                  <div className="flex flex-row-reverse justify-between items-center mb-2">
+                    <span className="font-bold text-sm">
                       {msg.sender === "user" ? "شما" : "پشتیبانی"}
                     </span>
                     <span className="text-xs text-gray-500">
