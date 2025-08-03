@@ -52,6 +52,7 @@ export const CategoryProvider = ({ children }) => {
 
       if (Array.isArray(response.data)) {
         setCategories(response.data);
+        setData(response.data);
       } else {
         setCategories([]);
       }

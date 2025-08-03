@@ -27,7 +27,7 @@ console.log("get categories",categories);
                                  flex items-center text-white font-medium cursor-pointer 
                                  hover:bg-orange-400 transition duration-300 hover:scale-105">
                      <button className="flex flex-row-reverse gap-2 cursor-pointer" onClick={() => setIsModalOpen(true)} >
-                         افزودن محصول جدید <FaPlus className="h-4 w-4 mt-1" />
+                         افزودن دسته‌بندی جدید <FaPlus className="h-4 w-4 mt-1" />
                      </button>
                  </div>
 
