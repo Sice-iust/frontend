@@ -34,7 +34,7 @@ console.log("Image Source:", imageSrc);
   }, []);
 
   return (
-    <div className="border rounded-lg p-4 flex flex-col items-center bg-white shadow-md relative">
+    <div className="border border-gray-200 w-full p-4 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
       
       <div className={`absolute top-2 left-2 w-4 h-4 rounded-full ${colorMap[color] || "bg-gray-400"} border border-gray-300`} />
       <button
