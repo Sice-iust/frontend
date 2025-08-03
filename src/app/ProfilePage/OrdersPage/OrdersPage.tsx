@@ -27,6 +27,7 @@ interface Order {
   status:number,
   reciver:string,
   reciver_phone:string,
+  description:string;
 
 
   delivery : {
@@ -175,6 +176,7 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
         product_count={convertToPersianNumbers(orderItem.products.length )}
         status={orderItem.status}
         phone_number={convertPhoneNumberToPersian(orderItem.reciver_phone)}
+        description={orderItem.description || "فاقد توضیحات"}
       />
         ))
       ) : (

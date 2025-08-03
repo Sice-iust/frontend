@@ -3,7 +3,7 @@ import axios from "axios";
 const handlePayment = async (orderDetails: {
     location_id: number;
     deliver_time: number;
-    discription: string;
+    description: string;
     total_price: number;
     profit: number;
     total_payment: number;
@@ -34,9 +34,12 @@ const handlePayment = async (orderDetails: {
             alert("Payment processed, but no redirect URL was provided.");
         }
     } catch (error) {
-        console.error("Error processing payment:", error);
-        alert("Payment failed. Please try again.");
+    if (axios.isAxiosError(error) && error.response) {
+        console.error("Status:", error.response.status);
+        console.error("Headers:", error.response.headers);
+        console.error("Body:", error.response.data);
     }
+}
 };
 
 export default handlePayment;

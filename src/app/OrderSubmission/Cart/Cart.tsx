@@ -107,7 +107,7 @@ const Cart: React.FC = () => {
                         onClick={() => handlePayment({
                             location_id: Number(selected?.id),
                             deliver_time: Number(selectedSlotId),
-                            discription: detail, 
+                            description: detail, 
                             total_price: totalActualPricewithshipp,
                             profit: totalDiscount || 0,
                             total_payment: totalActualPricewithshipp,

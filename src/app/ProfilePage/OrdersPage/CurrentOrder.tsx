@@ -26,9 +26,10 @@ interface OrderStatusPageProps {
   product_count: string;  
   status: number;
   phone_number: string;
+  description:string;
 }
 
-export default function OrderStatusPage({ orderkey, id, total_price, delivery_day, delivery_clock, distination, address, reciver, product_count, status, phone_number }: OrderStatusPageProps) {  
+export default function OrderStatusPage({ orderkey, id, total_price, delivery_day, delivery_clock, distination, address, reciver, product_count, status, phone_number,description }: OrderStatusPageProps) {  
   const params = useParams();
   const [invoiceData, setInvoiceData] = useState<any>(null);  
   const [loading, setLoading] = useState(true);  
@@ -123,7 +124,7 @@ export default function OrderStatusPage({ orderkey, id, total_price, delivery_da
             </div>
             <div className="flex items-start gap-2">
               <FaInfoCircle className="text-[#B8681D] mt-1" />
-              <p className="font-medium text-[#B8681D]">توضیحات سفارش: <span className='text-[#2A2828] mr-1.5'>فاقد توضیحات.</span></p>
+              <p className="font-medium text-[#B8681D]">توضیحات سفارش: <span className='text-[#2A2828] mr-1.5'>{description}</span></p>
             </div>
             <div className="flex items-start gap-2">
               <FaPhone className="text-[#B8681D] mt-1" />
