@@ -318,8 +318,9 @@ const Support: React.FC = () => {
               type="submit"
               className="px-6 py-2 bg-[#f18825] text-white rounded-lg hover:bg-orange-600 transition flex items-center"
             >
+              ارسال تیکت
               <svg
-                className="w-5 h-5 ml-2"
+                className="w-5 h-5 ml-2 transform rotate-90"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -332,7 +333,7 @@ const Support: React.FC = () => {
                   d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                 />
               </svg>
-              ارسال تیکت
+
             </button>
           </div>
         </form>
@@ -414,8 +415,9 @@ const Support: React.FC = () => {
                     type="submit"
                     className="px-6 py-2 bg-[#f18825] text-white rounded-lg hover:bg-orange-600 transition flex items-center"
                   >
+                    ارسال پاسخ
                     <svg
-                      className="w-5 h-5 ml-2"
+                      className="w-5 h-5 ml-2 transform rotate-90"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -428,7 +430,7 @@ const Support: React.FC = () => {
                         d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
                       />
                     </svg>
-                    ارسال پاسخ
+
                   </button>
                 </div>
               </form>
