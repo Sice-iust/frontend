@@ -15,6 +15,7 @@ interface CartContextType {
     selectedSlotId: string,
     selectedDateId: string,
     totalActualPricewithshipp:number,
+    shoppingNum:number;
     incrementQuantity: (id: number) => Promise<void>;
     decrementQuantity: (id: number) => Promise<void>;
     removeItem: (id: number) => Promise<void>;
@@ -37,6 +38,7 @@ const CartContext = createContext<CartContextType>({
     selectedSlotId: "",
     selectedDateId: "",
     totalActualPricewithshipp : 0,
+    shoppingNum:0,
     incrementQuantity: async () => Promise.resolve(),
     decrementQuantity: async () => Promise.resolve(),
     removeItem: async () => Promise.resolve(),
@@ -59,6 +61,8 @@ export const CartProvider = ({ children }) => {
     const [selectedSlotId, setSelectedSlotId] = useState<string>("");
     const [selectedDateId, setSelectedDateId] = useState<string>("");
     const [totalActualPricewithshipp ,setsetTotalActualPricewithshipp] = useState(0);
+    const shoppingNum = Object.keys(userquantity).length;
+
 
     //Cart Data
     const fetchData = async () => {
@@ -230,7 +234,7 @@ export const CartProvider = ({ children }) => {
     return (
         <CartContext.Provider value={{
             cartItems, counts, totalDiscount, totalActualPrice, loading, shipping_fee,
-            userquantity, userdelivery, selectedSlotId, selectedDateId,totalActualPricewithshipp,
+            userquantity, userdelivery, selectedSlotId, selectedDateId,totalActualPricewithshipp,shoppingNum,
             incrementQuantity, decrementQuantity, removeItem, handleAdd, fetchDatauser,
             fetchdeliverydata, handleSlotSelect
         }}>
