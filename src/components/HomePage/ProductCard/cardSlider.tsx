@@ -7,10 +7,26 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductCard from '../ProductCard/productCard';
 import axios from 'axios';
 import { useCart } from "../../../context/Receiptcontext";
+import ProductPage from '../../ProductPage/ProductPage';
 
 
 export default function CardSlider({ text, color, url, type }) {
     const { fetchDatauser } = useCart();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const handleOpenModal = (id) => {
+        console.log("id",id)
+        setSelectedItem(id); 
+        setIsOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsOpen(false);
+        setSelectedItem(null);
+    };
+
 
     const [products, setProducts] = useState<any[]>([]);
     useEffect(() => {
@@ -70,6 +86,7 @@ export default function CardSlider({ text, color, url, type }) {
     };
 
     return (
+        <>
         <div className='rounded-2xl md:px-8 py-1 pb-8 m-6 px-8 md:m-10 drop-shadow-xl/25' style={{ backgroundColor: color }}>
             <div className='text-white dark:text-black
             text-xl
@@ -89,9 +106,18 @@ export default function CardSlider({ text, color, url, type }) {
                         price={product.price}
                         rate={product.rate}
                         stock={product.stock}
-                        type={type} />
+                        type={type}
+                        onOpenModal={handleOpenModal}
+                     />
                 ))}
             </Slider>
         </div>
+        {isOpen && (
+        <ProductPage
+            open={isOpen}
+            itemid={selectedItem}
+            onClose={handleCloseModal}
+        />
+        )}</>
     );
 };
