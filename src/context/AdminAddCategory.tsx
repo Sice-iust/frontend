@@ -13,15 +13,32 @@ interface CategoryContextType {
   categories: Category[];
   fetchCategories: () => Promise<void>;
   addCategory: (categoryData: FormData) => Promise<true | undefined>;
+  removeAdminItem: (id: number) => Promise<void>;
 }
 
 const CategoryContext = createContext<CategoryContextType>({
   categories: [],
   fetchCategories: async () => { return undefined; },
   addCategory: async () => { return undefined; },
+  removeAdminItem: async () => Promise.resolve() ,
 });
 
 export const CategoryProvider = ({ children }) => {
+  
+  const [data, setData] = useState<Array<{
+      id: number,
+      category: string,
+      name: string,
+      price: number,
+      stock: number,
+      box_type: number,
+      box_color: string,
+      color: string,
+      image: string,
+      average_rate: number,
+      discount:number,
+      description:string,
+    }>>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
@@ -42,6 +59,19 @@ export const CategoryProvider = ({ children }) => {
       console.error("Error fetching categories:", error);
       setCategories([]);
     }
+  };
+
+  const removeAdminItem = async (id: number) => {
+      setData(prev => prev.filter(item => item.id !== id));
+
+      try {
+          await axios.delete(`https://nanziback.liara.run/nanzi/admin/category/modify/${id}`, {
+              headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          });
+      } catch (error) {
+          console.error("Error deleting item:", error);
+          fetchCategories();
+      }
   };
 
   const addCategory = async (categoryData: FormData) => {
@@ -72,7 +102,7 @@ export const CategoryProvider = ({ children }) => {
   }, []);
 
   return (
-    <CategoryContext.Provider value={{ categories, fetchCategories, addCategory }}>
+    <CategoryContext.Provider value={{ removeAdminItem,categories, fetchCategories, addCategory }}>
       {children}
     </CategoryContext.Provider>
   );

@@ -14,14 +14,14 @@ interface ColorOption {
 const CategoryModal: React.FC<CategoryModalProps> = ({ isOpen, onClose }) => {
   const [categoryName, setCategoryName] = useState("");
   const { addCategory } = useCategory();
-const [selectedColor, setSelectedColor] = useState<ColorOption>({
+  const [selectedColor, setSelectedColor] = useState<ColorOption>({
     name: "زرد",
     bgClass: "bg-yellow-400"
   });  const [image, setImage] = useState<File | null>(null);
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-   const colors: ColorOption[] = [
+  const colors: ColorOption[] = [
     { name: "صورتی", bgClass: "bg-pink-400" },
     { name: "سبز", bgClass: "bg-green-400" },
     { name: "زرد", bgClass: "bg-yellow-400" },
@@ -67,7 +67,7 @@ const [selectedColor, setSelectedColor] = useState<ColorOption>({
       <div className="fixed inset-0 flex justify-center items-center z-50 " dir="rtl">
         <div className="bg-white p-6 rounded-lg shadow-lg w-96">
           <div className="flex items-center mb-6 border-b-1 pb-4">
-             <button 
+            <button 
               onClick={onClose}
               className="text-black hover:text-gray-700">
               <FaChevronRight className="h-4 w-4" />
@@ -112,7 +112,7 @@ const [selectedColor, setSelectedColor] = useState<ColorOption>({
                 {colors.map((color) => (
                   <button
                     key={color.name}
-                     className={`w-8 h-8 rounded-full ${color.bgClass} ${
+                    className={`w-8 h-8 rounded-full ${color.bgClass} ${
                       selectedColor.name === color.name ? "ring-2 ring-[#F18825]" : ""
                     }`}
                     onClick={() => setSelectedColor(color)}
@@ -123,7 +123,7 @@ const [selectedColor, setSelectedColor] = useState<ColorOption>({
               </div>
             </div>
 
-           <button 
+          <button 
           onClick={handleSubmit}
           disabled={isSubmitting}
           className="w-full bg-[#F18825] hover:bg-orange-500 text-white py-2 px-4 rounded-lg font-medium text-lg transition-colors mt-6 disabled:opacity-50"

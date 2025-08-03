@@ -71,7 +71,6 @@ console.log("Image Source:", imageSrc);
         </div>
       </div>
 
-      {/* Product name with fixed height and proper text handling */}
       <div className="w-full text-center h-12 flex items-center justify-center">
         <p className="font-bold text-base line-clamp-2" title={name}>
           {name}
