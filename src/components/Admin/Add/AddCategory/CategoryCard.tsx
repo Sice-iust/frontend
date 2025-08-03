@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Image from 'next/image';
+import { useCategory } from "../../../../context/AdminAddCategory";
+import photo from "../../../../../public/assets/images.png";
 interface CategoryCardProps {
   name: string;
   imageSrc: string;
@@ -19,6 +21,7 @@ const colorMap: Record<string, string> = {
 const CategoryCard: React.FC<CategoryCardProps> = ({ name, imageSrc, color, id }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const {removeAdmincat} = useCategory();  
 console.log("Image Source:", imageSrc);
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
@@ -52,15 +55,15 @@ console.log("Image Source:", imageSrc);
           </div>
           <div className="flex items-center">
             <DeleteOutlineOutlinedIcon className="text-red-500" />
-            <button className="text-black py-1 px-0.5">حذف</button>
+            <button className="text-black py-1 px-0.5" onClick={() => removeAdmincat(id)}>حذف</button>
           </div>
         </div>
       )}
 
-       <div className="w-full flex justify-center mb-3">
+      <div className="w-full flex justify-center mb-3">
         <div className="w-16 h-25 relative">
           <Image 
-            src={imageSrc } 
+            src={imageSrc || photo} 
             alt={name}
             fill
             className=" object-cover"

@@ -13,14 +13,14 @@ interface CategoryContextType {
   categories: Category[];
   fetchCategories: () => Promise<void>;
   addCategory: (categoryData: FormData) => Promise<true | undefined>;
-  removeAdminItem: (id: number) => Promise<void>;
+  removeAdmincat: (id: number) => Promise<void>;
 }
 
 const CategoryContext = createContext<CategoryContextType>({
   categories: [],
   fetchCategories: async () => { return undefined; },
   addCategory: async () => { return undefined; },
-  removeAdminItem: async () => Promise.resolve() ,
+  removeAdmincat: async () => Promise.resolve() ,
 });
 
 export const CategoryProvider = ({ children }) => {
@@ -61,9 +61,9 @@ export const CategoryProvider = ({ children }) => {
     }
   };
 
-  const removeAdminItem = async (id: number) => {
+  const removeAdmincat = async (id: number) => {
       setData(prev => prev.filter(item => item.id !== id));
-
+      console.log("i am hereee");
       try {
           await axios.delete(`https://nanziback.liara.run/nanzi/admin/category/modify/${id}`, {
               headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -102,7 +102,7 @@ export const CategoryProvider = ({ children }) => {
   }, []);
 
   return (
-    <CategoryContext.Provider value={{ removeAdminItem,categories, fetchCategories, addCategory }}>
+    <CategoryContext.Provider value={{ removeAdmincat,categories, fetchCategories, addCategory }}>
       {children}
     </CategoryContext.Provider>
   );
