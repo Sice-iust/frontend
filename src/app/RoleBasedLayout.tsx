@@ -12,7 +12,7 @@ export default function RoleBasedLayout({ children }) {
   const userRole = useUserRole(); 
 const pathname = usePathname();
   return (
-    <div className="relative">
+    <div>
       {userRole === "admin" ? <AdminHeader /> : <Header2 />}
       {userRole === "admin" ? (
         pathname === "/AdminAddPage" ? <AdminPanel /> :

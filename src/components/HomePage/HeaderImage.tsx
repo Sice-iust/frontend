@@ -61,7 +61,7 @@ const HeaderImage = ({ isDarkMode }) => {
               >
                 {currentBreadType}
               </span>
-              <span className="text-[#555050] ml-2">سفارش انواع نان</span>
+              <span className="text-[#555050] dark:text-white ml-2">سفارش انواع نان</span>
             </h2>
           </div>
 

@@ -99,7 +99,7 @@ export default function FirstPage({ isDarkMode, setStep, phoneNumber, setPhoneNu
                         htmlFor="phoneNumber"
                         className={`absolute right-3 transition-all duration-200 
                             ${shouldFloat 
-                                ? 'text-xs -top-2 bg-white px-1' 
+                                ? 'text-xs -top-2 bg-white px-1 dark:bg-[rgb(25,25,25)]' 
                                 : 'top-2.5 text-sm'} text-gray-500`}
                     >
                         {shouldFloat && <span className="text-red-500 ml-1">*</span>}
