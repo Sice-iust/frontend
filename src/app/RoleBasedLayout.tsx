@@ -1,6 +1,6 @@
 "use client"; // Required since we're using hooks
 
-import {  useUserRole } from "./userRole";
+import { useUserRole } from "./userRole";
 import AdminHeader from "../components/Admin/Add/header";
 import Header2 from "../components/HomePage/header2";
 import AdminPanel from "../../src/app/AdminAddPage/page";
@@ -9,19 +9,20 @@ import OrdersPage from "../app/OrdersAdmin/page";
 import { usePathname } from "next/navigation";
 
 export default function RoleBasedLayout({ children }) {
-  const userRole = useUserRole(); 
-const pathname = usePathname();
+  const userRole = useUserRole();
+  const pathname = usePathname();
   return (
     <div>
       {userRole === "admin" ? <AdminHeader /> : <Header2 />}
-      {userRole === "admin" ? (
-        pathname === "/AdminAddPage" ? <AdminPanel /> :
-        pathname === "/OrdersAdmin" ? <OrdersPage /> :
-        <AdminPanel /> 
-      ) : (
-        children 
-      )}
-
+      <div className="mb-25 md:mb-0">
+        {userRole === "admin" ? (
+          pathname === "/AdminAddPage" ? <AdminPanel /> :
+            pathname === "/OrdersAdmin" ? <OrdersPage /> :
+              <AdminPanel />
+        ) : (
+          children
+        )}
+      </div>
       <div className="hidden md:block">{userRole === "user" && <Footer2 />}</div>
     </div>
   );

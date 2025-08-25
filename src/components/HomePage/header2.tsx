@@ -206,7 +206,7 @@ export default function Header() {
           </Link>
         ) : (
           <button
-            className="text-black dark:text-white bg-orange-400 text-4xl rounded-2xl p-3 cursor-pointer"
+            className="text-black dark:text-white text-4xl rounded-2xl p-3 cursor-pointer"
             onClick={handleOpenLoginModal}
           >
             <AccountCircleOutlinedIcon className="!text-3xl w-2.5 ml-0.5" />
