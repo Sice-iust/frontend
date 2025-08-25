@@ -110,7 +110,7 @@ export default function ThirdPage({
 
                 }
                 else {
-                    setCdError('کد تایید نادرست است ');
+                    setCdError('کد تایید نادرست است');
                     isVerificationCodeEntered2 == true;
 
                 }

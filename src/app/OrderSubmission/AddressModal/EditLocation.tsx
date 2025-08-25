@@ -4,6 +4,7 @@ import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { useADDRESS } from '../../../context/GetAddress';
 import { NULL } from "sass";
+import { convertToPersianNumbers } from "../../../utils/Coversionutils";
 
 
 interface PopupProps {
@@ -120,20 +121,6 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
         />
           <div className="mt-4 p-4" dir="rtl">
             <h1 className="text-xl font-bold mb-6 text-center">ویرایش آدرس</h1>
-            
-            {/* <div className="mb-6 relative" style={{ height: "200px", width: "100%" }}>
-              <div id="mini-map" className="flex flex-row" style={{ height: "100%", width: "100%", borderRadius: "8px", border: "1px solid #e5e7eb" }} />
-              <button
-                onClick={() => setShowAddressForm(false)}
-                className="absolute bottom-2 right-2 bg-white text-gray-800 py-1 px-3 rounded-lg text-sm font-semibold shadow-md hover:bg-gray-100 transition"
-                style={{ zIndex: 1000 }}
-              >
-                <div className="flex flex-row-reverse gap-1 cursor-pointer" onClick={backtomap}>
-                  <span className="text-green-600">تغییر آدرس روی نقشه</span>
-                  <FaRegEdit className="text-green-600 h-4 w-4"/>
-                </div>
-              </button>
-            </div> */}
 
             <div className="mb-6">
               <h2 className="font-semibold mb-2">نشانی</h2>
@@ -152,7 +139,7 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
                 <input
                   type="text"
                   name="plaque"
-                  value={addressData.plaque}
+                  value={convertToPersianNumbers(addressData.plaque)}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />
@@ -162,7 +149,7 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
                 <input
                   type="text"
                   name="floor"
-                  value={addressData.floor}
+                  value={convertToPersianNumbers(addressData.floor)}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />
@@ -172,7 +159,7 @@ const EditLocation: React.FC<PopupProps> = ({  onClose, itemid }) => {
                 <input
                   type="text"
                   name="unit"
-                  value={addressData.unit}
+                  value={convertToPersianNumbers(addressData.unit)}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />

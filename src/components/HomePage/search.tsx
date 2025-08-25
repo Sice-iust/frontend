@@ -93,6 +93,7 @@ const Search: React.FC = () => {
           rounded-3xl p-2 
           dark:bg-[#383535] bg-[#D9D9D9]
           w-full
+          mt-2
         `} 
         dir='rtl'
       >
@@ -100,7 +101,7 @@ const Search: React.FC = () => {
         <input
           type="text"
           className={`
-            px-2 py-1 
+            px-2 py-1
             focus:outline-none font-vazir
             w-full rounded-full text-right dark:text-white
             bg-transparent text-[16px] dark:placeholder:[#D9D9D9] placeholder:[#696363]
