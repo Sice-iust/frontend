@@ -10,10 +10,9 @@ const HeaderImage = ({ isDarkMode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-  // Check login status on mount
   useEffect(() => {
     const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // Convert token presence to boolean
+    setIsLoggedIn(!!token); 
   }, []);
 
   useEffect(() => {
@@ -37,6 +36,7 @@ const HeaderImage = ({ isDarkMode }) => {
     if (!isLoggedIn) {
       setShowLoginPopup(true);
     }
+    
   };
 
   return (
@@ -45,6 +45,7 @@ const HeaderImage = ({ isDarkMode }) => {
         src={isDarkMode ? "/assets/darkHomePagePhoto.png" : "/assets/homePagePhoto.png"}
         alt="Background"
         fill
+        className="z-0"
       />
 
       <div className="absolute inset-0 flex flex-col justify-end items-start text-white pb-18">
@@ -65,26 +66,27 @@ const HeaderImage = ({ isDarkMode }) => {
           </div>
 
           {/* Address Input */}
-          {!isLoggedIn && (
+          {!isLoggedIn &&(
   <div className="relative flex items-center bg-[#B7B3AC] bg-opacity-90 rounded-lg p-2 shadow-lg">
     <input
       type="text"
-      className="w-full bg-transparent border-none outline-none text-gray-800 placeholder-gray-700 text-right"
+      className="w-full bg-transparent border-none outline-none text-gray-800 placeholder-gray-700 text-right cursor-pointer z-10"
       placeholder="آدرس خود را انتخاب کنید"
       dir="rtl"
+      readOnly
       onClick={handleInputClick} // Trigger login check only when not logged in
     />
-    <LocationOnIcon className="text-[#F18825] ml-2" />
+    <LocationOnIcon className="text-[#F18825] ml-2 cursor-pointer" />
   </div>
-)}
+  )}
         </div>
       </div>
 
       {/* Login Popup */}
       {/* Login Popup */}
 {showLoginPopup && (
-  <div className="fixed inset-0 flex items-center justify-center">
-    <div className="bg-white p-6 rounded-lg shadow-lg relative">
+  <div className="fixed inset-0 flex items-center justify-center z-40">
+    <div className="inset-0 bg-white p-6 rounded-lg shadow-lg relative z-50">
       
       {/* Close Button (X on the right) */}
       <button 
@@ -94,7 +96,6 @@ const HeaderImage = ({ isDarkMode }) => {
         ✖
       </button>
 
-      {/* Popup Title */}
       <h2 className="text-lg  text-center mb-4 mt-4">لطفاً ابتدا وارد حساب کاربری خود شوید<ErrorOutlineOutlinedIcon className="text-red-500"/></h2>
 
      

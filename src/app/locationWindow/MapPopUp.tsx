@@ -35,7 +35,6 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
     addressTitle: ""
   });
 
-  // Load the map SDK and initialize maps
   useEffect(() => {
     if (!isOpen) return;
 
