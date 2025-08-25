@@ -3,7 +3,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { useADDRESS } from '../../context/GetAddress';
-
+import { convertToPersianNumbers } from "../../utils/Coversionutils";
 declare global {
   interface Window {
     L?: any;
@@ -290,7 +290,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
                 <input
                   type="text"
                   name="plaque"
-                  value={addressData.plaque}
+                  value={convertToPersianNumbers(addressData.plaque)}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />
@@ -300,7 +300,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
                 <input
                   type="text"
                   name="floor"
-                  value={addressData.floor}
+                  value={convertToPersianNumbers(addressData.floor)}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />
@@ -310,7 +310,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose, onLocationSelect }) => {
                 <input
                   type="text"
                   name="unit"
-                  value={addressData.unit}
+                  value={convertToPersianNumbers(addressData.unit)}
                   onChange={handleInputChange}
                   className="w-full p-2 border border-gray-300 rounded"
                 />

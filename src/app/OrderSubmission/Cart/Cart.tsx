@@ -236,7 +236,7 @@ const Cart: React.FC = () => {
                             total_price: totalActualPricewithshipp,
                             profit: totalDiscount || 0,
                             total_payment: totalActualPricewithshipp,
-                            discount_text: "Applied discount",
+                            discount_text: "",
                             payment_status: "unpaid",
                             reciver: reciver||"",
                             reciver_phone: reciver_phone ||  ""                       })}
