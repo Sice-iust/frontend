@@ -5,7 +5,7 @@ import { convertPhoneNumberToPersian } from '../../../utils/Coversionutils';
 import { useOrderContext } from '../../../context/Adminordercontext';
 import Image from 'next/image';
 import pic from '../../../../public/assets/Noorderpic.png';
-
+import { convertToPersianNumbers } from '../../../utils/Coversionutils';
 interface Order {
   id: number;
   location: {
@@ -51,9 +51,9 @@ const OrderList = () => {
     return [
       location.name,
       location.address,
-      location.home_plaque ? `پلاک ${location.home_plaque}` : null,
-      location.home_unit ? `واحد ${location.home_unit}` : null,
-      location.home_floor ? `طبقه ${location.home_floor}` : null,
+      location.home_plaque ? `پلاک ${convertToPersianNumbers(location.home_plaque)}` : null,
+      location.home_unit ? `واحد ${convertToPersianNumbers(location.home_unit)}` : null,
+      location.home_floor ? `طبقه ${convertToPersianNumbers(location.home_floor)}` : null,
     ].filter(Boolean).join("-");
   };
 
