@@ -114,7 +114,7 @@ const OrderCard: React.FC<OrderCardProps> = ({
         
 
             <div className="flex items-center ml-auto">
-                {product_count != "0" && (
+                {Number(product_count) >0 && (
                     <div className="flex items-center mr-2">
                     <span className="text-gray-500 text-sm  hidden lg:flex lg:text-lg">نان دیگر</span>
                     <span className="text-gray-500 text-sm hidden lg:flex lg:text-lg mr-1">+{product_count}</span>
