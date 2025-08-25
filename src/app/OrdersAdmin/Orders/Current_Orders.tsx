@@ -6,6 +6,7 @@ import { useOrderContext } from '../../../context/Adminordercontext';
 import Image from 'next/image';
 import pic from '../../../../public/assets/Noorderpic.png';
 
+
 interface Order {
   id: number;
   location: {

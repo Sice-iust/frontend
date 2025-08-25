@@ -150,7 +150,7 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
         total_price={convertPrice(orderItem.total_price)}
         delivery_day={orderItem.delivery.delivery_date ? convertDateInPersian(orderItem.delivery.delivery_date) : "Date not available"}
         delivery_clock={orderItem.delivery.end_time ? convertTimeToPersian(orderItem.delivery.end_time) : "Time not valid"}
-        distination={orderItem.location.name}
+        distination={""}
         product_count={convertToPersianNumbers(orderItem.products.length - 3)}
         product_photos={orderItem.products.slice(0, 3).map(prod => prod)}
       />
@@ -170,7 +170,7 @@ const [Current, setCurrent] = useState<CurrentOrdersResponse | null>({ current_o
         total_price={orderItem.total_price}
         delivery_day={orderItem.delivery.delivery_date ? convertDateInPersian(orderItem.delivery.delivery_date) : "Date not available"}
         delivery_clock={orderItem.delivery.end_time ? convertTimeToPersian(orderItem.delivery.end_time) : "Time not valid"}
-        distination={orderItem.location.name}
+        distination={""}
         address={orderItem.location.address}
         reciver={orderItem.reciver}
         product_count={convertToPersianNumbers(orderItem.products.length )}
