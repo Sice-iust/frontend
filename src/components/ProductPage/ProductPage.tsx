@@ -233,13 +233,13 @@ export default function ProductPage({ open, onClose, itemid }) {
                                 text-md mt-0 sm:font-bold 
                                 sm:text-base lg:text-2xl sm:mt-6 dark:text-white text-black`}>{data.name}</span>
                                                 </div>
-                                                <div className={`mt-2 ml-4 font-vazir text-sm font-medium text-justify sm:text-lg lg:mt-7 sm:ml-10
+                                                <div className={`mt-2 ml-4 font-vazir text-sm font-medium text-right sm:text-lg lg:mt-7 sm:ml-10
                                         dark:text-[#BAB2B2] text-gray-700`}>
                                                     {data.description}
                                                 </div>
                                                 <div className={` box-content rounded-2xl bg-${data.color}-400 border-1 p-2 mt-3 ml-4 font-vazir sm:ml-10
-                                         text-xs text-justify sm:text-base lg:text-lg lg:mt-7 dark:text-white dark:border-white dark:font-medium 
-                                         text-black font-semibold`}>{data.box_color}</div>
+                                         text-xs sm:text-base lg:text-lg lg:mt-7 dark:text-white dark:border-white dark:font-medium 
+                                         text-black font-semibold text-right `}>{data.box_color}</div>
                                                 <div className="flex flex-row-reverse mt-2 justify-between lg:mt-9">
                                                     <div className='flex flex-col'>
                                                         <div className={`font-vazir text-right text-base sm:text-xl 
